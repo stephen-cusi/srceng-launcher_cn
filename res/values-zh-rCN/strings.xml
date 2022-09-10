@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="last_commit" />
+    <string name="deploy_branch" />
+    <string name="srceng_launcher_about">关于</string>
+    <string name="srceng_launcher_about_text">"感谢nillerusr和jusic为端口撰写代码
+起源引擎开发商-Valve
+不用于商业用途！
+联系我们：unknownandlost11@gmail.com
+捐赠：https://new.donatepay.ru/@Nillerusr
+BTC（比特币）：BC1QNJQ92J9UQJTAFCX2ZVNWD48Q89HGTD6W8A6NA
+XMR（Monero）：48IXVX61MU24M5VGC77RXQYKMOWW3DZH6HN7MEWDALVTFGHYBKQ2TEOPPEBQ6XVQJ4ITSGH6EZNTZBTY6ZDEVAPCFNPSJG
+感谢哔哩哔哩_世界无核恢复中文：www.bilibili.com"</string>
+    <string name="srceng_launcher_launch">启动</string>
+    <string name="srceng_launcher_ok">好的</string>
+    <string name="srceng_launcher_set">设定当前目录为游戏路径</string>
+    <string name="srceng_launcher_error">错误</string>
+    <string name="srceng_launcher_error_missing_obb_a">没有</string>
+    <string name="srceng_launcher_error_missing_obb_b">路径上的文件</string>
+    <string name="srceng_launcher_error_test_write">测试写入失败，所有文件将存储在</string>
+    <string name="srceng_launcher_error_no_permission">没有权限，游戏将无法运行</string>
+    <string name="srceng_launcher_error_find_gameinfo">找不到游戏资源，路径设置的正确吗？</string>
+    <string name="srceng_launcher_command_args">命令行参数</string>
+    <string name="srceng_launcher_env">环境变量</string>
+    <string name="srceng_launcher_game_path">游戏资源路径</string>
+    <string name="srceng_launcher_set_game_path">设置游戏目录</string>
+    <string name="srceng_launcher_game_menu">游戏</string>
+    <string name="srceng_launcher_touch_controls">显示触摸控制</string>
+    <string name="srceng_launcher_volume_buttons">使用音量按钮</string>
+    <string name="srceng_launcher_volume_buttons_desc">音量上升按钮可以绑定为L_TRIGGER，音量下降按钮可以绑定到R_Triger！！！</string>
+    <string name="srceng_launcher_check_updates">检查更新</string>
+    <string name="srceng_launcher_immersive_mode">沉浸式模式</string>
+    <string name="srceng_launcher_screen_resolution">固定屏幕分辨率</string>
+    <string name="srceng_game_hl2">半条命2</string>
+    <string name="srceng_game_hl2ep1">半条命2第一章</string>
+    <string name="srceng_game_hl2ep2">半条命2第二章</string>
+    <string name="srceng_game_portal">门户</string>
+    <string name="srceng_dir_choice_btn">设置当前目录</string>
+    <string name="srceng_update">更新可用！</string>
+    <string name="srceng_app_name">起源引擎</string>
+</resources>
