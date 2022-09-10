@@ -1,7 +1,7 @@
 #!/bin/bash
 
-git config --global user.name nillerusr
-git config --global user.email nillerusr@users.noreply.github.com
+git config --global user.name stephen-cusi
+git config --global user.email magiskcurry@qq.com
 
 generate_readme() # maybe later...
 {
@@ -15,7 +15,7 @@ upload()
 	cp $* deploy/
 	cd deploy
 	git init
-	git remote add deploy https://nillerusr:${GH_TOKEN}@github.com/nillerusr/srceng-deploy.git
+	git remote add deploy https://nillerusr:${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}@github.com/stephen-cusi/srceng-deploy.git
 	git checkout -b $DEPLOY_BRANCH
 	generate_readme
 	git add .
