@@ -29,7 +29,7 @@ jobs:
       shell: bash
       env:
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-        GH_TOKEN: ${{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}}
+        GH_TOKEN: ${{ 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 }}
       run: |
         DEPLOY_BRANCH=srceng-old-port scripts/upload-to-github.sh bin/srceng-debug.apk version
         CHANNEL_ID=801092155090927626 python3 scripts/send-to-discord.py "Commits history: https://github.com/nillerusr/srceng-android/commits/con-wrappers\nBuild: https://github.com/nillerusr/srceng-deploy/\nBuild finished at: $(date +%Y-%m-%d-%H:%M)"
