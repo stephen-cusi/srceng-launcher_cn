@@ -11,8 +11,8 @@
 BTC（比特币）：BC1QNJQ92J9UQJTAFCX2ZVNWD48Q89HGTD6W8A6NA
 XMR（Monero）：48IXVX61MU24M5VGC77RXQYKMOWW3DZH6HN7MEWDALVTFGHYBKQ2TEOPPEBQ6XVQJ4ITSGH6EZNTZBTY6ZDEVAPCFNPSJG
 感谢哔哩哔哩_世界无核恢复中文：www.bilibili.com"</string>
-    <string name="srceng_launcher_launch">启动</string>
-    <string name="srceng_launcher_ok">好的</string>
+    <string name="srceng_launcher_launch">启动游戏</string>
+    <string name="srceng_launcher_ok">确定</string>
     <string name="srceng_launcher_set">设定当前目录为游戏路径</string>
     <string name="srceng_launcher_error">错误</string>
     <string name="srceng_launcher_error_missing_obb_a">没有</string>
