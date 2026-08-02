@@ -8,13 +8,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.valvesoftware.source.R;
@@ -24,6 +28,7 @@ import me.nillerusr.md3.Md3Tokens;
 
 public class SettingsActivity extends Activity {
 
+    // Appearance
     private RadioGroup darkGroup;
     private RadioButton darkSystem, darkOff, darkOn;
     private Switch dynamicSwitch;
@@ -31,9 +36,17 @@ public class SettingsActivity extends Activity {
     private LinearLayout previewCard;
     private Button previewFilled, previewTonal, previewOutlined;
 
+    // Language
+    private RadioGroup uiLangGroup;
+    private RadioButton uiLangSystem, uiLangZhCn, uiLangZhTw, uiLangEn;
+    private Spinner gameLangSpinner;
+    private ArrayAdapter<String> gameLangAdapter;
+
     private int lastDarkMode = Md3Theme.THEME_SYSTEM;
     private boolean lastDynamic = false;
     private int lastSeed = Md3Theme.SEED_PRESETS[0];
+    private String lastUiLang = Md3Theme.UI_LANG_SYSTEM;
+    private String lastGameLang = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +59,9 @@ public class SettingsActivity extends Activity {
 
         findViews();
         bindState();
-        bindListeners();
         buildSeedColors();
+        buildGameLangSpinner();
+        bindListeners();
         updateSeedVisualState();
     }
 
@@ -62,6 +76,13 @@ public class SettingsActivity extends Activity {
         previewFilled = findViewById(R.id.md3_preview_btn_filled);
         previewTonal = findViewById(R.id.md3_preview_btn_tonal);
         previewOutlined = findViewById(R.id.md3_preview_btn_outlined);
+
+        uiLangGroup  = findViewById(R.id.md3_ui_lang_group);
+        uiLangSystem = findViewById(R.id.md3_ui_lang_system);
+        uiLangZhCn   = findViewById(R.id.md3_ui_lang_zh_cn);
+        uiLangZhTw   = findViewById(R.id.md3_ui_lang_zh_tw);
+        uiLangEn     = findViewById(R.id.md3_ui_lang_en);
+        gameLangSpinner = findViewById(R.id.md3_game_lang_spinner);
 
         ImageButton back = findViewById(R.id.md3_button_back);
         if (back != null) {
@@ -87,6 +108,93 @@ public class SettingsActivity extends Activity {
         lastDarkMode = mode;
         lastDynamic = Md3Theme.getDynamicColor(this);
         lastSeed = Md3Theme.getSeedColor(this);
+
+        // UI language
+        String uiLang = Md3Theme.getUiLang(this);
+        if (Md3Theme.UI_LANG_ZH_CN.equals(uiLang))      uiLangZhCn.setChecked(true);
+        else if (Md3Theme.UI_LANG_ZH_TW.equals(uiLang)) uiLangZhTw.setChecked(true);
+        else if (Md3Theme.UI_LANG_EN.equals(uiLang))    uiLangEn.setChecked(true);
+        else                                             uiLangSystem.setChecked(true);
+        lastUiLang = uiLang;
+
+        lastGameLang = Md3Theme.getGameLang(this);
+    }
+
+    private void buildGameLangSpinner() {
+        String[] raw = Md3Theme.GAME_LANG_VALUES;
+        String[] labels = new String[raw.length];
+        for (int i = 0; i < raw.length; i++) {
+            String v = raw[i];
+            if (v == null || v.isEmpty()) {
+                labels[i] = getString(R.string.md3_game_lang_default) + "  (" + getString(R.string.srceng_app_name) + ")";
+            } else {
+                labels[i] = gameLangDisplayName(v);
+            }
+        }
+        gameLangAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, labels) {
+            // Override getView / getDropDownView so text color follows MD3 tokens
+            @Override public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+                Md3Tokens t = Md3Theme.buildTokens(getContext());
+                try { ((TextView)v).setTextColor(t.onSurface); } catch (Throwable ignore) {}
+                return v;
+            }
+            @Override public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View v = super.getDropDownView(position, convertView, parent);
+                Md3Tokens t = Md3Theme.buildTokens(getContext());
+                try {
+                    TextView tv = (TextView)v;
+                    tv.setTextColor(t.onSurface);
+                    tv.setPadding(dp(16), dp(12), dp(16), dp(12));
+                } catch (Throwable ignore) {}
+                try { v.setBackgroundColor(t.surfaceContainerHigh); } catch (Throwable ignore) {}
+                return v;
+            }
+        };
+        gameLangAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        gameLangSpinner.setAdapter(gameLangAdapter);
+        // select current
+        int selIdx = 0;
+        for (int i = 0; i < raw.length; i++) {
+            if ((raw[i] == null ? "" : raw[i]).equals(lastGameLang == null ? "" : lastGameLang)) { selIdx = i; break; }
+        }
+        gameLangSpinner.setSelection(selIdx, false);
+    }
+
+    /** Friendly display name for a Source engine language code */
+    private String gameLangDisplayName(String code) {
+        if (code == null) return "";
+        // Keep the original code as technical name so users can verify against their game data.
+        String friendly;
+        if ("schinese".equals(code))      friendly = getString(R.string.md3_ui_lang_zh_cn);
+        else if ("tchinese".equals(code)) friendly = getString(R.string.md3_ui_lang_zh_tw);
+        else if ("english".equals(code))  friendly = getString(R.string.md3_ui_lang_en);
+        else if ("russian".equals(code))  friendly = "Русский (Russian)";
+        else if ("german".equals(code))   friendly = "Deutsch (German)";
+        else if ("french".equals(code))   friendly = "Français (French)";
+        else if ("italian".equals(code))  friendly = "Italiano (Italian)";
+        else if ("spanish".equals(code))  friendly = "Español (Spanish)";
+        else if ("brazilian".equals(code))friendly = "Português-BR (Brazilian)";
+        else if ("latam".equals(code))    friendly = "Español-LATAM (Latin America)";
+        else if ("japanese".equals(code)) friendly = "日本語 (Japanese)";
+        else if ("korean".equals(code))   friendly = "한국어 (Korean)";
+        else if ("polish".equals(code))   friendly = "Polski (Polish)";
+        else if ("dutch".equals(code))    friendly = "Nederlands (Dutch)";
+        else if ("czech".equals(code))    friendly = "Čeština (Czech)";
+        else if ("danish".equals(code))   friendly = "Dansk (Danish)";
+        else if ("finnish".equals(code))  friendly = "Suomi (Finnish)";
+        else if ("greek".equals(code))    friendly = "Ελληνικά (Greek)";
+        else if ("hungarian".equals(code))friendly = "Magyar (Hungarian)";
+        else if ("norwegian".equals(code))friendly = "Norsk (Norwegian)";
+        else if ("portuguese".equals(code))friendly = "Português (Portuguese)";
+        else if ("romanian".equals(code)) friendly = "Română (Romanian)";
+        else if ("swedish".equals(code))  friendly = "Svenska (Swedish)";
+        else if ("thai".equals(code))     friendly = "ไทย (Thai)";
+        else if ("turkish".equals(code))  friendly = "Türkçe (Turkish)";
+        else if ("ukrainian".equals(code))friendly = "Українська (Ukrainian)";
+        else if ("bulgarian".equals(code))friendly = "Български (Bulgarian)";
+        else friendly = code;
+        return friendly + "  ·  " + code;
     }
 
     private void bindListeners() {
@@ -130,6 +238,27 @@ public class SettingsActivity extends Activity {
         if (previewFilled != null) previewFilled.setOnClickListener(previewClick);
         if (previewTonal != null) previewTonal.setOnClickListener(previewClick);
         if (previewOutlined != null) previewOutlined.setOnClickListener(previewClick);
+
+        // ===== Language =====
+        uiLangGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override public void onCheckedChanged(RadioGroup group, int checkedId) {
+                String lang = Md3Theme.UI_LANG_SYSTEM;
+                if (checkedId == R.id.md3_ui_lang_zh_cn) lang = Md3Theme.UI_LANG_ZH_CN;
+                else if (checkedId == R.id.md3_ui_lang_zh_tw) lang = Md3Theme.UI_LANG_ZH_TW;
+                else if (checkedId == R.id.md3_ui_lang_en) lang = Md3Theme.UI_LANG_EN;
+                Md3Theme.setUiLang(SettingsActivity.this, lang);
+                if (!lang.equals(lastUiLang)) { lastUiLang = lang; refreshTheme(); }
+            }
+        });
+        gameLangSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String raw = Md3Theme.GAME_LANG_VALUES[position];
+                String value = (raw == null) ? "" : raw;
+                Md3Theme.setGameLang(SettingsActivity.this, value);
+                lastGameLang = value;
+            }
+            @Override public void onNothingSelected(AdapterView<?> parent) {}
+        });
     }
 
     /** 动态取色开启时，种子色区视觉上降级（半透明 + 提示 Toast 互斥） */
@@ -217,7 +346,7 @@ public class SettingsActivity extends Activity {
     }
 
     private void refreshTheme() {
-        // Super cheap: recreate activity so colors apply through applyBeforeOnCreate
+        // Recreate forces applyBeforeOnCreate to run again (applies locale + night mode + theme)
         if (Build.VERSION.SDK_INT >= 11) recreate();
         else { finish(); startActivity(getIntent()); }
     }

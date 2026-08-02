@@ -6,6 +6,7 @@ import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -37,6 +38,7 @@ import com.valvesoftware.source.R;
 import me.nillerusr.md3.Md3Tokens;
 
 import java.lang.reflect.Method;
+import java.util.Locale;
 
 /**
  * Hand-crafted MD3 theme utilities (zero dependency on Material Components / AndroidX).
@@ -49,10 +51,29 @@ public final class Md3Theme {
     public static final String SP_KEY_THEME_MODE     = "md3_theme_mode";
     public static final String SP_KEY_DYNAMIC_COLOR  = "md3_dynamic_color";
     public static final String SP_KEY_SEED_COLOR     = "md3_seed_color";
+    public static final String SP_KEY_UI_LANG        = "md3_ui_lang";         // "system" | "zh-rCN" | "zh-rTW" | "en"
+    public static final String SP_KEY_GAME_LANG      = "md3_game_lang";       // ""(=不追加) | schinese | tchinese | english | russian | german | french | italian | spanish | brazilian | latam | japanese | korean | polish | dutch | czech | danish | finnish | greek | hungarian | norwegian | portuguese | romanian | swedish | thai | turkish | ukrainian | bulgarian
+
+    public static final String UI_LANG_SYSTEM = "system";
+    public static final String UI_LANG_ZH_CN  = "zh-rCN";
+    public static final String UI_LANG_ZH_TW  = "zh-rTW";
+    public static final String UI_LANG_EN     = "en";
 
     public static final int THEME_SYSTEM = 0;
     public static final int THEME_LIGHT  = 1;
     public static final int THEME_DARK   = 2;
+
+    // 启动器UI语言映射列表：(持久化值 → 显示名称用string资源 → Locale对象)
+    public static final String[] UI_LANG_VALUES = new String[]{ UI_LANG_SYSTEM, UI_LANG_ZH_CN, UI_LANG_ZH_TW, UI_LANG_EN };
+
+    // Source引擎常用游戏语言代码（参考HL2/Portal的gameui_*.txt文件名），按展示频率排序；空串=不追加
+    public static final String[] GAME_LANG_VALUES = new String[]{
+        "", "schinese", "tchinese", "english", "russian", "german", "french",
+        "italian", "spanish", "brazilian", "latam", "japanese", "korean",
+        "polish", "dutch", "czech", "danish", "finnish", "greek", "hungarian",
+        "norwegian", "portuguese", "romanian", "swedish", "thai", "turkish",
+        "ukrainian", "bulgarian"
+    };
 
     public static final int[] SEED_PRESETS = new int[]{
         0xFFF79A10, // HL orange (default)
@@ -90,7 +111,59 @@ public final class Md3Theme {
         getPrefs(ctx).edit().putInt(SP_KEY_SEED_COLOR, color).apply();
     }
 
+    public static String getUiLang(Context ctx) {
+        return getPrefs(ctx).getString(SP_KEY_UI_LANG, UI_LANG_SYSTEM);
+    }
+    public static void setUiLang(Context ctx, String v) {
+        getPrefs(ctx).edit().putString(SP_KEY_UI_LANG, v).apply();
+    }
+
+    public static String getGameLang(Context ctx) {
+        return getPrefs(ctx).getString(SP_KEY_GAME_LANG, "");
+    }
+    public static void setGameLang(Context ctx, String v) {
+        getPrefs(ctx).edit().putString(SP_KEY_GAME_LANG, v).apply();
+    }
+
     public static boolean isDynamicColorAvailable() { return Build.VERSION.SDK_INT >= 27; }
+
+    // =========================================================
+    // UI Locale helpers — supports system follow / zh-CN / zh-TW / en
+    // =========================================================
+    private static Locale localeForUiLang(String uiLang) {
+        if (UI_LANG_ZH_CN.equals(uiLang)) return Locale.SIMPLIFIED_CHINESE;
+        if (UI_LANG_ZH_TW.equals(uiLang)) return Locale.TRADITIONAL_CHINESE;
+        if (UI_LANG_EN.equals(uiLang))    return Locale.ENGLISH;
+        return null; // follow system
+    }
+
+    @SuppressWarnings("deprecation")
+    public static void applyUiLocale(Activity a) {
+        String uiLang = getUiLang(a);
+        Locale target = localeForUiLang(uiLang);
+        Resources res = a.getResources();
+        Configuration cfg = res.getConfiguration();
+        Locale cur;
+        if (Build.VERSION.SDK_INT >= 24) {
+            cur = cfg.getLocales().isEmpty() ? Locale.getDefault() : cfg.getLocales().get(0);
+        } else {
+            cur = cfg.locale;
+        }
+        Locale desired = (target == null) ? Locale.getDefault() : target;
+        if (desired.equals(cur)) return;
+
+        cfg = new Configuration(cfg);
+        if (Build.VERSION.SDK_INT >= 17) {
+            cfg.setLocale(desired);
+        } else {
+            cfg.locale = desired;
+        }
+        DisplayMetrics dm = res.getDisplayMetrics();
+        res.updateConfiguration(cfg, dm);
+
+        // Also set default Locale so DateFormat etc. aligns
+        Locale.setDefault(desired);
+    }
 
     // =========================================================
     // Tag helpers (supports both android:tag string and R.id.* tags)
@@ -338,6 +411,10 @@ public final class Md3Theme {
     // Apply to Activity (entry points)
     // =========================================================
     public static void applyBeforeOnCreate(Activity a) {
+        // 1) FIRST: Apply UI locale override — affects which values-* resources get loaded
+        //    (must be before setTheme, otherwise the wrong strings will be cached)
+        applyUiLocale(a);
+
         boolean dark = resolveDark(a);
         // Theme selection: always go through SrcEng.MD3 variants; these are our base.
         if (dark) a.setTheme(R.style.SrcEng_MD3_Dark);

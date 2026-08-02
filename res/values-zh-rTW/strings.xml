@@ -59,4 +59,16 @@
     <string name="md3_title_launcher">起源引擎啟動器</string>
     <string name="md3_game_config_card">遊戲設定</string>
     <string name="md3_paths_card">資源路徑</string>
+
+    <!-- MD3 Language section -->
+    <string name="md3_section_language">語言設定</string>
+    <string name="md3_ui_language">啟動器介面語言</string>
+    <string name="md3_ui_lang_follow_system">跟隨系統</string>
+    <string name="md3_ui_lang_zh_cn">简体中文</string>
+    <string name="md3_ui_lang_zh_tw">繁體中文</string>
+    <string name="md3_ui_lang_en">English</string>
+    <string name="md3_game_language">遊戲語言</string>
+    <string name="md3_game_lang_default">自動（不強制）</string>
+    <string name="md3_game_lang_desc">於遊戲啟動參數末尾自動追加 \'-language {代碼}\'。可用值取決於遊戲資源中安裝了哪些語言包（例如：schinese=簡中、tchinese=繁中、english=英文、russian=俄文等）。</string>
+    <string name="md3_game_lang_hint_schinese">繁體中文對應 tchinese</string>
 </resources>

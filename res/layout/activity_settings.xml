@@ -47,6 +47,117 @@
                 android:maxLines="1"/>
         </LinearLayout>
 
+        <!-- ========== Language section (before Look & Feel) ========== -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/md3_section_language"
+            android:textAllCaps="true"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:tag="primary"/>
+
+        <!-- Launcher UI language -->
+        <LinearLayout
+            android:id="@id/md3_lang_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp"
+            android:tag="card">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/md3_ui_language"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginBottom="10dp"/>
+            <RadioGroup
+                android:id="@id/md3_ui_lang_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@id/md3_ui_lang_system"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/md3_ui_lang_follow_system"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"/>
+                <RadioButton
+                    android:id="@id/md3_ui_lang_zh_cn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/md3_ui_lang_zh_cn"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"/>
+                <RadioButton
+                    android:id="@id/md3_ui_lang_zh_tw"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/md3_ui_lang_zh_tw"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"/>
+                <RadioButton
+                    android:id="@id/md3_ui_lang_en"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/md3_ui_lang_en"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"/>
+            </RadioGroup>
+        </LinearLayout>
+
+        <!-- In-game language -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp"
+            android:tag="card_outlined">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="10dp">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/md3_game_language"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/md3_game_lang_desc"
+                        android:textSize="12sp"
+                        android:layout_marginTop="4dp"
+                        android:tag="subtitle"/>
+                </LinearLayout>
+            </LinearLayout>
+            <Spinner
+                android:id="@id/md3_game_lang_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dialog"/>
+        </LinearLayout>
+
         <!-- ========== Appearance section title ========== -->
         <TextView
             android:layout_width="wrap_content"

@@ -27,4 +27,13 @@
     <item type="id" name="md3_preview_btn_outlined"/>
     <!-- 设置页预览卡片容器 -->
     <item type="id" name="md3_preview_card"/>
+    <!-- 语言区 -->
+    <item type="id" name="md3_lang_section"/>
+    <item type="id" name="md3_ui_lang_group"/>
+    <item type="id" name="md3_ui_lang_system"/>
+    <item type="id" name="md3_ui_lang_zh_cn"/>
+    <item type="id" name="md3_ui_lang_zh_tw"/>
+    <item type="id" name="md3_ui_lang_en"/>
+    <item type="id" name="md3_game_lang_spinner"/>
+    <item type="id" name="md3_game_lang_override"/>
 </resources>

@@ -64,4 +64,16 @@
     <string name="md3_title_launcher">Source Engine Launcher</string>
     <string name="md3_game_config_card">Game configuration</string>
     <string name="md3_paths_card">Paths</string>
+
+    <!-- MD3 Language section -->
+    <string name="md3_section_language">Language</string>
+    <string name="md3_ui_language">Launcher UI language</string>
+    <string name="md3_ui_lang_follow_system">Follow system</string>
+    <string name="md3_ui_lang_zh_cn">简体中文</string>
+    <string name="md3_ui_lang_zh_tw">繁體中文</string>
+    <string name="md3_ui_lang_en">English</string>
+    <string name="md3_game_language">In-game language</string>
+    <string name="md3_game_lang_default">Auto (don\'t force)</string>
+    <string name="md3_game_lang_desc">Appends \'-language &lt;code&gt;\' to the game launch options. Available values depend on language packs installed in the game data.</string>
+    <string name="md3_game_lang_hint_schinese">简体中文 = schinese</string>
 </resources>

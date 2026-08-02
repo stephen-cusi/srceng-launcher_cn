@@ -17,6 +17,7 @@ import android.content.SharedPreferences;
 import android.content.Context;
 import android.util.Log;
 import me.nillerusr.ExtractAssets;
+import me.nillerusr.md3.Md3Theme;
 
 public class ValveActivity2 { // not activity, i am lazy to change native methods
 	private static Activity mSingleton;
@@ -113,6 +114,16 @@ public class ValveActivity2 { // not activity, i am lazy to change native method
 			argv = mPref.getString("argv", "-nobackgroundlevel");
 
 		argv = "-game "+gamedir+" "+argv;
+
+		// Append "-language <lang>" transparently from launcher settings (MD3).
+		// Empty means: don't force, let the game decide from Steam/LANG env.
+		String gameLang = Md3Theme.getGameLang(context);
+		if( gameLang != null && !gameLang.isEmpty() ) {
+			// Sanitize: only allow [a-z_] to prevent argv injection
+			if( gameLang.matches("[a-z_]+") ) {
+				argv = argv + " -language " + gameLang;
+			}
+		}
 
 		if( gamelibdir != null && !gamelibdir.isEmpty() )
 			setenv( "APP_MOD_LIB", gamelibdir, 1 );
