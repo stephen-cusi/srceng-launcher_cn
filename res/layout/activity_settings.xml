@@ -16,7 +16,7 @@
 
         <!-- ========== Top App Bar ========== -->
         <LinearLayout
-            android:id="@id/md3_app_bar"
+            android:id="@+id/md3_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -27,7 +27,7 @@
             android:paddingBottom="16dp">
 
             <ImageButton
-                android:id="@id/md3_button_back"
+                android:id="@+id/md3_button_back"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:src="@android:drawable/ic_menu_revert"
@@ -63,7 +63,7 @@
 
         <!-- Launcher UI language -->
         <LinearLayout
-            android:id="@id/md3_lang_section"
+            android:id="@+id/md3_lang_section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -78,12 +78,12 @@
                 android:textSize="16sp"
                 android:layout_marginBottom="10dp"/>
             <RadioGroup
-                android:id="@id/md3_ui_lang_group"
+                android:id="@+id/md3_ui_lang_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <RadioButton
-                    android:id="@id/md3_ui_lang_system"
+                    android:id="@+id/md3_ui_lang_system"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -91,7 +91,7 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"/>
                 <RadioButton
-                    android:id="@id/md3_ui_lang_zh_cn"
+                    android:id="@+id/md3_ui_lang_zh_cn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -99,7 +99,7 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"/>
                 <RadioButton
-                    android:id="@id/md3_ui_lang_zh_tw"
+                    android:id="@+id/md3_ui_lang_zh_tw"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -107,7 +107,7 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"/>
                 <RadioButton
-                    android:id="@id/md3_ui_lang_en"
+                    android:id="@+id/md3_ui_lang_en"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -152,7 +152,7 @@
                 </LinearLayout>
             </LinearLayout>
             <Spinner
-                android:id="@id/md3_game_lang_spinner"
+                android:id="@+id/md3_game_lang_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:spinnerMode="dialog"/>
@@ -277,7 +277,7 @@
                 android:textSize="16sp"
                 android:layout_marginBottom="12dp"/>
             <LinearLayout
-                android:id="@id/md3_seed_container"
+                android:id="@+id/md3_seed_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -301,7 +301,7 @@
             android:tag="primary"/>
 
         <LinearLayout
-            android:id="@id/md3_preview_card"
+            android:id="@+id/md3_preview_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -329,7 +329,7 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
                 <Button
-                    android:id="@id/md3_preview_btn_filled"
+                    android:id="@+id/md3_preview_btn_filled"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_preview_primary"
@@ -337,7 +337,7 @@
                     android:tag="filled"
                     android:layout_marginEnd="8dp"/>
                 <Button
-                    android:id="@id/md3_preview_btn_tonal"
+                    android:id="@+id/md3_preview_btn_tonal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_preview_secondary"
@@ -345,7 +345,7 @@
                     android:tag="tonal"
                     android:layout_marginEnd="8dp"/>
                 <Button
-                    android:id="@id/md3_preview_btn_outlined"
+                    android:id="@+id/md3_preview_btn_outlined"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_preview_outlined"
