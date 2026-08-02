@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="srceng_app_name">Source Engine</string>
+
+    <string name="srceng_launcher_about">このポートについて</string>
+    <string name="srceng_launcher_about_text">\nnillerusr と Jusic による移植\nValveによるSource Engine\n\n商用利用禁止！\nお問い合わせ: unknownandlost11@gmail.com\n\n寄付: https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg</string>
+    <string name="srceng_launcher_launch">起動</string>
+    <string name="srceng_launcher_set">設定</string>
+    <string name="srceng_launcher_ok">OK</string>
+    <string name="srceng_launcher_error">エラー</string>
+    <string name="srceng_launcher_error_missing_obb_a">以下の場所に </string>
+    <string name="srceng_launcher_error_missing_obb_b">ファイルが存在しません: </string>
+    <string name="srceng_launcher_error_test_write">書き込みテストに失敗しました。すべてのファイルは次の場所に保存されます: </string>
+    <string name="srceng_launcher_error_no_permission">権限がないためゲームは動作しません</string>
+    <string name="srceng_launcher_error_find_gameinfo">ゲームリソースが見つかりません。パスは正しく設定されていますか？</string>
+
+    <string name="srceng_launcher_command_args">コマンドライン引数</string>
+    <string name="srceng_launcher_env">環境変数</string>
+    <string name="srceng_launcher_game_path">ゲームリソースのパス</string>
+    <string name="srceng_launcher_set_game_path">ゲームディレクトリを選択</string>
+    <string name="srceng_launcher_game_menu">ゲーム</string>
+    <string name="srceng_launcher_touch_controls">タッチコントロールを表示</string>
+    <string name="srceng_launcher_volume_buttons">音量ボタンを使用</string>
+    <string name="srceng_launcher_volume_buttons_desc">音量+ボタンはL_TRIGGERとして、音量-ボタンはR_TRIGGERとして使用できます！</string>
+
+    <string name="srceng_launcher_check_updates">アップデートを確認</string>
+    <string name="srceng_launcher_immersive_mode">没入モード</string>
+    <string name="srceng_launcher_screen_resolution">画面解像度を固定</string>
+
+    <string name="srceng_game_hl2">Half-Life 2</string>
+    <string name="srceng_game_hl2ep1">Half-Life 2 Episode 1</string>
+    <string name="srceng_game_hl2ep2">Half-Life 2 Episode 2</string>
+    <string name="srceng_game_portal">Portal</string>
+
+    <string name="srceng_dir_choice_btn">現在のディレクトリに設定</string>
+    <string name="srceng_update">アップデートがあります！</string>
+    <string name="srceng_launcher_error_find_platform">platform フォルダが見つかりません！</string>
+
+    <!-- MD3 Settings / Appearance -->
+    <string name="md3_settings">設定</string>
+    <string name="md3_settings_desc">外観とテーマ</string>
+    <string name="md3_appearance">外観</string>
+    <string name="md3_dark_mode">ダークテーマ</string>
+    <string name="md3_dark_follow_system">システムに従う</string>
+    <string name="md3_dark_on">オン</string>
+    <string name="md3_dark_off">オフ</string>
+    <string name="md3_dynamic_color">ダイナミックカラー</string>
+    <string name="md3_dynamic_color_desc">壁紙から色を取得（Android 8.1+）</string>
+    <string name="md3_dynamic_color_not_available">このシステムではダイナミックカラーは利用できません</string>
+    <string name="md3_dynamic_color_on_hint">ダイナミックカラーが有効です。アクセントカラーは壁紙から取得され、壁紙の色が利用できない場合に手動選択したアクセントが適用されます。</string>
+    <string name="md3_seed_ignored_when_dynamic">ダイナミックカラーが有効なため、アクセントカラーは現在適用されません。ダイナミックカラーをオフにしてください。</string>
+    <string name="md3_seed_color">アクセントカラー</string>
+    <string name="md3_preview">プレビュー</string>
+    <string name="md3_preview_primary">プライマリ</string>
+    <string name="md3_preview_secondary">トーン</string>
+    <string name="md3_preview_outlined">アウトライン</string>
+    <string name="md3_preview_hint_filled">塗りつぶしボタン — 主要なアクションに使用されます。</string>
+    <string name="md3_preview_hint_tonal">トーンボタン — 強調度の中程度なアクションに使用されます。</string>
+    <string name="md3_preview_hint_outlined">アウトラインボタン — 主要ボタンとペアになる重要な補助アクションに使用されます。</string>
+    <string name="md3_preview_text">これは、現在選択されている配色でカード、ボタン、テキストがどのように表示されるかを示すプレビューカードです。</string>
+    <string name="md3_back">戻る</string>
+    <string name="md3_section_general">一般</string>
+    <string name="md3_section_look">外観</string>
+    <string name="md3_title_launcher">Source Engine ランチャー</string>
+    <string name="md3_game_config_card">ゲーム設定</string>
+    <string name="md3_paths_card">パス</string>
+
+    <!-- MD3 Language section -->
+    <string name="md3_section_language">言語</string>
+    <string name="md3_ui_language">ランチャーUI言語</string>
+    <string name="md3_ui_lang_desc">ランチャーUIにのみ影響します。ゲーム言語は下で設定してください。</string>
+    <string name="md3_ui_lang_follow_system">システムに従う</string>
+    <string name="md3_ui_lang_zh_cn">简体中文（中国語簡体）</string>
+    <string name="md3_ui_lang_zh_tw">繁體中文（中国語繁体）</string>
+    <string name="md3_ui_lang_en">English（英語）</string>
+    <string name="md3_ui_lang_ru">Русский（ロシア語）</string>
+    <string name="md3_ui_lang_ja">日本語</string>
+    <string name="md3_ui_lang_ko">한국어（韓国語）</string>
+    <string name="md3_ui_lang_fr">Français（フランス語）</string>
+    <string name="md3_ui_lang_de">Deutsch（ドイツ語）</string>
+    <string name="md3_ui_lang_es">Español（スペイン語）</string>
+    <string name="md3_game_language">ゲーム内言語</string>
+    <string name="md3_game_lang_default">自動（強制しない）</string>
+    <string name="md3_game_lang_desc">ゲーム起動オプションに \'-language &lt;code&gt;\' を追加します。利用可能な値はゲームデータにインストールされた言語パックに依存します。</string>
+    <string name="md3_game_lang_hint_schinese">简体中文 = schinese</string>
+</resources>

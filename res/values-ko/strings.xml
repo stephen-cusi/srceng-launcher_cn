@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="srceng_app_name">Source Engine</string>
+
+    <string name="srceng_launcher_about">정보</string>
+    <string name="srceng_launcher_about_text">\n포팅해주신 nillerusr, Jusic 감사합니다\nValve의 Source Engine\n\n상업적 이용 금지!\n문의: unknownandlost11@gmail.com\n\n후원: https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg</string>
+    <string name="srceng_launcher_launch">실행</string>
+    <string name="srceng_launcher_set">설정</string>
+    <string name="srceng_launcher_ok">확인</string>
+    <string name="srceng_launcher_error">오류</string>
+    <string name="srceng_launcher_error_missing_obb_a">다음 경로에 </string>
+    <string name="srceng_launcher_error_missing_obb_b">파일이 없습니다: </string>
+    <string name="srceng_launcher_error_test_write">쓰기 테스트에 실패했습니다. 모든 파일은 다음에 저장됩니다: </string>
+    <string name="srceng_launcher_error_no_permission">권한이 없어 게임이 실행되지 않습니다</string>
+    <string name="srceng_launcher_error_find_gameinfo">게임 리소스를 찾을 수 없습니다. 경로가 올바르게 설정되었습니까?</string>
+
+    <string name="srceng_launcher_command_args">명령줄 인수</string>
+    <string name="srceng_launcher_env">환경 변수</string>
+    <string name="srceng_launcher_game_path">게임 리소스 경로</string>
+    <string name="srceng_launcher_set_game_path">게임 디렉터리 선택</string>
+    <string name="srceng_launcher_game_menu">게임</string>
+    <string name="srceng_launcher_touch_controls">터치 컨트롤 표시</string>
+    <string name="srceng_launcher_volume_buttons">볼륨 버튼 사용</string>
+    <string name="srceng_launcher_volume_buttons_desc">볼륨 업 버튼은 L_TRIGGER로, 볼륨 다운 버튼은 R_TRIGGER로 사용할 수 있습니다!</string>
+
+    <string name="srceng_launcher_check_updates">업데이트 확인</string>
+    <string name="srceng_launcher_immersive_mode">몰입 모드</string>
+    <string name="srceng_launcher_screen_resolution">화면 해상도 고정</string>
+
+    <string name="srceng_game_hl2">Half-Life 2</string>
+    <string name="srceng_game_hl2ep1">Half-Life 2 Episode 1</string>
+    <string name="srceng_game_hl2ep2">Half-Life 2 Episode 2</string>
+    <string name="srceng_game_portal">Portal</string>
+
+    <string name="srceng_dir_choice_btn">현재 디렉터리로 설정</string>
+    <string name="srceng_update">업데이트가 있습니다!</string>
+    <string name="srceng_launcher_error_find_platform">platform 폴더가 없습니다!</string>
+
+    <!-- MD3 Settings / Appearance -->
+    <string name="md3_settings">설정</string>
+    <string name="md3_settings_desc">외관 및 테마</string>
+    <string name="md3_appearance">외관</string>
+    <string name="md3_dark_mode">다크 테마</string>
+    <string name="md3_dark_follow_system">시스템 설정 따르기</string>
+    <string name="md3_dark_on">켜기</string>
+    <string name="md3_dark_off">끄기</string>
+    <string name="md3_dynamic_color">동적 색상</string>
+    <string name="md3_dynamic_color_desc">배경화면에서 색상 가져오기 (Android 8.1+)</string>
+    <string name="md3_dynamic_color_not_available">이 시스템에서는 동적 색상을 사용할 수 없습니다</string>
+    <string name="md3_dynamic_color_on_hint">동적 색상이 활성화되었습니다. 강조 색상은 배경화면에서 가져오며, 배경화면 색상을 사용할 수 없는 경우 수동으로 선택한 액센트가 적용됩니다.</string>
+    <string name="md3_seed_ignored_when_dynamic">동적 색상이 활성 상태입니다 — 수동 액센트 색상은 적용되지 않습니다. 동적 색상을 끄면 수동으로 선택한 액센트가 적용됩니다.</string>
+    <string name="md3_seed_color">액센트 색상</string>
+    <string name="md3_preview">미리보기</string>
+    <string name="md3_preview_primary">기본 버튼</string>
+    <string name="md3_preview_secondary">보조 버튼</string>
+    <string name="md3_preview_outlined">외곽선 버튼</string>
+    <string name="md3_preview_hint_filled">채워진 버튼 — 가장 중요한 작업에 사용됩니다.</string>
+    <string name="md3_preview_hint_tonal">톤 버튼 — 중간 수준의 중요도 작업에 사용됩니다.</string>
+    <string name="md3_preview_hint_outlined">외곽선 버튼 — 주요 버튼과 함께 사용되는 중요한 보조 작업에 사용됩니다.</string>
+    <string name="md3_preview_text">이 카드는 현재 선택된 테마로 카드, 버튼, 텍스트가 어떻게 보이는지 보여줍니다.</string>
+    <string name="md3_back">뒤로</string>
+    <string name="md3_section_general">일반</string>
+    <string name="md3_section_look">외관</string>
+    <string name="md3_title_launcher">Source Engine 런처</string>
+    <string name="md3_game_config_card">게임 구성</string>
+    <string name="md3_paths_card">경로</string>
+
+    <!-- MD3 Language section -->
+    <string name="md3_section_language">언어</string>
+    <string name="md3_ui_language">런처 UI 언어</string>
+    <string name="md3_ui_lang_desc">런처 UI에만 적용됩니다. 게임 언어는 아래에서 별도로 설정하세요.</string>
+    <string name="md3_ui_lang_follow_system">시스템 설정 따르기</string>
+    <string name="md3_ui_lang_zh_cn">简体中文(중국어 간체)</string>
+    <string name="md3_ui_lang_zh_tw">繁體中文(중국어 번체)</string>
+    <string name="md3_ui_lang_en">English(영어)</string>
+    <string name="md3_ui_lang_ru">Русский(러시아어)</string>
+    <string name="md3_ui_lang_ja">日本語(일본어)</string>
+    <string name="md3_ui_lang_ko">한국어</string>
+    <string name="md3_ui_lang_fr">Français(프랑스어)</string>
+    <string name="md3_ui_lang_de">Deutsch(독일어)</string>
+    <string name="md3_ui_lang_es">Español(스페인어)</string>
+    <string name="md3_game_language">게임 내 언어</string>
+    <string name="md3_game_lang_default">자동(강제 안 함)</string>
+    <string name="md3_game_lang_desc">게임 시작 옵션에 \'-language &lt;code&gt;\' 를 추가합니다. 사용 가능한 값은 게임 데이터에 설치된 언어 팩에 따라 다릅니다.</string>
+    <string name="md3_game_lang_hint_schinese">简体中文 = schinese</string>
+</resources>

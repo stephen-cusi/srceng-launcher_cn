@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="srceng_app_name">Source Engine</string>
+
+    <string name="srceng_launcher_about">О порте</string>
+    <string name="srceng_launcher_about_text">\nОсобая благодарность:\nnillerusr,Jusic за порт \nvalve за source engine\n\nНе для коммерческого использования!\nКонтакты: unknownandlost11@gmail.com\n\nДонат: https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg</string>
+    <string name="srceng_launcher_launch">Запустить</string>
+    <string name="srceng_launcher_set">Выбрать</string>
+    <string name="srceng_launcher_ok">OK</string>
+    <string name="srceng_launcher_error">Ошибка</string>
+    <string name="srceng_launcher_error_missing_obb_a">Здесь нет </string>
+    <string name="srceng_launcher_error_missing_obb_b">файлов по пути </string>
+    <string name="srceng_launcher_error_test_write">Тест записи провален, файлы будут храниться в </string>
+    <string name="srceng_launcher_error_no_permission">Без разрешений игра не будет работать</string>
+    <string name="srceng_launcher_error_find_gameinfo">Не удалось обнаружить игровые ресурсы. Проверьте указанный путь к игре!</string>
+
+    <string name="srceng_launcher_command_args">Аргументы командной строки</string>
+    <string name="srceng_launcher_env">Переменные окружения</string>
+    <string name="srceng_launcher_game_path">Путь к игровым ресурсам</string>
+    <string name="srceng_launcher_set_game_path">Указать путь</string>
+    <string name="srceng_launcher_game_menu">Игра</string>
+    <string name="srceng_launcher_touch_controls">Показывать сенсорное управление</string>
+    <string name="srceng_launcher_volume_buttons">Использовать кнопки громкости</string>
+    <string name="srceng_launcher_volume_buttons_desc">Кнопка увеличения громкости будет использоваться как L_TRIGGER, и кнопка уменьшения громкости как R_TRIGGER!!!</string>
+
+    <string name="srceng_launcher_check_updates">Проверять обновления</string>
+    <string name="srceng_launcher_immersive_mode">Режим погружения</string>
+    <string name="srceng_launcher_screen_resolution">Пользовательское разрешение</string>
+
+    <string name="srceng_game_hl2">Half-Life 2</string>
+    <string name="srceng_game_hl2ep1">Half-Life 2 Episode 1</string>
+    <string name="srceng_game_hl2ep2">Half-Life 2 Episode 2</string>
+    <string name="srceng_game_portal">Portal</string>
+
+    <string name="srceng_dir_choice_btn">Указать данный путь</string>
+    <string name="srceng_update">Доступно обновление</string>
+    <string name="srceng_launcher_error_find_platform">Папка platform отсутствует!</string>
+
+    <!-- MD3 Settings / Appearance -->
+    <string name="md3_settings">Настройки</string>
+    <string name="md3_settings_desc">Внешний вид и тема</string>
+    <string name="md3_appearance">Внешний вид</string>
+    <string name="md3_dark_mode">Тёмная тема</string>
+    <string name="md3_dark_follow_system">Как в системе</string>
+    <string name="md3_dark_on">Вкл</string>
+    <string name="md3_dark_off">Выкл</string>
+    <string name="md3_dynamic_color">Динамические цвета</string>
+    <string name="md3_dynamic_color_desc">Цвета из обоев (Android 8.1+)</string>
+    <string name="md3_dynamic_color_not_available">Динамические цвета не поддерживаются</string>
+    <string name="md3_dynamic_color_on_hint">Динамические цвета включены: акцентные цвета берутся из обоев; вручную выбранный акцент работает только если цвета обоев недоступны.</string>
+    <string name="md3_seed_ignored_when_dynamic">Динамические цвета активны — акцентный цвет не применяется. Отключите динамические цвета для использования вручную выбранного акцента.</string>
+    <string name="md3_seed_color">Акцентный цвет</string>
+    <string name="md3_preview">Превью</string>
+    <string name="md3_preview_primary">Основная</string>
+    <string name="md3_preview_secondary">Вторичная</string>
+    <string name="md3_preview_outlined">Обводка</string>
+    <string name="md3_preview_hint_filled">Залитая кнопка — для главного действия.</string>
+    <string name="md3_preview_hint_tonal">Тональная кнопка — для среднеприоритетных действий.</string>
+    <string name="md3_preview_hint_outlined">Кнопка с обводкой — для важных вторичных действий, парных с основной.</string>
+    <string name="md3_preview_text">Здесь показано, как выглядят карточки, кнопки и текст в текущей цветовой схеме.</string>
+    <string name="md3_back">Назад</string>
+    <string name="md3_section_general">Основное</string>
+    <string name="md3_section_look">Вид</string>
+    <string name="md3_title_launcher">Source Engine лаунчер</string>
+    <string name="md3_game_config_card">Конфиг игры</string>
+    <string name="md3_paths_card">Пути</string>
+
+    <!-- MD3 Language section -->
+    <string name="md3_section_language">Язык</string>
+    <string name="md3_ui_language">Язык интерфейса лаунчера</string>
+    <string name="md3_ui_lang_desc">Влияет только на интерфейс лаунчера. Язык игры настраивается ниже.</string>
+    <string name="md3_ui_lang_follow_system">Как в системе</string>
+    <string name="md3_ui_lang_zh_cn">简体中文  ·  кит. упрощ.</string>
+    <string name="md3_ui_lang_zh_tw">繁體中文  ·  кит. трад.</string>
+    <string name="md3_ui_lang_en">English  ·  англ.</string>
+    <string name="md3_ui_lang_ru">Русский</string>
+    <string name="md3_ui_lang_ja">日本語  ·  япон.</string>
+    <string name="md3_ui_lang_ko">한국어  ·  кор.</string>
+    <string name="md3_ui_lang_fr">Français  ·  фр.</string>
+    <string name="md3_ui_lang_de">Deutsch  ·  нем.</string>
+    <string name="md3_ui_lang_es">Español  ·  исп.</string>
+    <string name="md3_game_language">Язык игры</string>
+    <string name="md3_game_lang_default">Авто (не принудительно)</string>
+    <string name="md3_game_lang_desc">Добавляет параметр \'-language &lt;код&gt;\' в параметры запуска игры. Доступные значения зависят от установленных в игре языковых пакетов.</string>
+    <string name="md3_game_lang_hint_schinese">简体中文 = schinese</string>
+</resources>

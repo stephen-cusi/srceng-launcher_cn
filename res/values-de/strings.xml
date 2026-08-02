@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="srceng_app_name">Source Engine</string>
+
+    <string name="srceng_launcher_about">Über</string>
+    <string name="srceng_launcher_about_text">\nDank an nillerusr und Jusic für den Port\nValve für die Source-Engine\n\nNicht für kommerzielle Nutzung!\nKontakt: unknownandlost11@gmail.com\n\nSpenden: https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg</string>
+    <string name="srceng_launcher_launch">Starten</string>
+    <string name="srceng_launcher_set">Festlegen</string>
+    <string name="srceng_launcher_ok">OK</string>
+    <string name="srceng_launcher_error">Fehler</string>
+    <string name="srceng_launcher_error_missing_obb_a">Es befinden sich keine </string>
+    <string name="srceng_launcher_error_missing_obb_b">Dateien im Pfad </string>
+    <string name="srceng_launcher_error_test_write">Testschreiben fehlgeschlagen, alle Dateien werden gespeichert in </string>
+    <string name="srceng_launcher_error_no_permission">Ohne Berechtigungen funktioniert das Spiel nicht</string>
+    <string name="srceng_launcher_error_find_gameinfo">Spielressourcen konnten nicht gefunden werden. Ist der Pfad korrekt gesetzt?</string>
+
+    <string name="srceng_launcher_command_args">Kommandozeilen-Argumente</string>
+    <string name="srceng_launcher_env">Umgebungsvariablen</string>
+    <string name="srceng_launcher_game_path">Pfad zu den Spielressourcen</string>
+    <string name="srceng_launcher_set_game_path">Spielverzeichnis wählen</string>
+    <string name="srceng_launcher_game_menu">Spiel</string>
+    <string name="srceng_launcher_touch_controls">Touch-Steuerung anzeigen</string>
+    <string name="srceng_launcher_volume_buttons">Lautstärketasten verwenden</string>
+    <string name="srceng_launcher_volume_buttons_desc">Lauter-Taste kann als L_TRIGGER, und Leiser-Taste als R_TRIGGER verwendet werden!</string>
+
+    <string name="srceng_launcher_check_updates">Auf Updates prüfen</string>
+    <string name="srceng_launcher_immersive_mode">Immersivmodus</string>
+    <string name="srceng_launcher_screen_resolution">Feste Bildschirmauflösung</string>
+
+    <string name="srceng_game_hl2">Half-Life 2</string>
+    <string name="srceng_game_hl2ep1">Half-Life 2 Episode 1</string>
+    <string name="srceng_game_hl2ep2">Half-Life 2 Episode 2</string>
+    <string name="srceng_game_portal">Portal</string>
+
+    <string name="srceng_dir_choice_btn">Aktuelles Verzeichnis festlegen</string>
+    <string name="srceng_update">Update verfügbar!</string>
+    <string name="srceng_launcher_error_find_platform">platform-Ordner fehlt!</string>
+
+    <!-- MD3 Settings / Appearance -->
+    <string name="md3_settings">Einstellungen</string>
+    <string name="md3_settings_desc">Darstellung &amp; Theme</string>
+    <string name="md3_appearance">Darstellung</string>
+    <string name="md3_dark_mode">Dunkles Theme</string>
+    <string name="md3_dark_follow_system">System</string>
+    <string name="md3_dark_on">An</string>
+    <string name="md3_dark_off">Aus</string>
+    <string name="md3_dynamic_color">Dynamische Farben</string>
+    <string name="md3_dynamic_color_desc">Farben aus deinem Hintergrundbild verwenden (Android 8.1+)</string>
+    <string name="md3_dynamic_color_not_available">Dynamische Farben sind auf diesem System nicht verfügbar</string>
+    <string name="md3_dynamic_color_on_hint">Dynamische Farben aktiviert: Akzentfarben stammen aus dem Hintergrundbild; manuelle Akzente wirken nur, falls Hintergrundfarben nicht verfügbar sind.</string>
+    <string name="md3_seed_ignored_when_dynamic">Dynamische Farben aktiv — manuelle Akzentfarbe wird nicht angewendet. Deaktiviere dynamische Farben, um den gewählten Akzent zu nutzen.</string>
+    <string name="md3_seed_color">Akzentfarbe</string>
+    <string name="md3_preview">Vorschau</string>
+    <string name="md3_preview_primary">Primär</string>
+    <string name="md3_preview_secondary">Tonal</string>
+    <string name="md3_preview_outlined">Umrissen</string>
+    <string name="md3_preview_hint_filled">Gefüllter Button — für die Primäraktion verwendet.</string>
+    <string name="md3_preview_hint_tonal">Tonaler Button — für Aktionen mittlerer Priorität, die weniger hervortreten sollen.</string>
+    <string name="md3_preview_hint_outlined">Umriss-Button — für wichtige Aktionen, die paarweise mit einem gefüllten Button auftreten.</string>
+    <string name="md3_preview_text">Dies ist eine Vorschaukarte, die zeigt, wie Karten, Buttons und Text mit dem aktuell ausgewählten Schema aussehen.</string>
+    <string name="md3_back">Zurück</string>
+    <string name="md3_section_general">Allgemein</string>
+    <string name="md3_section_look">Darstellung</string>
+    <string name="md3_title_launcher">Source Engine Launcher</string>
+    <string name="md3_game_config_card">Spielkonfiguration</string>
+    <string name="md3_paths_card">Pfade</string>
+
+    <!-- MD3 Language section -->
+    <string name="md3_section_language">Sprache</string>
+    <string name="md3_ui_language">Launcher-UI-Sprache</string>
+    <string name="md3_ui_lang_desc">Betrifft nur die Launcher-Oberfläche. Die Spielsprache wird unten separat festgelegt.</string>
+    <string name="md3_ui_lang_follow_system">System</string>
+    <string name="md3_ui_lang_zh_cn">简体中文 (Vereinfachtes Chinesisch)</string>
+    <string name="md3_ui_lang_zh_tw">繁體中文 (Traditionelles Chinesisch)</string>
+    <string name="md3_ui_lang_en">English (Englisch)</string>
+    <string name="md3_ui_lang_ru">Русский (Russisch)</string>
+    <string name="md3_ui_lang_ja">日本語 (Japanisch)</string>
+    <string name="md3_ui_lang_ko">한국어 (Koreanisch)</string>
+    <string name="md3_ui_lang_fr">Français (Französisch)</string>
+    <string name="md3_ui_lang_de">Deutsch</string>
+    <string name="md3_ui_lang_es">Español (Spanisch)</string>
+    <string name="md3_game_language">Sprache im Spiel</string>
+    <string name="md3_game_lang_default">Auto (kein Zwang)</string>
+    <string name="md3_game_lang_desc">Fügt \'-language &lt;code&gt;\' an die Spielstartoptionen an. Verfügbare Werte hängen von den in den Spieldaten installierten Sprachpaketen ab.</string>
+    <string name="md3_game_lang_hint_schinese">简体中文 = schinese</string>
+</resources>
