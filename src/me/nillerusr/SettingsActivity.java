@@ -32,6 +32,14 @@ import me.nillerusr.md3.Md3Tokens;
 public class SettingsActivity extends Activity {
     private static final String TAG = "SettingsActivity";
 
+    // 三档刷新策略
+    //   REFRESH_TOKEN_REDRAW: 仅重建Md3Tokens+重绘View(用于seed_color变化),无需重启
+    //   REFRESH_RECREATE:     recreate() SettingsActivity自己(深色/动态取色),主界面Launcher在onResume自动感知刷新
+    //   REFRESH_FULL_RESTART: CLEAR_TASK全栈重启LauncherActivity(仅用于语言变化,必须刷新所有inflation缓存)
+    private static final int REFRESH_TOKEN_REDRAW   = 0;
+    private static final int REFRESH_RECREATE       = 1;
+    private static final int REFRESH_FULL_RESTART   = 2;
+
     // Appearance
     private RadioGroup darkGroup;
     private RadioButton darkSystem, darkOff, darkOn;
@@ -310,7 +318,7 @@ public class SettingsActivity extends Activity {
                     if (checkedId == R.id.md3_dark_off) mode = Md3Theme.THEME_LIGHT;
                     else if (checkedId == R.id.md3_dark_on) mode = Md3Theme.THEME_DARK;
                     Md3Theme.setThemeMode(SettingsActivity.this, mode);
-                    if (mode != lastDarkMode) { lastDarkMode = mode; refreshTheme(); }
+                    if (mode != lastDarkMode) { lastDarkMode = mode; refreshTheme(REFRESH_RECREATE); }
                 }
             });
         }
@@ -327,7 +335,7 @@ public class SettingsActivity extends Activity {
                     if (isChecked) {
                         try { Toast.makeText(SettingsActivity.this, R.string.md3_dynamic_color_on_hint, Toast.LENGTH_LONG).show(); } catch (Throwable ignore) {}
                     }
-                    if (isChecked != lastDynamic) { lastDynamic = isChecked; refreshTheme(); }
+                    if (isChecked != lastDynamic) { lastDynamic = isChecked; refreshTheme(REFRESH_RECREATE); }
                 }
             });
         }
@@ -353,7 +361,7 @@ public class SettingsActivity extends Activity {
                         String raw = Md3Theme.UI_LANG_VALUES[position];
                         String value = (raw == null) ? Md3Theme.UI_LANG_SYSTEM : raw;
                         Md3Theme.setUiLang(SettingsActivity.this, value);
-                        if (!value.equals(lastUiLang)) { lastUiLang = value; refreshTheme(); }
+                        if (!value.equals(lastUiLang)) { lastUiLang = value; refreshTheme(REFRESH_FULL_RESTART); }
                     } catch (Throwable ignore) {}
                 }
                 @Override public void onNothingSelected(AdapterView<?> parent) {}
@@ -442,7 +450,9 @@ public class SettingsActivity extends Activity {
                                 if (c.getChildCount() >= 2) c.getChildAt(1).setVisibility(j == finalI ? View.VISIBLE : View.INVISIBLE);
                             } catch (Throwable ignore) {}
                         }
-                        refreshTheme();
+                        // Seed color change不需要recreate SettingsActivity——当前View都是我们手动画的(token重建即可)
+                        // Launcher那边也会在onResume自动感知变化刷新
+                        refreshTheme(REFRESH_TOKEN_REDRAW);
                     }
                 }
             });
@@ -462,28 +472,45 @@ public class SettingsActivity extends Activity {
     }
 
     private void refreshTheme() {
+        // 历史兼容入口(默认走REFRESH_RECREATE,不做全栈重启)
+        refreshTheme(REFRESH_RECREATE);
+    }
+
+    private void refreshTheme(int level) {
         try {
-            // 关键：不再单独recreate() SettingsActivity——那只会重建当前Activity
-            //    主界面LauncherActivity还在旧栈里→语言/主题完全不刷新！
-            //    现在通过CLEAR_TASK + NEW_TASK完全清空任务栈重启LauncherActivity，
-            //    保证所有Activity(Launcher+Settings)都是新Locale配置创建
-            Intent i = new Intent(this, LauncherActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            try { startActivity(i); } catch (Throwable ignore) {}
-            try {
-                if (Build.VERSION.SDK_INT >= 16) finishAffinity();
-                else finish();
-            } catch (Throwable ignore) {}
-            // 兜底：有些机型杀进程后栈不刷新，再杀一次Activity
-            Runtime.getRuntime().gc();
-        } catch (Throwable t) {
-            Log.w(TAG, "refreshTheme(CLEAR_TASK) failed, fallback recreate", t);
+            if (level == REFRESH_TOKEN_REDRAW) {
+                // ========= 档1：仅SeedColor变化 → 立刻重绘当前Activity & 预览卡片 =========
+                //   SettingsActivity里所有颜色都是从Md3Tokens.buildTokens动态生成
+                //   → 只需applyAfterSetContentView重新token化,不需要recreate
+                try { Md3Theme.applyAfterSetContentView(this); } catch (Throwable ignore) {}
+                // 手动刷新seed ring ring颜色（因为ring是buildSeedColors时创建的token.primary.color）
+                try { buildSeedColors(); } catch (Throwable ignore) {}
+                return;
+            }
+            if (level == REFRESH_FULL_RESTART) {
+                // ========= 档3：语言变化 → 必须全栈重启LauncherActivity =========
+                //   因为LayoutInflater缓存的strings资源/Context包装不会因为单Activity重建刷新
+                Intent i = new Intent(this, LauncherActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                try { startActivity(i); } catch (Throwable ignore) {}
+                try {
+                    if (Build.VERSION.SDK_INT >= 16) finishAffinity();
+                    else finish();
+                } catch (Throwable ignore) {}
+                return;
+            }
+            // ========= 档2：深色/动态取色变化 → recreate SettingsActivity自己,Launcher onResume感知 =========
             try {
                 if (Build.VERSION.SDK_INT >= 11) recreate();
                 else { finish(); startActivity(getIntent()); }
-            } catch (Throwable t2) {
-                try { finish(); } catch (Throwable ignore) {}
+                return;
+            } catch (Throwable t) {
+                Log.w(TAG, "refreshTheme(RECREATE) failed", t);
             }
+        } catch (Throwable t) {
+            Log.w(TAG, "refreshTheme level=" + level + " failed", t);
         }
+        // 兜底：极端情况也不要崩，简单finish
+        try { finish(); } catch (Throwable ignore) {}
     }
 }

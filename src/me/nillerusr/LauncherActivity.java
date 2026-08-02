@@ -53,6 +53,12 @@ public class LauncherActivity extends Activity {
 	public static final int sdk = Integer.valueOf(Build.VERSION.SDK).intValue();
 	static CheckBox useVolumeButtons, check_updates;
 
+	// Settings页面回来后，对比主题/主题色是否变化——变化就立刻刷新当前Launcher界面，无需全栈重启
+	private int cachedThemeMode = Md3Theme.THEME_SYSTEM;
+	private boolean cachedDynamic = false;
+	private int cachedSeedColor = Md3Theme.SEED_PRESETS[0];
+	private String cachedUiLang = Md3Theme.UI_LANG_SYSTEM;
+
 	final static int REQUEST_PERMISSIONS = 42;
 
 	public void applyPermissions( final String permissions[], final int code ) {
@@ -162,6 +168,12 @@ public class LauncherActivity extends Activity {
 
 		// 应用 MD3 主题：状态栏/导航栏 + View 树全部 token 化
 		Md3Theme.applyAfterSetContentView(this);
+
+		// 初始化主题缓存（用于onResume对比Settings是否改了）
+		cachedThemeMode = Md3Theme.getThemeMode(this);
+		cachedDynamic   = Md3Theme.isDynamicColorAvailable() && Md3Theme.getDynamicColor(this);
+		cachedSeedColor = Md3Theme.getSeedColor(this);
+		cachedUiLang    = Md3Theme.getUiLang(this);
 
 		cmdArgs = (EditText)findViewById(R.id.edit_cmdline);
 		EnvEdit = (EditText)findViewById(R.id.edit_env);
@@ -325,6 +337,26 @@ public class LauncherActivity extends Activity {
 		Log.v("SRCAPK", "onPause");
 		saveSettings(mPref.edit());
 		super.onPause();
+	}
+
+	// 从设置页回来时：深色/动态取色/主题色变化立刻重绘当前Launcher；语言变化SettingsActivity已经做了全栈重启
+	@Override
+	protected void onResume() {
+		super.onResume();
+		try {
+			int newMode   = Md3Theme.getThemeMode(this);
+			boolean newDyn = Md3Theme.isDynamicColorAvailable() && Md3Theme.getDynamicColor(this);
+			int newSeed   = Md3Theme.getSeedColor(this);
+			// 语言变化时SettingsActivity会做 CLEAR_TASK 全栈重启 → 不在这里处理，避免重复重建
+			if (newMode != cachedThemeMode || newDyn != cachedDynamic || newSeed != cachedSeedColor) {
+				// 深色/动态取色变化：先applyBeforeOnCreate重新注入Locale+Theme,然后applyAfterSetContentView重绘所有View
+				try { Md3Theme.applyBeforeOnCreate(this); } catch (Throwable ignore) {}
+				try { Md3Theme.applyAfterSetContentView(this); } catch (Throwable ignore) {}
+				cachedThemeMode = newMode;
+				cachedDynamic   = newDyn;
+				cachedSeedColor = newSeed;
+			}
+		} catch (Throwable ignore) {}
 	}
 }
 
