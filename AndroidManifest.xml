@@ -10,6 +10,7 @@
     <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
     <uses-feature android:name="android.software.leanback" android:required="false" />
     <uses-feature android:glEsVersion="0x00020000"/>
+    <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="29"/>
     <application android:icon="@drawable/ic_launcher" android:debuggable="true" android:label="@string/srceng_app_name" android:allowAudioPlaybackCapture="true" android:requestLegacyExternalStorage="true">
         <activity android:label="@string/srceng_app_name" android:name="me.nillerusr.LauncherActivity" android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
