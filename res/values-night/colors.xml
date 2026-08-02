@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 向后兼容 -->
+    <color name="hl_color">#FFF79A10</color>
+    <color name="spin_color">#FF3F3F3F</color>
+
+    <!-- ============ MD3 默认调色板（HL 橙主题 · Dark）============ -->
+    <color name="md3_primary">#FFFFB782</color>
+    <color name="md3_on_primary">#FF613300</color>
+    <color name="md3_primary_container">#FF8B4A00</color>
+    <color name="md3_on_primary_container">#FFFFDCC4</color>
+    <color name="md3_secondary">#FFE2C1A3</color>
+    <color name="md3_on_secondary">#FF432C18</color>
+    <color name="md3_secondary_container">#FF5A422C</color>
+    <color name="md3_on_secondary_container">#FFFEDBC8</color>
+    <color name="md3_tertiary">#FFBFCB98</color>
+    <color name="md3_on_tertiary">#FF2A3311</color>
+    <color name="md3_tertiary_container">#FF404A25</color>
+    <color name="md3_on_tertiary_container">#FFDBE7B4</color>
+    <color name="md3_error">#FFFFB4AB</color>
+    <color name="md3_on_error">#FF690005</color>
+    <color name="md3_error_container">#FF93000A</color>
+    <color name="md3_on_error_container">#FFFFDAD6</color>
+
+    <!-- Surface family Dark -->
+    <color name="md3_surface_dim">#FF15120E</color>
+    <color name="md3_surface">#FF15120E</color>
+    <color name="md3_surface_bright">#FF3B3732</color>
+    <color name="md3_surface_container_lowest">#FF100E0B</color>
+    <color name="md3_surface_container_low">#FF1F1B16</color>
+    <color name="md3_surface_container">#FF231F1A</color>
+    <color name="md3_surface_container_high">#FF2D2924</color>
+    <color name="md3_surface_container_highest">#FF38342E</color>
+
+    <color name="md3_on_surface">#FFEAE1D9</color>
+    <color name="md3_on_surface_variant">#FFD3C4B6</color>
+    <color name="md3_outline">#FF9D8F81</color>
+    <color name="md3_outline_variant">#FF50453A</color>
+
+    <color name="md3_inverse_surface">#FFEAE1D9</color>
+    <color name="md3_inverse_on_surface">#FF34302B</color>
+    <color name="md3_inverse_primary">#FFB86200</color>
+    <color name="md3_scrim">#FF000000</color>
+    <color name="md3_shadow">#FF000000</color>
+
+    <color name="md3_status_bar">#FF15120E</color>
+    <color name="md3_nav_bar">#FF231F1A</color>
+</resources>

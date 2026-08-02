@@ -37,4 +37,28 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="srceng_game_hl2ep2">半条命2：第二章</string>
     <string name="srceng_game_portal">传送门</string>
     <string name="srceng_launcher_error_find_platform">platform 目录缺失！</string>
+
+    <!-- MD3 Settings / Appearance -->
+    <string name="md3_settings">设置</string>
+    <string name="md3_settings_desc">外观与主题</string>
+    <string name="md3_appearance">外观</string>
+    <string name="md3_dark_mode">深色主题</string>
+    <string name="md3_dark_follow_system">跟随系统</string>
+    <string name="md3_dark_on">开启</string>
+    <string name="md3_dark_off">关闭</string>
+    <string name="md3_dynamic_color">动态取色</string>
+    <string name="md3_dynamic_color_desc">从壁纸提取颜色作为主题色（Android 8.1+）</string>
+    <string name="md3_dynamic_color_not_available">当前系统不支持动态取色</string>
+    <string name="md3_seed_color">主题色</string>
+    <string name="md3_preview">预览</string>
+    <string name="md3_preview_primary">主色调按钮</string>
+    <string name="md3_preview_secondary">辅色调按钮</string>
+    <string name="md3_preview_outlined">描边按钮</string>
+    <string name="md3_preview_text">这是一张预览卡片，展示当前主题方案下卡片、按钮与文字的视觉效果。</string>
+    <string name="md3_back">返回</string>
+    <string name="md3_section_general">通用</string>
+    <string name="md3_section_look">视觉效果</string>
+    <string name="md3_title_launcher">起源引擎启动器</string>
+    <string name="md3_game_config_card">游戏配置</string>
+    <string name="md3_paths_card">资源路径</string>
 </resources>

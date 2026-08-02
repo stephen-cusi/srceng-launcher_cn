@@ -35,4 +35,28 @@
     <string name="srceng_dir_choice_btn">Set current directory</string>
     <string name="srceng_update">Update avalible!</string>
     <string name="srceng_launcher_error_find_platform">platform directory is missing!</string>
+
+    <!-- MD3 Settings / Appearance -->
+    <string name="md3_settings">Settings</string>
+    <string name="md3_settings_desc">Appearance &amp; theme</string>
+    <string name="md3_appearance">Appearance</string>
+    <string name="md3_dark_mode">Dark theme</string>
+    <string name="md3_dark_follow_system">Follow system</string>
+    <string name="md3_dark_on">On</string>
+    <string name="md3_dark_off">Off</string>
+    <string name="md3_dynamic_color">Dynamic color</string>
+    <string name="md3_dynamic_color_desc">Use colors from your wallpaper (Android 8.1+)</string>
+    <string name="md3_dynamic_color_not_available">Dynamic color is not available on this system</string>
+    <string name="md3_seed_color">Accent color</string>
+    <string name="md3_preview">Preview</string>
+    <string name="md3_preview_primary">Primary</string>
+    <string name="md3_preview_secondary">Filled tonal</string>
+    <string name="md3_preview_outlined">Outlined</string>
+    <string name="md3_preview_text">This is a preview card showing how cards, buttons and text look with the currently selected scheme.</string>
+    <string name="md3_back">Back</string>
+    <string name="md3_section_general">General</string>
+    <string name="md3_section_look">Look &amp; feel</string>
+    <string name="md3_title_launcher">Source Engine Launcher</string>
+    <string name="md3_game_config_card">Game configuration</string>
+    <string name="md3_paths_card">Paths</string>
 </resources>

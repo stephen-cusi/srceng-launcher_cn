@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="hl_color">#FFF79A10</color>
-	<color name="spin_color">#FF3F3F3F</color>
-</resources>
+    <!-- 向后兼容（保留原名 + 新 MD3 调色板） -->
+    <color name="hl_color">#FFF79A10</color>
+    <color name="spin_color">#FF3F3F3F</color>
 
+    <!-- ============ MD3 默认调色板（HL 橙主题 · Light）============ -->
+    <color name="md3_primary">#FFB86200</color>
+    <color name="md3_on_primary">#FFFFFFFF</color>
+    <color name="md3_primary_container">#FFFFDCC4</color>
+    <color name="md3_on_primary_container">#FF3B1B00</color>
+    <color name="md3_secondary">#FF735A41</color>
+    <color name="md3_on_secondary">#FFFFFFFF</color>
+    <color name="md3_secondary_container">#FFFEDBC8</color>
+    <color name="md3_on_secondary_container">#FF2A1805</color>
+    <color name="md3_tertiary">#FF57623A</color>
+    <color name="md3_on_tertiary">#FFFFFFFF</color>
+    <color name="md3_tertiary_container">#FFDBE7B4</color>
+    <color name="md3_on_tertiary_container">#FF161E01</color>
+    <color name="md3_error">#FFBA1A1A</color>
+    <color name="md3_on_error">#FFFFFFFF</color>
+    <color name="md3_error_container">#FFFFDAD6</color>
+    <color name="md3_on_error_container">#FF410002</color>
+
+    <!-- Surface family (MD3 5 tonal surface levels) -->
+    <color name="md3_surface_dim">#FFDED8D3</color>
+    <color name="md3_surface">#FFFBF8F5</color>
+    <color name="md3_surface_bright">#FFFBF8F5</color>
+    <color name="md3_surface_container_lowest">#FFFFFFFF</color>
+    <color name="md3_surface_container_low">#FFF5EFE9</color>
+    <color name="md3_surface_container">#FFEFEEE9</color>
+    <color name="md3_surface_container_high">#FFE9E7E1</color>
+    <color name="md3_surface_container_highest">#FFE3E1DB</color>
+
+    <color name="md3_on_surface">#FF1F1B16</color>
+    <color name="md3_on_surface_variant">#FF50453A</color>
+    <color name="md3_outline">#FF827567</color>
+    <color name="md3_outline_variant">#FFD3C4B6</color>
+
+    <color name="md3_inverse_surface">#FF34302B</color>
+    <color name="md3_inverse_on_surface">#FFF9EFE8</color>
+    <color name="md3_inverse_primary">#FFFFB782</color>
+    <color name="md3_scrim">#FF000000</color>
+    <color name="md3_shadow">#FF000000</color>
+
+    <!-- Window/Status bar defaults -->
+    <color name="md3_status_bar">#FFFBF8F5</color>
+    <color name="md3_nav_bar">#FFE3E1DB</color>
+</resources>

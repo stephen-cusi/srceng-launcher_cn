@@ -36,8 +36,11 @@ import me.nillerusr.UpdateService;
 import me.nillerusr.UpdateSystem;
 import me.nillerusr.ExtractAssets;
 import me.nillerusr.DirchActivity;
+import me.nillerusr.SettingsActivity;
 
 import org.libsdl.app.SDLActivity;
+
+import me.nillerusr.md3.Md3Theme;
 
 public class LauncherActivity extends Activity {
 	public static String PKG_NAME;
@@ -134,24 +137,31 @@ public class LauncherActivity extends Activity {
 
 
 	public void onCreate(Bundle savedInstanceState) {
+		Md3Theme.applyBeforeOnCreate(this);
 		super.onCreate(savedInstanceState);
 		PKG_NAME = getApplication().getPackageName();
-		requestWindowFeature(1);
-
-		if (sdk >= 21)
-			super.setTheme(0x01030224);
-		else
-			super.setTheme(0x01030005);
 
 		mPref = getSharedPreferences("mod", 0);
 
 		setContentView(R.layout.activity_launcher);
 
-		LinearLayout body = (LinearLayout)findViewById(R.id.body);
+		// 应用 MD3 主题：状态栏/导航栏 + View 树全部 token 化
+		Md3Theme.applyAfterSetContentView(this);
 
 		cmdArgs = (EditText)findViewById(R.id.edit_cmdline);
 		EnvEdit = (EditText)findViewById(R.id.edit_env);
 		GamePath = (EditText)findViewById(R.id.edit_gamepath);
+
+		// 设置按钮
+		View settingsBtn = findViewById(R.id.md3_button_settings);
+		if (settingsBtn != null) {
+			settingsBtn.setOnClickListener(new View.OnClickListener() {
+				@Override public void onClick(View v) {
+					Intent i = new Intent(LauncherActivity.this, SettingsActivity.class);
+					startActivity(i);
+				}
+			});
+		}
 
 //		immersiveMode = (CheckBox)findViewById(R.id.checkbox_immersive_mode);
 

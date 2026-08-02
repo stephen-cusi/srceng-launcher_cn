@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- MD3 基础主题：继承 Material Light NoActionBar (API 21+) -->
+    <style name="SrcEng.MD3" parent="@android:style/Theme.Material.Light.NoActionBar.Fullscreen">
+        <item name="android:windowBackground">@color/md3_surface</item>
+        <item name="android:colorBackground">@color/md3_surface</item>
+        <item name="android:colorPrimary">@color/md3_primary</item>
+        <item name="android:colorPrimaryDark">@color/md3_status_bar</item>
+        <item name="android:colorAccent">@color/md3_tertiary</item>
+        <item name="android:statusBarColor">@color/md3_status_bar</item>
+        <item name="android:navigationBarColor">@color/md3_nav_bar</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowContentTransitions">false</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Activity</item>
+        <item name="android:windowSoftInputMode">adjustResize|stateHidden</item>
+        <item name="android:textColorPrimary">@color/md3_on_surface</item>
+        <item name="android:textColorSecondary">@color/md3_on_surface_variant</item>
+        <item name="android:textColorHint">@color/md3_outline</item>
+        <item name="android:divider">@color/md3_outline_variant</item>
+        <item name="android:listDivider">@color/md3_outline_variant</item>
+    </style>
+
+    <!-- 深色模式（独立主题，会被 Md3Theme 在代码中选中用于强制深色） -->
+    <style name="SrcEng.MD3.Dark" parent="@android:style/Theme.Material.NoActionBar.Fullscreen">
+        <item name="android:windowBackground">@color/md3_surface</item>
+        <item name="android:colorBackground">@color/md3_surface</item>
+        <item name="android:colorPrimary">@color/md3_primary</item>
+        <item name="android:colorPrimaryDark">@color/md3_status_bar</item>
+        <item name="android:colorAccent">@color/md3_tertiary</item>
+        <item name="android:statusBarColor">@color/md3_status_bar</item>
+        <item name="android:navigationBarColor">@color/md3_nav_bar</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowSoftInputMode">adjustResize|stateHidden</item>
+        <item name="android:textColorPrimary">@color/md3_on_surface</item>
+        <item name="android:textColorSecondary">@color/md3_on_surface_variant</item>
+        <item name="android:textColorHint">@color/md3_outline</item>
+        <item name="android:divider">@color/md3_outline_variant</item>
+    </style>
+
+</resources>

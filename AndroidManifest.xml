@@ -12,12 +12,13 @@
     <uses-feature android:glEsVersion="0x00020000"/>
     <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="29"/>
     <application android:icon="@drawable/ic_launcher" android:debuggable="true" android:label="@string/srceng_app_name" android:allowAudioPlaybackCapture="true" android:requestLegacyExternalStorage="true">
-        <activity android:label="@string/srceng_app_name" android:name="me.nillerusr.LauncherActivity" android:windowSoftInputMode="adjustResize|stateHidden">
+        <activity android:label="@string/srceng_app_name" android:name="me.nillerusr.LauncherActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize|uiMode|locale|layoutDirection" android:windowSoftInputMode="adjustResize|stateHidden" android:theme="@style/SrcEng.MD3">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:label="@string/md3_settings" android:name="me.nillerusr.SettingsActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize|uiMode|locale|layoutDirection" android:windowSoftInputMode="adjustResize|stateHidden" android:parentActivityName="me.nillerusr.LauncherActivity" android:theme="@style/SrcEng.MD3"/>
         <activity android:label="Directory" android:name="me.nillerusr.DirchActivity" android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.DIRCH"/>

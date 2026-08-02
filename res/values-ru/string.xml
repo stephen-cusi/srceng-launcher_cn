@@ -32,4 +32,28 @@
     <string name="srceng_dir_choice_btn">Указать данный путь</string>
     <string name="srceng_update">Доступно обновление</string>
     <string name="srceng_launcher_error_find_platform">Скопируй platform папку бля!</string>
+
+    <!-- MD3 Settings / Appearance -->
+    <string name="md3_settings">Настройки</string>
+    <string name="md3_settings_desc">Внешний вид и тема</string>
+    <string name="md3_appearance">Внешний вид</string>
+    <string name="md3_dark_mode">Тёмная тема</string>
+    <string name="md3_dark_follow_system">Как в системе</string>
+    <string name="md3_dark_on">Вкл</string>
+    <string name="md3_dark_off">Выкл</string>
+    <string name="md3_dynamic_color">Динамические цвета</string>
+    <string name="md3_dynamic_color_desc">Цвета из обоев (Android 8.1+)</string>
+    <string name="md3_dynamic_color_not_available">Динамические цвета не поддерживаются</string>
+    <string name="md3_seed_color">Акцентный цвет</string>
+    <string name="md3_preview">Превью</string>
+    <string name="md3_preview_primary">Primary</string>
+    <string name="md3_preview_secondary">Filled tonal</string>
+    <string name="md3_preview_outlined">Outlined</string>
+    <string name="md3_preview_text">Здесь показано, как выглядят карточки, кнопки и текст в текущей цветовой схеме.</string>
+    <string name="md3_back">Назад</string>
+    <string name="md3_section_general">Основное</string>
+    <string name="md3_section_look">Вид</string>
+    <string name="md3_title_launcher">Source Engine лаунчер</string>
+    <string name="md3_game_config_card">Конфиг игры</string>
+    <string name="md3_paths_card">Пути</string>
 </resources>
