@@ -87,7 +87,7 @@
     <!-- MD3 Game / Resolution section -->
     <string name="md3_section_game">게임</string>
     <string name="md3_resolution">해상도</string>
-    <string name="md3_resolution_desc">게임 화면 해상도. 실행 명령줄에 \'-w &lt;너비&gt; -h &lt;높이&gt;\' 와 \'-full\'(전체화면) 또는 \'-windowed\'(창 모드)를 추가합니다.</string>
+    <string name="md3_resolution_desc">게임 화면 해상도. 실행 명령줄에 \'-w &lt;너비&gt; -h &lt;높이&gt;\' 를 추가합니다. 「장치 네이티브 해상도 사용」선택 시에는 추가되지 않습니다.</string>
     <string name="md3_res_mode_device">기기 기본 해상도 사용</string>
     <string name="md3_res_mode_preset">프리셋에서 선택</string>
     <string name="md3_res_mode_custom">사용자 지정 너비 × 높이</string>

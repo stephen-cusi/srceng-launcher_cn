@@ -89,7 +89,7 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <!-- MD3 Game / Resolution section -->
     <string name="md3_section_game">游戏设置</string>
     <string name="md3_resolution">分辨率</string>
-    <string name="md3_resolution_desc">游戏画面分辨率。会自动在启动参数中追加 \'-w {宽度} -h {高度}\'，同时追加 \'-full\'（全屏）或 \'-windowed\'（窗口）。</string>
+    <string name="md3_resolution_desc">游戏画面分辨率。会自动在启动参数中追加 \'-w {宽度} -h {高度}\'（选择「使用本机分辨率」时不追加，由引擎用设备物理分辨率）。</string>
     <string name="md3_res_mode_device">使用本机分辨率</string>
     <string name="md3_res_mode_preset">从预设列表选择</string>
     <string name="md3_res_mode_custom">自定义宽 × 高</string>

@@ -505,6 +505,20 @@ public class SettingsActivity extends Activity {
                     String newMode = Md3Theme.RES_MODE_DEVICE;
                     if (checkedId == R.id.md3_res_mode_preset)       newMode = Md3Theme.RES_MODE_PRESET;
                     else if (checkedId == R.id.md3_res_mode_custom)  newMode = Md3Theme.RES_MODE_CUSTOM;
+                    // 切到 CUSTOM 模式的那一瞬间，把当前 EditText 已经存在的值（bindState 填的/上次残留的）立即同步并落盘，
+                    // 保证启动游戏读到的是 UI 上实际显示的数字（避免 TextWatcher 还没触发导致 SP 中残留脏值）。
+                    if (Md3Theme.RES_MODE_CUSTOM.equals(newMode)) {
+                        int w = readIntEt(resCustomW, lastResCustomW);
+                        if (w < 320) w = 320; else if (w > 8192) w = 8192;
+                        int h = readIntEt(resCustomH, lastResCustomH);
+                        if (h < 240) h = 240; else if (h > 8192) h = 8192;
+                        Md3Theme.setResolutionCustomW(SettingsActivity.this, w);
+                        Md3Theme.setResolutionCustomH(SettingsActivity.this, h);
+                        lastResCustomW = w;
+                        lastResCustomH = h;
+                        try { if (resCustomW != null) resCustomW.setText(String.valueOf(w)); } catch (Throwable ignore) {}
+                        try { if (resCustomH != null) resCustomH.setText(String.valueOf(h)); } catch (Throwable ignore) {}
+                    }
                     Md3Theme.setResolutionMode(SettingsActivity.this, newMode);
                     lastResMode = newMode;
                     updateResolutionVisibility();
@@ -522,12 +536,14 @@ public class SettingsActivity extends Activity {
                 @Override public void onNothingSelected(AdapterView<?> parent) {}
             });
         }
-        // 自定义宽高：输入变化时立刻保存（避免需要点"保存"）
+        // 自定义宽高：输入变化时立刻保存（仅当 CUSTOM 模式激活才写入，避免误存旧值/默认值）
         android.text.TextWatcher customWch = new android.text.TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override public void afterTextChanged(android.text.Editable s) {
+                if (!Md3Theme.RES_MODE_CUSTOM.equals(lastResMode)) return;
                 int w = readIntEt(resCustomW, lastResCustomW);
+                if (w < 320) w = 320; else if (w > 8192) w = 8192;
                 if (w != lastResCustomW) {
                     Md3Theme.setResolutionCustomW(SettingsActivity.this, w);
                     lastResCustomW = w;
@@ -538,7 +554,9 @@ public class SettingsActivity extends Activity {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override public void afterTextChanged(android.text.Editable s) {
+                if (!Md3Theme.RES_MODE_CUSTOM.equals(lastResMode)) return;
                 int h = readIntEt(resCustomH, lastResCustomH);
+                if (h < 240) h = 240; else if (h > 8192) h = 8192;
                 if (h != lastResCustomH) {
                     Md3Theme.setResolutionCustomH(SettingsActivity.this, h);
                     lastResCustomH = h;
@@ -561,51 +579,81 @@ public class SettingsActivity extends Activity {
 
     private void buildSeedColors() {
         if (seedContainer == null) return;
-        try { seedContainer.removeAllViews(); } catch (Throwable ignore) {}
         int[] presets = Md3Theme.SEED_PRESETS;
         int current = Md3Theme.getSeedColor(this);
         int size = dp(44);
         int margin = dp(8);
+
+        // 如果seedContainer子View数量与预设数一致，就只增量更新颜色/选中态（不removeAllViews，避免ScrollView滚回顶部）
+        boolean reuse = (seedContainer.getChildCount() == presets.length);
+
+        if (!reuse) {
+            try { seedContainer.removeAllViews(); } catch (Throwable ignore) {}
+        }
+
+        Md3Tokens freshTokens = Md3Theme.buildTokens(this);
+        int ringColor = 0;
+        try { ringColor = freshTokens.primary.color; } catch (Throwable ignore) {}
+
         for (int i = 0; i < presets.length; i++) {
             final int color = presets[i];
-            GradientDrawable g = new GradientDrawable();
-            g.setShape(GradientDrawable.RECTANGLE);
+            final android.widget.FrameLayout wrap;
+            final android.view.View v;
+            final android.view.View ringView;
+            final GradientDrawable g;
+            final GradientDrawable ring;
+
+            if (reuse) {
+                wrap = (android.widget.FrameLayout) seedContainer.getChildAt(i);
+                android.view.View inner0 = wrap.getChildAt(0);
+                android.view.View inner1 = wrap.getChildAt(1);
+                v = inner0;
+                ringView = (inner1 != null) ? inner1 : new android.view.View(this);
+                g = (GradientDrawable) v.getBackground();
+                ring = (GradientDrawable) ringView.getBackground();
+            } else {
+                g = new GradientDrawable();
+                g.setShape(GradientDrawable.RECTANGLE);
+                wrap = new android.widget.FrameLayout(this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(size, size);
+                if (i == 0) lp.leftMargin = 0; else lp.leftMargin = margin;
+                wrap.setLayoutParams(lp);
+                wrap.setPadding(dp(3), dp(3), dp(3), dp(3));
+
+                android.widget.FrameLayout.LayoutParams fplp = new android.widget.FrameLayout.LayoutParams(
+                        android.widget.FrameLayout.LayoutParams.MATCH_PARENT,
+                        android.widget.FrameLayout.LayoutParams.MATCH_PARENT);
+                v = new android.view.View(this);
+                v.setLayoutParams(fplp);
+                wrap.addView(v);
+
+                ring = new GradientDrawable();
+                ring.setShape(GradientDrawable.RECTANGLE);
+                ringView = new android.view.View(this);
+                ringView.setLayoutParams(fplp);
+                wrap.addView(ringView);
+
+                if (Build.VERSION.SDK_INT >= 21) {
+                    try {
+                        wrap.setForeground(new android.graphics.drawable.RippleDrawable(
+                                new android.content.res.ColorStateList(new int[][]{{}}, new int[]{0x22000000}),
+                                null, null));
+                    } catch (Throwable ignore) {}
+                }
+                wrap.setClickable(true);
+                wrap.setFocusable(true);
+            }
+
             g.setColor(color);
             g.setCornerRadius(size * 0.5f);
-            final android.widget.FrameLayout wrap = new android.widget.FrameLayout(this);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(size, size);
-            if (i == 0) lp.leftMargin = 0; else lp.leftMargin = margin;
-            wrap.setLayoutParams(lp);
-            wrap.setPadding(dp(3), dp(3), dp(3), dp(3));
-
-            android.widget.FrameLayout.LayoutParams fplp = new android.widget.FrameLayout.LayoutParams(
-                    android.widget.FrameLayout.LayoutParams.MATCH_PARENT,
-                    android.widget.FrameLayout.LayoutParams.MATCH_PARENT);
-            android.view.View v = new android.view.View(this);
             v.setBackground(g);
-            v.setLayoutParams(fplp);
-            wrap.addView(v);
 
-            final GradientDrawable ring = new GradientDrawable();
-            ring.setShape(GradientDrawable.RECTANGLE);
             ring.setColor(Color.TRANSPARENT);
             ring.setCornerRadius(size * 0.5f);
-            try { ring.setStroke(dp(3), Md3Theme.buildTokens(this).primary.color); } catch (Throwable ignore) {}
-            final android.view.View ringView = new android.view.View(this);
+            try { ring.setStroke(dp(3), ringColor); } catch (Throwable ignore) {}
             ringView.setBackground(ring);
-            ringView.setLayoutParams(fplp);
             ringView.setVisibility(colorsEqual(current, color) ? View.VISIBLE : View.INVISIBLE);
-            wrap.addView(ringView);
 
-            if (Build.VERSION.SDK_INT >= 21) {
-                try {
-                    wrap.setForeground(new android.graphics.drawable.RippleDrawable(
-                            new android.content.res.ColorStateList(new int[][]{{}}, new int[]{0x22000000}),
-                            null, null));
-                } catch (Throwable ignore) {}
-            }
-            wrap.setClickable(true);
-            wrap.setFocusable(true);
             final int finalI = i;
             wrap.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View vv) {
@@ -627,7 +675,8 @@ public class SettingsActivity extends Activity {
                     }
                 }
             });
-            seedContainer.addView(wrap);
+
+            if (!reuse) seedContainer.addView(wrap);
         }
     }
 

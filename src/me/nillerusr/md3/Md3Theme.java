@@ -642,8 +642,8 @@ public final class Md3Theme {
 
     private static void applySingleView(View v, Md3Tokens t) {
         // Never apply twice
-        try { if (v.getTag(R.id.md3_tag_applied) != null) return; } catch (Throwable ignore) {}
-        try { v.setTag(R.id.md3_tag_applied, Boolean.TRUE); } catch (Throwable ignore) {}
+        // try { if (v.getTag(R.id.md3_tag_applied) != null) return; } catch (Throwable ignore) {}
+        // try { v.setTag(R.id.md3_tag_applied, Boolean.TRUE); } catch (Throwable ignore) {}
         if (v.getId() == R.id.md3_preserve_bg) return;
 
         // AppBar (flat, no rounded corners, edge-to-edge)

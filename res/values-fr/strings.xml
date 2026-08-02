@@ -87,7 +87,7 @@
     <!-- MD3 Game / Resolution section -->
     <string name="md3_section_game">Jeu</string>
     <string name="md3_resolution">Résolution</string>
-    <string name="md3_resolution_desc">Résolution d\'écran du jeu. Ajoute \'-w &lt;largeur&gt; -h &lt;hauteur&gt;\' ainsi que \'-full\' (plein écran) ou \'-windowed\' (fenêtré) à la ligne de commande de lancement.</string>
+    <string name="md3_resolution_desc">Résolution d\'écran du jeu. Ajoute \'-w &lt;largeur&gt; -h &lt;hauteur&gt;\' à la ligne de commande de lancement. Rien n’est ajouté si « Utiliser la résolution native de l’appareil » est sélectionné.</string>
     <string name="md3_res_mode_device">Utiliser la résolution native de l\'appareil</string>
     <string name="md3_res_mode_preset">Choisir parmi des préréglages</string>
     <string name="md3_res_mode_custom">Largeur × hauteur personnalisée</string>
