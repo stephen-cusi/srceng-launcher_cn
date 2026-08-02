@@ -20,6 +20,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import java.lang.Thread;
 import android.content.Intent;
+import android.content.Context;
+import android.content.res.Configuration;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -135,6 +137,19 @@ public class LauncherActivity extends Activity {
 		}
 	}
 
+
+	// attachBaseContext：在Context创建之前注入Locale，确保LayoutInflater/Resources加载的strings是最新语言
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		try {
+			Configuration cfg = new Configuration(newBase.getResources().getConfiguration());
+			Md3Theme.applyUiLocaleConfiguration(cfg, Md3Theme.getUiLang(newBase));
+			Context ctx = newBase.createConfigurationContext(cfg);
+			super.attachBaseContext(ctx);
+			return;
+		} catch (Throwable ignore) {}
+		super.attachBaseContext(newBase);
+	}
 
 	public void onCreate(Bundle savedInstanceState) {
 		Md3Theme.applyBeforeOnCreate(this);

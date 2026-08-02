@@ -157,7 +157,7 @@ public final class Md3Theme {
     }
 
     // 返回系统**真正**的Locale（Resources.getSystem().getConfiguration()不受我们手动改Locale.setDefault的影响）
-    private static Locale getRealSystemLocale() {
+    public static Locale getRealSystemLocale() {
         try {
             Configuration sysCfg = Resources.getSystem().getConfiguration();
             if (Build.VERSION.SDK_INT >= 24) {
@@ -166,10 +166,30 @@ public final class Md3Theme {
                 if (sysCfg.locale != null) return sysCfg.locale;
             }
         } catch (Throwable ignore) {}
-        // 保底：用反射/全局值；Locale.getDefault虽然可能被我们污染，但总比null好
+        // 保底：虽然Locale.getDefault可能被我们污染，但总比null好；最后fallback = ENGLISH
         Locale fallback = Locale.getDefault();
         if (fallback == null) fallback = Locale.ENGLISH;
         return fallback;
+    }
+
+    // 根据uiLang计算目标Locale(暴露给外面,用于attachBaseContext/createConfigurationContext)
+    public static Locale resolveUiLangLocale(String uiLang) {
+        Locale target = localeForUiLang(uiLang);
+        return (target == null) ? getRealSystemLocale() : target;
+    }
+
+    // 只更新传入的Configuration的Locale设置(不直接作用于任何Activity)——供attachBaseContext内部使用
+    public static void applyUiLocaleConfiguration(Configuration cfg, String uiLang) {
+        if (cfg == null) return;
+        try {
+            Locale desired = resolveUiLangLocale(uiLang);
+            if (Build.VERSION.SDK_INT >= 17) {
+                cfg.setLocale(desired);
+            } else {
+                cfg.locale = desired;
+            }
+            Locale.setDefault(desired);
+        } catch (Throwable ignore) {}
     }
 
     @SuppressWarnings("deprecation")
@@ -188,7 +208,11 @@ public final class Md3Theme {
         //     —因为手动选英文时我们调过 Locale.setDefault(ENGLISH)，
         //      这时 Locale.getDefault 已经是污染值 ENGLISH，不再是系统真实Locale了
         Locale desired = (target == null) ? getRealSystemLocale() : target;
-        if (desired.equals(cur)) return;
+        if (desired.equals(cur)) {
+            // 即使Locale没变,也同步一下Locale.setDefault保证DateFormat等一致
+            Locale.setDefault(desired);
+            return;
+        }
 
         cfg = new Configuration(cfg);
         if (Build.VERSION.SDK_INT >= 17) {

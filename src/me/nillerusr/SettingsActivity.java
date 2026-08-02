@@ -1,6 +1,9 @@
 package me.nillerusr;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.Color;
 import android.os.Build;
@@ -60,6 +63,20 @@ public class SettingsActivity extends Activity {
         buildGameLangSpinner();
         bindListeners();
         updateSeedVisualState();
+    }
+
+    // attachBaseContext：在系统创建Context时立刻注入正确Locale，保证所有LayoutInflater/Resources都是最新语言
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        try {
+            // 先走一次applyUiLocale的Configuration，再wrap
+            Configuration cfg = new Configuration(newBase.getResources().getConfiguration());
+            Md3Theme.applyUiLocaleConfiguration(cfg, Md3Theme.getUiLang(newBase));
+            Context ctx = newBase.createConfigurationContext(cfg);
+            super.attachBaseContext(ctx);
+            return;
+        } catch (Throwable ignore) {}
+        super.attachBaseContext(newBase);
     }
 
     private void findViews() {
@@ -446,11 +463,27 @@ public class SettingsActivity extends Activity {
 
     private void refreshTheme() {
         try {
-            if (Build.VERSION.SDK_INT >= 11) recreate();
-            else { finish(); startActivity(getIntent()); }
+            // 关键：不再单独recreate() SettingsActivity——那只会重建当前Activity
+            //    主界面LauncherActivity还在旧栈里→语言/主题完全不刷新！
+            //    现在通过CLEAR_TASK + NEW_TASK完全清空任务栈重启LauncherActivity，
+            //    保证所有Activity(Launcher+Settings)都是新Locale配置创建
+            Intent i = new Intent(this, LauncherActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            try { startActivity(i); } catch (Throwable ignore) {}
+            try {
+                if (Build.VERSION.SDK_INT >= 16) finishAffinity();
+                else finish();
+            } catch (Throwable ignore) {}
+            // 兜底：有些机型杀进程后栈不刷新，再杀一次Activity
+            Runtime.getRuntime().gc();
         } catch (Throwable t) {
-            Log.w(TAG, "refreshTheme failed, fallback to just finish", t);
-            try { finish(); } catch (Throwable ignore) {}
+            Log.w(TAG, "refreshTheme(CLEAR_TASK) failed, fallback recreate", t);
+            try {
+                if (Build.VERSION.SDK_INT >= 11) recreate();
+                else { finish(); startActivity(getIntent()); }
+            } catch (Throwable t2) {
+                try { finish(); } catch (Throwable ignore) {}
+            }
         }
     }
 }
