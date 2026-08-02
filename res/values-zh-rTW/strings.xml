@@ -63,10 +63,17 @@
     <!-- MD3 Language section -->
     <string name="md3_section_language">語言設定</string>
     <string name="md3_ui_language">啟動器介面語言</string>
+    <string name="md3_ui_lang_desc">僅影響啟動器介面。遊戲語言在下方單獨設定。</string>
     <string name="md3_ui_lang_follow_system">跟隨系統</string>
     <string name="md3_ui_lang_zh_cn">简体中文</string>
     <string name="md3_ui_lang_zh_tw">繁體中文</string>
     <string name="md3_ui_lang_en">English</string>
+    <string name="md3_ui_lang_ru">Русский  ·  俄文</string>
+    <string name="md3_ui_lang_ja">日本語  ·  日文</string>
+    <string name="md3_ui_lang_ko">한국어  ·  韓文</string>
+    <string name="md3_ui_lang_fr">Français  ·  法文</string>
+    <string name="md3_ui_lang_de">Deutsch  ·  德文</string>
+    <string name="md3_ui_lang_es">Español  ·  西班牙文</string>
     <string name="md3_game_language">遊戲語言</string>
     <string name="md3_game_lang_default">自動（不強制）</string>
     <string name="md3_game_lang_desc">於遊戲啟動參數末尾自動追加 \'-language {代碼}\'。可用值取決於遊戲資源中安裝了哪些語言包（例如：schinese=簡中、tchinese=繁中、english=英文、russian=俄文等）。</string>

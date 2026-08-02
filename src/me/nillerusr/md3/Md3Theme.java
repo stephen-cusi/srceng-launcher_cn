@@ -58,13 +58,25 @@ public final class Md3Theme {
     public static final String UI_LANG_ZH_CN  = "zh-rCN";
     public static final String UI_LANG_ZH_TW  = "zh-rTW";
     public static final String UI_LANG_EN     = "en";
+    public static final String UI_LANG_RU     = "ru";
+    public static final String UI_LANG_JA     = "ja";
+    public static final String UI_LANG_KO     = "ko";
+    public static final String UI_LANG_FR     = "fr";
+    public static final String UI_LANG_DE     = "de";
+    public static final String UI_LANG_ES     = "es";
 
     public static final int THEME_SYSTEM = 0;
     public static final int THEME_LIGHT  = 1;
     public static final int THEME_DARK   = 2;
 
     // 启动器UI语言映射列表：(持久化值 → 显示名称用string资源 → Locale对象)
-    public static final String[] UI_LANG_VALUES = new String[]{ UI_LANG_SYSTEM, UI_LANG_ZH_CN, UI_LANG_ZH_TW, UI_LANG_EN };
+    // 顺序：跟随系统 → 简中 → 繁中 → 英文 → 俄语 → 日语 → 韩语 → 法语 → 德语 → 西语
+    public static final String[] UI_LANG_VALUES = new String[]{
+        UI_LANG_SYSTEM,
+        UI_LANG_ZH_CN, UI_LANG_ZH_TW, UI_LANG_EN,
+        UI_LANG_RU, UI_LANG_JA, UI_LANG_KO,
+        UI_LANG_FR, UI_LANG_DE, UI_LANG_ES
+    };
 
     // Source引擎常用游戏语言代码（参考HL2/Portal的gameui_*.txt文件名），按展示频率排序；空串=不追加
     public static final String[] GAME_LANG_VALUES = new String[]{
@@ -128,13 +140,36 @@ public final class Md3Theme {
     public static boolean isDynamicColorAvailable() { return Build.VERSION.SDK_INT >= 27; }
 
     // =========================================================
-    // UI Locale helpers — supports system follow / zh-CN / zh-TW / en
+    // UI Locale helpers — supports:
+    //   system follow / zh-CN / zh-TW / en / ru / ja / ko / fr / de / es
     // =========================================================
     private static Locale localeForUiLang(String uiLang) {
         if (UI_LANG_ZH_CN.equals(uiLang)) return Locale.SIMPLIFIED_CHINESE;
         if (UI_LANG_ZH_TW.equals(uiLang)) return Locale.TRADITIONAL_CHINESE;
         if (UI_LANG_EN.equals(uiLang))    return Locale.ENGLISH;
-        return null; // follow system
+        if (UI_LANG_RU.equals(uiLang))    return new Locale("ru", "RU");
+        if (UI_LANG_JA.equals(uiLang))    return Locale.JAPAN;
+        if (UI_LANG_KO.equals(uiLang))    return Locale.KOREA;
+        if (UI_LANG_FR.equals(uiLang))    return Locale.FRANCE;
+        if (UI_LANG_DE.equals(uiLang))    return Locale.GERMANY;
+        if (UI_LANG_ES.equals(uiLang))    return new Locale("es", "ES");
+        return null; // follow system → return real system locale below
+    }
+
+    // 返回系统**真正**的Locale（Resources.getSystem().getConfiguration()不受我们手动改Locale.setDefault的影响）
+    private static Locale getRealSystemLocale() {
+        try {
+            Configuration sysCfg = Resources.getSystem().getConfiguration();
+            if (Build.VERSION.SDK_INT >= 24) {
+                if (!sysCfg.getLocales().isEmpty()) return sysCfg.getLocales().get(0);
+            } else {
+                if (sysCfg.locale != null) return sysCfg.locale;
+            }
+        } catch (Throwable ignore) {}
+        // 保底：用反射/全局值；Locale.getDefault虽然可能被我们污染，但总比null好
+        Locale fallback = Locale.getDefault();
+        if (fallback == null) fallback = Locale.ENGLISH;
+        return fallback;
     }
 
     @SuppressWarnings("deprecation")
@@ -145,11 +180,14 @@ public final class Md3Theme {
         Configuration cfg = res.getConfiguration();
         Locale cur;
         if (Build.VERSION.SDK_INT >= 24) {
-            cur = cfg.getLocales().isEmpty() ? Locale.getDefault() : cfg.getLocales().get(0);
+            cur = cfg.getLocales().isEmpty() ? getRealSystemLocale() : cfg.getLocales().get(0);
         } else {
-            cur = cfg.locale;
+            cur = (cfg.locale != null) ? cfg.locale : getRealSystemLocale();
         }
-        Locale desired = (target == null) ? Locale.getDefault() : target;
+        // 关键：跟随系统时用 getRealSystemLocale()，不要用 Locale.getDefault()
+        //     —因为手动选英文时我们调过 Locale.setDefault(ENGLISH)，
+        //      这时 Locale.getDefault 已经是污染值 ENGLISH，不再是系统真实Locale了
+        Locale desired = (target == null) ? getRealSystemLocale() : target;
         if (desired.equals(cur)) return;
 
         cfg = new Configuration(cfg);

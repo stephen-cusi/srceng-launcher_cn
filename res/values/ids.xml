@@ -29,11 +29,20 @@
     <item type="id" name="md3_preview_card"/>
     <!-- 语言区 -->
     <item type="id" name="md3_lang_section"/>
+    <item type="id" name="md3_ui_lang_spinner"/>
+    <item type="id" name="md3_game_lang_spinner"/>
+    <item type="id" name="md3_game_lang_override"/>
+    <!-- 保留旧RadioGroup/Button id,防止老资源加载异常 -->
     <item type="id" name="md3_ui_lang_group"/>
     <item type="id" name="md3_ui_lang_system"/>
     <item type="id" name="md3_ui_lang_zh_cn"/>
     <item type="id" name="md3_ui_lang_zh_tw"/>
     <item type="id" name="md3_ui_lang_en"/>
-    <item type="id" name="md3_game_lang_spinner"/>
-    <item type="id" name="md3_game_lang_override"/>
+    <!-- 新增UI语言RadioButton占位id(兼容) -->
+    <item type="id" name="md3_ui_lang_ru"/>
+    <item type="id" name="md3_ui_lang_ja"/>
+    <item type="id" name="md3_ui_lang_ko"/>
+    <item type="id" name="md3_ui_lang_fr"/>
+    <item type="id" name="md3_ui_lang_de"/>
+    <item type="id" name="md3_ui_lang_es"/>
 </resources>

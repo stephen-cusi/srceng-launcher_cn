@@ -37,10 +37,8 @@ public class SettingsActivity extends Activity {
     private Button previewFilled, previewTonal, previewOutlined;
 
     // Language
-    private RadioGroup uiLangGroup;
-    private RadioButton uiLangSystem, uiLangZhCn, uiLangZhTw, uiLangEn;
-    private Spinner gameLangSpinner;
-    private ArrayAdapter<String> gameLangAdapter;
+    private Spinner uiLangSpinner, gameLangSpinner;
+    private ArrayAdapter<String> uiLangAdapter, gameLangAdapter;
 
     private int lastDarkMode = Md3Theme.THEME_SYSTEM;
     private boolean lastDynamic = false;
@@ -58,6 +56,7 @@ public class SettingsActivity extends Activity {
         findViews();
         bindState();
         buildSeedColors();
+        buildUiLangSpinner();
         buildGameLangSpinner();
         bindListeners();
         updateSeedVisualState();
@@ -74,11 +73,7 @@ public class SettingsActivity extends Activity {
         previewTonal = optFind(R.id.md3_preview_btn_tonal);
         previewOutlined = optFind(R.id.md3_preview_btn_outlined);
 
-        uiLangGroup  = optFind(R.id.md3_ui_lang_group);
-        uiLangSystem = optFind(R.id.md3_ui_lang_system);
-        uiLangZhCn   = optFind(R.id.md3_ui_lang_zh_cn);
-        uiLangZhTw   = optFind(R.id.md3_ui_lang_zh_tw);
-        uiLangEn     = optFind(R.id.md3_ui_lang_en);
+        uiLangSpinner   = optFind(R.id.md3_ui_lang_spinner);
         gameLangSpinner = optFind(R.id.md3_game_lang_spinner);
 
         ImageButton back = optFind(R.id.md3_button_back);
@@ -130,15 +125,82 @@ public class SettingsActivity extends Activity {
         lastDynamic = dyn;
         lastSeed = Md3Theme.getSeedColor(this);
 
-        // UI language — only setChecked if at least one RadioButton exists; otherwise the preference still works next launch.
-        String uiLang = Md3Theme.getUiLang(this);
-        if      (Md3Theme.UI_LANG_ZH_CN.equals(uiLang)) setCheckedSafe(uiLangZhCn, true);
-        else if (Md3Theme.UI_LANG_ZH_TW.equals(uiLang)) setCheckedSafe(uiLangZhTw, true);
-        else if (Md3Theme.UI_LANG_EN.equals(uiLang))    setCheckedSafe(uiLangEn, true);
-        else                                             setCheckedSafe(uiLangSystem, true);
-        lastUiLang = uiLang;
+        // UI language — Spinner selection; done in buildUiLangSpinner()
+        lastUiLang = Md3Theme.getUiLang(this);
 
         lastGameLang = Md3Theme.getGameLang(this);
+    }
+
+    // ========= UI language Spinner (10 languages: system/zh_CN/zh_TW/en/ru/ja/ko/fr/de/es) =========
+    private String uiLangDisplayName(String value) {
+        if (value == null) return "";
+        String friendly;
+        try {
+            if (Md3Theme.UI_LANG_SYSTEM.equals(value))      friendly = getString(R.string.md3_ui_lang_follow_system);
+            else if (Md3Theme.UI_LANG_ZH_CN.equals(value))  friendly = getString(R.string.md3_ui_lang_zh_cn);
+            else if (Md3Theme.UI_LANG_ZH_TW.equals(value))  friendly = getString(R.string.md3_ui_lang_zh_tw);
+            else if (Md3Theme.UI_LANG_EN.equals(value))     friendly = getString(R.string.md3_ui_lang_en);
+            else if (Md3Theme.UI_LANG_RU.equals(value))     friendly = getString(R.string.md3_ui_lang_ru);
+            else if (Md3Theme.UI_LANG_JA.equals(value))     friendly = getString(R.string.md3_ui_lang_ja);
+            else if (Md3Theme.UI_LANG_KO.equals(value))     friendly = getString(R.string.md3_ui_lang_ko);
+            else if (Md3Theme.UI_LANG_FR.equals(value))     friendly = getString(R.string.md3_ui_lang_fr);
+            else if (Md3Theme.UI_LANG_DE.equals(value))     friendly = getString(R.string.md3_ui_lang_de);
+            else if (Md3Theme.UI_LANG_ES.equals(value))     friendly = getString(R.string.md3_ui_lang_es);
+            else friendly = value;
+        } catch (Throwable t) {
+            // Resource可能还没加载或不存在,fallback母语名
+            if (Md3Theme.UI_LANG_SYSTEM.equals(value)) friendly = "Follow System";
+            else if (Md3Theme.UI_LANG_ZH_CN.equals(value)) friendly = "简体中文";
+            else if (Md3Theme.UI_LANG_ZH_TW.equals(value)) friendly = "繁體中文";
+            else if (Md3Theme.UI_LANG_EN.equals(value))    friendly = "English";
+            else if (Md3Theme.UI_LANG_RU.equals(value))    friendly = "Русский";
+            else if (Md3Theme.UI_LANG_JA.equals(value))    friendly = "日本語";
+            else if (Md3Theme.UI_LANG_KO.equals(value))    friendly = "한국어";
+            else if (Md3Theme.UI_LANG_FR.equals(value))    friendly = "Français";
+            else if (Md3Theme.UI_LANG_DE.equals(value))    friendly = "Deutsch";
+            else if (Md3Theme.UI_LANG_ES.equals(value))    friendly = "Español";
+            else friendly = value;
+        }
+        return friendly + "  ·  " + value;
+    }
+
+    private void buildUiLangSpinner() {
+        if (uiLangSpinner == null) return;
+        String[] raw = Md3Theme.UI_LANG_VALUES;
+        String[] labels = new String[raw.length];
+        for (int i = 0; i < raw.length; i++) {
+            labels[i] = uiLangDisplayName(raw[i]);
+        }
+        uiLangAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, labels) {
+            @Override public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+                try {
+                    Md3Tokens t = Md3Theme.buildTokens(getContext());
+                    ((TextView)v).setTextColor(t.onSurface);
+                } catch (Throwable ignore) {}
+                return v;
+            }
+            @Override public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View v = super.getDropDownView(position, convertView, parent);
+                try {
+                    Md3Tokens t = Md3Theme.buildTokens(getContext());
+                    TextView tv = (TextView)v;
+                    tv.setTextColor(t.onSurface);
+                    tv.setPadding(dp(16), dp(12), dp(16), dp(12));
+                    v.setBackgroundColor(t.surfaceContainerHigh);
+                } catch (Throwable ignore) {}
+                return v;
+            }
+        };
+        uiLangAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        uiLangSpinner.setAdapter(uiLangAdapter);
+        int selIdx = 0;
+        for (int i = 0; i < raw.length; i++) {
+            String a = (raw[i] == null) ? "" : raw[i];
+            String b = (lastUiLang == null) ? "" : lastUiLang;
+            if (a.equals(b)) { selIdx = i; break; }
+        }
+        try { uiLangSpinner.setSelection(selIdx, false); } catch (Throwable ignore) {}
     }
 
     private void buildGameLangSpinner() {
@@ -267,16 +329,17 @@ public class SettingsActivity extends Activity {
         if (previewOutlined != null) previewOutlined.setOnClickListener(previewClick);
 
         // ===== Language =====
-        if (uiLangGroup != null) {
-            uiLangGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    String lang = Md3Theme.UI_LANG_SYSTEM;
-                    if (checkedId == R.id.md3_ui_lang_zh_cn) lang = Md3Theme.UI_LANG_ZH_CN;
-                    else if (checkedId == R.id.md3_ui_lang_zh_tw) lang = Md3Theme.UI_LANG_ZH_TW;
-                    else if (checkedId == R.id.md3_ui_lang_en) lang = Md3Theme.UI_LANG_EN;
-                    Md3Theme.setUiLang(SettingsActivity.this, lang);
-                    if (!lang.equals(lastUiLang)) { lastUiLang = lang; refreshTheme(); }
+        if (uiLangSpinner != null) {
+            uiLangSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    try {
+                        String raw = Md3Theme.UI_LANG_VALUES[position];
+                        String value = (raw == null) ? Md3Theme.UI_LANG_SYSTEM : raw;
+                        Md3Theme.setUiLang(SettingsActivity.this, value);
+                        if (!value.equals(lastUiLang)) { lastUiLang = value; refreshTheme(); }
+                    } catch (Throwable ignore) {}
                 }
+                @Override public void onNothingSelected(AdapterView<?> parent) {}
             });
         }
         if (gameLangSpinner != null) {
