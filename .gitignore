@@ -1,3 +1,13 @@
 gen/
 bin/
 *.o
+apk*/
+*.apk
+*.ap_
+*.dex
+*.class
+*.jar
+local.properties
+.gradle/
+build/
+*.log

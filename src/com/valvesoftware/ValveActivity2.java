@@ -27,11 +27,14 @@ public class ValveActivity2 { // not activity, i am lazy to change native method
 	public static native int setenv(String name, String value, int overwrite);
 	private static native void nativeOnActivityResult(Activity activity, int i, int i2, Intent intent);
 
-	public static boolean findGameinfo(String path)
+	public static int findGameinfo(String path)
 	{
 		File dir = new File(path);
+		boolean havePlatform = false;
+		boolean haveGameinfo = false;
+
 		if( !dir.isDirectory() )
-			return false;
+			return 0;
 
 		for( File file : dir.listFiles() )
 		{
@@ -40,12 +43,21 @@ public class ValveActivity2 { // not activity, i am lazy to change native method
 				for( File f : file.listFiles() )
 				{
 					if( f.getName().toLowerCase().equals("gameinfo.txt") )
-						return true;
+						haveGameinfo = true;
 				}
 			}
+
+			if( file.getName().toLowerCase().equals("platform") )
+				havePlatform = true;
 		}
 
-		return false;
+		if( !haveGameinfo )
+			return 0;
+
+		if( !havePlatform )
+			return -1;
+
+		return 1;
 	}
 
 	static public boolean isModGameinfoExists(String path)
@@ -63,7 +75,7 @@ public class ValveActivity2 { // not activity, i am lazy to change native method
 		return false;
 	}
 
-	static public boolean preInit(Context context, Intent intent)
+	static public int preInit(Context context, Intent intent)
 	{
 		mPref = context.getSharedPreferences("mod", 0);
 		String gamepath = mPref.getString("gamepath", LauncherActivity.getDefaultDir() + "/srceng");
@@ -71,10 +83,16 @@ public class ValveActivity2 { // not activity, i am lazy to change native method
 		if( gamedir == null || gamedir.isEmpty() )
 			gamedir = "hl2";
 
-		if( !findGameinfo(gamepath) || !isModGameinfoExists(gamepath+"/"+gamedir) )
-			return false;
+		int haveGameinfo = findGameinfo(gamepath);
+		boolean haveModGameinfo = isModGameinfoExists(gamepath+"/"+gamedir);
 
-		return true;
+		if( haveGameinfo == 0 || !haveModGameinfo )
+			return 0;
+
+		if( haveGameinfo == -1 )
+			return -1;
+
+		return 1;
 	}
 
 	static public void initNatives(Context context, Intent intent) {
@@ -92,14 +110,14 @@ public class ValveActivity2 { // not activity, i am lazy to change native method
 			gamedir = "hl2";
 
 		if( argv == null || argv.isEmpty() )
-			argv = mPref.getString("argv", "-console");
+			argv = mPref.getString("argv", "-nobackgroundlevel");
 
 		argv = "-game "+gamedir+" "+argv;
 
 		if( gamelibdir != null && !gamelibdir.isEmpty() )
 			setenv( "APP_MOD_LIB", gamelibdir, 1 );
 
-		ExtractAssets.extractVPK(context, false);
+		ExtractAssets.extractAssets(context);
 
 		String vpks = context.getFilesDir().getPath()+"/"+ExtractAssets.VPK_NAME;
 		if( customVPK != null && !customVPK.isEmpty() )

@@ -31,4 +31,5 @@
 
     <string name="srceng_dir_choice_btn">Указать данный путь</string>
     <string name="srceng_update">Доступно обновление</string>
+    <string name="srceng_launcher_error_find_platform">Скопируй platform папку бля!</string>
 </resources>

@@ -292,13 +292,22 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         }
 
 
-        if( !ValveActivity2.preInit(this, getIntent()) )
+    if (Build.VERSION.SDK_INT >= 24) {
+        SDLActivity.this.getWindow().setSustainedPerformanceMode(true);
+    }
+
+
+        int preinitResult = ValveActivity2.preInit(this, getIntent());
+        if( preinitResult <= 0 )
         {
         	mBrokenLibraries = true; // Funny hack, but should work
             mSingleton = this;
             AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
             dlgAlert.setTitle(getResources().getString(R.string.srceng_launcher_error));
-            dlgAlert.setMessage(getResources().getString(R.string.srceng_launcher_error_find_gameinfo));
+            if( preinitResult == -1 )
+                dlgAlert.setMessage(getResources().getString(R.string.srceng_launcher_error_find_platform));
+            else
+                dlgAlert.setMessage(getResources().getString(R.string.srceng_launcher_error_find_gameinfo));
             dlgAlert.setNegativeButton(R.string.srceng_launcher_set, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int id) {

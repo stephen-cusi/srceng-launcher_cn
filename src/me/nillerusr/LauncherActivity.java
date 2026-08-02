@@ -207,7 +207,7 @@ public class LauncherActivity extends Activity {
 //		check_updates = (CheckBox)findViewById(R.id.checkbox_check_updates);
 		String last_commit = getResources().getString(R.string.last_commit);
 
-		cmdArgs.setText(mPref.getString("argv", "-console"));
+		cmdArgs.setText(mPref.getString("argv", "-nobackgroundlevel"));
 		GamePath.setText(mPref.getString("gamepath", getDefaultDir() + "/srceng"));
 		EnvEdit.setText(mPref.getString("env", "LIBGL_USEVBO=0"));
 

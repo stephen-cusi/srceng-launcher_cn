@@ -34,4 +34,5 @@
 
     <string name="srceng_dir_choice_btn">Set current directory</string>
     <string name="srceng_update">Update avalible!</string>
+    <string name="srceng_launcher_error_find_platform">platform directory is missing!</string>
 </resources>

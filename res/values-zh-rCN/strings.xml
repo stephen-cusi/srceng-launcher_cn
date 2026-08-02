@@ -36,4 +36,5 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="srceng_game_hl2ep1">半条命2：第一章</string>
     <string name="srceng_game_hl2ep2">半条命2：第二章</string>
     <string name="srceng_game_portal">传送门</string>
+    <string name="srceng_launcher_error_find_platform">platform 目录缺失！</string>
 </resources>

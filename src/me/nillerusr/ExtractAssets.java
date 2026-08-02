@@ -14,7 +14,7 @@ public class ExtractAssets
 	static SharedPreferences mPref;
 
 	public static final String VPK_NAME = "extras_dir.vpk";
-	public static int PAK_VERSION = 9;
+	public static int PAK_VERSION = 24;
 
     private static int chmod(String path, int mode)
     {
@@ -46,24 +46,19 @@ public class ExtractAssets
 		return ret;
 	}
 
-	public static void extractVPK(Context context, Boolean force) 
+	public static void extractAsset(Context context, String asset, Boolean force)
 	{
-		ApplicationInfo appinf = context.getApplicationInfo();
-
-		FileOutputStream os = null;
+		android.content.res.AssetManager am = context.getAssets();
 		try {
-			if( mPref == null )
-				mPref = context.getSharedPreferences("mod", 0);
+			String asset_path = context.getFilesDir().getPath() + "/" + asset;
+			File asset_file = new File(asset_path);
+			Boolean asset_exists = asset_file.exists();
 
-			File file = new File( context.getFilesDir().getPath() +"/"+ VPK_NAME );
-			if( !file.exists() )
-				force = true;
-
-			if( mPref.getInt( "pakversion", 0 ) == PAK_VERSION && !force )
+			if( !force && asset_exists )
 				return;
 
-			InputStream is = context.getAssets().open(VPK_NAME);
-			os = new FileOutputStream( context.getFilesDir().getPath() +"/"+ VPK_NAME);
+			InputStream is = am.open(asset);
+			FileOutputStream os = new FileOutputStream(context.getFilesDir().getPath() + "/tmp");
 			byte[] buffer = new byte[8192];
 			while (true) {
 				int length = is.read(buffer);
@@ -73,16 +68,57 @@ public class ExtractAssets
 				os.write(buffer, 0, length);
 			}
 
-			SharedPreferences.Editor editor = mPref.edit();
-			editor.putInt( "pakversion", PAK_VERSION );
-			editor.commit();
+			os.close();
+			File tmp = new File(context.getFilesDir().getPath() + "/tmp");
+			if( asset_exists )
+				asset_file.delete();
 
-			chmod(appinf.dataDir, 0777);
-			chmod(context.getFilesDir().getPath(), 0777);
-			chmod(context.getFilesDir().getPath() +"/"+ VPK_NAME, 0777);
+			File dst = new File(context.getFilesDir().getPath() + "/" + asset);
+			tmp.renameTo(dst);
 		}
 		catch (Exception e) {
-			Log.e("SRCAPK", "Failed to extract vpk:" + e.toString());
+			Log.e("SRCAPK", "Failed to extract " + asset + ":" + e.toString());
 		}
+		finally {
+			chmod(context.getFilesDir().getPath() + "/" + asset, 0777);
+		}
+	}
+
+	public static void extractAssets(Context context)
+	{
+		ApplicationInfo appinf = context.getApplicationInfo();
+		chmod(appinf.dataDir, 0777);
+		chmod(context.getFilesDir().getPath(), 0777);
+
+		extractVPK(context);
+		extractAsset(context, "DroidSansFallback.ttf", false);
+		extractAsset(context, "LiberationMono-Regular.ttf", false);
+		extractAsset(context, "dejavusans-boldoblique.ttf", false);
+		extractAsset(context, "dejavusans-bold.ttf", false);
+		extractAsset(context, "dejavusans-oblique.ttf", false);
+		extractAsset(context, "dejavusans.ttf", false);
+		extractAsset(context, "Itim-Regular.otf", false);
+	}
+
+	public static void extractVPK(Context context)
+	{
+		if( mPref == null )
+			mPref = context.getSharedPreferences("mod", 0);
+
+		int version = mPref.getInt( "pakversion", 0 );
+		Boolean force = (version != PAK_VERSION);
+
+		extractAsset(context, VPK_NAME, force);
+
+		SharedPreferences.Editor editor = mPref.edit();
+		editor.putInt( "pakversion", PAK_VERSION );
+		editor.commit();
+	}
+
+	// Old API kept for compatibility (not used anymore in 1.17)
+	@Deprecated
+	public static void extractVPK(Context context, Boolean force)
+	{
+		extractAssets(context);
 	}
 }
