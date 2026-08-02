@@ -190,6 +190,7 @@
             android:tag="primary"/>
 
         <LinearLayout
+            android:id="@id/md3_preview_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -217,6 +218,7 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
                 <Button
+                    android:id="@id/md3_preview_btn_filled"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_preview_primary"
@@ -224,6 +226,7 @@
                     android:tag="filled"
                     android:layout_marginEnd="8dp"/>
                 <Button
+                    android:id="@id/md3_preview_btn_tonal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_preview_secondary"
@@ -231,6 +234,7 @@
                     android:tag="tonal"
                     android:layout_marginEnd="8dp"/>
                 <Button
+                    android:id="@id/md3_preview_btn_outlined"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_preview_outlined"

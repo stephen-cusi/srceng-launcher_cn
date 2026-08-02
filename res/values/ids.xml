@@ -21,4 +21,10 @@
     <item type="id" name="md3_seed_container"/>
     <!-- 设置条目行 -->
     <item type="id" name="md3_row_shell"/>
+    <!-- 设置页预览区按钮 -->
+    <item type="id" name="md3_preview_btn_filled"/>
+    <item type="id" name="md3_preview_btn_tonal"/>
+    <item type="id" name="md3_preview_btn_outlined"/>
+    <!-- 设置页预览卡片容器 -->
+    <item type="id" name="md3_preview_card"/>
 </resources>

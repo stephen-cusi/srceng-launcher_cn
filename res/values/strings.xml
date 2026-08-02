@@ -47,11 +47,16 @@
     <string name="md3_dynamic_color">Dynamic color</string>
     <string name="md3_dynamic_color_desc">Use colors from your wallpaper (Android 8.1+)</string>
     <string name="md3_dynamic_color_not_available">Dynamic color is not available on this system</string>
+    <string name="md3_dynamic_color_on_hint">Dynamic color enabled. Accent colors will be sourced from your wallpaper; manual seed colors will take effect only when wallpaper colors are unavailable.</string>
+    <string name="md3_seed_ignored_when_dynamic">Dynamic color is active — seed color currently has no effect. Turn off dynamic color to use the manual seed.</string>
     <string name="md3_seed_color">Accent color</string>
     <string name="md3_preview">Preview</string>
     <string name="md3_preview_primary">Primary</string>
     <string name="md3_preview_secondary">Filled tonal</string>
     <string name="md3_preview_outlined">Outlined</string>
+    <string name="md3_preview_hint_filled">Filled button — used for the primary action.</string>
+    <string name="md3_preview_hint_tonal">Tonal button — used for medium-emphasis actions that need less prominence.</string>
+    <string name="md3_preview_hint_outlined">Outlined button — used for important actions paired with a filled button.</string>
     <string name="md3_preview_text">This is a preview card showing how cards, buttons and text look with the currently selected scheme.</string>
     <string name="md3_back">Back</string>
     <string name="md3_section_general">General</string>

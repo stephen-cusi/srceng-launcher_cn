@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -27,6 +28,8 @@ public class SettingsActivity extends Activity {
     private RadioButton darkSystem, darkOff, darkOn;
     private Switch dynamicSwitch;
     private LinearLayout seedContainer;
+    private LinearLayout previewCard;
+    private Button previewFilled, previewTonal, previewOutlined;
 
     private int lastDarkMode = Md3Theme.THEME_SYSTEM;
     private boolean lastDynamic = false;
@@ -45,6 +48,7 @@ public class SettingsActivity extends Activity {
         bindState();
         bindListeners();
         buildSeedColors();
+        updateSeedVisualState();
     }
 
     private void findViews() {
@@ -54,6 +58,10 @@ public class SettingsActivity extends Activity {
         darkOn = findViewById(R.id.md3_dark_on);
         dynamicSwitch = findViewById(R.id.md3_dynamic_switch);
         seedContainer = findViewById(R.id.md3_seed_container);
+        previewCard = findViewById(R.id.md3_preview_card);
+        previewFilled = findViewById(R.id.md3_preview_btn_filled);
+        previewTonal = findViewById(R.id.md3_preview_btn_tonal);
+        previewOutlined = findViewById(R.id.md3_preview_btn_outlined);
 
         ImageButton back = findViewById(R.id.md3_button_back);
         if (back != null) {
@@ -99,9 +107,37 @@ public class SettingsActivity extends Activity {
                     return;
                 }
                 Md3Theme.setDynamicColor(SettingsActivity.this, isChecked);
+                updateSeedVisualState();
+                if (isChecked) {
+                    Toast.makeText(SettingsActivity.this, R.string.md3_dynamic_color_on_hint, Toast.LENGTH_LONG).show();
+                }
                 if (isChecked != lastDynamic) { lastDynamic = isChecked; refreshTheme(); }
             }
         });
+
+        // 预览区按钮 —— 点击有明确反馈
+        View.OnClickListener previewClick = new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                if (v == previewFilled) {
+                    Toast.makeText(SettingsActivity.this, R.string.md3_preview_hint_filled, Toast.LENGTH_SHORT).show();
+                } else if (v == previewTonal) {
+                    Toast.makeText(SettingsActivity.this, R.string.md3_preview_hint_tonal, Toast.LENGTH_SHORT).show();
+                } else if (v == previewOutlined) {
+                    Toast.makeText(SettingsActivity.this, R.string.md3_preview_hint_outlined, Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        if (previewFilled != null) previewFilled.setOnClickListener(previewClick);
+        if (previewTonal != null) previewTonal.setOnClickListener(previewClick);
+        if (previewOutlined != null) previewOutlined.setOnClickListener(previewClick);
+    }
+
+    /** 动态取色开启时，种子色区视觉上降级（半透明 + 提示 Toast 互斥） */
+    private void updateSeedVisualState() {
+        boolean dyn = Md3Theme.isDynamicColorAvailable() && Md3Theme.getDynamicColor(this);
+        if (seedContainer != null) {
+            seedContainer.setAlpha(dyn ? 0.42f : 1.0f);
+        }
     }
 
     private void buildSeedColors() {
@@ -152,6 +188,10 @@ public class SettingsActivity extends Activity {
             final int finalI = i;
             wrap.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View vv) {
+                    // 动态取色开启时提示种子色不会立即生效
+                    if (Md3Theme.isDynamicColorAvailable() && Md3Theme.getDynamicColor(SettingsActivity.this)) {
+                        Toast.makeText(SettingsActivity.this, R.string.md3_seed_ignored_when_dynamic, Toast.LENGTH_LONG).show();
+                    }
                     Md3Theme.setSeedColor(SettingsActivity.this, color);
                     if (lastSeed != color) { lastSeed = color;
                         // update rings

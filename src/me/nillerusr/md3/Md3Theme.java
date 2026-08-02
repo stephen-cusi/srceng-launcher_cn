@@ -39,16 +39,9 @@ import me.nillerusr.md3.Md3Tokens;
 import java.lang.reflect.Method;
 
 /**
- * 手工 MD3 主题工具（零依赖 AndroidX / Material Components）
+ * Hand-crafted MD3 theme utilities (zero dependency on Material Components / AndroidX).
  *
- * 1) 持久化设置（mod SharedPreferences）：
- *    - theme_mode : 0 = 跟随系统，1 = 强制浅色，2 = 强制深色
- *    - dynamic_color : boolean = 壁纸动态取色（API 27+）
- *    - seed_color : int     = 动态取色不可用或关闭时的主色
- *
- * 2) 颜色系统：seed (ARGB) → HSL 生成主/辅/第三色 + 各 4 级 tonal palette（容器 + onColor） + surface 5 级
- *
- * 3) apply(Activity) 流程：setTheme(light/dark) → 填充 tokens → window 状态栏/导航栏着色 → 对 View 树递归打补丁
+ * Tagging convention: supports both android:tag="..." (legacy string) AND R.id.md3_*_tag id-tag.
  */
 public final class Md3Theme {
     private Md3Theme() {}
@@ -61,16 +54,15 @@ public final class Md3Theme {
     public static final int THEME_LIGHT  = 1;
     public static final int THEME_DARK   = 2;
 
-    // 4 个默认种子色（启动器设置中用来做色卡）
     public static final int[] SEED_PRESETS = new int[]{
-        0xFFF79A10, // HL 橙（默认）
-        0xFF7C4DFF, // 紫
-        0xFF0088FF, // 蓝
-        0xFF00A66B, // 绿
+        0xFFF79A10, // HL orange (default)
+        0xFF7C4DFF, // purple
+        0xFF0088FF, // blue
+        0xFF00A66B, // green
     };
 
     // =========================================================
-    // 持久化
+    // Persistence
     // =========================================================
     public static SharedPreferences getPrefs(Context ctx) {
         return ctx.getSharedPreferences("mod", Context.MODE_PRIVATE);
@@ -98,12 +90,42 @@ public final class Md3Theme {
         getPrefs(ctx).edit().putInt(SP_KEY_SEED_COLOR, color).apply();
     }
 
-    public static boolean isDynamicColorAvailable() {
-        return Build.VERSION.SDK_INT >= 27;
+    public static boolean isDynamicColorAvailable() { return Build.VERSION.SDK_INT >= 27; }
+
+    // =========================================================
+    // Tag helpers (supports both android:tag string and R.id.* tags)
+    // =========================================================
+    private static String getStrTag(View v) {
+        try {
+            Object o = v.getTag(R.id.md3_btn_style);
+            if (o instanceof String) return (String) o;
+        } catch (Throwable ignore) {}
+        try {
+            Object o = v.getTag(R.id.md3_text_role);
+            if (o instanceof String) return (String) o;
+        } catch (Throwable ignore) {}
+        try {
+            Object o = v.getTag();
+            if (o instanceof String) return (String) o;
+        } catch (Throwable ignore) {}
+        return null;
+    }
+    private static boolean hasStrTag(View v, String exact) {
+        if (exact == null) return false;
+        try {
+            Object o = v.getTag();
+            if (exact.equals(o)) return true;
+        } catch (Throwable ignore) {}
+        // also check R.id.* tag slots
+        int[] ids = new int[]{ R.id.md3_btn_style, R.id.md3_text_role };
+        for (int id : ids) {
+            try { Object o = v.getTag(id); if (exact.equals(o)) return true; } catch (Throwable ignore) {}
+        }
+        return false;
     }
 
     // =========================================================
-    // 深浅模式判定
+    // Dark mode resolution
     // =========================================================
     public static boolean resolveDark(Context ctx) {
         int mode = getThemeMode(ctx);
@@ -118,7 +140,7 @@ public final class Md3Theme {
     }
 
     // =========================================================
-    // 种子色获取（动态壁纸色 / 静态种子）
+    // Seed color resolution (dynamic wallpaper / static seed)
     // =========================================================
     @TargetApi(27)
     private static Integer tryGetWallpaperSeed(Context ctx) {
@@ -126,22 +148,21 @@ public final class Md3Theme {
             WallpaperManager wm = WallpaperManager.getInstance(ctx);
             android.app.WallpaperColors wc = wm.getWallpaperColors(WallpaperManager.FLAG_SYSTEM);
             if (wc == null) return null;
-            int[] c = new int[3];
-            // 提取主色 / 次色 / 第三色，取饱和度最高的那个
             int[] colors = new int[] {
                 wc.getPrimaryColor()   == null ? 0 : wc.getPrimaryColor().toArgb(),
                 wc.getSecondaryColor() == null ? 0 : wc.getSecondaryColor().toArgb(),
                 wc.getTertiaryColor()  == null ? 0 : wc.getTertiaryColor().toArgb()
             };
             int best = 0; float bestSat = -1f;
-            for (int color : colors) {
-                if (color == 0 || Color.alpha(color) < 128) continue;
+            for (int c : colors) {
+                if (c == 0 || Color.alpha(c) < 128) continue;
                 float[] hsv = new float[3];
-                Color.colorToHSV(color, hsv);
-                if (hsv[1] > bestSat) { bestSat = hsv[1]; best = color; }
+                Color.colorToHSV(c, hsv);
+                // ignore too-bright or too-dark pastels where hue influence is weak
+                if (hsv[1] < 0.10f || hsv[2] < 0.15f || hsv[2] > 0.97f) continue;
+                if (hsv[1] > bestSat) { bestSat = hsv[1]; best = c; }
             }
-            if (best == 0) return null;
-            return best;
+            return best == 0 ? null : best;
         } catch (Throwable ignored) {
             return null;
         }
@@ -156,125 +177,172 @@ public final class Md3Theme {
     }
 
     // =========================================================
-    // 构建 MD3 tokens（根据 seed + dark 生成完整调色板）
+    // Build MD3 color tokens from seed + dark flag
     // =========================================================
     public static Md3Tokens buildTokens(Context ctx) {
         boolean dark = resolveDark(ctx);
         int seed = resolveSeedColor(ctx);
-        // 主/辅/第三色：把 seed 色相旋转 0 / +60 / -60（HSL）
+
+        // derive primary/secondary/tertiary hues from seed (HSL-ish approximations)
         float[] hsv = new float[3];
         Color.colorToHSV(seed, hsv);
-        float primaryHue = hsv[0];
-        int primarySeed = Color.HSVToColor(new float[]{primaryHue,          clamp(hsv[1], 0.45f, 0.85f), clamp(hsv[2], 0.40f, 0.85f)});
-        int secondarySeed = Color.HSVToColor(new float[]{wrapHue(primaryHue + 55), clamp(hsv[1]*0.72f, 0.25f, 0.70f), clamp(hsv[2]*0.90f+0.04f, 0.45f, 0.85f)});
-        int tertiarySeed  = Color.HSVToColor(new float[]{wrapHue(primaryHue - 55), clamp(hsv[1]*0.78f, 0.28f, 0.75f), clamp(hsv[2]*0.92f+0.03f, 0.45f, 0.85f)});
+        float pH = hsv[0];
+        // clamp to reasonable saturation/value to guarantee readable tones
+        float seedSat = clamp(hsv[1], 0.55f, 0.82f);
+        float seedVal = clamp(hsv[2], 0.55f, 0.78f);
+
+        int primarySeed   = Color.HSVToColor(new float[]{ pH,                           seedSat,        seedVal });
+        int secondarySeed = Color.HSVToColor(new float[]{ wrapHue(pH + 45),             seedSat*0.62f,  seedVal });
+        int tertiarySeed  = Color.HSVToColor(new float[]{ wrapHue(pH - 55),             seedSat*0.75f,  seedVal });
         int errorSeed     = 0xFFBA1A1A;
 
         Md3Tokens t = new Md3Tokens();
         t.dark = dark;
-        applyTonalRole(t.primary,   primarySeed,   dark);
-        applyTonalRole(t.secondary, secondarySeed, dark);
-        applyTonalRole(t.tertiary,  tertiarySeed,  dark);
-        applyTonalRole(t.error,     errorSeed,     dark);
 
-        // Neutral (surface/text)：取主色最小饱和
-        int neutralSeed = Color.HSVToColor(new float[]{primaryHue, Math.max(0.04f, hsv[1]*0.12f), dark ? 0.10f : 0.98f});
-        applyNeutrals(t, neutralSeed, dark);
+        fillRole(t.primary,   primarySeed,   dark);
+        fillRole(t.secondary, secondarySeed, dark);
+        fillRole(t.tertiary,  tertiarySeed,  dark);
+        fillRole(t.error,     errorSeed,     dark);
+
+        // Neutral palette (surface family) - STABLE anchor so surface never clashes with text
+        float neutralHue = pH;
+        float neutralSat = Math.max(0.05f, seedSat * 0.12f); // keep it very close to grayscale, with warm/cool hint
+        applyStableSurfaces(t, neutralHue, neutralSat, dark);
+
         return t;
     }
 
-    private static void applyTonalRole(Md3Tokens.Role r, int seed, boolean dark) {
+    private static void fillRole(Md3Tokens.Role r, int seed, boolean dark) {
         if (dark) {
-            r.color         = tonal(seed, 80);
-            r.onColor       = tonal(seed, 20);
-            r.container     = tonal(seed, 30);
-            r.onContainer   = tonal(seed, 90);
+            r.color         = tone(seed, 80, 40);
+            r.onColor       = tone(seed, 20, 20);
+            r.container     = tone(seed, 30, 50);
+            r.onContainer   = tone(seed, 90, 10);
         } else {
-            r.color         = tonal(seed, 40);
-            r.onColor       = tonal(seed, 100);
-            r.container     = tonal(seed, 90);
-            r.onContainer   = tonal(seed, 10);
+            r.color         = tone(seed, 40, 60);
+            r.onColor       = tone(seed, 100, 0);
+            r.container     = tone(seed, 90, 8);
+            r.onContainer   = tone(seed, 10, 40);
+        }
+        // Guarantee contrast for primary/on-primary (minimum ~ AA for 4.5:1)
+        if (!dark) ensureContrast(r, true);
+        else       ensureContrast(r, false);
+    }
+
+    private static void ensureContrast(Md3Tokens.Role r, boolean onLightBg) {
+        // color-onColor contrast: if luminance too close, push onColor to white/black
+        if (luminance(r.color) > 0.6f) r.onColor = blacken(r.onColor, 200);
+        if (luminance(r.color) < 0.18f) r.onColor = whiten(r.onColor, 235);
+        if (luminance(r.container) > 0.7f) r.onContainer = blacken(r.onContainer, 200);
+        if (luminance(r.container) < 0.22f) r.onContainer = whiten(r.onContainer, 235);
+    }
+
+    private static void applyStableSurfaces(Md3Tokens t, float neutralHue, float sat, boolean dark) {
+        // Build a proper well-ordered surface stack from lightest→highest (tone)
+        if (dark) {
+            // dark: ascending tone means ascending lightness
+            t.surfaceContainerLowest = n(neutralHue, sat, 0.04f);
+            t.surfaceDim             = n(neutralHue, sat, 0.05f);
+            t.surface                = n(neutralHue, sat, 0.06f);
+            t.surfaceContainerLow    = n(neutralHue, sat, 0.09f);
+            t.surfaceContainer       = n(neutralHue, sat, 0.12f);
+            t.surfaceContainerHigh   = n(neutralHue, sat, 0.16f);
+            t.surfaceContainerHighest= n(neutralHue, sat, 0.22f);
+            t.surfaceBright          = n(neutralHue, sat, 0.26f);
+            t.onSurface              = ensureAgainst(t.surface,      0xFFF2EFE8, 0xFF0D0C0A, true);
+            t.onSurfaceVariant       = ensureAgainst(t.surfaceContainerHigh, 0xFFC8BDB1, 0xFF4E443A, true);
+            t.outline                = ensureAgainst(t.surfaceContainerHigh, 0xFF988B7E, 0xFF685D53, true);
+            t.outlineVariant         = ensureAgainst(t.surfaceContainerLow,  0xFF4A4036, 0xFFD8C8BB, true);
+            t.inverseSurface         = 0xFFEDE6DF;
+            t.inverseOnSurface       = 0xFF201C18;
+            t.inversePrimary         = t.primary.color;
+            t.statusBar = t.surface;
+            t.navBar    = t.surfaceContainer;
+        } else {
+            t.surfaceContainerLowest = 0xFFFFFFFF;
+            t.surfaceBright          = n(neutralHue, sat, 0.995f);
+            t.surface                = n(neutralHue, sat, 0.985f);
+            t.surfaceContainerLow    = n(neutralHue, sat, 0.965f);
+            t.surfaceContainer       = n(neutralHue, sat, 0.945f);
+            t.surfaceContainerHigh   = n(neutralHue, sat, 0.915f);
+            t.surfaceContainerHighest= n(neutralHue, sat, 0.885f);
+            t.surfaceDim             = n(neutralHue, sat, 0.855f);
+            t.onSurface              = ensureAgainst(t.surface,                 0xFF1C1B17, 0xFFF2EFE8, false);
+            t.onSurfaceVariant       = ensureAgainst(t.surfaceContainerHigh,   0xFF4A443B, 0xFFC8BDB1, false);
+            t.outline                = ensureAgainst(t.surfaceContainerHigh,   0xFF796C60, 0xFF958B7E, false);
+            t.outlineVariant         = ensureAgainst(t.surfaceContainerLow,    0xFFCAC0B4, 0xFF4C4037, false);
+            t.inverseSurface         = 0xFF322C27;
+            t.inverseOnSurface       = 0xFFF7F1EA;
+            t.inversePrimary         = tone(t.primary.color, 80, 0);
+            t.statusBar = t.surface;
+            t.navBar    = t.surfaceContainerHighest;
         }
     }
 
-    private static void applyNeutrals(Md3Tokens t, int neutralSeed, boolean dark) {
-        if (dark) {
-            // Dark surfaces
-            t.surfaceDim             = tonal(neutralSeed, 6);
-            t.surface                = tonal(neutralSeed, 6);
-            t.surfaceBright          = tonal(neutralSeed, 24);
-            t.surfaceContainerLowest = tonal(neutralSeed, 4);
-            t.surfaceContainerLow    = tonal(neutralSeed, 10);
-            t.surfaceContainer       = tonal(neutralSeed, 12);
-            t.surfaceContainerHigh   = tonal(neutralSeed, 17);
-            t.surfaceContainerHighest= tonal(neutralSeed, 22);
-            t.onSurface              = tonal(neutralSeed, 90);
-            t.onSurfaceVariant       = tonal(neutralSeed, 80);
-            t.outline                = tonal(neutralSeed, 60);
-            t.outlineVariant         = tonal(neutralSeed, 30);
-            t.inverseSurface         = tonal(neutralSeed, 90);
-            t.inverseOnSurface       = tonal(neutralSeed, 20);
-            t.statusBar              = t.surface;
-            t.navBar                 = t.surfaceContainer;
-        } else {
-            t.surfaceDim             = tonal(neutralSeed, 87);
-            t.surface                = tonal(neutralSeed, 98);
-            t.surfaceBright          = tonal(neutralSeed, 98);
-            t.surfaceContainerLowest = tonal(neutralSeed, 100);
-            t.surfaceContainerLow    = tonal(neutralSeed, 96);
-            t.surfaceContainer       = tonal(neutralSeed, 94);
-            t.surfaceContainerHigh   = tonal(neutralSeed, 92);
-            t.surfaceContainerHighest= tonal(neutralSeed, 90);
-            t.onSurface              = tonal(neutralSeed, 10);
-            t.onSurfaceVariant       = tonal(neutralSeed, 30);
-            t.outline                = tonal(neutralSeed, 50);
-            t.outlineVariant         = tonal(neutralSeed, 80);
-            t.inverseSurface         = tonal(neutralSeed, 20);
-            t.inverseOnSurface       = tonal(neutralSeed, 95);
-            t.statusBar              = t.surface;
-            t.navBar                 = t.surfaceContainerHighest;
-        }
-        // inversePrimary（和 primary 一致，方便 Snackbar 等）
-        t.inversePrimary = dark ? tonal(seedColorFix(neutralSeed), 40) : tonal(seedColorFix(neutralSeed), 80);
-    }
-    private static int seedColorFix(int n) { return n; }
-
-    private static float clamp(float v, float lo, float hi) {
-        if (v < lo) return lo; if (v > hi) return hi; return v;
-    }
-    private static float wrapHue(float h) {
-        while (h < 0) h += 360f;
-        while (h >= 360f) h -= 360f;
-        return h;
+    /** Pick `ifLight` / `ifDark` based on luminance of bg */
+    private static int ensureAgainst(int bg, int ifLight, int ifDark, boolean bgIsDarkSide) {
+        float lum = luminance(bg);
+        if (bgIsDarkSide) return ifLight;
+        if (lum > 0.75f) return ifLight;
+        if (lum < 0.30f) return ifDark;
+        return ifLight;
     }
 
-    /** 根据色调种子（HSL 近似）和目标 tone (L* 0-100) 生成颜色，alpha=FF */
-    private static int tonal(int seed, int tone) {
+    private static int n(float hue, float sat, float v) {
+        return 0xFF000000 | (0x00FFFFFF & Color.HSVToColor(new float[]{ wrapHue(hue), clamp(sat, 0.03f, 0.4f), clamp(v, 0f, 1f) }));
+    }
+
+    // Generate a tone (lightness / L*) approximation. `satBoost` adds saturation for higher tones.
+    // toneTarget is 0..100 but interpreted as value 0..1 and then adjusted by tone semantics.
+    private static int tone(int seed, int toneTarget, int satBoost) {
         float[] hsv = new float[3];
         Color.colorToHSV(seed, hsv);
-        // 保持色相不变；饱和度在 tone≤10 / tone≥90 时下降
         float s = hsv[1];
-        if (tone <= 10) s *= (0.25f + 0.75f * tone/10f);
-        else if (tone >= 90) s *= (1.0f - 0.92f * (tone - 90)/10f);
-        float v;
-        if (tone <= 10) v = 0.05f + 0.07f * tone/10f;
-        else if (tone <= 50) v = 0.15f + 0.55f * (tone-10)/40f;
-        else if (tone <= 90) v = 0.70f + 0.25f * (tone-50)/40f;
-        else v = 0.95f + 0.05f * (tone-90)/10f;
-        if (v > 1f) v = 1f;
-        if (s < 0f) s = 0f; if (s > 1f) s = 1f;
-        return 0xFF000000 | (0x00FFFFFF & Color.HSVToColor(new float[]{hsv[0], s, v}));
+        float v = hsv[2];
+        // Higher tone → higher value, lower sat; lower tone → lower value
+        if (toneTarget >= 90) { v = 0.93f + 0.07f * (toneTarget - 90)/10f; s = Math.max(0.03f, s * (0.25f + 0.5f * (toneTarget-90)/10f) + satBoost/255f); }
+        else if (toneTarget >= 80) { v = 0.82f + 0.12f * (toneTarget - 80)/10f; s = Math.max(0.05f, s * (0.55f + 0.45f * (toneTarget-80)/10f)); }
+        else if (toneTarget >= 50) { v = 0.55f + 0.30f * (toneTarget - 50)/30f;     s = s * (0.85f + 0.15f * (toneTarget-50)/30f) + satBoost/255f; }
+        else if (toneTarget >= 30) { v = 0.30f + 0.25f * (toneTarget - 30)/20f;     s = s; }
+        else if (toneTarget >= 10) { v = 0.10f + 0.22f * (toneTarget - 10)/20f;     s = s * (0.80f + 0.20f * (toneTarget-10)/20f); }
+        else                       { v = 0.04f + 0.07f * toneTarget/10f;            s = Math.min(s, 0.35f); }
+        s = clamp(s, 0.02f, 0.96f);
+        v = clamp(v, 0.03f, 0.995f);
+        return 0xFF000000 | (0x00FFFFFF & Color.HSVToColor(new float[]{ wrapHue(hsv[0]), s, v }));
+    }
+
+    private static float clamp(float v, float lo, float hi) { return v < lo ? lo : (Math.min(v, hi)); }
+    private static float wrapHue(float h) { while (h < 0) h += 360f; while (h >= 360f) h -= 360f; return h; }
+
+    private static float luminance(int c) {
+        // sRGB luminance (0..1)
+        int r = Color.red(c), g = Color.green(c), b = Color.blue(c);
+        return (0.2126f*r + 0.7152f*g + 0.0722f*b) / 255f;
+    }
+    private static int blacken(int c, int minVal) { // push down value >= minVal darkness (ie towards black, but minVal means cap)
+        int a = Color.alpha(c);
+        int r = Math.max(0, Color.red(c) - 160);
+        int g = Math.max(0, Color.green(c) - 160);
+        int b = Math.max(0, Color.blue(c) - 160);
+        return Color.argb(a, r, g, b);
+    }
+    private static int whiten(int c, int target) {
+        int a = Color.alpha(c);
+        int r = Math.min(255, Color.red(c)   + 160);
+        int g = Math.min(255, Color.green(c) + 160);
+        int b = Math.min(255, Color.blue(c)  + 160);
+        return Color.argb(a, r, g, b);
     }
 
     // =========================================================
-    // 应用到 Activity（入口）
+    // Apply to Activity (entry points)
     // =========================================================
     public static void applyBeforeOnCreate(Activity a) {
-        // 在 super.onCreate / setContentView 之前：选 light/dark 主题
         boolean dark = resolveDark(a);
+        // Theme selection: always go through SrcEng.MD3 variants; these are our base.
         if (dark) a.setTheme(R.style.SrcEng_MD3_Dark);
         else       a.setTheme(R.style.SrcEng_MD3);
-        // 强制覆盖窗口模式的 uiMode（theme "跟随系统" 不会根据强制模式自动改）
+        // Make sure Resources.Configuration.uiMode aligns with forced mode (affects values-night)
         Configuration cfg = a.getResources().getConfiguration();
         int wanted = dark ? Configuration.UI_MODE_NIGHT_YES : Configuration.UI_MODE_NIGHT_NO;
         if ((cfg.uiMode & Configuration.UI_MODE_NIGHT_MASK) != wanted) {
@@ -288,6 +356,8 @@ public final class Md3Theme {
         Md3Tokens tokens = buildTokens(a);
         applyWindow(a, tokens);
         View root = a.findViewById(android.R.id.content);
+        // Force root background to be tokens.surface (in case theme.windowBackground used xml colors instead of tokens)
+        try { if (root != null) root.setBackgroundDrawable(new ColorDrawable(tokens.surface)); } catch (Throwable ignore) {}
         if (root != null) applyViewTree(root, tokens);
     }
 
@@ -295,7 +365,6 @@ public final class Md3Theme {
     private static void applyWindow(Activity a, Md3Tokens t) {
         Window w = a.getWindow();
         if (w == null) return;
-        // 背景（有时候 windowBackground 没覆盖到）
         try { w.setBackgroundDrawable(new ColorDrawable(t.surface)); } catch (Throwable ignore) {}
         if (Build.VERSION.SDK_INT >= 21) {
             try {
@@ -303,101 +372,112 @@ public final class Md3Theme {
                 w.setNavigationBarColor(t.navBar);
             } catch (Throwable ignore) {}
         }
-        // 23+ 浅色状态栏：自动选择深色/浅色图标
         if (Build.VERSION.SDK_INT >= 23) {
             View dec = w.getDecorView();
             if (dec != null) {
                 int sys = dec.getSystemUiVisibility();
-                boolean lightBars = !t.dark && isLightColor(t.statusBar);
-                boolean lightNav  = !t.dark && isLightColor(t.navBar);
-                if (lightBars) sys |= 0x00002000; else sys &= ~0x00002000; // SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                boolean lightBars = !t.dark && luminance(t.statusBar) > 0.70f;
+                boolean lightNav  = !t.dark && luminance(t.navBar) > 0.70f;
+                if (lightBars) sys |= 0x00002000; else sys &= ~0x00002000;
                 if (Build.VERSION.SDK_INT >= 26) {
-                    if (lightNav) sys |= 0x08000000; else sys &= ~0x08000000; // LIGHT_NAVIGATION_BAR
+                    if (lightNav) sys |= 0x08000000; else sys &= ~0x08000000;
                 }
                 dec.setSystemUiVisibility(sys);
             }
         }
     }
 
-    private static boolean isLightColor(int c) {
-        int r = Color.red(c), g = Color.green(c), b = Color.blue(c);
-        // sRGB luminance approximation
-        double y = (0.2126 * r) + (0.7152 * g) + (0.0722 * b);
-        return y > 140.0;
-    }
-
     // =========================================================
-    // View 树遍历 + 着色
+    // View tree traversal + styling
     // =========================================================
     private static void applyViewTree(View v, Md3Tokens t) {
         applySingleView(v, t);
         if (v instanceof ViewGroup) {
-            ViewGroup vg = (ViewGroup)v;
+            ViewGroup vg = (ViewGroup) v;
             for (int i = 0; i < vg.getChildCount(); i++) applyViewTree(vg.getChildAt(i), t);
         }
     }
 
     private static void applySingleView(View v, Md3Tokens t) {
-        // 背景
-        if (v.getTag(R.id.md3_tag_applied) == null && v.getId() != R.id.md3_preserve_bg) {
-            if (v instanceof TextView && !(v instanceof Button || v instanceof EditText || v instanceof CompoundButton)) {
-                TextView tv = (TextView) v;
-                Object tag = v.getTag(R.id.md3_text_role);
-                String role = (tag instanceof String) ? (String) tag : null;
-                if ("on_primary_container".equals(role))         tv.setTextColor(t.primary.onContainer);
-                else if ("on_secondary_container".equals(role)) tv.setTextColor(t.secondary.onContainer);
-                else if ("on_surface_variant".equals(role))     tv.setTextColor(t.onSurfaceVariant);
-                else if ("outline".equals(role))                tv.setTextColor(t.outline);
-                else if ("on_surface".equals(role))             tv.setTextColor(t.onSurface);
-                else if ("primary".equals(role))                tv.setTextColor(t.primary.color);
-                else {
-                    // 默认按 textAppearance 大致区分：title 大字号 = onSurface，辅助 = onSurfaceVariant
-                    float size = tv.getTextSize();
-                    if (isSubTitleStyle(v, role)) tv.setTextColor(t.onSurfaceVariant);
-                    else tv.setTextColor(t.onSurface);
-                }
-                // hint
-                tv.setHintTextColor(t.outline);
+        // Never apply twice
+        try { if (v.getTag(R.id.md3_tag_applied) != null) return; } catch (Throwable ignore) {}
+        try { v.setTag(R.id.md3_tag_applied, Boolean.TRUE); } catch (Throwable ignore) {}
+        if (v.getId() == R.id.md3_preserve_bg) return;
+
+        // AppBar (flat, no rounded corners, edge-to-edge)
+        if (v.getId() == R.id.md3_app_bar) {
+            setBg(v, t.surface, 0, Color.TRANSPARENT, 0, 0, 0);
+        }
+
+        // Background by tag (card variants / divider / preview)
+        if (hasStrTag(v, "card"))            setBg(v, t.surfaceContainerHigh,     20, Color.TRANSPARENT, 0, 0, 0);
+        if (hasStrTag(v, "card_outlined"))   setBg(v, t.surfaceContainerLow,      20, t.outlineVariant,       1, 0, 0);
+        if (hasStrTag(v, "card_filled"))     setBg(v, t.primary.container,       20, Color.TRANSPARENT, 0, 0, 0);
+        if (hasStrTag(v, "preview_primary")) setBg(v, t.primary.container,       20, Color.TRANSPARENT, 0, 0, 0);
+        if (hasStrTag(v, "divider"))         setBg(v, t.outlineVariant,           0, Color.TRANSPARENT, 0, 0, 0);
+
+        // TextViews (but NOT Button/EditText/CompoundButton which get their own treatment)
+        if (v instanceof TextView && !(v instanceof Button) && !(v instanceof EditText) && !(v instanceof CompoundButton)) {
+            TextView tv = (TextView) v;
+            String role = getStrTag(v);
+            if      ("on_primary_container".equals(role))   tv.setTextColor(t.primary.onContainer);
+            else if ("on_secondary_container".equals(role)) tv.setTextColor(t.secondary.onContainer);
+            else if ("on_surface_variant".equals(role))     tv.setTextColor(t.onSurfaceVariant);
+            else if ("outline".equals(role))                tv.setTextColor(t.outline);
+            else if ("on_surface".equals(role))             tv.setTextColor(t.onSurface);
+            else if ("primary".equals(role))                tv.setTextColor(t.primary.color);
+            else if ("subtitle".equals(role))               tv.setTextColor(t.onSurfaceVariant);
+            else {
+                tv.setTextColor(t.onSurface);
             }
+            tv.setHintTextColor(t.outline);
+        }
 
-            // 顶部 bar（按 id / tag）
-            if (matchesId(v, R.id.md3_app_bar))  setTintedBg(v, t.surfaceContainer, Color.TRANSPARENT, 0);
-            if (matchesTag(v, "card"))           setTintedBg(v, t.surfaceContainerHigh, Color.TRANSPARENT, 0);
-            if (matchesTag(v, "card_filled"))    setTintedBg(v, t.primary.container, Color.TRANSPARENT, 0);
-            if (matchesTag(v, "card_outlined"))  setTintedBg(v, t.surfaceContainerLow, t.outlineVariant, 1);
-            if (matchesTag(v, "preview_primary"))setTintedBg(v, t.primary.container, Color.TRANSPARENT, 0);
-            if (matchesTag(v, "divider"))        setTintedBg(v, t.outlineVariant, Color.TRANSPARENT, 0);
+        // Buttons — ONLY when NOT a CompoundButton (Radio/Checkbox/Switch keep their look + tinted button)
+        if (v instanceof Button && !(v instanceof CompoundButton)) {
+            Button b = (Button) v;
+            String style = getStrTag(v);
+            if (style == null) style = "filled";
+            applyButtonStyle(b, style, t);
+            b.setMinHeight(dp(b.getContext(), 40));
+            int padH = dp(b.getContext(), 24);
+            int padV = dp(b.getContext(), 10);
+            b.setPadding(padH, padV, padH, padV);
+            b.setAllCaps(false);
+        }
 
-            if (v instanceof Button) {
-                Button b = (Button) v;
-                Object tag = v.getTag(R.id.md3_btn_style);
-                String style = (tag instanceof String) ? (String) tag : "filled";
-                applyButtonStyle(b, style, t);
-                b.setMinHeight(dp(b.getContext(), 40));
-                int padH = dp(b.getContext(), 24);
-                b.setPadding(padH, 0, padH, 0);
-                b.setAllCaps(false);
-            }
+        // EditText — Filled tonal style with readable contrast
+        if (v instanceof EditText) {
+            EditText et = (EditText) v;
+            int fill   = t.surfaceContainerHigh;
+            int stroke = t.outline;
+            int text   = ensureContrastColor(fill, t.onSurface, 0xFF1C1B17, 0xFFF5F1EC);
+            int hint   = t.outline;
+            et.setTextColor(text);
+            et.setHintTextColor(hint);
+            setEditTextBg(et, fill, stroke);
+            try { et.setHighlightColor(withAlpha(t.primary.color, 0x33)); } catch (Throwable ignore) {}
+            trySetColorFilterField(et, "mCursorDrawable", t.primary.color);
+            trySetColorFilterField(et, "mTextSelectHandleLeftRes", t.primary.color);
+            trySetColorFilterField(et, "mTextSelectHandleRightRes", t.primary.color);
+            trySetColorFilterField(et, "mTextSelectHandleRes", t.primary.color);
+            tryEtBackgroundTint(et, t.primary.color, t.outline);
+            // Give it a visible padding too
+            int pad = dp(et.getContext(), 14);
+            et.setPadding(pad, pad, pad, pad);
+        }
 
-            if (v instanceof EditText) {
-                EditText et = (EditText) v;
-                et.setTextColor(t.onSurface);
-                et.setHintTextColor(t.outline);
-                try { setTintedBg(et, t.surfaceContainerHigh, t.outline, 1, true); } catch (Throwable ignore) {}
-                // highlight/cursor/handle color = primary
-                try { et.setHighlightColor(withAlpha(t.primary.color, 0x44)); } catch (Throwable ignore) {}
-                trySetColorFilterField(et, "mCursorDrawable", t.primary.color);
-                trySetColorFilterField(et, "mTextSelectHandleLeftRes", t.primary.color);
-                trySetColorFilterField(et, "mTextSelectHandleRightRes", t.primary.color);
-                trySetColorFilterField(et, "mTextSelectHandleRes", t.primary.color);
-                tryEtBackgroundTint(et, t.primary.color, t.outline);
-            }
-
-            if (v instanceof CompoundButton && !(v instanceof RadioButton)) {
-                CompoundButton cb = (CompoundButton)v;
+        // CompoundButton (Switch/CheckBox): tint track/thumb + text color
+        if (v instanceof CompoundButton) {
+            CompoundButton cb = (CompoundButton) v;
+            if (cb instanceof RadioButton) {
+                RadioButton rb = (RadioButton) cb;
+                if (Build.VERSION.SDK_INT >= 21) try { rb.setButtonTintList(tintList(t.primary.color, t.outline)); } catch (Throwable ignore) {}
+                rb.setTextColor(t.onSurface);
+                int pad = dp(rb.getContext(), 4);
+                rb.setPadding(rb.getPaddingLeft() + pad, rb.getPaddingTop(), rb.getPaddingRight() + pad, rb.getPaddingBottom());
+            } else {
                 try {
-                    // Switch / CheckBox track + thumb tint
-                    Drawable[] drawables = cb.getCompoundDrawables();
                     if (Build.VERSION.SDK_INT >= 21) {
                         cb.setButtonTintList(tintList(t.primary.color, t.outline));
                         if (cb instanceof Switch) {
@@ -407,148 +487,185 @@ public final class Md3Theme {
                         }
                     }
                 } catch (Throwable ignore) {}
+                if (cb instanceof TextView) ((TextView) cb).setTextColor(t.onSurface);
             }
+        }
 
-            if (v instanceof RadioButton) {
-                RadioButton rb = (RadioButton) v;
-                if (Build.VERSION.SDK_INT >= 21) {
-                    try { rb.setButtonTintList(tintList(t.primary.color, t.outline)); } catch (Throwable ignore) {}
-                }
-                rb.setTextColor(t.onSurface);
-            }
-
-            if (v instanceof ImageButton || v instanceof ImageView) {
-                Object tag = v.getTag(R.id.md3_btn_style);
-                if ("icon".equals(tag)) {
-                    if (matchesTag(v, "pressed_bg_on")) v.setBackground(makeRippleBg(t.primary.container, t.surfaceContainerHighest));
-                    else v.setBackground(makeRippleBg(t.surfaceContainerHighest, t.surfaceContainerHigh));
-                    if (v instanceof ImageView) {
-                        ImageView iv = (ImageView)v;
-                        if (iv.getTag(R.id.md3_tint) != null || matchesId(v, R.id.md3_icon_button)) {
-                            iv.setColorFilter(t.onSurfaceVariant, android.graphics.PorterDuff.Mode.SRC_IN);
-                        }
-                    }
+        // ImageButton / ImageView — icon style
+        if (v instanceof ImageButton || v instanceof ImageView) {
+            boolean icon = hasStrTag(v, "icon");
+            if (icon) {
+                Drawable bg = makeRippleBg(t.surfaceContainerHighest, t.surfaceContainerHigh);
+                try { v.setBackgroundDrawable(bg); } catch (Throwable ignore) {}
+                if (v instanceof ImageView) {
+                    ImageView iv = (ImageView) v;
+                    iv.setColorFilter(t.onSurfaceVariant, android.graphics.PorterDuff.Mode.SRC_IN);
+                    iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                    int pad = dp(iv.getContext(), 8);
+                    iv.setPadding(pad, pad, pad, pad);
                 }
             }
         }
     }
 
-    private static boolean isSubTitleStyle(View v, String role) {
-        if (role != null) return false;
-        Object tag = v.getTag(R.id.md3_text_role);
-        return "subtitle".equals(tag);
+    private static int ensureContrastColor(int bg, int preferred, int fallbackDark, int fallbackLight) {
+        // pick fallbackDark or fallbackLight based on bg luminance, and make sure preferred is not too close
+        float lBg = luminance(bg);
+        int text = preferred;
+        // Too close? swap to explicit fallback
+        if (Math.abs(lBg - luminance(text)) < 0.40f) {
+            text = (lBg > 0.55f) ? fallbackDark : fallbackLight;
+        }
+        return text;
     }
 
-    private static boolean matchesId(View v, int id) {
-        try { return v.getId() == id; } catch (Throwable ignore) { return false; }
-    }
-    private static boolean matchesTag(View v, String tag) {
-        try { return tag.equals(v.getTag()); } catch (Throwable ignore) { return false; }
+    // =========================================================
+    // Background + button styling primitives
+    // =========================================================
+    private static void setBg(View v, int fill, int radiusDp, int strokeColor, int strokeDp, int padDpX, int padDpY) {
+        try {
+            GradientDrawable g = new GradientDrawable();
+            g.setShape(GradientDrawable.RECTANGLE);
+            g.setColor(fill);
+            if (radiusDp > 0) {
+                float r = dpF(v.getContext(), radiusDp);
+                g.setCornerRadius(r);
+            }
+            if (strokeDp > 0) {
+                g.setStroke(Math.max(1, dp(v.getContext(), strokeDp)), strokeColor);
+            }
+            Drawable d = withRipple(g, strokeColor, radiusDp);
+            if (padDpX > 0 || padDpY > 0) {
+                v.setPadding(dp(v.getContext(), padDpX), dp(v.getContext(), padDpY), dp(v.getContext(), padDpX), dp(v.getContext(), padDpY));
+            }
+            v.setBackgroundDrawable(d);
+        } catch (Throwable ignore) {}
     }
 
-    private static int withAlpha(int color, int a) { return (0x00FFFFFF & color) | ((a & 0xFF) << 24); }
+    private static void setEditTextBg(EditText et, int fill, int stroke) {
+        try {
+            GradientDrawable g = new GradientDrawable();
+            g.setShape(GradientDrawable.RECTANGLE);
+            g.setColor(fill);
+            float r = dpF(et.getContext(), 12);
+            g.setCornerRadii(new float[]{r,r,r,r,0,0,0,0}); // top rounded like MD3 filled text field
+            // stroke will be drawn by backgroundTint (focused=primary) via tryEtBackgroundTint
+            vCompatBackground(et, withRipple(g, fill, 12));
+        } catch (Throwable ignore) {}
+    }
 
-    private static android.content.res.ColorStateList tintList(int checkedColor, int defaultColor) {
-        int[][] states = new int[][] {
-            new int[] { android.R.attr.state_checked },
-            new int[] { android.R.attr.state_enabled, -android.R.attr.state_checked },
-            new int[] { -android.R.attr.state_enabled },
-            new int[] {}
-        };
-        int[] colors = new int[] {
-            checkedColor,
-            defaultColor,
-            withAlpha(defaultColor, 128),
-            defaultColor
-        };
-        return new android.content.res.ColorStateList(states, colors);
+    private static void vCompatBackground(View v, Drawable d) {
+        try { v.setBackgroundDrawable(d); } catch (Throwable ignore) {}
     }
 
     private static void applyButtonStyle(Button b, String style, Md3Tokens t) {
         switch (style) {
             case "tonal": {
-                GradientDrawable g = new GradientDrawable();
-                g.setShape(GradientDrawable.RECTANGLE);
-                g.setColor(t.secondary.container);
-                g.setCornerRadius(dpF(b.getContext(), 20));
-                b.setBackground(makeRipple(g, withAlpha(t.secondary.onContainer, 0x33)));
+                GradientDrawable g = baseRect(t.secondary.container, 20);
+                Drawable bg = withRipple(g, t.secondary.onContainer, 20);
+                vCompatBackground(b, bg);
                 b.setTextColor(t.secondary.onContainer);
                 break;
             }
             case "outlined": {
-                GradientDrawable g = new GradientDrawable();
-                g.setShape(GradientDrawable.RECTANGLE);
-                g.setColor(Color.TRANSPARENT);
+                GradientDrawable g = baseRect(Color.TRANSPARENT, 20);
                 g.setStroke(Math.max(1, dp(b.getContext(), 1)), t.outline);
-                g.setCornerRadius(dpF(b.getContext(), 20));
-                b.setBackground(makeRipple(g, withAlpha(t.primary.color, 0x33)));
+                Drawable bg = withRipple(g, t.primary.color, 20);
+                vCompatBackground(b, bg);
                 b.setTextColor(t.primary.color);
                 break;
             }
             case "text": {
-                GradientDrawable g = new GradientDrawable();
-                g.setShape(GradientDrawable.RECTANGLE);
-                g.setColor(Color.TRANSPARENT);
-                g.setCornerRadius(dpF(b.getContext(), 20));
-                b.setBackground(makeRipple(g, withAlpha(t.primary.color, 0x33)));
+                GradientDrawable g = baseRect(Color.TRANSPARENT, 20);
+                Drawable bg = withRipple(g, t.primary.color, 20);
+                vCompatBackground(b, bg);
                 b.setTextColor(t.primary.color);
                 break;
             }
             case "filled":
             default: {
-                GradientDrawable g = new GradientDrawable();
-                g.setShape(GradientDrawable.RECTANGLE);
-                g.setColor(t.primary.color);
-                g.setCornerRadius(dpF(b.getContext(), 20));
-                b.setBackground(makeRipple(g, withAlpha(t.primary.onColor, 0x33)));
-                b.setTextColor(t.primary.onColor);
+                GradientDrawable g = baseRect(t.primary.color, 20);
+                int onPrimary = ensureContrastColor(t.primary.color, t.primary.onColor, 0xFF1C1B17, 0xFFFFFFFF);
+                Drawable bg = withRipple(g, onPrimary, 20);
+                vCompatBackground(b, bg);
+                b.setTextColor(onPrimary);
                 break;
             }
         }
     }
 
-    private static Drawable makeRipple(Drawable content, int maskColor) {
-        if (Build.VERSION.SDK_INT >= 21) {
-            Drawable mask;
-            if (content instanceof GradientDrawable) {
-                GradientDrawable src = (GradientDrawable) content;
-                GradientDrawable m = new GradientDrawable();
-                m.setCornerRadii(getCornerRadii(src));
-                m.setColor(0xFFFFFFFF);
-                mask = m;
-            } else mask = content.getConstantState().newDrawable();
-            return new RippleDrawable(new android.content.res.ColorStateList(new int[][]{{}}, new int[]{maskColor & 0x00FFFFFF | 0x33000000}), content, mask);
-        } else {
-            StateListDrawable sld = new StateListDrawable();
-            GradientDrawable pressed = new GradientDrawable();
-            pressed.setColor(maskColor);
-            if (content instanceof GradientDrawable) {
-                GradientDrawable g = (GradientDrawable) content;
-                pressed.setCornerRadii(getCornerRadii(g));
-            }
-            LayerDrawable lp = new LayerDrawable(new Drawable[]{content, pressed});
-            sld.addState(new int[]{android.R.attr.state_pressed}, lp);
-            sld.addState(new int[]{}, content);
-            return sld;
-        }
+    private static GradientDrawable baseRect(int fill, int radiusDp) {
+        GradientDrawable g = new GradientDrawable();
+        g.setShape(GradientDrawable.RECTANGLE);
+        g.setColor(fill);
+        g.setCornerRadius(dpF(null, radiusDp));
+        return g;
     }
 
-    private static Drawable makeRippleBg(int pressedFill, int normalFill) {
-        GradientDrawable normal = new GradientDrawable();
-        normal.setShape(GradientDrawable.RECTANGLE);
-        normal.setColor(normalFill);
-        normal.setCornerRadius(99999f);
-        GradientDrawable mask = new GradientDrawable();
-        mask.setColor(0xFFFFFFFF); mask.setCornerRadius(99999f);
+    private static Drawable withRipple(GradientDrawable content, int rippleTone, int radiusDp) {
+        // rippleTone is used for pressed/ripple color; we derive alpha version
+        int rippleColor = withAlpha(rippleTone, 0x1F);
         if (Build.VERSION.SDK_INT >= 21) {
-            return new RippleDrawable(new android.content.res.ColorStateList(new int[][]{{}}, new int[]{0x22000000 | (pressedFill & 0x00FFFFFF)}), normal, mask);
-        } else {
-            GradientDrawable pr = new GradientDrawable(); pr.setColor(pressedFill); pr.setCornerRadius(99999f);
-            StateListDrawable sld = new StateListDrawable();
-            sld.addState(new int[]{android.R.attr.state_pressed}, pr);
-            sld.addState(new int[]{}, normal);
-            return sld;
+            try {
+                GradientDrawable mask = new GradientDrawable();
+                mask.setShape(GradientDrawable.RECTANGLE);
+                float[] cr = getCornerRadii(content);
+                mask.setCornerRadii(cr);
+                mask.setColor(0xFFFFFFFF);
+                return new RippleDrawable(new android.content.res.ColorStateList(new int[][]{{}}, new int[]{ rippleColor }), content, mask);
+            } catch (Throwable ignore) { /* fall through */ }
         }
+        StateListDrawable sld = new StateListDrawable();
+        GradientDrawable pressed = new GradientDrawable();
+        pressed.setCornerRadii(getCornerRadii(content));
+        pressed.setColor(blend(contentColorOr(content), rippleTone, 0.22f));
+        LayerDrawable lp = new LayerDrawable(new Drawable[]{ content, pressed });
+        sld.addState(new int[]{ android.R.attr.state_pressed }, lp);
+        sld.addState(new int[]{}, content);
+        return sld;
+    }
+
+    private static Drawable makeRippleBg(int normalFill, int pressedFill) {
+        GradientDrawable normal = new GradientDrawable();
+        normal.setShape(GradientDrawable.OVAL);
+        normal.setColor(normalFill);
+        if (Build.VERSION.SDK_INT >= 21) {
+            try {
+                GradientDrawable mask = new GradientDrawable();
+                mask.setShape(GradientDrawable.OVAL);
+                mask.setColor(0xFFFFFFFF);
+                return new RippleDrawable(new android.content.res.ColorStateList(new int[][]{{}}, new int[]{ withAlpha(pressedFill, 0x33) }), normal, mask);
+            } catch (Throwable ignore) {}
+        }
+        GradientDrawable pr = new GradientDrawable(); pr.setShape(GradientDrawable.OVAL); pr.setColor(pressedFill);
+        StateListDrawable sld = new StateListDrawable();
+        sld.addState(new int[]{ android.R.attr.state_pressed }, pr);
+        sld.addState(new int[]{}, normal);
+        return sld;
+    }
+
+    private static int contentColorOr(GradientDrawable g) {
+        try {
+            Method m = GradientDrawable.class.getDeclaredMethod("getColor");
+            m.setAccessible(true);
+            Object cso = m.invoke(g);
+            if (cso instanceof android.content.res.ColorStateList) {
+                return ((android.content.res.ColorStateList) cso).getDefaultColor();
+            }
+        } catch (Throwable ignore) {}
+        return 0xFFCCCCCC;
+    }
+
+    private static int blend(int a, int b, float tB) {
+        int ar = Color.red(a), ag = Color.green(a), ab = Color.blue(b);
+        int br = Color.red(b), bg = Color.green(b), bb = Color.blue(b);
+        // Correct blue extraction (was typo above)
+        ab = Color.blue(a);
+        bb = Color.blue(b);
+        int r = Math.round(ar + (br - ar) * tB);
+        int g = Math.round(ag + (bg - ag) * tB);
+        int bl = Math.round(ab + (bb - ab) * tB);
+        return Color.rgb(r, g, bl);
     }
 
     private static float[] getCornerRadii(GradientDrawable g) {
@@ -567,38 +684,44 @@ public final class Md3Theme {
         return new float[]{20f,20f,20f,20f,20f,20f,20f,20f};
     }
 
-    private static void setTintedBg(View v, int color, int stroke, int strokeDp) {
-        setTintedBg(v, color, stroke, strokeDp, false);
-    }
-    private static void setTintedBg(View v, int color, int stroke, int strokeDp, boolean topRadiusOnly) {
-        GradientDrawable g = new GradientDrawable();
-        g.setShape(GradientDrawable.RECTANGLE);
-        g.setColor(color);
-        if (stroke > 0) g.setStroke(Math.max(1, dp(v.getContext(), strokeDp)), stroke);
-        float r = dpF(v.getContext(), topRadiusOnly ? 12 : 20);
-        if (topRadiusOnly) g.setCornerRadii(new float[]{r,r,r,r,0,0,0,0});
-        else g.setCornerRadius(r);
-        Drawable mask = g;
-        if (Build.VERSION.SDK_INT >= 21) {
-            int rippleColor = withAlpha(mix(color, 0xFF000000, 0.35f), 0x1F);
-            v.setBackground(new RippleDrawable(new android.content.res.ColorStateList(new int[][]{{}}, new int[]{rippleColor}), g, mask));
-        } else v.setBackground(g);
-    }
+    private static int withAlpha(int color, int a) { return (0x00FFFFFF & color) | ((a & 0xFF) << 24); }
 
-    private static int mix(int a, int b, float t) {
-        float ar = Color.red(a), ag = Color.green(a), ab = Color.blue(a);
-        float br = Color.red(b), bg = Color.green(b), bb = Color.blue(b);
-        return Color.rgb(Math.round(ar + (br-ar)*t), Math.round(ag + (bg-ag)*t), Math.round(ab + (bb-ab)*t));
+    private static android.content.res.ColorStateList tintList(int checked, int defaultC) {
+        int[][] states = new int[][]{
+            new int[]{ android.R.attr.state_checked,  android.R.attr.state_enabled },
+            new int[]{ android.R.attr.state_enabled, -android.R.attr.state_checked },
+            new int[]{ -android.R.attr.state_enabled },
+            new int[]{}
+        };
+        int[] colors = new int[]{
+            checked,
+            defaultC,
+            withAlpha(defaultC, 128),
+            defaultC
+        };
+        return new android.content.res.ColorStateList(states, colors);
     }
 
     private static int dp(Context c, int dp) { return Math.round(dpF(c, dp)); }
     private static float dpF(Context c, int dp) {
-        DisplayMetrics dm = c.getResources().getDisplayMetrics();
+        DisplayMetrics dm;
+        if (c != null) dm = c.getResources().getDisplayMetrics();
+        else dm = ResourcesHolder.DM;
         return dp * dm.density;
+    }
+    // Fallback density store (when context unavailable during drawable building that got passed null)
+    static final class ResourcesHolder {
+        static final DisplayMetrics DM;
+        static {
+            DisplayMetrics m = new DisplayMetrics();
+            // Best effort default 2.0x
+            m.density = 2.0f; m.widthPixels = 1080; m.heightPixels = 2280;
+            DM = m;
+        }
     }
 
     // =========================================================
-    // EditText 着色辅助
+    // EditText helpers
     // =========================================================
     private static void trySetColorFilterField(Object target, String fieldName, int color) {
         try {
@@ -609,16 +732,6 @@ public final class Md3Theme {
                 ((Drawable)o).mutate().setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN);
             } else if (o instanceof Drawable[]) {
                 for (Drawable d : (Drawable[]) o) if (d != null) d.mutate().setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN);
-            } else if (o instanceof Integer) {
-                // res id
-                int id = (Integer) o;
-                if (id != 0 && target instanceof TextView) {
-                    android.content.res.Resources res = ((TextView)target).getResources();
-                    try {
-                        Drawable d = res.getDrawable(id).mutate();
-                        d.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN);
-                    } catch (Throwable ignore) {}
-                }
             }
         } catch (Throwable ignore) {}
     }
@@ -629,7 +742,7 @@ public final class Md3Theme {
                 Drawable bg = et.getBackground();
                 if (bg != null) {
                     bg = bg.mutate();
-                    int[][] states = new int[][] {
+                    int[][] states = new int[][]{
                         new int[]{ android.R.attr.state_focused },
                         new int[]{}
                     };

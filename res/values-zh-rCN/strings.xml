@@ -49,11 +49,16 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="md3_dynamic_color">动态取色</string>
     <string name="md3_dynamic_color_desc">从壁纸提取颜色作为主题色（Android 8.1+）</string>
     <string name="md3_dynamic_color_not_available">当前系统不支持动态取色</string>
+    <string name="md3_dynamic_color_on_hint">已开启动态取色，主题色优先使用壁纸颜色；仅当壁纸无法提取颜色时，手动选择的主题色才会生效。</string>
+    <string name="md3_seed_ignored_when_dynamic">动态取色已开启，当前手动选择的主题色不会生效。如需使用手动主题色，请先关闭动态取色。</string>
     <string name="md3_seed_color">主题色</string>
     <string name="md3_preview">预览</string>
     <string name="md3_preview_primary">主色调按钮</string>
     <string name="md3_preview_secondary">辅色调按钮</string>
     <string name="md3_preview_outlined">描边按钮</string>
+    <string name="md3_preview_hint_filled">填充按钮：用于最高优先级的主操作。</string>
+    <string name="md3_preview_hint_tonal">色调按钮：用于中等强调、需要与主按钮区分开的次要操作。</string>
+    <string name="md3_preview_hint_outlined">描边按钮：用于与填充按钮配对的重要次要操作。</string>
     <string name="md3_preview_text">这是一张预览卡片，展示当前主题方案下卡片、按钮与文字的视觉效果。</string>
     <string name="md3_back">返回</string>
     <string name="md3_section_general">通用</string>
