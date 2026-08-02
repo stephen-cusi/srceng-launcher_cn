@@ -95,6 +95,4 @@
     <string name="md3_res_custom_label">사용자 지정 해상도</string>
     <string name="md3_res_width">너비(픽셀)</string>
     <string name="md3_res_height">높이(픽셀)</string>
-    <string name="md3_res_fullscreen">전체화면 모드</string>
-    <string name="md3_res_fullscreen_desc">켜기 = \'-full\' 전체화면; 끄기 = \'-windowed\' 창 모드.</string>
 </resources>

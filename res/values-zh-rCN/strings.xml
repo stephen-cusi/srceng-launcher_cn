@@ -97,6 +97,4 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="md3_res_custom_label">自定义分辨率</string>
     <string name="md3_res_width">宽度（像素）</string>
     <string name="md3_res_height">高度（像素）</string>
-    <string name="md3_res_fullscreen">全屏模式</string>
-    <string name="md3_res_fullscreen_desc">开 = 追加 \'-full\' 全屏；关 = 追加 \'-windowed\' 窗口模式。</string>
 </resources>

@@ -90,6 +90,4 @@
     <string name="md3_res_custom_label">自訂解析度</string>
     <string name="md3_res_width">寬度（像素）</string>
     <string name="md3_res_height">高度（像素）</string>
-    <string name="md3_res_fullscreen">全螢幕模式</string>
-    <string name="md3_res_fullscreen_desc">開 = 追加 \'-full\' 全螢幕；關 = 追加 \'-windowed\' 視窗模式。</string>
 </resources>

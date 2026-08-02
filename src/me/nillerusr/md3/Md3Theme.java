@@ -60,7 +60,6 @@ public final class Md3Theme {
     public static final String SP_KEY_RES_PRESET_IDX = "md3_res_preset_idx";
     public static final String SP_KEY_RES_CUSTOM_W   = "md3_res_custom_w";
     public static final String SP_KEY_RES_CUSTOM_H   = "md3_res_custom_h";
-    public static final String SP_KEY_RES_FULLSCREEN = "md3_res_fullscreen";  // boolean: true=-full, false=-windowed (default true)
 
     public static final String RES_MODE_DEVICE = "device";
     public static final String RES_MODE_PRESET = "preset";
@@ -192,13 +191,6 @@ public final class Md3Theme {
     }
     public static void setResolutionCustomH(Context ctx, int v) {
         getPrefs(ctx).edit().putInt(SP_KEY_RES_CUSTOM_H, v).apply();
-    }
-
-    public static boolean getResolutionFullscreen(Context ctx) {
-        return getPrefs(ctx).getBoolean(SP_KEY_RES_FULLSCREEN, true);
-    }
-    public static void setResolutionFullscreen(Context ctx, boolean v) {
-        getPrefs(ctx).edit().putBoolean(SP_KEY_RES_FULLSCREEN, v).apply();
     }
 
     /**

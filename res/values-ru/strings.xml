@@ -95,6 +95,4 @@
     <string name="md3_res_custom_label">Произвольное разрешение</string>
     <string name="md3_res_width">Ширина (px)</string>
     <string name="md3_res_height">Высота (px)</string>
-    <string name="md3_res_fullscreen">Полноэкранный режим</string>
-    <string name="md3_res_fullscreen_desc">Вкл = \'-full\' полный экран; Выкл = \'-windowed\' оконный режим.</string>
 </resources>

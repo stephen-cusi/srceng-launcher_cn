@@ -95,6 +95,4 @@
     <string name="md3_res_custom_label">Résolution personnalisée</string>
     <string name="md3_res_width">Largeur (px)</string>
     <string name="md3_res_height">Hauteur (px)</string>
-    <string name="md3_res_fullscreen">Mode plein écran</string>
-    <string name="md3_res_fullscreen_desc">Activé = \'-full\' plein écran ; Désactivé = \'-windowed\' mode fenêtré.</string>
 </resources>

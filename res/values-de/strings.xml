@@ -95,6 +95,4 @@
     <string name="md3_res_custom_label">Eigene Auflösung</string>
     <string name="md3_res_width">Breite (px)</string>
     <string name="md3_res_height">Höhe (px)</string>
-    <string name="md3_res_fullscreen">Vollbildmodus</string>
-    <string name="md3_res_fullscreen_desc">An = \'-full\' Vollbild; Aus = \'-windowed\' Fenstermodus.</string>
 </resources>

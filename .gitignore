@@ -8,6 +8,8 @@ apk*/
 *.class
 *.jar
 local.properties
+ant.properties
+release.keystore
 .gradle/
 build/
 *.log

@@ -95,6 +95,4 @@
     <string name="md3_res_custom_label">カスタム解像度</string>
     <string name="md3_res_width">幅（ピクセル）</string>
     <string name="md3_res_height">高さ（ピクセル）</string>
-    <string name="md3_res_fullscreen">フルスクリーンモード</string>
-    <string name="md3_res_fullscreen_desc">オン = \'-full\' フルスクリーン；オフ = \'-windowed\' ウィンドウモード。</string>
 </resources>

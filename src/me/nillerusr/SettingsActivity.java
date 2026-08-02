@@ -59,7 +59,6 @@ public class SettingsActivity extends Activity {
     private Spinner resPresetSpinner;
     private ArrayAdapter<String> resPresetAdapter;
     private EditText resCustomW, resCustomH;
-    private Switch resFullscreenSwitch;
 
     private int lastDarkMode = Md3Theme.THEME_SYSTEM;
     private boolean lastDynamic = false;
@@ -70,7 +69,6 @@ public class SettingsActivity extends Activity {
     private String lastResMode = Md3Theme.RES_MODE_DEVICE;
     private int lastResPresetIdx = 0;
     private int lastResCustomW = 1280, lastResCustomH = 720;
-    private boolean lastResFullscreen = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +126,6 @@ public class SettingsActivity extends Activity {
         resPresetSpinner = optFind(R.id.md3_res_preset_spinner);
         resCustomW       = optFind(R.id.md3_res_custom_w);
         resCustomH       = optFind(R.id.md3_res_custom_h);
-        resFullscreenSwitch = optFind(R.id.md3_res_fullscreen_switch);
 
         ImageButton back = optFind(R.id.md3_button_back);
         if (back != null) {
@@ -189,11 +186,9 @@ public class SettingsActivity extends Activity {
         lastResPresetIdx   = Md3Theme.getResolutionPresetIdx(this);
         lastResCustomW     = Md3Theme.getResolutionCustomW(this);
         lastResCustomH     = Md3Theme.getResolutionCustomH(this);
-        lastResFullscreen  = Md3Theme.getResolutionFullscreen(this);
         if (Md3Theme.RES_MODE_PRESET.equals(lastResMode))       setCheckedSafe(resModePreset, true);
         else if (Md3Theme.RES_MODE_CUSTOM.equals(lastResMode))  setCheckedSafe(resModeCustom, true);
         else                                                     setCheckedSafe(resModeDevice, true);
-        setCheckedSafe(resFullscreenSwitch, lastResFullscreen);
         if (resCustomW != null) {
             try { resCustomW.setText(String.valueOf(lastResCustomW)); } catch (Throwable ignore) {}
         }
@@ -555,14 +550,6 @@ public class SettingsActivity extends Activity {
         }
         if (resCustomH != null) {
             try { resCustomH.addTextChangedListener(customHch); } catch (Throwable ignore) {}
-        }
-        if (resFullscreenSwitch != null) {
-            resFullscreenSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Md3Theme.setResolutionFullscreen(SettingsActivity.this, isChecked);
-                    lastResFullscreen = isChecked;
-                }
-            });
         }
     }
 

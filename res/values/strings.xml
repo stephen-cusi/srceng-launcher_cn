@@ -95,6 +95,4 @@
     <string name="md3_res_custom_label">Custom resolution</string>
     <string name="md3_res_width">Width (px)</string>
     <string name="md3_res_height">Height (px)</string>
-    <string name="md3_res_fullscreen">Fullscreen mode</string>
-    <string name="md3_res_fullscreen_desc">On = \'-full\' fullscreen; Off = \'-windowed\' windowed mode.</string>
 </resources>
