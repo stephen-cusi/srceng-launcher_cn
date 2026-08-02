@@ -83,4 +83,18 @@
     <string name="md3_game_lang_default">Auto (no forzar)</string>
     <string name="md3_game_lang_desc">Añade el parámetro \'-language &lt;code&gt;\' a las opciones de inicio del juego. Los valores disponibles dependen de los paquetes de idioma instalados en los datos del juego.</string>
     <string name="md3_game_lang_hint_schinese">简体中文 = schinese</string>
+
+    <!-- MD3 Game / Resolution section -->
+    <string name="md3_section_game">Juego</string>
+    <string name="md3_resolution">Resolución</string>
+    <string name="md3_resolution_desc">Resolución de pantalla del juego. Añade \'-w &lt;ancho&gt; -h &lt;alto&gt;\' más \'-full\' (pantalla completa) o \'-windowed\' (ventana) a la línea de comandos de inicio.</string>
+    <string name="md3_res_mode_device">Usar resolución nativa del dispositivo</string>
+    <string name="md3_res_mode_preset">Elegir entre preajustes</string>
+    <string name="md3_res_mode_custom">Ancho × alto personalizado</string>
+    <string name="md3_res_preset_label">Resoluciones preestablecidas</string>
+    <string name="md3_res_custom_label">Resolución personalizada</string>
+    <string name="md3_res_width">Ancho (px)</string>
+    <string name="md3_res_height">Alto (px)</string>
+    <string name="md3_res_fullscreen">Modo pantalla completa</string>
+    <string name="md3_res_fullscreen_desc">Activado = \'-full\' pantalla completa; Desactivado = \'-windowed\' modo ventana.</string>
 </resources>

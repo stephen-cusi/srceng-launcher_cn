@@ -83,4 +83,18 @@
     <string name="md3_game_lang_default">自動（強制しない）</string>
     <string name="md3_game_lang_desc">ゲーム起動オプションに \'-language &lt;code&gt;\' を追加します。利用可能な値はゲームデータにインストールされた言語パックに依存します。</string>
     <string name="md3_game_lang_hint_schinese">简体中文 = schinese</string>
+
+    <!-- MD3 Game / Resolution section -->
+    <string name="md3_section_game">ゲーム</string>
+    <string name="md3_resolution">解像度</string>
+    <string name="md3_resolution_desc">ゲーム画面の解像度。起動コマンドラインに \'-w &lt;幅&gt; -h &lt;高さ&gt;\' に加え、\'-full\'（フルスクリーン）または \'-windowed\'（ウィンドウ）を追加します。</string>
+    <string name="md3_res_mode_device">デバイスネイティブ解像度を使用</string>
+    <string name="md3_res_mode_preset">プリセットから選択</string>
+    <string name="md3_res_mode_custom">カスタム幅 × 高さ</string>
+    <string name="md3_res_preset_label">プリセット解像度</string>
+    <string name="md3_res_custom_label">カスタム解像度</string>
+    <string name="md3_res_width">幅（ピクセル）</string>
+    <string name="md3_res_height">高さ（ピクセル）</string>
+    <string name="md3_res_fullscreen">フルスクリーンモード</string>
+    <string name="md3_res_fullscreen_desc">オン = \'-full\' フルスクリーン；オフ = \'-windowed\' ウィンドウモード。</string>
 </resources>

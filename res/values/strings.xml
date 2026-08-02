@@ -83,4 +83,18 @@
     <string name="md3_game_lang_default">Auto (don\'t force)</string>
     <string name="md3_game_lang_desc">Appends \'-language &lt;code&gt;\' to the game launch options. Available values depend on language packs installed in the game data.</string>
     <string name="md3_game_lang_hint_schinese">简体中文 = schinese</string>
+
+    <!-- MD3 Game / Resolution section -->
+    <string name="md3_section_game">Game</string>
+    <string name="md3_resolution">Resolution</string>
+    <string name="md3_resolution_desc">Game screen resolution. Appends \'-w &lt;width&gt; -h &lt;height&gt;\' plus \'-full\' (fullscreen) or \'-windowed\' to the launch command line.</string>
+    <string name="md3_res_mode_device">Use device native resolution</string>
+    <string name="md3_res_mode_preset">Choose from presets</string>
+    <string name="md3_res_mode_custom">Custom width × height</string>
+    <string name="md3_res_preset_label">Preset resolutions</string>
+    <string name="md3_res_custom_label">Custom resolution</string>
+    <string name="md3_res_width">Width (px)</string>
+    <string name="md3_res_height">Height (px)</string>
+    <string name="md3_res_fullscreen">Fullscreen mode</string>
+    <string name="md3_res_fullscreen_desc">On = \'-full\' fullscreen; Off = \'-windowed\' windowed mode.</string>
 </resources>

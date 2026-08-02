@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -51,11 +52,25 @@ public class SettingsActivity extends Activity {
     private Spinner uiLangSpinner, gameLangSpinner;
     private ArrayAdapter<String> uiLangAdapter, gameLangAdapter;
 
+    // Resolution
+    private RadioGroup resModeGroup;
+    private RadioButton resModeDevice, resModePreset, resModeCustom;
+    private LinearLayout resPresetRow, resCustomRow;
+    private Spinner resPresetSpinner;
+    private ArrayAdapter<String> resPresetAdapter;
+    private EditText resCustomW, resCustomH;
+    private Switch resFullscreenSwitch;
+
     private int lastDarkMode = Md3Theme.THEME_SYSTEM;
     private boolean lastDynamic = false;
     private int lastSeed = Md3Theme.SEED_PRESETS[0];
     private String lastUiLang = Md3Theme.UI_LANG_SYSTEM;
     private String lastGameLang = "";
+    // Resolution: cache for change detection (resolution不会刷新策略：不需要重启Activity(设置变化不要求立刻影响UI,只影响游戏启动参数
+    private String lastResMode = Md3Theme.RES_MODE_DEVICE;
+    private int lastResPresetIdx = 0;
+    private int lastResCustomW = 1280, lastResCustomH = 720;
+    private boolean lastResFullscreen = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +84,10 @@ public class SettingsActivity extends Activity {
         buildSeedColors();
         buildUiLangSpinner();
         buildGameLangSpinner();
+        buildResolutionPresetSpinner();
         bindListeners();
         updateSeedVisualState();
+        updateResolutionVisibility();
     }
 
     // attachBaseContext：在系统创建Context时立刻注入正确Locale，保证所有LayoutInflater/Resources都是最新语言
@@ -100,6 +117,18 @@ public class SettingsActivity extends Activity {
 
         uiLangSpinner   = optFind(R.id.md3_ui_lang_spinner);
         gameLangSpinner = optFind(R.id.md3_game_lang_spinner);
+
+        // Resolution
+        resModeGroup     = optFind(R.id.md3_res_mode_group);
+        resModeDevice    = optFind(R.id.md3_res_mode_device);
+        resModePreset    = optFind(R.id.md3_res_mode_preset);
+        resModeCustom    = optFind(R.id.md3_res_mode_custom);
+        resPresetRow     = optFind(R.id.md3_res_preset_row);
+        resCustomRow     = optFind(R.id.md3_res_custom_row);
+        resPresetSpinner = optFind(R.id.md3_res_preset_spinner);
+        resCustomW       = optFind(R.id.md3_res_custom_w);
+        resCustomH       = optFind(R.id.md3_res_custom_h);
+        resFullscreenSwitch = optFind(R.id.md3_res_fullscreen_switch);
 
         ImageButton back = optFind(R.id.md3_button_back);
         if (back != null) {
@@ -154,6 +183,23 @@ public class SettingsActivity extends Activity {
         lastUiLang = Md3Theme.getUiLang(this);
 
         lastGameLang = Md3Theme.getGameLang(this);
+
+        // Resolution: load and bind radio buttons
+        lastResMode        = Md3Theme.getResolutionMode(this);
+        lastResPresetIdx   = Md3Theme.getResolutionPresetIdx(this);
+        lastResCustomW     = Md3Theme.getResolutionCustomW(this);
+        lastResCustomH     = Md3Theme.getResolutionCustomH(this);
+        lastResFullscreen  = Md3Theme.getResolutionFullscreen(this);
+        if (Md3Theme.RES_MODE_PRESET.equals(lastResMode))       setCheckedSafe(resModePreset, true);
+        else if (Md3Theme.RES_MODE_CUSTOM.equals(lastResMode))  setCheckedSafe(resModeCustom, true);
+        else                                                     setCheckedSafe(resModeDevice, true);
+        setCheckedSafe(resFullscreenSwitch, lastResFullscreen);
+        if (resCustomW != null) {
+            try { resCustomW.setText(String.valueOf(lastResCustomW)); } catch (Throwable ignore) {}
+        }
+        if (resCustomH != null) {
+            try { resCustomH.setText(String.valueOf(lastResCustomH)); } catch (Throwable ignore) {}
+        }
     }
 
     // ========= UI language Spinner (10 languages: system/zh_CN/zh_TW/en/ru/ja/ko/fr/de/es) =========
@@ -310,6 +356,82 @@ public class SettingsActivity extends Activity {
         return friendly + "  ·  " + code;
     }
 
+    // ========= Resolution helpers =========
+    private static String ratioLabel(int w, int h) {
+        // 计算近似比例标签
+        int g = 1;
+        try {
+            int a = w, b = h;
+            while (b != 0) { int t = b; b = a % b; a = t; }
+            if (a > 0) g = a;
+        } catch (Throwable ignore) {}
+        int rw = w / Math.max(1,g), rh = h / Math.max(1,g);
+        String tag;
+        if      (rw == 16 && rh == 9)  tag = "16:9";
+        else if (rw == 16 && rh == 10) tag = "16:10";
+        else if (rw == 4  && rh == 3)  tag = "4:3";
+        else if (rw == 3  && rh == 2)  tag = "3:2";
+        else if (rw == 5  && rh == 4)  tag = "5:4";
+        else if (rw == 21 && rh == 9)  tag = "21:9";
+        else                           tag = rw + ":" + rh;
+        return w + " × " + h + "  (" + tag + ")";
+    }
+
+    private void buildResolutionPresetSpinner() {
+        if (resPresetSpinner == null) return;
+        int[][] presets = Md3Theme.RESOLUTION_PRESETS;
+        String[] labels = new String[presets.length];
+        for (int i = 0; i < presets.length; i++) {
+            labels[i] = ratioLabel(presets[i][0], presets[i][1]);
+        }
+        resPresetAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, labels) {
+            @Override public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+                try {
+                    Md3Tokens t = Md3Theme.buildTokens(getContext());
+                    ((TextView)v).setTextColor(t.onSurface);
+                } catch (Throwable ignore) {}
+                return v;
+            }
+            @Override public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View v = super.getDropDownView(position, convertView, parent);
+                try {
+                    Md3Tokens t = Md3Theme.buildTokens(getContext());
+                    TextView tv = (TextView)v;
+                    tv.setTextColor(t.onSurface);
+                    tv.setPadding(dp(16), dp(12), dp(16), dp(12));
+                    v.setBackgroundColor(t.surfaceContainerHigh);
+                } catch (Throwable ignore) {}
+                return v;
+            }
+        };
+        resPresetAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        resPresetSpinner.setAdapter(resPresetAdapter);
+        int idx = lastResPresetIdx;
+        if (idx < 0 || idx >= presets.length) idx = 0;
+        try { resPresetSpinner.setSelection(idx, false); } catch (Throwable ignore) {}
+    }
+
+    /** 根据当前mode更新预设行和自定义行的可见性 */
+    private void updateResolutionVisibility() {
+        String mode = lastResMode;
+        boolean showPreset = Md3Theme.RES_MODE_PRESET.equals(mode);
+        boolean showCustom = Md3Theme.RES_MODE_CUSTOM.equals(mode);
+        try { if (resPresetRow != null) resPresetRow.setVisibility(showPreset ? View.VISIBLE : View.GONE); } catch (Throwable ignore) {}
+        try { if (resCustomRow != null) resCustomRow.setVisibility(showCustom ? View.VISIBLE : View.GONE); } catch (Throwable ignore) {}
+    }
+
+    /** 从EditText读取正整数，失败返回fallback */
+    private static int readIntEt(EditText et, int fallback) {
+        if (et == null) return fallback;
+        try {
+            String s = et.getText() == null ? "" : et.getText().toString().trim();
+            if (s.isEmpty()) return fallback;
+            int v = Integer.parseInt(s);
+            return v > 0 ? v : fallback;
+        } catch (Throwable ignore) { return fallback; }
+    }
+
     private void bindListeners() {
         if (darkGroup != null) {
             darkGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -378,6 +500,68 @@ public class SettingsActivity extends Activity {
                     } catch (Throwable ignore) {}
                 }
                 @Override public void onNothingSelected(AdapterView<?> parent) {}
+            });
+        }
+
+        // ===== Resolution =====
+        if (resModeGroup != null) {
+            resModeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    String newMode = Md3Theme.RES_MODE_DEVICE;
+                    if (checkedId == R.id.md3_res_mode_preset)       newMode = Md3Theme.RES_MODE_PRESET;
+                    else if (checkedId == R.id.md3_res_mode_custom)  newMode = Md3Theme.RES_MODE_CUSTOM;
+                    Md3Theme.setResolutionMode(SettingsActivity.this, newMode);
+                    lastResMode = newMode;
+                    updateResolutionVisibility();
+                }
+            });
+        }
+        if (resPresetSpinner != null) {
+            resPresetSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    try {
+                        Md3Theme.setResolutionPresetIdx(SettingsActivity.this, position);
+                        lastResPresetIdx = position;
+                    } catch (Throwable ignore) {}
+                }
+                @Override public void onNothingSelected(AdapterView<?> parent) {}
+            });
+        }
+        // 自定义宽高：输入变化时立刻保存（避免需要点"保存"）
+        android.text.TextWatcher customWch = new android.text.TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(android.text.Editable s) {
+                int w = readIntEt(resCustomW, lastResCustomW);
+                if (w != lastResCustomW) {
+                    Md3Theme.setResolutionCustomW(SettingsActivity.this, w);
+                    lastResCustomW = w;
+                }
+            }
+        };
+        android.text.TextWatcher customHch = new android.text.TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override public void afterTextChanged(android.text.Editable s) {
+                int h = readIntEt(resCustomH, lastResCustomH);
+                if (h != lastResCustomH) {
+                    Md3Theme.setResolutionCustomH(SettingsActivity.this, h);
+                    lastResCustomH = h;
+                }
+            }
+        };
+        if (resCustomW != null) {
+            try { resCustomW.addTextChangedListener(customWch); } catch (Throwable ignore) {}
+        }
+        if (resCustomH != null) {
+            try { resCustomH.addTextChangedListener(customHch); } catch (Throwable ignore) {}
+        }
+        if (resFullscreenSwitch != null) {
+            resFullscreenSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    Md3Theme.setResolutionFullscreen(SettingsActivity.this, isChecked);
+                    lastResFullscreen = isChecked;
+                }
             });
         }
     }

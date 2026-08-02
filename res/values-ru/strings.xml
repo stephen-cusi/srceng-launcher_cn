@@ -83,4 +83,18 @@
     <string name="md3_game_lang_default">Авто (не принудительно)</string>
     <string name="md3_game_lang_desc">Добавляет параметр \'-language &lt;код&gt;\' в параметры запуска игры. Доступные значения зависят от установленных в игре языковых пакетов.</string>
     <string name="md3_game_lang_hint_schinese">简体中文 = schinese</string>
+
+    <!-- MD3 Game / Resolution section -->
+    <string name="md3_section_game">Игра</string>
+    <string name="md3_resolution">Разрешение</string>
+    <string name="md3_resolution_desc">Разрешение экрана игры. Добавляет \'-w &lt;ширина&gt; -h &lt;высота&gt;\' плюс \'-full\' (полноэкранный) или \'-windowed\' (оконный) в командную строку запуска.</string>
+    <string name="md3_res_mode_device">Нативное разрешение устройства</string>
+    <string name="md3_res_mode_preset">Выбрать из пресетов</string>
+    <string name="md3_res_mode_custom">Произвольная ширина × высота</string>
+    <string name="md3_res_preset_label">Пресеты разрешений</string>
+    <string name="md3_res_custom_label">Произвольное разрешение</string>
+    <string name="md3_res_width">Ширина (px)</string>
+    <string name="md3_res_height">Высота (px)</string>
+    <string name="md3_res_fullscreen">Полноэкранный режим</string>
+    <string name="md3_res_fullscreen_desc">Вкл = \'-full\' полный экран; Выкл = \'-windowed\' оконный режим.</string>
 </resources>

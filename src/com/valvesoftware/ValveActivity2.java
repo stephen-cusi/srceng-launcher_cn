@@ -125,6 +125,20 @@ public class ValveActivity2 { // not activity, i am lazy to change native method
 			}
 		}
 
+		// Append resolution args: -w <width> -h <height> + -full / -windowed
+		// DEVICE mode (0,0) means: don't add -w/-h, let engine use device native res.
+		int[] res = Md3Theme.getResolvedResolution(context);
+		if( res != null && res.length >= 2 && res[0] > 0 && res[1] > 0 ) {
+			int w = res[0], h = res[1];
+			// Sanitize: reasonable range (320..8192 for both)
+			if( w >= 320 && w <= 8192 && h >= 240 && h <= 8192 ) {
+				argv = argv + " -w " + w + " -h " + h;
+			}
+		}
+		// Fullscreen / windowed
+		boolean fullscreen = Md3Theme.getResolutionFullscreen(context);
+		argv = fullscreen ? (argv + " -full") : (argv + " -windowed");
+
 		if( gamelibdir != null && !gamelibdir.isEmpty() )
 			setenv( "APP_MOD_LIB", gamelibdir, 1 );
 

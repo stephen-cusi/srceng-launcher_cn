@@ -78,4 +78,18 @@
     <string name="md3_game_lang_default">自動（不強制）</string>
     <string name="md3_game_lang_desc">於遊戲啟動參數末尾自動追加 \'-language {代碼}\'。可用值取決於遊戲資源中安裝了哪些語言包（例如：schinese=簡中、tchinese=繁中、english=英文、russian=俄文等）。</string>
     <string name="md3_game_lang_hint_schinese">繁體中文對應 tchinese</string>
+
+    <!-- MD3 Game / Resolution section -->
+    <string name="md3_section_game">遊戲設定</string>
+    <string name="md3_resolution">解析度</string>
+    <string name="md3_resolution_desc">遊戲畫面解析度。會自動在啟動參數中追加 \'-w {寬度} -h {高度}\'，同時追加 \'-full\'（全螢幕）或 \'-windowed\'（視窗）。</string>
+    <string name="md3_res_mode_device">使用裝置原生解析度</string>
+    <string name="md3_res_mode_preset">從預設清單中選擇</string>
+    <string name="md3_res_mode_custom">自訂寬 × 高</string>
+    <string name="md3_res_preset_label">預設解析度</string>
+    <string name="md3_res_custom_label">自訂解析度</string>
+    <string name="md3_res_width">寬度（像素）</string>
+    <string name="md3_res_height">高度（像素）</string>
+    <string name="md3_res_fullscreen">全螢幕模式</string>
+    <string name="md3_res_fullscreen_desc">開 = 追加 \'-full\' 全螢幕；關 = 追加 \'-windowed\' 視窗模式。</string>
 </resources>

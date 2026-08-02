@@ -85,4 +85,18 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="md3_game_lang_default">自动（不强制）</string>
     <string name="md3_game_lang_desc">在游戏启动命令后自动追加 \'-language {代码}\' 参数。可用值取决于游戏资源中安装了哪些语言包（如：schinese=简中、tchinese=繁中、english=英文、russian=俄语 等）。</string>
     <string name="md3_game_lang_hint_schinese">简体中文对应 schinese</string>
+
+    <!-- MD3 Game / Resolution section -->
+    <string name="md3_section_game">游戏设置</string>
+    <string name="md3_resolution">分辨率</string>
+    <string name="md3_resolution_desc">游戏画面分辨率。会自动在启动参数中追加 \'-w {宽度} -h {高度}\'，同时追加 \'-full\'（全屏）或 \'-windowed\'（窗口）。</string>
+    <string name="md3_res_mode_device">使用本机分辨率</string>
+    <string name="md3_res_mode_preset">从预设列表选择</string>
+    <string name="md3_res_mode_custom">自定义宽 × 高</string>
+    <string name="md3_res_preset_label">预设分辨率</string>
+    <string name="md3_res_custom_label">自定义分辨率</string>
+    <string name="md3_res_width">宽度（像素）</string>
+    <string name="md3_res_height">高度（像素）</string>
+    <string name="md3_res_fullscreen">全屏模式</string>
+    <string name="md3_res_fullscreen_desc">开 = 追加 \'-full\' 全屏；关 = 追加 \'-windowed\' 窗口模式。</string>
 </resources>

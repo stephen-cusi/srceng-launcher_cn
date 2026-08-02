@@ -54,6 +54,34 @@ public final class Md3Theme {
     public static final String SP_KEY_UI_LANG        = "md3_ui_lang";         // "system" | "zh-rCN" | "zh-rTW" | "en"
     public static final String SP_KEY_GAME_LANG      = "md3_game_lang";       // ""(=不追加) | schinese | tchinese | english | russian | german | french | italian | spanish | brazilian | latam | japanese | korean | polish | dutch | czech | danish | finnish | greek | hungarian | norwegian | portuguese | romanian | swedish | thai | turkish | ukrainian | bulgarian
 
+    // ========== Resolution (Screen) ==========
+    // resolution mode: "device" (= use device native, don't add -w/-h), "preset" (= use RESOLUTION_PRESETS[idx]), "custom" (= custom_w/custom_h)
+    public static final String SP_KEY_RES_MODE       = "md3_res_mode";
+    public static final String SP_KEY_RES_PRESET_IDX = "md3_res_preset_idx";
+    public static final String SP_KEY_RES_CUSTOM_W   = "md3_res_custom_w";
+    public static final String SP_KEY_RES_CUSTOM_H   = "md3_res_custom_h";
+    public static final String SP_KEY_RES_FULLSCREEN = "md3_res_fullscreen";  // boolean: true=-full, false=-windowed (default true)
+
+    public static final String RES_MODE_DEVICE = "device";
+    public static final String RES_MODE_PRESET = "preset";
+    public static final String RES_MODE_CUSTOM = "custom";
+
+    // 常用预设分辨率 (宽x高) — 16:9, 16:10, 4:3 常见游戏分辨率
+    public static final int[][] RESOLUTION_PRESETS = new int[][]{
+        { 1920, 1080 }, // FHD 1080p 16:9
+        { 1280, 720  }, // HD 720p 16:9
+        { 2560, 1440 }, // QHD 1440p 16:9
+        { 3840, 2160 }, // UHD 4K 16:9
+        { 1366, 768  }, // HD+ 16:9 (laptop)
+        { 1600, 900  }, // HD+ 16:9
+        { 1680, 1050 }, // WSXGA+ 16:10
+        { 1920, 1200 }, // WUXGA 16:10
+        { 1280, 800  }, // WXGA 16:10
+        { 1024, 768  }, // XGA 4:3
+        { 1280, 1024 }, // SXGA 4:3
+        { 800,  600  }, // SVGA 4:3
+    };
+
     public static final String UI_LANG_SYSTEM = "system";
     public static final String UI_LANG_ZH_CN  = "zh-rCN";
     public static final String UI_LANG_ZH_TW  = "zh-rTW";
@@ -135,6 +163,89 @@ public final class Md3Theme {
     }
     public static void setGameLang(Context ctx, String v) {
         getPrefs(ctx).edit().putString(SP_KEY_GAME_LANG, v).apply();
+    }
+
+    // ========== Resolution getters/setters ==========
+    public static String getResolutionMode(Context ctx) {
+        return getPrefs(ctx).getString(SP_KEY_RES_MODE, RES_MODE_DEVICE);
+    }
+    public static void setResolutionMode(Context ctx, String v) {
+        getPrefs(ctx).edit().putString(SP_KEY_RES_MODE, v).apply();
+    }
+
+    public static int getResolutionPresetIdx(Context ctx) {
+        return getPrefs(ctx).getInt(SP_KEY_RES_PRESET_IDX, 0);
+    }
+    public static void setResolutionPresetIdx(Context ctx, int v) {
+        getPrefs(ctx).edit().putInt(SP_KEY_RES_PRESET_IDX, v).apply();
+    }
+
+    public static int getResolutionCustomW(Context ctx) {
+        return getPrefs(ctx).getInt(SP_KEY_RES_CUSTOM_W, 1280);
+    }
+    public static void setResolutionCustomW(Context ctx, int v) {
+        getPrefs(ctx).edit().putInt(SP_KEY_RES_CUSTOM_W, v).apply();
+    }
+
+    public static int getResolutionCustomH(Context ctx) {
+        return getPrefs(ctx).getInt(SP_KEY_RES_CUSTOM_H, 720);
+    }
+    public static void setResolutionCustomH(Context ctx, int v) {
+        getPrefs(ctx).edit().putInt(SP_KEY_RES_CUSTOM_H, v).apply();
+    }
+
+    public static boolean getResolutionFullscreen(Context ctx) {
+        return getPrefs(ctx).getBoolean(SP_KEY_RES_FULLSCREEN, true);
+    }
+    public static void setResolutionFullscreen(Context ctx, boolean v) {
+        getPrefs(ctx).edit().putBoolean(SP_KEY_RES_FULLSCREEN, v).apply();
+    }
+
+    /**
+     * 计算最终生效的分辨率宽高。
+     *   - DEVICE模式：返回{0,0}（表示不追加-w/-h，让引擎用设备分辨率）
+     *   - PRESET模式：返回RESOLUTION_PRESETS[idx]
+     *   - CUSTOM模式：返回{customW, customH}
+     */
+    public static int[] getResolvedResolution(Context ctx) {
+        String mode = getResolutionMode(ctx);
+        if (RES_MODE_DEVICE.equals(mode)) {
+            return new int[]{ 0, 0 };
+        }
+        if (RES_MODE_PRESET.equals(mode)) {
+            int idx = getResolutionPresetIdx(ctx);
+            if (idx < 0 || idx >= RESOLUTION_PRESETS.length) idx = 0;
+            return new int[]{ RESOLUTION_PRESETS[idx][0], RESOLUTION_PRESETS[idx][1] };
+        }
+        // CUSTOM
+        return new int[]{
+            Math.max(320, getResolutionCustomW(ctx)),
+            Math.max(240, getResolutionCustomH(ctx))
+        };
+    }
+
+    /** 获取设备本机分辨率（用于"使用本机分辨率"选项显示和DEVICE模式的参考） */
+    public static int[] getDeviceResolution(Context ctx) {
+        try {
+            WindowManager wm = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
+            DisplayMetrics dm = new DisplayMetrics();
+            if (wm != null) {
+                android.view.Display display = wm.getDefaultDisplay();
+                if (Build.VERSION.SDK_INT >= 17) {
+                    android.graphics.Point size = new android.graphics.Point();
+                    display.getRealSize(size);
+                    return new int[]{ size.x, size.y };
+                } else {
+                    display.getMetrics(dm);
+                    return new int[]{ dm.widthPixels, dm.heightPixels };
+                }
+            }
+        } catch (Throwable ignore) {}
+        try {
+            DisplayMetrics dm = ctx.getResources().getDisplayMetrics();
+            return new int[]{ dm.widthPixels, dm.heightPixels };
+        } catch (Throwable ignore) {}
+        return new int[]{ 1920, 1080 };
     }
 
     public static boolean isDynamicColorAvailable() { return Build.VERSION.SDK_INT >= 27; }
