@@ -53,6 +53,7 @@ public final class Md3Theme {
     public static final String SP_KEY_SEED_COLOR     = "md3_seed_color";
     public static final String SP_KEY_UI_LANG        = "md3_ui_lang";         // "system" | "zh-rCN" | "zh-rTW" | "en"
     public static final String SP_KEY_GAME_LANG      = "md3_game_lang";       // ""(=不追加) | schinese | tchinese | english | russian | german | french | italian | spanish | brazilian | latam | japanese | korean | polish | dutch | czech | danish | finnish | greek | hungarian | norwegian | portuguese | romanian | swedish | thai | turkish | ukrainian | bulgarian
+    public static final String SP_KEY_IMMERSIVE      = "md3_immersive_statusbar"; // 默认false，状态栏沉浸（内容延伸到状态栏下）开关
 
     // ========== Resolution (Screen) ==========
     // resolution mode: "device" (= use device native, don't add -w/-h), "preset" (= use RESOLUTION_PRESETS[idx]), "custom" (= custom_w/custom_h)
@@ -143,6 +144,13 @@ public final class Md3Theme {
         getPrefs(ctx).edit().putBoolean(SP_KEY_DYNAMIC_COLOR, v).apply();
     }
 
+    public static boolean getImmersiveStatusBar(Context ctx) {
+        return getPrefs(ctx).getBoolean(SP_KEY_IMMERSIVE, false); // 默认不沉浸
+    }
+    public static void setImmersiveStatusBar(Context ctx, boolean v) {
+        getPrefs(ctx).edit().putBoolean(SP_KEY_IMMERSIVE, v).apply();
+    }
+
     public static int getSeedColor(Context ctx) {
         return getPrefs(ctx).getInt(SP_KEY_SEED_COLOR, SEED_PRESETS[0]);
     }
@@ -209,11 +217,12 @@ public final class Md3Theme {
             if (idx < 0 || idx >= RESOLUTION_PRESETS.length) idx = 0;
             return new int[]{ RESOLUTION_PRESETS[idx][0], RESOLUTION_PRESETS[idx][1] };
         }
-        // CUSTOM
-        return new int[]{
-            Math.max(320, getResolutionCustomW(ctx)),
-            Math.max(240, getResolutionCustomH(ctx))
-        };
+        // CUSTOM: 双端范围夹取（320≤W≤8192，240≤H≤8192），彻底杜绝脏值
+        int w = getResolutionCustomW(ctx);
+        int h = getResolutionCustomH(ctx);
+        if (w < 320) w = 320; else if (w > 8192) w = 8192;
+        if (h < 240) h = 240; else if (h > 8192) h = 8192;
+        return new int[]{ w, h };
     }
 
     /** 获取设备本机分辨率（用于"使用本机分辨率"选项显示和DEVICE模式的参考） */
@@ -608,10 +617,25 @@ public final class Md3Theme {
         Window w = a.getWindow();
         if (w == null) return;
         try { w.setBackgroundDrawable(new ColorDrawable(t.surface)); } catch (Throwable ignore) {}
+        boolean immersive = getImmersiveStatusBar(a); // 默认false=不沉浸
         if (Build.VERSION.SDK_INT >= 21) {
             try {
                 w.setStatusBarColor(t.statusBar);
                 w.setNavigationBarColor(t.navBar);
+                // 沉浸式：内容延伸到状态栏下方（LIGHT/NO_ACTION_BAR 主题也能做到）；默认不沉浸
+                View dec = w.getDecorView();
+                if (dec != null) {
+                    int sys = dec.getSystemUiVisibility();
+                    int LAYOUT_FULLSCREEN = 0x00000400; // View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    int LAYOUT_STABLE     = 0x00000100; // View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    if (immersive) {
+                        sys |= (LAYOUT_FULLSCREEN | LAYOUT_STABLE);
+                    } else {
+                        sys &= ~LAYOUT_FULLSCREEN;
+                        sys &= ~LAYOUT_STABLE;
+                    }
+                    dec.setSystemUiVisibility(sys);
+                }
             } catch (Throwable ignore) {}
         }
         if (Build.VERSION.SDK_INT >= 23) {
@@ -641,9 +665,22 @@ public final class Md3Theme {
     }
 
     private static void applySingleView(View v, Md3Tokens t) {
-        // Never apply twice
-        // try { if (v.getTag(R.id.md3_tag_applied) != null) return; } catch (Throwable ignore) {}
-        // try { v.setTag(R.id.md3_tag_applied, Boolean.TRUE); } catch (Throwable ignore) {}
+        // 第一次进来：记录"XML inflation后的原始padding快照"，存到 tag 里，防止重复 apply 时 padding 累加。
+        // 注意：md3_tag_applied 不再用来阻止重新着色（着色是幂等的），只用于标记"已经存过原始padding"。
+        if (v.getTag(R.id.md3_tag_applied) == null) {
+            try {
+                int[] pad = new int[]{ v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), v.getPaddingBottom() };
+                v.setTag(R.id.md3_original_padding, pad);
+            } catch (Throwable ignore) {}
+            try { v.setTag(R.id.md3_tag_applied, Boolean.TRUE); } catch (Throwable ignore) {}
+        }
+        int[] op = null;
+        try { op = (int[]) v.getTag(R.id.md3_original_padding); } catch (Throwable ignore) { op = null; }
+        final int oL = (op != null) ? op[0] : v.getPaddingLeft();
+        final int oT = (op != null) ? op[1] : v.getPaddingTop();
+        final int oR = (op != null) ? op[2] : v.getPaddingRight();
+        final int oB = (op != null) ? op[3] : v.getPaddingBottom();
+
         if (v.getId() == R.id.md3_preserve_bg) return;
 
         // AppBar (flat, no rounded corners, edge-to-edge)
@@ -684,7 +721,8 @@ public final class Md3Theme {
             b.setMinHeight(dp(b.getContext(), 40));
             int padH = dp(b.getContext(), 24);
             int padV = dp(b.getContext(), 10);
-            b.setPadding(padH, padV, padH, padV);
+            // 基于 XML inflation 时的原始 padding 额外叠加，避免每次 apply 重复累加导致文字偏移
+            b.setPadding(oL + padH, oT + padV, oR + padH, oB + padV);
             b.setAllCaps(false);
         }
 
@@ -706,7 +744,7 @@ public final class Md3Theme {
             tryEtBackgroundTint(et, t.primary.color, t.outline);
             // Give it a visible padding too
             int pad = dp(et.getContext(), 14);
-            et.setPadding(pad, pad, pad, pad);
+            et.setPadding(oL + pad, oT + pad, oR + pad, oB + pad);
         }
 
         // CompoundButton (Switch/CheckBox): tint track/thumb + text color
@@ -717,7 +755,8 @@ public final class Md3Theme {
                 if (Build.VERSION.SDK_INT >= 21) try { rb.setButtonTintList(tintList(t.primary.color, t.outline)); } catch (Throwable ignore) {}
                 rb.setTextColor(t.onSurface);
                 int pad = dp(rb.getContext(), 4);
-                rb.setPadding(rb.getPaddingLeft() + pad, rb.getPaddingTop(), rb.getPaddingRight() + pad, rb.getPaddingBottom());
+                // 基于 XML inflation 时的原始 padding 叠加，避免每次 apply 重复累加导致文字越来越右偏
+                rb.setPadding(oL + pad, oT, oR + pad, oB);
             } else {
                 try {
                     if (Build.VERSION.SDK_INT >= 21) {
@@ -744,7 +783,7 @@ public final class Md3Theme {
                     iv.setColorFilter(t.onSurfaceVariant, android.graphics.PorterDuff.Mode.SRC_IN);
                     iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                     int pad = dp(iv.getContext(), 8);
-                    iv.setPadding(pad, pad, pad, pad);
+                    iv.setPadding(oL + pad, oT + pad, oR + pad, oB + pad);
                 }
             }
         }

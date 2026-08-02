@@ -48,6 +48,8 @@
     <string name="md3_dynamic_color_desc">Use colors from your wallpaper (Android 8.1+)</string>
     <string name="md3_dynamic_color_not_available">Dynamic color is not available on this system</string>
     <string name="md3_dynamic_color_on_hint">Dynamic color enabled. Accent colors will be sourced from your wallpaper; manual seed colors will take effect only when wallpaper colors are unavailable.</string>
+    <string name="md3_immersive">Immersive status bar</string>
+    <string name="md3_immersive_desc">Content extends under the status bar (default: off)</string>
     <string name="md3_seed_ignored_when_dynamic">Dynamic color is active — seed color currently has no effect. Turn off dynamic color to use the manual seed.</string>
     <string name="md3_seed_color">Accent color</string>
     <string name="md3_preview">Preview</string>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- R.id.md3_tag_applied：View 是否已被 Md3Theme.apply 处理 -->
+    <!-- R.id.md3_tag_applied：View 已初始化过"原始布局padding"快照（仅用来存储初始padding，不会阻止重新着色） -->
     <item type="id" name="md3_tag_applied"/>
+    <!-- R.id.md3_original_padding：存储{l,t,r,b}原始padding（int[4]），防止每次apply时padding累加 -->
+    <item type="id" name="md3_original_padding"/>
     <!-- R.id.md3_btn_style：filled | tonal | outlined | text | icon -->
     <item type="id" name="md3_btn_style"/>
     <!-- R.id.md3_text_role：on_surface | on_surface_variant | on_primary_container | outline | primary -->

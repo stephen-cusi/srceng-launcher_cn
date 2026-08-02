@@ -51,6 +51,8 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="md3_dynamic_color_not_available">当前系统不支持动态取色</string>
     <string name="md3_dynamic_color_on_hint">已开启动态取色，主题色优先使用壁纸颜色；仅当壁纸无法提取颜色时，手动选择的主题色才会生效。</string>
     <string name="md3_seed_ignored_when_dynamic">动态取色已开启，当前手动选择的主题色不会生效。如需使用手动主题色，请先关闭动态取色。</string>
+    <string name="md3_immersive">状态栏沉浸</string>
+    <string name="md3_immersive_desc">让页面内容延伸到状态栏下方（默认：关闭）</string>
     <string name="md3_seed_color">主题色</string>
     <string name="md3_preview">预览</string>
     <string name="md3_preview_primary">主色调按钮</string>

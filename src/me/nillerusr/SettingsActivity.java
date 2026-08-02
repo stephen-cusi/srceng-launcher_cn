@@ -59,6 +59,8 @@ public class SettingsActivity extends Activity {
     private Spinner resPresetSpinner;
     private ArrayAdapter<String> resPresetAdapter;
     private EditText resCustomW, resCustomH;
+    // Immersive status bar
+    private Switch immersiveSwitch;
 
     private int lastDarkMode = Md3Theme.THEME_SYSTEM;
     private boolean lastDynamic = false;
@@ -69,6 +71,7 @@ public class SettingsActivity extends Activity {
     private String lastResMode = Md3Theme.RES_MODE_DEVICE;
     private int lastResPresetIdx = 0;
     private int lastResCustomW = 1280, lastResCustomH = 720;
+    private boolean lastImmersive = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +129,7 @@ public class SettingsActivity extends Activity {
         resPresetSpinner = optFind(R.id.md3_res_preset_spinner);
         resCustomW       = optFind(R.id.md3_res_custom_w);
         resCustomH       = optFind(R.id.md3_res_custom_h);
+        immersiveSwitch  = optFind(R.id.md3_immersive_switch);
 
         ImageButton back = optFind(R.id.md3_button_back);
         if (back != null) {
@@ -186,6 +190,17 @@ public class SettingsActivity extends Activity {
         lastResPresetIdx   = Md3Theme.getResolutionPresetIdx(this);
         lastResCustomW     = Md3Theme.getResolutionCustomW(this);
         lastResCustomH     = Md3Theme.getResolutionCustomH(this);
+        // 进入页面时先对 CUSTOM 宽高做一次范围夹取+写回SP，保证 SP 中不可能存在非法值（问题2根因：升级或残留导致W/H越界）
+        boolean resDirty = false;
+        int cw = lastResCustomW, ch = lastResCustomH;
+        if (cw < 320) { cw = 320; resDirty = true; } else if (cw > 8192) { cw = 8192; resDirty = true; }
+        if (ch < 240) { ch = 240; resDirty = true; } else if (ch > 8192) { ch = 8192; resDirty = true; }
+        if (resDirty) {
+            Md3Theme.setResolutionCustomW(this, cw);
+            Md3Theme.setResolutionCustomH(this, ch);
+            lastResCustomW = cw;
+            lastResCustomH = ch;
+        }
         if (Md3Theme.RES_MODE_PRESET.equals(lastResMode))       setCheckedSafe(resModePreset, true);
         else if (Md3Theme.RES_MODE_CUSTOM.equals(lastResMode))  setCheckedSafe(resModeCustom, true);
         else                                                     setCheckedSafe(resModeDevice, true);
@@ -195,6 +210,9 @@ public class SettingsActivity extends Activity {
         if (resCustomH != null) {
             try { resCustomH.setText(String.valueOf(lastResCustomH)); } catch (Throwable ignore) {}
         }
+        // Immersive status bar
+        lastImmersive = Md3Theme.getImmersiveStatusBar(this);
+        setCheckedSafe(immersiveSwitch, lastImmersive);
     }
 
     // ========= UI language Spinner (10 languages: system/zh_CN/zh_TW/en/ru/ja/ko/fr/de/es) =========
@@ -453,6 +471,14 @@ public class SettingsActivity extends Activity {
                         try { Toast.makeText(SettingsActivity.this, R.string.md3_dynamic_color_on_hint, Toast.LENGTH_LONG).show(); } catch (Throwable ignore) {}
                     }
                     if (isChecked != lastDynamic) { lastDynamic = isChecked; refreshTheme(REFRESH_RECREATE); }
+                }
+            });
+        }
+        if (immersiveSwitch != null) {
+            immersiveSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    Md3Theme.setImmersiveStatusBar(SettingsActivity.this, isChecked);
+                    if (isChecked != lastImmersive) { lastImmersive = isChecked; refreshTheme(REFRESH_RECREATE); }
                 }
             });
         }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- MD3 基础主题：继承 Material Light NoActionBar (API 21+) -->
-    <style name="SrcEng.MD3" parent="@android:style/Theme.Material.Light.NoActionBar.Fullscreen">
+    <!-- MD3 基础主题：继承 Material Light NoActionBar (API 21+)，默认不沉浸（状态栏独立区域） -->
+    <style name="SrcEng.MD3" parent="@android:style/Theme.Material.Light.NoActionBar">
         <item name="android:windowBackground">@color/md3_surface</item>
         <item name="android:colorBackground">@color/md3_surface</item>
         <item name="android:colorPrimary">@color/md3_primary</item>
@@ -23,7 +23,7 @@
     </style>
 
     <!-- 深色模式（独立主题，会被 Md3Theme 在代码中选中用于强制深色） -->
-    <style name="SrcEng.MD3.Dark" parent="@android:style/Theme.Material.NoActionBar.Fullscreen">
+    <style name="SrcEng.MD3.Dark" parent="@android:style/Theme.Material.NoActionBar">
         <item name="android:windowBackground">@color/md3_surface</item>
         <item name="android:colorBackground">@color/md3_surface</item>
         <item name="android:colorPrimary">@color/md3_primary</item>
