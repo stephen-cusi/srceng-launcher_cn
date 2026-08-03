@@ -10,7 +10,7 @@ Requirements:
 
 - JDK 17
 - Android 7.0 (API 24) or newer
-- Android SDK Platform 29
+- Android SDK Platform 34
 - Android SDK Build Tools 35.0.0 or newer
 
 Build the debug APK with the Gradle Wrapper:
