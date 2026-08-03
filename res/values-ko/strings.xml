@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="srceng_launcher_rewrite_text">현대화 재작성 안내\n런처 UI와 애플리케이션 로직을 Kotlin으로 다시 작성했습니다. 빌드 시스템은 Gradle Wrapper와 Android Gradle Plugin으로 전환했으며, 인터페이스는 공식 Material 3 테마와 컴포넌트를 사용합니다. 엔진 동작을 유지하기 위해 SDL 및 네이티브 호환 계층은 Java로 유지합니다.</string>
     <string name="srceng_app_name">Source Engine</string>
 
     <string name="srceng_launcher_about">정보</string>

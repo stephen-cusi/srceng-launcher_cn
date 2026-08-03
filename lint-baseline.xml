@@ -63,7 +63,7 @@
         errorLine2="                       ~~~~~~~~">
         <location
             file="src/me/nillerusr/DirchActivity.kt"
-            line="127"
+            line="123"
             column="24"/>
     </issue>
 
@@ -74,7 +74,7 @@
         errorLine2="               ~~~~~~~~">
         <location
             file="src/me/nillerusr/LauncherActivity.kt"
-            line="242"
+            line="211"
             column="16"/>
     </issue>
 
@@ -112,250 +112,8 @@
     </issue>
 
     <issue
-        id="InlinedApi"
-        message="Field requires API level 21 (current min is 17): `android.media.AudioTrack#WRITE_BLOCKING`"
-        errorLine1="            int result = mAudioTrack.write(buffer, i, buffer.length - i, AudioTrack.WRITE_BLOCKING);"
-        errorLine2="                                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/org/libsdl/app/SDLAudioManager.java"
-            line="253"
-            column="74"/>
-    </issue>
-
-    <issue
-        id="InlinedApi"
-        message="Field requires API level 23 (current min is 17): `android.media.AudioRecord#READ_BLOCKING`"
-        errorLine1="        return mAudioRecord.read(buffer, 0, buffer.length, blocking ? AudioRecord.READ_BLOCKING : AudioRecord.READ_NON_BLOCKING);"
-        errorLine2="                                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/org/libsdl/app/SDLAudioManager.java"
-            line="330"
-            column="71"/>
-    </issue>
-
-    <issue
-        id="InlinedApi"
-        message="Field requires API level 23 (current min is 17): `android.media.AudioRecord#READ_NON_BLOCKING`"
-        errorLine1="        return mAudioRecord.read(buffer, 0, buffer.length, blocking ? AudioRecord.READ_BLOCKING : AudioRecord.READ_NON_BLOCKING);"
-        errorLine2="                                                                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/org/libsdl/app/SDLAudioManager.java"
-            line="330"
-            column="99"/>
-    </issue>
-
-    <issue
-        id="InlinedApi"
-        message="Field requires API level 24 (current min is 17): `android.view.MotionEvent#AXIS_RELATIVE_X`"
-        errorLine1="                    float x = event.getAxisValue(MotionEvent.AXIS_RELATIVE_X);"
-        errorLine2="                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/org/libsdl/app/SDLControllerManager.java"
-            line="636"
-            column="50"/>
-    </issue>
-
-    <issue
-        id="InlinedApi"
-        message="Field requires API level 24 (current min is 17): `android.view.MotionEvent#AXIS_RELATIVE_Y`"
-        errorLine1="                    float y = event.getAxisValue(MotionEvent.AXIS_RELATIVE_Y);"
-        errorLine2="                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/org/libsdl/app/SDLControllerManager.java"
-            line="637"
-            column="50"/>
-    </issue>
-
-    <issue
-        id="InlinedApi"
-        message="Field requires API level 24 (current min is 17): `android.view.MotionEvent#AXIS_RELATIVE_X`"
-        errorLine1="            return event.getAxisValue(MotionEvent.AXIS_RELATIVE_X);"
-        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/org/libsdl/app/SDLControllerManager.java"
-            line="667"
-            column="39"/>
-    </issue>
-
-    <issue
-        id="InlinedApi"
-        message="Field requires API level 24 (current min is 17): `android.view.MotionEvent#AXIS_RELATIVE_Y`"
-        errorLine1="            return event.getAxisValue(MotionEvent.AXIS_RELATIVE_Y);"
-        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/org/libsdl/app/SDLControllerManager.java"
-            line="676"
-            column="39"/>
-    </issue>
-
-    <issue
         id="NewApi"
-        message="Call requires API level 23 (current min is 17): `android.content.ContextWrapper#checkSelfPermission`"
-        errorLine1="            if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {"
-        errorLine2="                ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/me/nillerusr/LauncherActivity.kt"
-            line="123"
-            column="17"/>
-    </issue>
-
-    <issue
-        id="NewApi"
-        message="Call requires API level 23 (current min is 17): `android.app.Activity#requestPermissions`"
-        errorLine1="            requestPermissions(requestPermissions.toTypedArray(), code)"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/me/nillerusr/LauncherActivity.kt"
-            line="129"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="NewApi"
-        message="Call requires API level 23 (current min is 21): `android.widget.Switch#setThumbTintList`"
-        errorLine1="            if(v is CompoundButton){if(v is RadioButton){if(Build.VERSION.SDK_INT>=21)try{v.buttonTintList=tintList(t.primary.color,t.outline)}catch(_:Throwable){};v.setTextColor(t.onSurface);val p=dp(v.context,4);v.setPadding(l+p,top,r+p,bottom)}else{try{if(Build.VERSION.SDK_INT>=21){v.buttonTintList=tintList(t.primary.color,t.outline);if(v is Switch){v.trackTintList=tintList(withAlpha(t.primary.color,0x66),t.outlineVariant);v.thumbTintList=tintList(t.primary.color,t.surfaceContainerHighest)}}}catch(_:Throwable){};v.setTextColor(t.onSurface)}}"
-        errorLine2="                                                                                                                                                                                                                                                                                                                                                                                                                                                ~~~~~~~~~~~~~">
-        <location
-            file="src/me/nillerusr/md3/Md3Theme.kt"
-            line="322"
-            column="433"/>
-    </issue>
-
-    <issue
-        id="NewApi"
-        message="Call requires API level 23 (current min is 21): `android.widget.Switch#setThumbTintList`"
-        errorLine1="            if(v is CompoundButton){if(v is RadioButton){if(Build.VERSION.SDK_INT>=21)try{v.buttonTintList=tintList(t.primary.color,t.outline)}catch(_:Throwable){};v.setTextColor(t.onSurface);val p=dp(v.context,4);v.setPadding(l+p,top,r+p,bottom)}else{try{if(Build.VERSION.SDK_INT>=21){v.buttonTintList=tintList(t.primary.color,t.outline);if(v is Switch){v.trackTintList=tintList(withAlpha(t.primary.color,0x66),t.outlineVariant);v.thumbTintList=tintList(t.primary.color,t.surfaceContainerHighest)}}}catch(_:Throwable){};v.setTextColor(t.onSurface)}}"
-        errorLine2="                                                                                                                                                                                                                                                                                                                                                                                                                                                             ~">
-        <location
-            file="src/me/nillerusr/md3/Md3Theme.kt"
-            line="322"
-            column="446"/>
-    </issue>
-
-    <issue
-        id="NewApi"
-        message="Call requires API level 23 (current min is 21): `android.widget.Switch#setTrackTintList`"
-        errorLine1="            if(v is CompoundButton){if(v is RadioButton){if(Build.VERSION.SDK_INT>=21)try{v.buttonTintList=tintList(t.primary.color,t.outline)}catch(_:Throwable){};v.setTextColor(t.onSurface);val p=dp(v.context,4);v.setPadding(l+p,top,r+p,bottom)}else{try{if(Build.VERSION.SDK_INT>=21){v.buttonTintList=tintList(t.primary.color,t.outline);if(v is Switch){v.trackTintList=tintList(withAlpha(t.primary.color,0x66),t.outlineVariant);v.thumbTintList=tintList(t.primary.color,t.surfaceContainerHighest)}}}catch(_:Throwable){};v.setTextColor(t.onSurface)}}"
-        errorLine2="                                                                                                                                                                                                                                                                                                                                                                     ~~~~~~~~~~~~~">
-        <location
-            file="src/me/nillerusr/md3/Md3Theme.kt"
-            line="322"
-            column="358"/>
-    </issue>
-
-    <issue
-        id="NewApi"
-        message="Call requires API level 23 (current min is 21): `android.widget.Switch#setTrackTintList`"
-        errorLine1="            if(v is CompoundButton){if(v is RadioButton){if(Build.VERSION.SDK_INT>=21)try{v.buttonTintList=tintList(t.primary.color,t.outline)}catch(_:Throwable){};v.setTextColor(t.onSurface);val p=dp(v.context,4);v.setPadding(l+p,top,r+p,bottom)}else{try{if(Build.VERSION.SDK_INT>=21){v.buttonTintList=tintList(t.primary.color,t.outline);if(v is Switch){v.trackTintList=tintList(withAlpha(t.primary.color,0x66),t.outlineVariant);v.thumbTintList=tintList(t.primary.color,t.surfaceContainerHighest)}}}catch(_:Throwable){};v.setTextColor(t.onSurface)}}"
-        errorLine2="                                                                                                                                                                                                                                                                                                                                                                                  ~">
-        <location
-            file="src/me/nillerusr/md3/Md3Theme.kt"
-            line="322"
-            column="371"/>
-    </issue>
-
-    <issue
-        id="NewApi"
-        message="Call requires API level 23 (current min is 17): `android.content.ContextWrapper#checkSelfPermission`"
-        errorLine1="   if( checkSelfPermission(permissions[i]) != PackageManager.PERMISSION_GRANTED )"
-        errorLine2="       ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/org/libsdl/app/SDLActivity.java"
-            line="218"
-            column="8"/>
-    </issue>
-
-    <issue
-        id="NewApi"
-        message="Call requires API level 23 (current min is 17): `android.app.Activity#requestPermissions`"
-        errorLine1="   requestPermissions(requestPermissionsArray, code);"
-        errorLine2="   ~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/org/libsdl/app/SDLActivity.java"
-            line="226"
-            column="4"/>
-    </issue>
-
-    <issue
-        id="NewApi"
-        message="Call requires API level 23 (current min is 17): `android.content.ContextWrapper#checkSelfPermission`"
-        errorLine1="        if( checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &amp;&amp; "
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/org/libsdl/app/SDLActivity.java"
-            line="411"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="NewApi"
-        message="Call requires API level 23 (current min is 17): `android.content.ContextWrapper#checkSelfPermission`"
-        errorLine1="            checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED )"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/org/libsdl/app/SDLActivity.java"
-            line="412"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="NewApi"
-        message="Call requires API level 21 (current min is 17): `android.media.AudioTrack#write`"
-        errorLine1="            int result = mAudioTrack.write(buffer, i, buffer.length - i, AudioTrack.WRITE_BLOCKING);"
-        errorLine2="                                     ~~~~~">
-        <location
-            file="src/org/libsdl/app/SDLAudioManager.java"
-            line="253"
-            column="38"/>
-    </issue>
-
-    <issue
-        id="NewApi"
-        message="Call requires API level 23 (current min is 17): `android.media.AudioRecord#read`"
-        errorLine1="        return mAudioRecord.read(buffer, 0, buffer.length, blocking ? AudioRecord.READ_BLOCKING : AudioRecord.READ_NON_BLOCKING);"
-        errorLine2="                            ~~~~">
-        <location
-            file="src/org/libsdl/app/SDLAudioManager.java"
-            line="330"
-            column="29"/>
-    </issue>
-
-    <issue
-        id="NewApi"
-        message="Call requires API level 19 (current min is 17): `android.view.InputDevice#getProductId`"
-        errorLine1="        return joystickDevice.getProductId();"
-        errorLine2="                              ~~~~~~~~~~~~">
-        <location
-            file="src/org/libsdl/app/SDLControllerManager.java"
-            line="305"
-            column="31"/>
-    </issue>
-
-    <issue
-        id="NewApi"
-        message="Call requires API level 19 (current min is 17): `android.view.InputDevice#getVendorId`"
-        errorLine1="        return joystickDevice.getVendorId();"
-        errorLine2="                              ~~~~~~~~~~~">
-        <location
-            file="src/org/libsdl/app/SDLControllerManager.java"
-            line="310"
-            column="31"/>
-    </issue>
-
-    <issue
-        id="NewApi"
-        message="Call requires API level 19 (current min is 17): `android.view.InputDevice#hasKeys`"
-        errorLine1="        boolean[] has_keys = joystickDevice.hasKeys(keys);"
-        errorLine2="                                            ~~~~~~~">
-        <location
-            file="src/org/libsdl/app/SDLControllerManager.java"
-            line="397"
-            column="45"/>
-    </issue>
-
-    <issue
-        id="NewApi"
-        message="Call requires API level 26 (current min is 17): `android.os.VibrationEffect#createOneShot`"
+        message="Call requires API level 26 (current min is 24): `android.os.VibrationEffect#createOneShot`"
         errorLine1="                haptic.vib.vibrate(VibrationEffect.createOneShot(length, vibeValue));"
         errorLine2="                                                   ~~~~~~~~~~~~~">
         <location
@@ -366,7 +124,7 @@
 
     <issue
         id="NewApi"
-        message="Call requires API level 26 (current min is 17): `android.os.Vibrator#vibrate`"
+        message="Call requires API level 26 (current min is 24): `android.os.Vibrator#vibrate`"
         errorLine1="                haptic.vib.vibrate(VibrationEffect.createOneShot(length, vibeValue));"
         errorLine2="                           ~~~~~~~">
         <location
@@ -377,7 +135,7 @@
 
     <issue
         id="NewApi"
-        message="Call requires API level 26 (current min is 17): `android.view.View#requestPointerCapture`"
+        message="Call requires API level 26 (current min is 24): `android.view.View#requestPointerCapture`"
         errorLine1="                SDLActivity.getContentView().requestPointerCapture();"
         errorLine2="                                             ~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -388,7 +146,7 @@
 
     <issue
         id="NewApi"
-        message="Call requires API level 26 (current min is 17): `android.view.View#releasePointerCapture`"
+        message="Call requires API level 26 (current min is 24): `android.view.View#releasePointerCapture`"
         errorLine1="                SDLActivity.getContentView().releasePointerCapture();"
         errorLine2="                                             ~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -399,7 +157,7 @@
 
     <issue
         id="NewApi"
-        message="Call requires API level 26 (current min is 17): `android.view.View#requestPointerCapture`"
+        message="Call requires API level 26 (current min is 24): `android.view.View#requestPointerCapture`"
         errorLine1="            SDLActivity.getContentView().requestPointerCapture();"
         errorLine2="                                         ~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -409,24 +167,13 @@
     </issue>
 
     <issue
-        id="NewApi"
-        message="Call requires API level 23 (current min is 21): `android.view.View#setForeground`"
-        errorLine1="                    wrapper.foreground = RippleDrawable(ColorStateList(arrayOf(intArrayOf()), intArrayOf(0x22000000)), null, null)"
-        errorLine2="                                       ~">
-        <location
-            file="src/me/nillerusr/SettingsActivity.kt"
-            line="586"
-            column="40"/>
-    </issue>
-
-    <issue
         id="SdCardPath"
         message="Do not hardcode &quot;/sdcard/&quot;; use `Environment.getExternalStorageDirectory().getPath()` instead"
         errorLine1="            val dir = Environment.getExternalStorageDirectory() ?: return &quot;/sdcard/&quot;"
         errorLine2="                                                                           ~~~~~~~~">
         <location
             file="src/me/nillerusr/LauncherActivity.kt"
-            line="66"
+            line="63"
             column="76"/>
     </issue>
 
@@ -437,7 +184,7 @@
         errorLine2="                                                                           ~~~~~~~~">
         <location
             file="src/me/nillerusr/LauncherActivity.kt"
-            line="66"
+            line="63"
             column="76"/>
     </issue>
 
@@ -448,7 +195,7 @@
         errorLine2="                        ~~~~~~~~">
         <location
             file="src/me/nillerusr/LauncherActivity.kt"
-            line="68"
+            line="65"
             column="25"/>
     </issue>
 
@@ -459,7 +206,7 @@
         errorLine2="                        ~~~~~~~~">
         <location
             file="src/me/nillerusr/LauncherActivity.kt"
-            line="68"
+            line="65"
             column="25"/>
     </issue>
 
@@ -497,7 +244,7 @@
 
     <issue
         id="UnusedAttribute"
-        message="Attribute `allowAudioPlaybackCapture` is only used in API level 29 and higher (current min is 17)"
+        message="Attribute `allowAudioPlaybackCapture` is only used in API level 29 and higher (current min is 24)"
         errorLine1="    &lt;application android:icon=&quot;@drawable/ic_launcher&quot; android:debuggable=&quot;true&quot; android:label=&quot;@string/srceng_app_name&quot; android:allowAudioPlaybackCapture=&quot;true&quot; android:requestLegacyExternalStorage=&quot;true&quot;>"
         errorLine2="                                                                                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -542,12 +289,12 @@
     <issue
         id="AppBundleLocaleChanges"
         message="Found dynamic locale changes, but did not find corresponding Play Core library calls for downloading languages and splitting by language is not disabled in the `bundle` configuration"
-        errorLine1="                if (Build.VERSION.SDK_INT >= 17) cfg.setLocale(desired) else cfg.locale = desired"
-        errorLine2="                                                 ~~~~~~~~~~~~~~~~~~~~~~">
+        errorLine1="                cfg.setLocale(desired)"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/me/nillerusr/md3/Md3Theme.kt"
-            line="157"
-            column="50"/>
+            line="158"
+            column="17"/>
     </issue>
 
     <issue
@@ -607,13 +354,24 @@
 
     <issue
         id="GradleDependency"
-        message="A newer version of `compileSdkVersion` than 29 is available: 36"
-        errorLine1="    compileSdk = 29"
+        message="A newer version of `compileSdkVersion` than 34 is available: 36"
+        errorLine1="    compileSdk = 34"
         errorLine2="    ~~~~~~~~~~~~~~~">
         <location
             file="build.gradle.kts"
             line="10"
             column="5"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of com.google.android.material:material than 1.12.0 is available: 1.14.0"
+        errorLine1="    implementation(&quot;com.google.android.material:material:1.12.0&quot;)"
+        errorLine2="                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="54"
+            column="20"/>
     </issue>
 
     <issue
@@ -656,7 +414,7 @@
         errorLine2="        ~~~~~~~~~~~~~~">
         <location
             file="src/me/nillerusr/md3/Md3Theme.kt"
-            line="197"
+            line="196"
             column="9"/>
     </issue>
 
@@ -667,7 +425,7 @@
         errorLine2="        ~~~~~~~~~~~~~~">
         <location
             file="src/me/nillerusr/md3/Md3Theme.kt"
-            line="303"
+            line="302"
             column="9"/>
     </issue>
 
@@ -700,7 +458,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="8"
+            line="10"
             column="13"/>
     </issue>
 
@@ -711,19 +469,8 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="15"
+            line="17"
             column="13"/>
-    </issue>
-
-    <issue
-        id="Typos"
-        message="Did you mean &quot;unknownandlost!!&quot; instead of &quot;unknownandlost11&quot;?"
-        errorLine1="    &lt;string name=&quot;srceng_launcher_about_text&quot;>\nGracias a nillerusr y Jusic por el porteo\nValve por el motor Source\n\n¡No para uso comercial!\nContacto: unknownandlost11@gmail.com\n\nDonar: https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg&lt;/string>"
-        errorLine2="                                                                                                                                                           ~~~~~~~~~~~~~~~~">
-        <location
-            file="res/values-es/strings.xml"
-            line="6"
-            column="156"/>
     </issue>
 
     <issue
@@ -735,6 +482,17 @@
             file="res/values/strings.xml"
             line="6"
             column="153"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="Did you mean &quot;unknownandlost!!&quot; instead of &quot;unknownandlost11&quot;?"
+        errorLine1="    &lt;string name=&quot;srceng_launcher_about_text&quot;>\nGracias a nillerusr y Jusic por el porteo\nValve por el motor Source\n\n¡No para uso comercial!\nContacto: unknownandlost11@gmail.com\n\nDonar: https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg&lt;/string>"
+        errorLine2="                                                                                                                                                           ~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values-es/strings.xml"
+            line="7"
+            column="156"/>
     </issue>
 
     <issue
@@ -816,84 +574,216 @@
 
     <issue
         id="ObsoleteSdkInt"
-        message="Unnecessary; `SDK_INT` is always >= 17"
-        errorLine1="                    if (Build.VERSION.SDK_INT >= 17) {"
-        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/me/nillerusr/md3/Md3Theme.kt"
-            line="114"
-            column="25"/>
-    </issue>
-
-    <issue
-        id="ObsoleteSdkInt"
-        message="Unnecessary; `SDK_INT` is always >= 17"
-        errorLine1="                    if (Build.VERSION.SDK_INT >= 17) {"
-        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/me/nillerusr/md3/Md3Theme.kt"
-            line="114"
-            column="25"/>
-    </issue>
-
-    <issue
-        id="ObsoleteSdkInt"
-        message="Unnecessary; `SDK_INT` is always >= 17"
-        errorLine1="                if (Build.VERSION.SDK_INT >= 17) cfg.setLocale(desired) else cfg.locale = desired"
-        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/me/nillerusr/md3/Md3Theme.kt"
-            line="157"
-            column="21"/>
-    </issue>
-
-    <issue
-        id="ObsoleteSdkInt"
-        message="Unnecessary; `SDK_INT` is always >= 17"
-        errorLine1="                if (Build.VERSION.SDK_INT >= 17) cfg.setLocale(desired) else cfg.locale = desired"
-        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/me/nillerusr/md3/Md3Theme.kt"
-            line="157"
-            column="21"/>
-    </issue>
-
-    <issue
-        id="ObsoleteSdkInt"
-        message="Unnecessary; `SDK_INT` is always >= 17"
-        errorLine1="            if (Build.VERSION.SDK_INT >= 17) cfg.setLocale(desired) else cfg.locale = desired"
-        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/me/nillerusr/md3/Md3Theme.kt"
-            line="172"
-            column="17"/>
-    </issue>
-
-    <issue
-        id="ObsoleteSdkInt"
-        message="Unnecessary; `SDK_INT` is always >= 17"
-        errorLine1="            if (Build.VERSION.SDK_INT >= 17) cfg.setLocale(desired) else cfg.locale = desired"
-        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/me/nillerusr/md3/Md3Theme.kt"
-            line="172"
-            column="17"/>
-    </issue>
-
-    <issue
-        id="ObsoleteSdkInt"
         message="Unnecessary; `SDK_INT` is always >= 21"
-        errorLine1="            if(Build.VERSION.SDK_INT>=21)try{w.statusBarColor=t.statusBar;w.navigationBarColor=t.navBar;w.decorView?.let{it.systemUiVisibility=it.systemUiVisibility and 0x400.inv() and 0x100.inv()}}catch(_:Throwable){}"
-        errorLine2="               ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        errorLine1="        @TargetApi(21) private fun applyWindow(a:Activity,t:Md3Tokens) {"
+        errorLine2="        ~~~~~~~~~~~~~~">
         <location
             file="src/me/nillerusr/md3/Md3Theme.kt"
-            line="305"
-            column="16"/>
+            line="302"
+            column="9"/>
     </issue>
 
     <issue
         id="ObsoleteSdkInt"
-        message="Unnecessary; `SDK_INT` is always >= 17"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="        private fun withRipple(content:GradientDrawable,tone:Int,radius:Int):Drawable{val ripple=withAlpha(tone,0x1f);if(Build.VERSION.SDK_INT>=21)try{val mask=GradientDrawable();mask.shape=GradientDrawable.RECTANGLE;mask.cornerRadii=getCornerRadii(content);mask.setColor(Color.WHITE);return RippleDrawable(ColorStateList(arrayOf(intArrayOf()),intArrayOf(ripple)),content,mask)}catch(_:Throwable){};val pressed=GradientDrawable();pressed.cornerRadii=getCornerRadii(content);pressed.setColor(blend(contentColorOr(content),tone,.22f));return StateListDrawable().apply{addState(intArrayOf(android.R.attr.state_pressed),LayerDrawable(arrayOf(content,pressed)));addState(intArrayOf(),content)}}"
+        errorLine2="                                                                                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="333"
+            column="122"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="        private fun makeRippleBg(normalFill:Int,pressedFill:Int):Drawable{val normal=GradientDrawable();normal.shape=GradientDrawable.OVAL;normal.setColor(normalFill);if(Build.VERSION.SDK_INT>=21)try{val mask=GradientDrawable();mask.shape=GradientDrawable.OVAL;mask.setColor(Color.WHITE);return RippleDrawable(ColorStateList(arrayOf(intArrayOf()),intArrayOf(withAlpha(pressedFill,0x33))),normal,mask)}catch(_:Throwable){};val pressed=GradientDrawable();pressed.shape=GradientDrawable.OVAL;pressed.setColor(pressedFill);return StateListDrawable().apply{addState(intArrayOf(android.R.attr.state_pressed),pressed);addState(intArrayOf(),normal)}}"
+        errorLine2="                                                                                                                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="334"
+            column="171"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="        private fun tryEtBackgroundTint(v:EditText,primary:Int,outline:Int){try{if(Build.VERSION.SDK_INT>=21){val bg=v.background?.mutate()?:return;bg.setTintList(ColorStateList(arrayOf(intArrayOf(android.R.attr.state_focused),intArrayOf()),intArrayOf(primary,outline)));v.setBackgroundDrawable(bg)}}catch(_:Throwable){}}"
+        errorLine2="                                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="343"
+            column="84"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="    public static final boolean mHasMultiWindow = (Build.VERSION.SDK_INT >= 24);"
+        errorLine2="                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="76"
+            column="52"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `Build.VERSION.SDK_INT >= 24` is always true here (`SDK_INT` ≥ 24 and &lt; 26)"
+        errorLine1="            } else if (Build.VERSION.SDK_INT >= 24) {"
+        errorLine2="                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="131"
+            column="24"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="    if (Build.VERSION.SDK_INT >= 24) {"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="295"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="    if (Build.VERSION.SDK_INT >= 19) {"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="348"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is never &lt; 24"
+        errorLine1="            if (Build.VERSION.SDK_INT &lt; 24) {"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="374"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="        if( Build.VERSION.SDK_INT >= 23 )"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="408"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="                if (Build.VERSION.SDK_INT >= 19) {"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="739"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="        if (Build.VERSION.SDK_INT >= 19) {"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="806"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is never &lt; 24"
+        errorLine1="        if (Build.VERSION.SDK_INT &lt; 24) {"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="1140"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="            if (Build.VERSION.SDK_INT >= 19) {"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="1494"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="        if (Build.VERSION.SDK_INT >= 24) {"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="1547"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="        if (Build.VERSION.SDK_INT >= 24) {"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="1564"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="        if (Build.VERSION.SDK_INT >= 24) {"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="1619"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is never &lt; 24"
+        errorLine1="        if (Build.VERSION.SDK_INT &lt; 23) {"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="1633"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="            if (Build.VERSION.SDK_INT >= 21) {"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="1656"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
         errorLine1="            if (Build.VERSION.SDK_INT >= 17) {"
         errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -904,13 +794,82 @@
 
     <issue
         id="ObsoleteSdkInt"
-        message="Unnecessary; `SDK_INT` is always >= 17"
-        errorLine1="                try { if (Build.VERSION.SDK_INT >= 16) finishAffinity() else finish() } catch (_: Throwable) {}"
-        errorLine2="                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="            if (Build.VERSION.SDK_INT >= 24) {"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="src/me/nillerusr/SettingsActivity.kt"
-            line="635"
-            column="27"/>
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="1891"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is never &lt; 24"
+        errorLine1="        if (Build.VERSION.SDK_INT &lt; 21) {"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLAudioManager.java"
+            line="46"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="                if (Build.VERSION.SDK_INT >= 23) {"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLAudioManager.java"
+            line="119"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is never &lt; 24"
+        errorLine1="        if (Build.VERSION.SDK_INT &lt; 23) {"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLAudioManager.java"
+            line="335"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is never &lt; 24"
+        errorLine1="        if (Build.VERSION.SDK_INT &lt; 23) {"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLAudioManager.java"
+            line="344"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 24"
+        errorLine1="            if (Build.VERSION.SDK_INT >= 19) {"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLControllerManager.java"
+            line="45"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v21`) is unnecessary; `minSdkVersion` is 24. Merge all the resources in this folder into `layout`.">
+        <location
+            file="res/layout-v21"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v21`) is unnecessary; `minSdkVersion` is 24. Merge all the resources in this folder into `values`.">
+        <location
+            file="res/values-v21"/>
     </issue>
 
     <issue
@@ -920,7 +879,7 @@
         errorLine2="        ^">
         <location
             file="src/me/nillerusr/DirchActivity.kt"
-            line="32"
+            line="28"
             column="9"/>
     </issue>
 
@@ -986,7 +945,7 @@
         errorLine2="        ^">
         <location
             file="src/me/nillerusr/LauncherActivity.kt"
-            line="56"
+            line="53"
             column="9"/>
     </issue>
 
@@ -997,7 +956,7 @@
         errorLine2="        ^">
         <location
             file="src/me/nillerusr/LauncherActivity.kt"
-            line="59"
+            line="56"
             column="9"/>
     </issue>
 
@@ -1062,30 +1021,8 @@
         errorLine1="            &lt;LinearLayout"
         errorLine2="             ~~~~~~~~~~~~">
         <location
-            file="res/layout-v21/activity_settings.xml"
-            line="73"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="DisableBaselineAlignment"
-        message="Set `android:baselineAligned=&quot;false&quot;` on this element for better performance"
-        errorLine1="            &lt;LinearLayout"
-        errorLine2="             ~~~~~~~~~~~~">
-        <location
             file="res/layout/activity_settings.xml"
             line="73"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="DisableBaselineAlignment"
-        message="Set `android:baselineAligned=&quot;false&quot;` on this element for better performance"
-        errorLine1="            &lt;LinearLayout"
-        errorLine2="             ~~~~~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_settings.xml"
-            line="114"
             column="14"/>
     </issue>
 
@@ -1106,31 +1043,9 @@
         errorLine1="            &lt;LinearLayout"
         errorLine2="             ~~~~~~~~~~~~">
         <location
-            file="res/layout-v21/activity_settings.xml"
-            line="170"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="DisableBaselineAlignment"
-        message="Set `android:baselineAligned=&quot;false&quot;` on this element for better performance"
-        errorLine1="            &lt;LinearLayout"
-        errorLine2="             ~~~~~~~~~~~~">
-        <location
             file="res/layout/activity_settings.xml"
             line="170"
             column="14"/>
-    </issue>
-
-    <issue
-        id="DisableBaselineAlignment"
-        message="Set `android:baselineAligned=&quot;false&quot;` on this element for better performance"
-        errorLine1="                &lt;LinearLayout"
-        errorLine2="                 ~~~~~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_settings.xml"
-            line="264"
-            column="18"/>
     </issue>
 
     <issue
@@ -1185,94 +1100,6 @@
         <location
             file="res/values/colors.xml"
             line="5"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.md3_on_primary` appears to be unused"
-        errorLine1="    &lt;color name=&quot;md3_on_primary&quot;>#FFFFFFFF&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="res/values/colors.xml"
-            line="9"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.md3_primary_container` appears to be unused"
-        errorLine1="    &lt;color name=&quot;md3_primary_container&quot;>#FFFFDCC4&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="res/values/colors.xml"
-            line="10"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.md3_on_primary_container` appears to be unused"
-        errorLine1="    &lt;color name=&quot;md3_on_primary_container&quot;>#FF3B1B00&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="res/values/colors.xml"
-            line="11"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.md3_secondary` appears to be unused"
-        errorLine1="    &lt;color name=&quot;md3_secondary&quot;>#FF735A41&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="res/values/colors.xml"
-            line="12"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.md3_on_secondary` appears to be unused"
-        errorLine1="    &lt;color name=&quot;md3_on_secondary&quot;>#FFFFFFFF&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="res/values/colors.xml"
-            line="13"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.md3_secondary_container` appears to be unused"
-        errorLine1="    &lt;color name=&quot;md3_secondary_container&quot;>#FFFEDBC8&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="res/values/colors.xml"
-            line="14"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.md3_on_secondary_container` appears to be unused"
-        errorLine1="    &lt;color name=&quot;md3_on_secondary_container&quot;>#FF2A1805&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="res/values/colors.xml"
-            line="15"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.md3_on_tertiary` appears to be unused"
-        errorLine1="    &lt;color name=&quot;md3_on_tertiary&quot;>#FFFFFFFF&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="res/values/colors.xml"
-            line="17"
             column="12"/>
     </issue>
 
@@ -1399,6 +1226,17 @@
 
     <issue
         id="UnusedResources"
+        message="The resource `R.color.md3_surface_container_high` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_surface_container_high&quot;>#FFE9E7E1&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="32"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
         message="The resource `R.color.md3_inverse_surface` appears to be unused"
         errorLine1="    &lt;color name=&quot;md3_inverse_surface&quot;>#FF34302B&lt;/color>"
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~">
@@ -1449,6 +1287,28 @@
         <location
             file="res/values/colors.xml"
             line="44"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_status_bar` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_status_bar&quot;>#FFFBF8F5&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="47"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_nav_bar` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_nav_bar&quot;>#FFE3E1DB&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="48"
             column="12"/>
     </issue>
 
@@ -1553,6 +1413,17 @@
 
     <issue
         id="UnusedResources"
+        message="The resource `R.drawable.md3_edittext_bg` appears to be unused"
+        errorLine1="&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="res/drawable/md3_edittext_bg.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
         message="The resource `R.layout.spinner_item_v8` appears to be unused"
         errorLine1="&lt;TextView  "
         errorLine2="^">
@@ -1569,7 +1440,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="11"
+            line="13"
             column="13"/>
     </issue>
 
@@ -1580,7 +1451,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="12"
+            line="14"
             column="13"/>
     </issue>
 
@@ -1591,7 +1462,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="13"
+            line="15"
             column="13"/>
     </issue>
 
@@ -1602,7 +1473,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="21"
+            line="23"
             column="13"/>
     </issue>
 
@@ -1613,7 +1484,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="22"
+            line="24"
             column="13"/>
     </issue>
 
@@ -1624,7 +1495,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="23"
+            line="25"
             column="13"/>
     </issue>
 
@@ -1635,7 +1506,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="24"
+            line="26"
             column="13"/>
     </issue>
 
@@ -1646,7 +1517,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="26"
+            line="28"
             column="13"/>
     </issue>
 
@@ -1657,7 +1528,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="27"
+            line="29"
             column="13"/>
     </issue>
 
@@ -1668,7 +1539,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="28"
+            line="30"
             column="13"/>
     </issue>
 
@@ -1679,7 +1550,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="30"
+            line="32"
             column="13"/>
     </issue>
 
@@ -1690,7 +1561,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="31"
+            line="33"
             column="13"/>
     </issue>
 
@@ -1701,7 +1572,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="32"
+            line="34"
             column="13"/>
     </issue>
 
@@ -1712,7 +1583,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="33"
+            line="35"
             column="13"/>
     </issue>
 
@@ -1723,7 +1594,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="42"
+            line="44"
             column="13"/>
     </issue>
 
@@ -1734,7 +1605,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="64"
+            line="66"
             column="13"/>
     </issue>
 
@@ -1745,7 +1616,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/values/strings.xml"
-            line="108"
+            line="110"
             column="13"/>
     </issue>
 
@@ -1755,19 +1626,8 @@
         errorLine1="        &lt;LinearLayout"
         errorLine2="         ~~~~~~~~~~~~">
         <location
-            file="res/layout-v21/activity_launcher.xml"
-            line="179"
-            column="10"/>
-    </issue>
-
-    <issue
-        id="UselessLeaf"
-        message="This `LinearLayout` view is unnecessary (no children, no `background`, no `id`, no `style`)"
-        errorLine1="        &lt;LinearLayout"
-        errorLine2="         ~~~~~~~~~~~~">
-        <location
             file="res/layout/activity_launcher.xml"
-            line="179"
+            line="206"
             column="10"/>
     </issue>
 
@@ -1799,30 +1659,8 @@
         errorLine1="                &lt;LinearLayout"
         errorLine2="                 ~~~~~~~~~~~~">
         <location
-            file="res/layout-v21/activity_settings.xml"
-            line="79"
-            column="18"/>
-    </issue>
-
-    <issue
-        id="UselessParent"
-        message="This `LinearLayout` layout or its `LinearLayout` parent is unnecessary"
-        errorLine1="                &lt;LinearLayout"
-        errorLine2="                 ~~~~~~~~~~~~">
-        <location
             file="res/layout/activity_settings.xml"
             line="79"
-            column="18"/>
-    </issue>
-
-    <issue
-        id="UselessParent"
-        message="This `LinearLayout` layout or its `LinearLayout` parent is unnecessary"
-        errorLine1="                &lt;LinearLayout"
-        errorLine2="                 ~~~~~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_settings.xml"
-            line="120"
             column="18"/>
     </issue>
 
@@ -1843,17 +1681,6 @@
         errorLine1="                &lt;LinearLayout"
         errorLine2="                 ~~~~~~~~~~~~">
         <location
-            file="res/layout-v21/activity_settings.xml"
-            line="176"
-            column="18"/>
-    </issue>
-
-    <issue
-        id="UselessParent"
-        message="This `LinearLayout` layout or its `LinearLayout` parent is unnecessary"
-        errorLine1="                &lt;LinearLayout"
-        errorLine2="                 ~~~~~~~~~~~~">
-        <location
             file="res/layout/activity_settings.xml"
             line="176"
             column="18"/>
@@ -1862,22 +1689,11 @@
     <issue
         id="TooManyViews"
         message="`activity_settings.xml` has more than 80 views, bad for performance"
-        errorLine1="                    &lt;TextView android:layout_width=&quot;24dp&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;G&quot;/>"
-        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_settings.xml"
-            line="527"
-            column="21"/>
-    </issue>
-
-    <issue
-        id="TooManyViews"
-        message="`activity_settings.xml` has more than 80 views, bad for performance"
-        errorLine1="                    &lt;TextView android:layout_width=&quot;24dp&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;G&quot;/>"
-        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        errorLine1="                    &lt;SeekBar android:id=&quot;@+id/md3_seed_red&quot; android:layout_width=&quot;0dp&quot; android:layout_height=&quot;wrap_content&quot; android:layout_weight=&quot;1&quot; android:max=&quot;255&quot;/>"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/layout/activity_settings.xml"
-            line="527"
+            line="534"
             column="21"/>
     </issue>
 
@@ -1963,201 +1779,344 @@
     </issue>
 
     <issue
-        id="ButtonStyle"
-        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
-        errorLine1="                &lt;Button"
-        errorLine2="                 ~~~~~~">
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="                val editor = mPref!!.edit()"
+        errorLine2="                             ~~~~~~~~~~~~~~">
         <location
-            file="res/layout-v21/activity_settings.xml"
-            line="585"
-            column="18"/>
+            file="src/me/nillerusr/DirchActivity.kt"
+            line="121"
+            column="30"/>
     </issue>
 
     <issue
-        id="ButtonStyle"
-        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
-        errorLine1="                &lt;Button"
-        errorLine2="                 ~~~~~~">
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="                mPref!!.edit().putInt(&quot;pakversion&quot;, PAK_VERSION).apply()"
+        errorLine2="                ~~~~~~~~~~~~~~">
         <location
-            file="res/layout/activity_settings.xml"
-            line="585"
-            column="18"/>
+            file="src/me/nillerusr/ExtractAssets.kt"
+            line="114"
+            column="17"/>
     </issue>
 
     <issue
-        id="ButtonStyle"
-        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
-        errorLine1="                &lt;Button"
-        errorLine2="                 ~~~~~~">
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="                mPref!!.edit().putInt(&quot;pakversion&quot;, PAK_VERSION).apply()"
+        errorLine2="                ~~~~~~~~~~~~~~">
         <location
-            file="res/layout-v21/activity_settings.xml"
-            line="593"
-            column="18"/>
+            file="src/me/nillerusr/ExtractAssets.kt"
+            line="114"
+            column="17"/>
     </issue>
 
     <issue
-        id="ButtonStyle"
-        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
-        errorLine1="                &lt;Button"
-        errorLine2="                 ~~~~~~">
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        val editor = mPref!!.edit()"
+        errorLine2="                     ~~~~~~~~~~~~~~">
         <location
-            file="res/layout/activity_settings.xml"
-            line="593"
-            column="18"/>
-    </issue>
-
-    <issue
-        id="ButtonStyle"
-        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
-        errorLine1="                &lt;Button"
-        errorLine2="                 ~~~~~~">
-        <location
-            file="res/layout-v21/activity_settings.xml"
-            line="601"
-            column="18"/>
-    </issue>
-
-    <issue
-        id="ButtonStyle"
-        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
-        errorLine1="                &lt;Button"
-        errorLine2="                 ~~~~~~">
-        <location
-            file="res/layout/activity_settings.xml"
-            line="601"
-            column="18"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="            &lt;EditText"
-        errorLine2="             ~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_launcher.xml"
-            line="101"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="            &lt;EditText"
-        errorLine2="             ~~~~~~~~">
-        <location
-            file="res/layout/activity_launcher.xml"
-            line="101"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="            &lt;EditText"
-        errorLine2="             ~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_launcher.xml"
-            line="120"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="            &lt;EditText"
-        errorLine2="             ~~~~~~~~">
-        <location
-            file="res/layout/activity_launcher.xml"
-            line="120"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="            &lt;EditText"
-        errorLine2="             ~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_launcher.xml"
-            line="158"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="            &lt;EditText"
-        errorLine2="             ~~~~~~~~">
-        <location
-            file="res/layout/activity_launcher.xml"
-            line="158"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="                        &lt;EditText"
-        errorLine2="                         ~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_settings.xml"
-            line="281"
-            column="26"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="                        &lt;EditText"
-        errorLine2="                         ~~~~~~~~">
-        <location
-            file="res/layout/activity_settings.xml"
-            line="281"
-            column="26"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="                        &lt;EditText"
-        errorLine2="                         ~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_settings.xml"
-            line="303"
-            column="26"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="                        &lt;EditText"
-        errorLine2="                         ~~~~~~~~">
-        <location
-            file="res/layout/activity_settings.xml"
-            line="303"
-            column="26"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="                    &lt;EditText"
-        errorLine2="                     ~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_settings.xml"
-            line="502"
+            file="src/me/nillerusr/LauncherActivity.kt"
+            line="208"
             column="22"/>
     </issue>
 
     <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="                    &lt;EditText"
-        errorLine2="                     ~~~~~~~~">
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setThemeMode(ctx: Context, mode: Int) { getPrefs(ctx).edit().putInt(SP_KEY_THEME_MODE, mode).apply() }"
+        errorLine2="                                                               ~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="res/layout/activity_settings.xml"
-            line="502"
-            column="22"/>
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="86"
+            column="64"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setThemeMode(ctx: Context, mode: Int) { getPrefs(ctx).edit().putInt(SP_KEY_THEME_MODE, mode).apply() }"
+        errorLine2="                                                               ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="86"
+            column="64"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setDynamicColor(ctx: Context, value: Boolean) { getPrefs(ctx).edit().putBoolean(SP_KEY_DYNAMIC_COLOR, value).apply() }"
+        errorLine2="                                                                       ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="88"
+            column="72"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setDynamicColor(ctx: Context, value: Boolean) { getPrefs(ctx).edit().putBoolean(SP_KEY_DYNAMIC_COLOR, value).apply() }"
+        errorLine2="                                                                       ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="88"
+            column="72"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setSeedColor(ctx: Context, color: Int) { getPrefs(ctx).edit().putInt(SP_KEY_SEED_COLOR, color).apply() }"
+        errorLine2="                                                                ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="90"
+            column="65"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setSeedColor(ctx: Context, color: Int) { getPrefs(ctx).edit().putInt(SP_KEY_SEED_COLOR, color).apply() }"
+        errorLine2="                                                                ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="90"
+            column="65"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setUiLang(ctx: Context, value: String) { getPrefs(ctx).edit().putString(SP_KEY_UI_LANG, value).apply() }"
+        errorLine2="                                                                ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="92"
+            column="65"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setUiLang(ctx: Context, value: String) { getPrefs(ctx).edit().putString(SP_KEY_UI_LANG, value).apply() }"
+        errorLine2="                                                                ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="92"
+            column="65"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setGameLang(ctx: Context, value: String) { getPrefs(ctx).edit().putString(SP_KEY_GAME_LANG, value).apply() }"
+        errorLine2="                                                                  ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="94"
+            column="67"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setGameLang(ctx: Context, value: String) { getPrefs(ctx).edit().putString(SP_KEY_GAME_LANG, value).apply() }"
+        errorLine2="                                                                  ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="94"
+            column="67"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setResolutionMode(ctx: Context, value: String) { getPrefs(ctx).edit().putString(SP_KEY_RES_MODE, value).apply() }"
+        errorLine2="                                                                        ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="96"
+            column="73"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setResolutionMode(ctx: Context, value: String) { getPrefs(ctx).edit().putString(SP_KEY_RES_MODE, value).apply() }"
+        errorLine2="                                                                        ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="96"
+            column="73"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setResolutionPresetIdx(ctx: Context, value: Int) { getPrefs(ctx).edit().putInt(SP_KEY_RES_PRESET_IDX, value).apply() }"
+        errorLine2="                                                                          ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="98"
+            column="75"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setResolutionPresetIdx(ctx: Context, value: Int) { getPrefs(ctx).edit().putInt(SP_KEY_RES_PRESET_IDX, value).apply() }"
+        errorLine2="                                                                          ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="98"
+            column="75"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setResolutionCustomW(ctx: Context, value: Int) { getPrefs(ctx).edit().putInt(SP_KEY_RES_CUSTOM_W, value).apply() }"
+        errorLine2="                                                                        ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="100"
+            column="73"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setResolutionCustomW(ctx: Context, value: Int) { getPrefs(ctx).edit().putInt(SP_KEY_RES_CUSTOM_W, value).apply() }"
+        errorLine2="                                                                        ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="100"
+            column="73"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setResolutionCustomH(ctx: Context, value: Int) { getPrefs(ctx).edit().putInt(SP_KEY_RES_CUSTOM_H, value).apply() }"
+        errorLine2="                                                                        ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="102"
+            column="73"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="        @JvmStatic fun setResolutionCustomH(ctx: Context, value: Int) { getPrefs(ctx).edit().putInt(SP_KEY_RES_CUSTOM_H, value).apply() }"
+        errorLine2="                                                                        ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="102"
+            column="73"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `Int.toDrawable` instead?"
+        errorLine1="            try { root?.setBackgroundDrawable(ColorDrawable(t.surface)) } catch (_:Throwable) {}"
+        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="299"
+            column="47"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `Int.toDrawable` instead?"
+        errorLine1="            try { root?.setBackgroundDrawable(ColorDrawable(t.surface)) } catch (_:Throwable) {}"
+        errorLine2="                                              ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="299"
+            column="47"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `Int.toDrawable` instead?"
+        errorLine1="            val w=a.window?:return; try{w.setBackgroundDrawable(ColorDrawable(t.surface))}catch(_:Throwable){}"
+        errorLine2="                                                                ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="303"
+            column="65"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="            preferences.edit().putString(UpdateSystem.PREF_CHANNEL, if (position == 1) UpdateSystem.CHANNEL_DEV else UpdateSystem.CHANNEL_STABLE).apply()"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/SettingsActivity.kt"
+            line="347"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="            preferences.edit().putString(UpdateSystem.PREF_CHANNEL, if (position == 1) UpdateSystem.CHANNEL_DEV else UpdateSystem.CHANNEL_STABLE).apply()"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/SettingsActivity.kt"
+            line="347"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="            mirrorSpinner.onItemSelectedListener = itemSelected { preferences.edit().putString(UpdateSystem.PREF_MIRROR, mirrorId(it)).apply() }"
+        errorLine2="                                                                  ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/SettingsActivity.kt"
+            line="355"
+            column="67"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?"
+        errorLine1="            mirrorSpinner.onItemSelectedListener = itemSelected { preferences.edit().putString(UpdateSystem.PREF_MIRROR, mirrorId(it)).apply() }"
+        errorLine2="                                                                  ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/SettingsActivity.kt"
+            line="355"
+            column="67"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="                        try { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(result.apkUrl))) }"
+        errorLine2="                                                                       ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/SettingsActivity.kt"
+            line="389"
+            column="72"/>
+    </issue>
+
+    <issue
+        id="UseKtx"
+        message="Use the KTX extension function `String.toUri` instead?"
+        errorLine1="        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(extras!![&quot;update_url&quot;]!!.toString()))"
+        errorLine2="                                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/UpdateService.kt"
+            line="39"
+            column="56"/>
     </issue>
 
     <issue
@@ -2167,7 +2126,7 @@
         errorLine2="                 ~~~~~~~">
         <location
             file="src/me/nillerusr/DirchActivity.kt"
-            line="39"
+            line="35"
             column="18"/>
     </issue>
 
@@ -2194,79 +2153,13 @@
     </issue>
 
     <issue
-        id="LabelFor"
-        message="Missing accessibility label: provide either a view with an `android:labelFor` that references this view or provide an `android:hint`"
-        errorLine1="            &lt;EditText"
-        errorLine2="             ~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_launcher.xml"
-            line="101"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="LabelFor"
-        message="Missing accessibility label: provide either a view with an `android:labelFor` that references this view or provide an `android:hint`"
-        errorLine1="            &lt;EditText"
-        errorLine2="             ~~~~~~~~">
-        <location
-            file="res/layout/activity_launcher.xml"
-            line="101"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="LabelFor"
-        message="Missing accessibility label: provide either a view with an `android:labelFor` that references this view or provide an `android:hint`"
-        errorLine1="            &lt;EditText"
-        errorLine2="             ~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_launcher.xml"
-            line="120"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="LabelFor"
-        message="Missing accessibility label: provide either a view with an `android:labelFor` that references this view or provide an `android:hint`"
-        errorLine1="            &lt;EditText"
-        errorLine2="             ~~~~~~~~">
-        <location
-            file="res/layout/activity_launcher.xml"
-            line="120"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="LabelFor"
-        message="Missing accessibility label: provide either a view with an `android:labelFor` that references this view or provide an `android:hint`"
-        errorLine1="            &lt;EditText"
-        errorLine2="             ~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_launcher.xml"
-            line="158"
-            column="14"/>
-    </issue>
-
-    <issue
-        id="LabelFor"
-        message="Missing accessibility label: provide either a view with an `android:labelFor` that references this view or provide an `android:hint`"
-        errorLine1="            &lt;EditText"
-        errorLine2="             ~~~~~~~~">
-        <location
-            file="res/layout/activity_launcher.xml"
-            line="158"
-            column="14"/>
-    </issue>
-
-    <issue
         id="SetTextI18n"
         message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
         errorLine1="                LauncherActivity.GamePath?.setText(&quot;$currentDirectory/&quot;)"
         errorLine2="                                                   ~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/me/nillerusr/DirchActivity.kt"
-            line="124"
+            line="120"
             column="52"/>
     </issue>
 
@@ -2277,7 +2170,7 @@
         errorLine2="                                  ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/me/nillerusr/SettingsActivity.kt"
-            line="192"
+            line="193"
             column="35"/>
     </issue>
 
@@ -2288,7 +2181,7 @@
         errorLine2="                                  ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/me/nillerusr/SettingsActivity.kt"
-            line="193"
+            line="194"
             column="35"/>
     </issue>
 
@@ -2299,7 +2192,7 @@
         errorLine2="                                  ~~~~~~~~~~~~~~~~">
         <location
             file="src/me/nillerusr/SettingsActivity.kt"
-            line="332"
+            line="333"
             column="35"/>
     </issue>
 
@@ -2310,7 +2203,7 @@
         errorLine2="                                  ~~~~~~~~~~~~~~~~~">
         <location
             file="src/me/nillerusr/SettingsActivity.kt"
-            line="333"
+            line="334"
             column="35"/>
     </issue>
 
@@ -2321,7 +2214,7 @@
         errorLine2="                                   ~~~~~~~~~~~~~~">
         <location
             file="src/me/nillerusr/SettingsActivity.kt"
-            line="537"
+            line="538"
             column="36"/>
     </issue>
 
@@ -2332,7 +2225,7 @@
         errorLine2="                                     ~~~~~~~~~~~~~~~~">
         <location
             file="src/me/nillerusr/SettingsActivity.kt"
-            line="538"
+            line="539"
             column="38"/>
     </issue>
 
@@ -2343,7 +2236,7 @@
         errorLine2="                                    ~~~~~~~~~~~~~~~">
         <location
             file="src/me/nillerusr/SettingsActivity.kt"
-            line="539"
+            line="540"
             column="37"/>
     </issue>
 
@@ -2361,122 +2254,56 @@
     <issue
         id="HardcodedText"
         message="Hardcoded string &quot;-nobackgroundlevel&quot;, should use `@string` resource"
-        errorLine1="                android:text=&quot;-nobackgroundlevel&quot;"
-        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_launcher.xml"
-            line="107"
-            column="17"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;-nobackgroundlevel&quot;, should use `@string` resource"
-        errorLine1="                android:text=&quot;-nobackgroundlevel&quot;"
-        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        errorLine1="                        android:text=&quot;-nobackgroundlevel&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/layout/activity_launcher.xml"
-            line="107"
-            column="17"/>
+            line="117"
+            column="25"/>
     </issue>
 
     <issue
         id="HardcodedText"
         message="Hardcoded string &quot;LIBGL_USEVBO=0&quot;, should use `@string` resource"
-        errorLine1="                android:text=&quot;LIBGL_USEVBO=0&quot;"
-        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_launcher.xml"
-            line="124"
-            column="17"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;LIBGL_USEVBO=0&quot;, should use `@string` resource"
-        errorLine1="                android:text=&quot;LIBGL_USEVBO=0&quot;"
-        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        errorLine1="                        android:text=&quot;LIBGL_USEVBO=0&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/layout/activity_launcher.xml"
-            line="124"
-            column="17"/>
+            line="138"
+            column="25"/>
     </issue>
 
     <issue
         id="HardcodedText"
         message="Hardcoded string &quot;/sdcard/srceng/&quot;, should use `@string` resource"
-        errorLine1="                android:text=&quot;/sdcard/srceng/&quot;"
-        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_launcher.xml"
-            line="164"
-            column="17"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;/sdcard/srceng/&quot;, should use `@string` resource"
-        errorLine1="                android:text=&quot;/sdcard/srceng/&quot;"
-        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        errorLine1="                        android:text=&quot;/sdcard/srceng/&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/layout/activity_launcher.xml"
-            line="164"
-            column="17"/>
+            line="190"
+            column="25"/>
     </issue>
 
     <issue
         id="HardcodedText"
         message="Hardcoded string &quot;1280&quot;, should use `@string` resource"
-        errorLine1="                            android:hint=&quot;1280&quot;"
-        errorLine2="                            ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_settings.xml"
-            line="286"
-            column="29"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;1280&quot;, should use `@string` resource"
-        errorLine1="                            android:hint=&quot;1280&quot;"
-        errorLine2="                            ~~~~~~~~~~~~~~~~~~~">
+        errorLine1="                                android:hint=&quot;1280&quot;"
+        errorLine2="                                ~~~~~~~~~~~~~~~~~~~">
         <location
             file="res/layout/activity_settings.xml"
-            line="286"
-            column="29"/>
+            line="290"
+            column="33"/>
     </issue>
 
     <issue
         id="HardcodedText"
         message="Hardcoded string &quot;720&quot;, should use `@string` resource"
-        errorLine1="                            android:hint=&quot;720&quot;"
-        errorLine2="                            ~~~~~~~~~~~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_settings.xml"
-            line="308"
-            column="29"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;720&quot;, should use `@string` resource"
-        errorLine1="                            android:hint=&quot;720&quot;"
-        errorLine2="                            ~~~~~~~~~~~~~~~~~~">
+        errorLine1="                                android:hint=&quot;720&quot;"
+        errorLine2="                                ~~~~~~~~~~~~~~~~~~">
         <location
             file="res/layout/activity_settings.xml"
-            line="308"
-            column="29"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;R&quot;, should use `@string` resource"
-        errorLine1="                    &lt;TextView android:layout_width=&quot;24dp&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;R&quot;/>"
-        errorLine2="                                                                                               ~~~~~~~~~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_settings.xml"
-            line="518"
-            column="96"/>
+            line="317"
+            column="33"/>
     </issue>
 
     <issue
@@ -2486,18 +2313,7 @@
         errorLine2="                                                                                               ~~~~~~~~~~~~~~~~">
         <location
             file="res/layout/activity_settings.xml"
-            line="518"
-            column="96"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;G&quot;, should use `@string` resource"
-        errorLine1="                    &lt;TextView android:layout_width=&quot;24dp&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;G&quot;/>"
-        errorLine2="                                                                                               ~~~~~~~~~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_settings.xml"
-            line="527"
+            line="533"
             column="96"/>
     </issue>
 
@@ -2508,18 +2324,7 @@
         errorLine2="                                                                                               ~~~~~~~~~~~~~~~~">
         <location
             file="res/layout/activity_settings.xml"
-            line="527"
-            column="96"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;B&quot;, should use `@string` resource"
-        errorLine1="                    &lt;TextView android:layout_width=&quot;24dp&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;B&quot;/>"
-        errorLine2="                                                                                               ~~~~~~~~~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_settings.xml"
-            line="536"
+            line="542"
             column="96"/>
     </issue>
 
@@ -2530,7 +2335,7 @@
         errorLine2="                                                                                               ~~~~~~~~~~~~~~~~">
         <location
             file="res/layout/activity_settings.xml"
-            line="536"
+            line="551"
             column="96"/>
     </issue>
 
@@ -2551,17 +2356,6 @@
         errorLine1="                android:layout_marginRight=&quot;12dp&quot;"
         errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="res/layout-v21/activity_launcher.xml"
-            line="34"
-            column="17"/>
-    </issue>
-
-    <issue
-        id="RtlHardcoded"
-        message="Consider replacing `android:layout_marginRight` with `android:layout_marginEnd=&quot;12dp&quot;` to better support right-to-left layouts"
-        errorLine1="                android:layout_marginRight=&quot;12dp&quot;"
-        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
             file="res/layout/activity_launcher.xml"
             line="34"
             column="17"/>
@@ -2573,30 +2367,8 @@
         errorLine1="                android:layout_marginLeft=&quot;4dp&quot;"
         errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="res/layout-v21/activity_launcher.xml"
-            line="35"
-            column="17"/>
-    </issue>
-
-    <issue
-        id="RtlHardcoded"
-        message="Consider replacing `android:layout_marginLeft` with `android:layout_marginStart=&quot;4dp&quot;` to better support right-to-left layouts"
-        errorLine1="                android:layout_marginLeft=&quot;4dp&quot;"
-        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
             file="res/layout/activity_launcher.xml"
             line="35"
-            column="17"/>
-    </issue>
-
-    <issue
-        id="RtlHardcoded"
-        message="Consider replacing `android:layout_marginLeft` with `android:layout_marginStart=&quot;4dp&quot;` to better support right-to-left layouts"
-        errorLine1="                android:layout_marginLeft=&quot;4dp&quot;"
-        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="res/layout-v21/activity_settings.xml"
-            line="43"
             column="17"/>
     </issue>
 

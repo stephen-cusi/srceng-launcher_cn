@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="srceng_launcher_rewrite_text">現代化重寫說明\n啟動器介面與應用程式邏輯已使用 Kotlin 重寫，建置系統已遷移至 Gradle Wrapper 與 Android Gradle Plugin，介面使用官方 Material 3 主題和元件。為維持引擎行為穩定，SDL 與原生相容層繼續保留 Java 實作。</string>
     <string name="srceng_app_name">起源引擎</string>
 
     <string name="srceng_launcher_about">關於</string>

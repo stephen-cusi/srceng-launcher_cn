@@ -201,21 +201,21 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginBottom="12dp">
-                <RadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/md3_res_mode_device"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_res_mode_device"
                     android:paddingTop="6dp"
                     android:paddingBottom="6dp"/>
-                <RadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/md3_res_mode_preset"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_res_mode_preset"
                     android:paddingTop="6dp"
                     android:paddingBottom="6dp"/>
-                <RadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/md3_res_mode_custom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -278,14 +278,19 @@
                             android:textSize="12sp"
                             android:tag="subtitle"
                             android:layout_marginBottom="2dp"/>
-                        <EditText
-                            android:id="@+id/md3_res_custom_w"
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:hint="1280"
-                            android:imeOptions="actionNext"
-                            android:maxLines="1"/>
+                            android:layout_height="wrap_content">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/md3_res_custom_w"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:hint="1280"
+                                android:imeOptions="actionNext"
+                                android:maxLines="1"/>
+                        </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="0dp"
@@ -300,14 +305,19 @@
                             android:textSize="12sp"
                             android:tag="subtitle"
                             android:layout_marginBottom="2dp"/>
-                        <EditText
-                            android:id="@+id/md3_res_custom_h"
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:hint="720"
-                            android:imeOptions="actionDone"
-                            android:maxLines="1"/>
+                            android:layout_height="wrap_content">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/md3_res_custom_h"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:hint="720"
+                                android:imeOptions="actionDone"
+                                android:maxLines="1"/>
+                        </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -339,10 +349,10 @@
             <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/md3_update_mirror" android:textStyle="bold" android:textSize="16sp" android:layout_marginTop="12dp"/>
             <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/md3_update_mirror_desc" android:textSize="12sp" android:layout_marginTop="4dp" android:tag="subtitle"/>
             <Spinner android:id="@+id/md3_update_mirror" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:spinnerMode="dialog"/>
-            <Button android:id="@+id/md3_test_mirrors" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/md3_update_mirror_test" android:tag="outlined"/>
+            <com.google.android.material.button.MaterialButton android:id="@+id/md3_test_mirrors" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/md3_update_mirror_test" android:tag="outlined"/>
             <TextView android:id="@+id/md3_mirror_test_status" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"/>
             <TextView android:id="@+id/md3_update_status" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:tag="subtitle"/>
-            <Button android:id="@+id/md3_check_update" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="@string/md3_update_check" android:tag="filled"/>
+            <com.google.android.material.button.MaterialButton android:id="@+id/md3_check_update" style="@style/Widget.Material3.Button" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="@string/md3_update_check" android:tag="filled"/>
         </LinearLayout>
 
         <!-- ========== Appearance section title ========== -->
@@ -387,7 +397,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <RadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/md3_dark_system"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -395,7 +405,7 @@
                     android:text="@string/md3_dark_follow_system"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"/>
-                <RadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/md3_dark_off"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -403,7 +413,7 @@
                     android:text="@string/md3_dark_off"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"/>
-                <RadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/md3_dark_on"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -442,7 +452,7 @@
                     android:layout_marginTop="4dp"
                     android:tag="subtitle"/>
             </LinearLayout>
-            <Switch
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/md3_dynamic_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -499,15 +509,20 @@
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:layout_marginEnd="12dp"/>
-                    <EditText
-                        android:id="@+id/md3_seed_hex"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="@string/md3_hex_color_hint"
-                        android:inputType="textCapCharacters"
-                        android:maxLength="7"
-                        android:singleLine="true"/>
+                        android:layout_weight="1">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/md3_seed_hex"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/md3_hex_color_hint"
+                            android:inputType="textCapCharacters"
+                            android:maxLength="7"
+                            android:singleLine="true"/>
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -582,24 +597,27 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/md3_preview_btn_filled"
+                    style="@style/Widget.Material3.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_preview_primary"
                     android:textSize="13sp"
                     android:tag="filled"
                     android:layout_marginEnd="8dp"/>
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/md3_preview_btn_tonal"
+                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_preview_secondary"
                     android:textSize="13sp"
                     android:tag="tonal"
                     android:layout_marginEnd="8dp"/>
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/md3_preview_btn_outlined"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_preview_outlined"

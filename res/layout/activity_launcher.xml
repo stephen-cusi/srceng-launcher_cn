@@ -82,51 +82,66 @@
             android:layout_marginBottom="6dp"
             android:tag="subtitle"/>
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
             android:layout_marginBottom="18dp"
             android:tag="card">
 
-            <!-- Command-line args -->
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/srceng_launcher_command_args"
-                android:textSize="13sp"
-                android:layout_marginBottom="4dp"
-                android:tag="on_surface_variant"/>
-            <EditText
-                android:id="@+id/edit_cmdline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:inputType="text"
-                android:text="-nobackgroundlevel"
-                android:textSize="14sp"
-                android:layout_marginBottom="14dp"
-                android:background="@drawable/md3_edittext_bg"/>
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <!-- Env -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/srceng_launcher_env"
-                android:textSize="13sp"
-                android:layout_marginBottom="4dp"
-                android:tag="on_surface_variant"/>
-            <EditText
-                android:id="@+id/edit_env"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="LIBGL_USEVBO=0"
-                android:maxLines="1"
-                android:inputType="text"
-                android:textSize="14sp"
-                android:background="@drawable/md3_edittext_bg"/>
-        </LinearLayout>
+                <!-- Command-line args -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/srceng_launcher_command_args"
+                    android:textSize="13sp"
+                    android:layout_marginBottom="4dp"
+                    android:tag="on_surface_variant"/>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_cmdline"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:inputType="text"
+                        android:text="-nobackgroundlevel"
+                        android:textSize="14sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Env -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/srceng_launcher_env"
+                    android:textSize="13sp"
+                    android:layout_marginBottom="4dp"
+                    android:tag="on_surface_variant"/>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_env"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="LIBGL_USEVBO=0"
+                        android:maxLines="1"
+                        android:inputType="text"
+                        android:textSize="14sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- ========== Paths Card ========== -->
         <TextView
@@ -140,40 +155,52 @@
             android:layout_marginBottom="6dp"
             android:tag="subtitle"/>
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Material3.CardView.Outlined"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
             android:layout_marginBottom="24dp"
             android:tag="card_outlined">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/srceng_launcher_game_path"
-                android:textSize="13sp"
-                android:layout_marginBottom="4dp"
-                android:tag="on_surface_variant"/>
-            <EditText
-                android:id="@+id/edit_gamepath"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:inputType="text"
-                android:text="/sdcard/srceng/"
-                android:textSize="14sp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/md3_edittext_bg"/>
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <Button
-                android:id="@+id/button_gamedir"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/srceng_launcher_set_game_path"
-                android:textSize="14sp"
-                android:tag="outlined"/>
-        </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/srceng_launcher_game_path"
+                    android:textSize="13sp"
+                    android:layout_marginBottom="4dp"
+                    android:tag="on_surface_variant"/>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_gamepath"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:inputType="text"
+                        android:text="/sdcard/srceng/"
+                        android:textSize="14sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:id="@+id/button_gamedir"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/srceng_launcher_set_game_path"
+                    android:textSize="14sp"
+                    android:tag="outlined"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Spacer -->
         <LinearLayout
@@ -189,7 +216,8 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:layout_marginTop="8dp">
-            <Button
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.TextButton"
                 android:id="@+id/button_about"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -202,7 +230,7 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"/>
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_launch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

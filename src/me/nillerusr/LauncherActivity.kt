@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -23,6 +22,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import com.valvesoftware.source.R
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.File
 import me.nillerusr.md3.Md3Theme
 import org.libsdl.app.SDLActivity
@@ -51,9 +51,6 @@ open class LauncherActivity : Activity() {
         var res_height: EditText? = null
 
         @JvmField
-        val sdk: Int = Build.VERSION.SDK.toInt()
-
-        @JvmField
         var useVolumeButtons: android.widget.CheckBox? = null
 
         @JvmField
@@ -80,32 +77,6 @@ open class LauncherActivity : Activity() {
             return path
         }
 
-        @JvmStatic
-        fun changeButtonsStyle(parent: ViewGroup) {
-            if (sdk >= 21) {
-                return
-            }
-
-            for (i in parent.childCount - 1 downTo 0) {
-                try {
-                    when (val child = parent.getChildAt(i)) {
-                        is ViewGroup -> changeButtonsStyle(child)
-                        is Button -> {
-                            child.background?.alpha = 96
-                            child.setTextColor(0xFFFFFFFF.toInt())
-                            child.textSize = 15f
-                            child.setTypeface(child.typeface, Typeface.BOLD)
-                        }
-                        is EditText -> {
-                            child.setBackgroundColor(0xFF272727.toInt())
-                            child.setTextColor(0xFFFFFFFF.toInt())
-                            child.textSize = 15f
-                        }
-                    }
-                } catch (_: Exception) {
-                }
-            }
-        }
     }
 
     @JvmField
@@ -184,22 +155,24 @@ open class LauncherActivity : Activity() {
         findViewById<Button>(R.id.button_launch).setOnClickListener(::startSource)
 
         findViewById<Button>(R.id.button_about).setOnClickListener {
-            val dialog = Dialog(this)
-            dialog.setTitle(R.string.srceng_launcher_about)
             val scroll = ScrollView(this)
-            scroll.layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
-            )
-            scroll.setPadding(5, 5, 5, 5)
+            val padding = (24 * resources.displayMetrics.density).toInt()
+            scroll.setPadding(padding, 0, padding, padding)
             val text = TextView(this)
-            text.setText(R.string.srceng_launcher_about_text)
+            text.text = getString(
+                R.string.srceng_launcher_about_content,
+                getString(R.string.srceng_launcher_about_text),
+                getString(R.string.srceng_launcher_rewrite_text)
+            )
             text.linksClickable = true
             text.setTextIsSelectable(true)
             Linkify.addLinks(text, Linkify.WEB_URLS or Linkify.EMAIL_ADDRESSES)
             scroll.addView(text)
-            dialog.setContentView(scroll)
-            dialog.show()
+            MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.srceng_launcher_about)
+                .setView(scroll)
+                .setPositiveButton(android.R.string.ok, null)
+                .show()
         }
 
         findViewById<Button>(R.id.button_gamedir).setOnClickListener {
@@ -213,17 +186,13 @@ open class LauncherActivity : Activity() {
         GamePath!!.setText(mPref!!.getString("gamepath", getDefaultDir() + "/srceng"))
         EnvEdit!!.setText(mPref!!.getString("env", "LIBGL_USEVBO=0"))
 
-        changeButtonsStyle(window.decorView as ViewGroup)
-
-        if (sdk >= 23) {
-            applyPermissions(
-                arrayOf(
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.RECORD_AUDIO
-                ),
-                REQUEST_PERMISSIONS
-            )
-        }
+        applyPermissions(
+            arrayOf(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.RECORD_AUDIO
+            ),
+            REQUEST_PERMISSIONS
+        )
     }
 
     open fun saveSettings(editor: SharedPreferences.Editor) {
@@ -238,7 +207,7 @@ open class LauncherActivity : Activity() {
 
         val editor = mPref!!.edit()
         saveSettings(editor)
-        editor.putBoolean("immersive_mode", sdk >= 19)
+        editor.putBoolean("immersive_mode", true)
         editor.commit()
 
         val intent = Intent(this, SDLActivity::class.java)

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -23,9 +22,6 @@ import me.nillerusr.md3.Md3Theme
 
 open class DirchActivity : Activity(), View.OnTouchListener {
     companion object {
-        @JvmField
-        val sdk: Int = Build.VERSION.SDK.toInt()
-
         @JvmField
         var cur_dir: String? = null
 

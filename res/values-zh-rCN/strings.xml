@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="srceng_launcher_rewrite_text">现代化重写说明\n启动器界面和应用逻辑已使用 Kotlin 重写，构建系统已迁移到 Gradle Wrapper 与 Android Gradle Plugin，界面使用官方 Material 3 主题和组件。为保持引擎行为稳定，SDL 与原生兼容层继续保留 Java 实现。</string>
     <string name="srceng_launcher_about">关于</string>
     <string name="srceng_launcher_about_text">"感谢nillerusr和jusic提供的端口
 起源源引擎的Valve

@@ -1,7 +1,6 @@
 package me.nillerusr
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -22,6 +21,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.valvesoftware.source.R
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.switchmaterial.SwitchMaterial
 import me.nillerusr.md3.Md3Theme
 import me.nillerusr.md3.Md3Tokens
 
@@ -30,7 +31,7 @@ open class SettingsActivity : Activity() {
     private var darkSystem: RadioButton? = null
     private var darkOff: RadioButton? = null
     private var darkOn: RadioButton? = null
-    private var dynamicSwitch: Switch? = null
+    private var dynamicSwitch: SwitchMaterial? = null
     private var seedContainer: LinearLayout? = null
     private var customColorContainer: LinearLayout? = null
     private var customColorPreview: View? = null
@@ -380,7 +381,7 @@ open class SettingsActivity : Activity() {
                     return
                 }
                 updateStatus?.text = getString(R.string.md3_update_available, result.versionName)
-                AlertDialog.Builder(this@SettingsActivity)
+                MaterialAlertDialogBuilder(this@SettingsActivity)
                     .setTitle(getString(R.string.md3_update_available, result.versionName))
                     .setMessage(result.changelog)
                     .setNegativeButton(android.R.string.cancel, null)
@@ -582,9 +583,7 @@ open class SettingsActivity : Activity() {
                 ringBackground = GradientDrawable().apply { shape = GradientDrawable.RECTANGLE }
                 ringView = View(this).apply { layoutParams = params }
                 wrapper.addView(ringView)
-                if (Build.VERSION.SDK_INT >= 21) try {
-                    wrapper.foreground = RippleDrawable(ColorStateList(arrayOf(intArrayOf()), intArrayOf(0x22000000)), null, null)
-                } catch (_: Throwable) {}
+                try { wrapper.foreground = RippleDrawable(ColorStateList(arrayOf(intArrayOf()), intArrayOf(0x22000000)), null, null) } catch (_: Throwable) {}
                 wrapper.isClickable = true
                 wrapper.isFocusable = true
             }
@@ -632,7 +631,7 @@ open class SettingsActivity : Activity() {
                 val intent = Intent(this, LauncherActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 try { startActivity(intent) } catch (_: Throwable) {}
-                try { if (Build.VERSION.SDK_INT >= 16) finishAffinity() else finish() } catch (_: Throwable) {}
+                try { finishAffinity() } catch (_: Throwable) {}
                 return
             }
         } catch (error: Throwable) {

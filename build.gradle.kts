@@ -7,11 +7,11 @@ plugins {
 
 android {
     namespace = "com.valvesoftware.source"
-    compileSdk = 29
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.valvesoftware.source"
-        minSdk = 17
+        minSdk = 24
         targetSdk = 29
         versionCode = 1170040
         versionName = "1.17.40-dev7"
@@ -48,6 +48,10 @@ android {
     lint {
         baseline = file("lint-baseline.xml")
     }
+}
+
+dependencies {
+    implementation("com.google.android.material:material:1.12.0")
 }
 
 kotlin {

@@ -17,6 +17,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.*
+import androidx.core.widget.CompoundButtonCompat
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.shape.ShapeAppearanceModel
+import com.google.android.material.switchmaterial.SwitchMaterial
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.valvesoftware.source.R
 import java.util.Locale
 import kotlin.math.abs
@@ -111,14 +119,9 @@ class Md3Theme private constructor() {
                 val wm = ctx.getSystemService(Context.WINDOW_SERVICE) as? WindowManager
                 if (wm != null) {
                     val display = wm.defaultDisplay
-                    if (Build.VERSION.SDK_INT >= 17) {
-                        val size = android.graphics.Point()
-                        display.getRealSize(size)
-                        return intArrayOf(size.x, size.y)
-                    }
-                    val dm = DisplayMetrics()
-                    display.getMetrics(dm)
-                    return intArrayOf(dm.widthPixels, dm.heightPixels)
+                    val size = android.graphics.Point()
+                    display.getRealSize(size)
+                    return intArrayOf(size.x, size.y)
                 }
             } catch (_: Throwable) {}
             try { return ctx.resources.displayMetrics.let { intArrayOf(it.widthPixels, it.heightPixels) } } catch (_: Throwable) {}
@@ -142,9 +145,7 @@ class Md3Theme private constructor() {
         @JvmStatic fun getRealSystemLocale(): Locale {
             try {
                 val cfg = Resources.getSystem().configuration
-                if (Build.VERSION.SDK_INT >= 24) {
-                    if (!cfg.locales.isEmpty) return cfg.locales[0]
-                } else cfg.locale?.let { return it }
+                if (!cfg.locales.isEmpty) return cfg.locales[0]
             } catch (_: Throwable) {}
             return Locale.getDefault() ?: Locale.ENGLISH
         }
@@ -154,7 +155,7 @@ class Md3Theme private constructor() {
             if (cfg == null) return
             try {
                 val desired = resolveUiLangLocale(uiLang)
-                if (Build.VERSION.SDK_INT >= 17) cfg.setLocale(desired) else cfg.locale = desired
+                cfg.setLocale(desired)
             } catch (_: Throwable) {}
         }
 
@@ -163,13 +164,11 @@ class Md3Theme private constructor() {
             val target = localeForUiLang(getUiLang(activity))
             val res = activity.resources
             var cfg = res.configuration
-            val current = if (Build.VERSION.SDK_INT >= 24) {
-                if (cfg.locales.isEmpty) getRealSystemLocale() else cfg.locales[0]
-            } else cfg.locale ?: getRealSystemLocale()
+            val current = if (cfg.locales.isEmpty) getRealSystemLocale() else cfg.locales[0]
             val desired = target ?: getRealSystemLocale()
             if (desired == current) return
             cfg = Configuration(cfg)
-            if (Build.VERSION.SDK_INT >= 17) cfg.setLocale(desired) else cfg.locale = desired
+            cfg.setLocale(desired)
             res.updateConfiguration(cfg, res.displayMetrics)
         }
 
@@ -302,8 +301,8 @@ class Md3Theme private constructor() {
         }
         @TargetApi(21) private fun applyWindow(a:Activity,t:Md3Tokens) {
             val w=a.window?:return; try{w.setBackgroundDrawable(ColorDrawable(t.surface))}catch(_:Throwable){}
-            if(Build.VERSION.SDK_INT>=21)try{w.statusBarColor=t.statusBar;w.navigationBarColor=t.navBar;w.decorView?.let{it.systemUiVisibility=it.systemUiVisibility and 0x400.inv() and 0x100.inv()}}catch(_:Throwable){}
-            if(Build.VERSION.SDK_INT>=23){val d=w.decorView?:return;var sys=d.systemUiVisibility;val light=!t.dark&&luminance(t.statusBar)>.70f;sys=if(light)sys or 0x2000 else sys and 0x2000.inv();if(Build.VERSION.SDK_INT>=26){val nav=!t.dark&&luminance(t.navBar)>.70f;sys=if(nav)sys or 0x08000000 else sys and 0x08000000.inv()};d.systemUiVisibility=sys}
+            try{w.statusBarColor=t.statusBar;w.navigationBarColor=t.navBar;w.decorView?.let{it.systemUiVisibility=it.systemUiVisibility and 0x400.inv() and 0x100.inv()}}catch(_:Throwable){}
+            val d=w.decorView?:return;var sys=d.systemUiVisibility;val light=!t.dark&&luminance(t.statusBar)>.70f;sys=if(light)sys or 0x2000 else sys and 0x2000.inv();if(Build.VERSION.SDK_INT>=26){val nav=!t.dark&&luminance(t.navBar)>.70f;sys=if(nav)sys or 0x08000000 else sys and 0x08000000.inv()};d.systemUiVisibility=sys
         }
         private fun applyViewTree(v:View,t:Md3Tokens){applySingleView(v,t);if(v is ViewGroup)for(i in 0 until v.childCount)applyViewTree(v.getChildAt(i),t)}
         private fun applySingleView(v:View,t:Md3Tokens) {
@@ -312,18 +311,20 @@ class Md3Theme private constructor() {
             val l=op?.get(0)?:v.paddingLeft;val top=op?.get(1)?:v.paddingTop;val r=op?.get(2)?:v.paddingRight;val bottom=op?.get(3)?:v.paddingBottom
             if(v.id==R.id.md3_preserve_bg)return
             if(v.id==R.id.md3_app_bar)setBg(v,t.surface,0,Color.TRANSPARENT,0,0,0)
-            if(hasStrTag(v,"card"))setBg(v,t.surfaceContainerHigh,20,Color.TRANSPARENT,0,0,0)
-            if(hasStrTag(v,"card_outlined"))setBg(v,t.surfaceContainerLow,20,t.outlineVariant,1,0,0)
-            if(hasStrTag(v,"card_filled")||hasStrTag(v,"preview_primary"))setBg(v,t.primary.container,20,Color.TRANSPARENT,0,0,0)
+            if(v is MaterialCardView){val outlined=hasStrTag(v,"card_outlined");v.setCardBackgroundColor(if(hasStrTag(v,"preview_primary"))t.primary.container else if(outlined)t.surfaceContainerLow else t.surfaceContainerHigh);v.strokeColor=if(outlined)t.outlineVariant else Color.TRANSPARENT;v.strokeWidth=if(outlined)dp(v.context,1) else 0;v.radius=dpF(v.context,20)}
+            else {if(hasStrTag(v,"card"))setBg(v,t.surfaceContainerHigh,20,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"card_outlined"))setBg(v,t.surfaceContainerLow,20,t.outlineVariant,1,0,0);if(hasStrTag(v,"card_filled")||hasStrTag(v,"preview_primary"))setBg(v,t.primary.container,20,Color.TRANSPARENT,0,0,0)}
             if(hasStrTag(v,"divider"))setBg(v,t.outlineVariant,0,Color.TRANSPARENT,0,0,0)
             if(v is TextView&&v !is Button&&v !is EditText&&v !is CompoundButton){v.setTextColor(when(getStrTag(v)){"on_primary_container"->t.primary.onContainer;"on_secondary_container"->t.secondary.onContainer;"on_surface_variant","subtitle"->t.onSurfaceVariant;"outline"->t.outline;"primary"->t.primary.color;else->t.onSurface});v.setHintTextColor(t.outline)}
-            if(v is Button&&v !is CompoundButton){applyButtonStyle(v,getStrTag(v)?:"filled",t);v.minHeight=dp(v.context,40);val h=dp(v.context,24);val pv=dp(v.context,10);v.setPadding(l+h,top+pv,r+h,bottom+pv);v.isAllCaps=false}
-            if(v is EditText){val fill=t.surfaceContainerHigh;v.setTextColor(ensureContrastColor(fill,t.onSurface,0xFF1C1B17.toInt(),0xFFF5F1EC.toInt()));v.setHintTextColor(t.outline);setEditTextBg(v,fill,t.outline);try{v.highlightColor=withAlpha(t.primary.color,0x33)}catch(_:Throwable){};trySetColorFilterField(v,"mCursorDrawable",t.primary.color);trySetColorFilterField(v,"mTextSelectHandleLeftRes",t.primary.color);trySetColorFilterField(v,"mTextSelectHandleRightRes",t.primary.color);trySetColorFilterField(v,"mTextSelectHandleRes",t.primary.color);tryEtBackgroundTint(v,t.primary.color,t.outline);val p=dp(v.context,14);v.setPadding(l+p,top+p,r+p,bottom+p)}
-            if(v is CompoundButton){if(v is RadioButton){if(Build.VERSION.SDK_INT>=21)try{v.buttonTintList=tintList(t.primary.color,t.outline)}catch(_:Throwable){};v.setTextColor(t.onSurface);val p=dp(v.context,4);v.setPadding(l+p,top,r+p,bottom)}else{try{if(Build.VERSION.SDK_INT>=21){v.buttonTintList=tintList(t.primary.color,t.outline);if(v is Switch){v.trackTintList=tintList(withAlpha(t.primary.color,0x66),t.outlineVariant);v.thumbTintList=tintList(t.primary.color,t.surfaceContainerHighest)}}}catch(_:Throwable){};v.setTextColor(t.onSurface)}}
+            if(v is MaterialButton)applyMaterialButtonStyle(v,getStrTag(v)?:"filled",t)
+            else if(v is Button&&v !is CompoundButton){applyButtonStyle(v,getStrTag(v)?:"filled",t);v.minHeight=dp(v.context,40);val h=dp(v.context,24);val pv=dp(v.context,10);v.setPadding(l+h,top+pv,r+h,bottom+pv);v.isAllCaps=false}
+            if(v is TextInputLayout){v.boxBackgroundColor=t.surfaceContainerHigh;v.boxStrokeColor=t.primary.color;v.hintTextColor=ColorStateList.valueOf(t.primary.color);v.defaultHintTextColor=ColorStateList.valueOf(t.onSurfaceVariant)}
+            if(v is EditText){val fill=t.surfaceContainerHigh;v.setTextColor(ensureContrastColor(fill,t.onSurface,0xFF1C1B17.toInt(),0xFFF5F1EC.toInt()));v.setHintTextColor(t.outline);if(v !is TextInputEditText)setEditTextBg(v,fill,t.outline);try{v.highlightColor=withAlpha(t.primary.color,0x33)}catch(_:Throwable){};trySetColorFilterField(v,"mCursorDrawable",t.primary.color);trySetColorFilterField(v,"mTextSelectHandleLeftRes",t.primary.color);trySetColorFilterField(v,"mTextSelectHandleRightRes",t.primary.color);trySetColorFilterField(v,"mTextSelectHandleRes",t.primary.color);if(v !is TextInputEditText)tryEtBackgroundTint(v,t.primary.color,t.outline)}
+            if(v is CompoundButton){CompoundButtonCompat.setButtonTintList(v,tintList(t.primary.color,t.outline));if(v is SwitchMaterial){v.trackTintList=tintList(withAlpha(t.primary.color,0x66),t.outlineVariant);v.thumbTintList=tintList(t.primary.color,t.surfaceContainerHighest)};v.setTextColor(t.onSurface)}
             if((v is ImageButton||v is ImageView)&&hasStrTag(v,"icon")){try{v.setBackgroundDrawable(makeRippleBg(t.surfaceContainerHighest,t.surfaceContainerHigh))}catch(_:Throwable){};if(v is ImageView){v.setColorFilter(t.onSurfaceVariant,PorterDuff.Mode.SRC_IN);v.scaleType=ImageView.ScaleType.CENTER_INSIDE;val p=dp(v.context,8);v.setPadding(l+p,top+p,r+p,bottom+p)}}
         }
+        private fun applyMaterialButtonStyle(b:MaterialButton,style:String,t:Md3Tokens){val fill:Int;val text:Int;val outlined:Boolean;when(style){"tonal"->{fill=t.secondary.container;text=t.secondary.onContainer;outlined=false};"outlined"->{fill=Color.TRANSPARENT;text=t.primary.color;outlined=true};"text"->{fill=Color.TRANSPARENT;text=t.primary.color;outlined=false};else->{fill=t.primary.color;text=ensureContrastColor(fill,t.primary.onColor,0xFF1C1B17.toInt(),Color.WHITE);outlined=false}};b.backgroundTintList=ColorStateList.valueOf(fill);b.setTextColor(text);b.rippleColor=ColorStateList.valueOf(withAlpha(text,0x1F));b.cornerRadius=dp(b.context,if(style=="launch")28 else 20);b.strokeColor=ColorStateList.valueOf(if(outlined)t.outline else Color.TRANSPARENT);b.strokeWidth=if(outlined)dp(b.context,1) else 0;b.isAllCaps=false}
         private fun ensureContrastColor(bg:Int,preferred:Int,dark:Int,light:Int)=if(abs(luminance(bg)-luminance(preferred))<.40f)if(luminance(bg)>.55f)dark else light else preferred
-        private fun setBg(v:View,fill:Int,radius:Int,stroke:Int,strokeDp:Int,px:Int,py:Int){try{val g=GradientDrawable();g.shape=GradientDrawable.RECTANGLE;g.setColor(fill);if(radius>0)g.cornerRadius=dpF(v.context,radius);if(strokeDp>0)g.setStroke(max(1,dp(v.context,strokeDp)),stroke);if(px>0||py>0)v.setPadding(dp(v.context,px),dp(v.context,py),dp(v.context,px),dp(v.context,py));v.setBackgroundDrawable(withRipple(g,stroke,radius))}catch(_:Throwable){}}
+        private fun setBg(v:View,fill:Int,radius:Int,stroke:Int,strokeDp:Int,px:Int,py:Int){try{val shape=MaterialShapeDrawable(ShapeAppearanceModel.builder().setAllCornerSizes(dpF(v.context,radius)).build());shape.fillColor=ColorStateList.valueOf(fill);if(strokeDp>0)shape.setStroke(dpF(v.context,strokeDp),stroke);if(px>0||py>0)v.setPadding(dp(v.context,px),dp(v.context,py),dp(v.context,px),dp(v.context,py));v.background=shape}catch(_:Throwable){}}
         private fun setEditTextBg(v:EditText,fill:Int,stroke:Int){try{val g=GradientDrawable();g.shape=GradientDrawable.RECTANGLE;g.setColor(fill);val r=dpF(v.context,12);g.cornerRadii=floatArrayOf(r,r,r,r,0f,0f,0f,0f);v.setBackgroundDrawable(withRipple(g,fill,12))}catch(_:Throwable){}}
         private fun applyButtonStyle(b:Button,style:String,t:Md3Tokens){val fill:Int;val text:Int;val radius:Int;val outlined:Boolean
             when(style){"launch"->{fill=t.primary.color;text=ensureContrastColor(fill,t.primary.onColor,0xFF1C1B17.toInt(),Color.WHITE);radius=28;outlined=false};"tonal"->{fill=t.secondary.container;text=t.secondary.onContainer;radius=20;outlined=false};"outlined"->{fill=Color.TRANSPARENT;text=t.primary.color;radius=20;outlined=true};"text"->{fill=Color.TRANSPARENT;text=t.primary.color;radius=20;outlined=false};else->{fill=t.primary.color;text=ensureContrastColor(fill,t.primary.onColor,0xFF1C1B17.toInt(),Color.WHITE);radius=20;outlined=false}}

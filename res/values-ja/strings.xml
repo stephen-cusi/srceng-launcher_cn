@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="srceng_launcher_rewrite_text">モダン化リライトについて\nランチャーの UI とアプリケーションロジックを Kotlin で書き直しました。ビルドシステムは Gradle Wrapper と Android Gradle Plugin に移行し、画面には公式の Material 3 テーマとコンポーネントを使用しています。エンジンの動作を維持するため、SDL とネイティブ互換レイヤーは Java のまま残しています。</string>
     <string name="srceng_app_name">Source Engine</string>
 
     <string name="srceng_launcher_about">このポートについて</string>

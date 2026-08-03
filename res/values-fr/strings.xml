@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="srceng_launcher_rewrite_text">Modernisation du lanceur\nL’interface et la logique applicative du lanceur ont été réécrites en Kotlin. Le système de compilation utilise désormais Gradle Wrapper et Android Gradle Plugin, et l’interface emploie les thèmes et composants Material 3 officiels. La couche de compatibilité SDL et native reste en Java afin de préserver le comportement du moteur.</string>
     <string name="srceng_app_name">Source Engine</string>
 
     <string name="srceng_launcher_about">À propos</string>

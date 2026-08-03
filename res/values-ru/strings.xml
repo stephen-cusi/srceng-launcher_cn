@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="srceng_launcher_rewrite_text">О современной переработке\nИнтерфейс и логика приложения лаунчера переписаны на Kotlin. Система сборки переведена на Gradle Wrapper и Android Gradle Plugin, а интерфейс использует официальные темы и компоненты Material 3. Слой совместимости SDL и нативного кода оставлен на Java для сохранения поведения движка.</string>
     <string name="srceng_app_name">Source Engine</string>
 
     <string name="srceng_launcher_about">О порте</string>
