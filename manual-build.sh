@@ -1,20 +1,46 @@
 #!/bin/bash
 # Manual APK build script for srceng-android (no ant required)
 set -e
+set -o pipefail
 
-ANDROID_HOME=/usr/lib/android-sdk
-PLATFORM=$ANDROID_HOME/platforms/android-29
-BUILD_TOOLS=$ANDROID_HOME/build-tools/29.0.3
-ANDROID_JAR=$PLATFORM/android.jar
-AAPT=/usr/bin/aapt
-DX=$BUILD_TOOLS/dx
-ZIPALIGN=$BUILD_TOOLS/zipalign
-APKSIGNER=$BUILD_TOOLS/apksigner
-JAVA_HOME=${JAVA_HOME:-$(dirname $(dirname $(readlink -f $(which javac))))}
+ANDROID_HOME=${ANDROID_HOME:-/usr/lib/android-sdk}
+PLATFORM=${PLATFORM:-$ANDROID_HOME/platforms/android-29}
+BUILD_TOOLS=${BUILD_TOOLS:-$ANDROID_HOME/build-tools/29.0.3}
+ANDROID_JAR=${ANDROID_JAR:-$PLATFORM/android.jar}
+AAPT=${AAPT:-/usr/bin/aapt}
+DX=${DX:-$BUILD_TOOLS/dx}
+ZIPALIGN=${ZIPALIGN:-$BUILD_TOOLS/zipalign}
+APKSIGNER=${APKSIGNER:-$BUILD_TOOLS/apksigner}
+if [ -z "${JAVA_HOME:-}" ]; then
+    JAVAC=$(command -v javac || true)
+    [ -n "$JAVAC" ] && JAVA_HOME=$(dirname "$(dirname "$(readlink -f "$JAVAC")")")
+fi
 NAME=srceng
 
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 cd "$SCRIPT_DIR"
+
+for TOOL in "$AAPT" "$DX" "$ZIPALIGN" "$JAVA_HOME/bin/javac"; do
+    if [ ! -x "$TOOL" ]; then
+        echo "Missing build tool: $TOOL" >&2
+        exit 1
+    fi
+done
+if [ ! -f "$ANDROID_JAR" ]; then
+    echo "Missing Android platform jar: $ANDROID_JAR" >&2
+    exit 1
+fi
+HAS_NATIVE_LIBS=false
+for LIB_DIR in libs/*; do
+    if [ -f "$LIB_DIR/libSDL2.so" ] && [ -f "$LIB_DIR/liblauncher.so" ]; then
+        HAS_NATIVE_LIBS=true
+        break
+    fi
+done
+if [ "$HAS_NATIVE_LIBS" != true ]; then
+    echo "Missing required native libraries under libs/<abi>/" >&2
+    exit 1
+fi
 
 echo "=== Clean ==="
 rm -rf gen bin

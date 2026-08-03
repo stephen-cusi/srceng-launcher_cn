@@ -2,32 +2,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent" 
-		android:background="#FF1A1A1A"
+		android:layout_height="match_parent"
 		xmlns:ads="http://schemas.android.com/apk/res-auto">
 		<LinearLayout
 			android:id="@+id/header_ch"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_alignParentTop="true"
-			android:background="#FF3A3A3A"		
+			android:padding="12dp"
+			android:tag="card"
 			android:layout_gravity="center">
 			<TextView
 				android:id="@+id/header_txt"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:paddingLeft="2dp"
-				android:paddingRight="2dp"
+				android:paddingLeft="4dp"
+				android:paddingRight="4dp"
 				android:text="Dir???"
-				android:textColor="#FFFFFF"
-				android:textSize="12sp"/>
+				android:textSize="14sp"
+				android:tag="on_surface"/>
 		</LinearLayout>
 		<LinearLayout
 			android:id="@+id/footer2"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_alignParentBottom="true"
-			android:background="#FF3A3A3A"
+			android:padding="12dp"
 			android:orientation="horizontal">
 			<Button
 				android:id="@+id/button_choice"
@@ -35,7 +35,7 @@
 				android:layout_height="wrap_content"
 				android:text="@string/srceng_dir_choice_btn"
 				android:layout_weight="1"
-				android:textColor="#FFFFFF"/>
+				android:tag="filled"/>
 		</LinearLayout>
 		<LinearLayout
 			android:layout_width="fill_parent"
@@ -49,7 +49,6 @@
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"
 				android:orientation="vertical"
-				android:background="#FF2A2A2A"
 				android:paddingTop="1dp"
 				android:paddingLeft="2dp"
 				android:paddingRight="2dp"
@@ -61,9 +60,8 @@
 		    			<LinearLayout
 		    				android:id="@+id/bodych"
 						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:orientation="vertical"
-						android:background="#FF3A3A3A">
+						android:layout_height="wrap_content"
+						android:orientation="vertical">
 					</LinearLayout>
 		    		</ScrollView>
 			</LinearLayout>

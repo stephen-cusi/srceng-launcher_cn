@@ -55,6 +55,7 @@ public class LauncherActivity extends Activity {
 
 	// Settings页面回来后，对比主题/主题色是否变化——变化就立刻刷新当前Launcher界面，无需全栈重启
 	private int cachedThemeMode = Md3Theme.THEME_SYSTEM;
+	private boolean cachedDark = false;
 	private boolean cachedDynamic = false;
 	private int cachedSeedColor = Md3Theme.SEED_PRESETS[0];
 	private String cachedUiLang = Md3Theme.UI_LANG_SYSTEM;
@@ -171,6 +172,7 @@ public class LauncherActivity extends Activity {
 
 		// 初始化主题缓存（用于onResume对比Settings是否改了）
 		cachedThemeMode = Md3Theme.getThemeMode(this);
+		cachedDark      = Md3Theme.resolveDark(this);
 		cachedDynamic   = Md3Theme.isDynamicColorAvailable() && Md3Theme.getDynamicColor(this);
 		cachedSeedColor = Md3Theme.getSeedColor(this);
 		cachedUiLang    = Md3Theme.getUiLang(this);
@@ -345,18 +347,19 @@ public class LauncherActivity extends Activity {
 		super.onResume();
 		try {
 			int newMode   = Md3Theme.getThemeMode(this);
+			boolean newDark = Md3Theme.resolveDark(this);
 			boolean newDyn = Md3Theme.isDynamicColorAvailable() && Md3Theme.getDynamicColor(this);
 			int newSeed   = Md3Theme.getSeedColor(this);
 			// 语言变化时SettingsActivity会做 CLEAR_TASK 全栈重启 → 不在这里处理，避免重复重建
-			if (newMode != cachedThemeMode || newDyn != cachedDynamic || newSeed != cachedSeedColor) {
+			if (newMode != cachedThemeMode || newDark != cachedDark || newDyn != cachedDynamic || newSeed != cachedSeedColor) {
 				// 深色/动态取色变化：先applyBeforeOnCreate重新注入Locale+Theme,然后applyAfterSetContentView重绘所有View
 				try { Md3Theme.applyBeforeOnCreate(this); } catch (Throwable ignore) {}
 				try { Md3Theme.applyAfterSetContentView(this); } catch (Throwable ignore) {}
 				cachedThemeMode = newMode;
+				cachedDark      = newDark;
 				cachedDynamic   = newDyn;
 				cachedSeedColor = newSeed;
 			}
 		} catch (Throwable ignore) {}
 	}
 }
-

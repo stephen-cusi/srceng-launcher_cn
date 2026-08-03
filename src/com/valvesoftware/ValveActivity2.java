@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.Display;
 import java.util.HashMap;
 import java.io.File;
-import java.util.Locale;
 import org.libsdl.app.SDLActivity;
 import me.nillerusr.LauncherActivity;
 import android.content.SharedPreferences;
@@ -121,20 +120,21 @@ public class ValveActivity2 { // not activity, i am lazy to change native method
 		if( gameLang != null && !gameLang.isEmpty() ) {
 			// Sanitize: only allow [a-z_] to prevent argv injection
 			if( gameLang.matches("[a-z_]+") ) {
+				argv = argv.replaceAll("(?i)(^|\\s)-language(?:\\s+|=)\\S+", "$1").trim();
 				argv = argv + " -language " + gameLang;
 			}
 		}
 
-		// Append resolution args: -w <width> -h <height>
-		// DEVICE mode (0,0) means: don't add -w/-h, let engine use device native res.
+		// Remove saved/manual resolution arguments before appending the selected value.
+		argv = argv.replaceAll("(?i)(^|\\s)-(?:w|width|h|height)(?:\\s+|=)\\S+", "$1").trim();
+
+		// DEVICE mode resolves the physical display size too, overriding any resolution
+		// persisted by the engine after a previous custom-resolution launch.
 		int[] res = Md3Theme.getResolvedResolution(context);
 		if( res != null && res.length >= 2 && res[0] > 0 && res[1] > 0 ) {
 			int w = res[0], h = res[1];
 			// Sanitize: reasonable range (320..8192 for both)
 			if( w >= 320 && w <= 8192 && h >= 240 && h <= 8192 ) {
-				// The launcher command field may contain old resolution arguments. Source's
-				// command-line parser can select the first duplicate, so keep one final pair.
-				argv = argv.replaceAll("(?i)(^|\\s)-(?:w|width|h|height)(?:\\s+|=)\\S+", "$1").trim();
 				argv = argv + " -w " + w + " -h " + h;
 			}
 		}
@@ -151,7 +151,7 @@ public class ValveActivity2 { // not activity, i am lazy to change native method
 		Log.v("SRCAPK", "vpks="+vpks);
 
 		setenv( "EXTRAS_VPK_PATH", vpks, 1 );
-		setenv( "LANG", Locale.getDefault().toString(), 1 );
+		setenv( "LANG", Md3Theme.getRealSystemLocale().toString(), 1 );
 		setenv( "APP_DATA_PATH", appinf.dataDir, 1);
 		setenv( "APP_LIB_PATH", appinf.nativeLibraryDir, 1);
 

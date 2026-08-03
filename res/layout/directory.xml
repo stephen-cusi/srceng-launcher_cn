@@ -3,7 +3,8 @@
 	android:orientation="horizontal"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:background="#FF272727"
+	android:padding="8dp"
+	android:tag="card_outlined"
 	android:clickable="true"
 	android:focusable="true"
 	android:focusableInTouchMode="true"
@@ -16,7 +17,8 @@
 		android:layout_width="40dp"
 		android:layout_height="40dp"
 		android:paddingRight="5dip"
-		android:src="@drawable/folder">
+		android:src="@drawable/folder"
+		android:tag="icon">
 	</ImageView>
 	<LinearLayout
 		android:orientation="vertical"
@@ -35,7 +37,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text=""
-			android:textColor="#FFFFFF"
-			android:textSize="12sp"/>
+			android:textSize="14sp"
+			android:tag="on_surface"/>
 	</LinearLayout>
 </LinearLayout>

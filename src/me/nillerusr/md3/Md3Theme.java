@@ -53,10 +53,9 @@ public final class Md3Theme {
     public static final String SP_KEY_SEED_COLOR     = "md3_seed_color";
     public static final String SP_KEY_UI_LANG        = "md3_ui_lang";         // "system" | "zh-rCN" | "zh-rTW" | "en"
     public static final String SP_KEY_GAME_LANG      = "md3_game_lang";       // ""(=不追加) | schinese | tchinese | english | russian | german | french | italian | spanish | brazilian | latam | japanese | korean | polish | dutch | czech | danish | finnish | greek | hungarian | norwegian | portuguese | romanian | swedish | thai | turkish | ukrainian | bulgarian
-    public static final String SP_KEY_IMMERSIVE      = "md3_immersive_statusbar"; // 默认false，状态栏沉浸（内容延伸到状态栏下）开关
 
     // ========== Resolution (Screen) ==========
-    // resolution mode: "device" (= use device native, don't add -w/-h), "preset" (= use RESOLUTION_PRESETS[idx]), "custom" (= custom_w/custom_h)
+    // resolution mode: "device" (= pass device-native size), "preset" (= use RESOLUTION_PRESETS[idx]), "custom" (= custom_w/custom_h)
     public static final String SP_KEY_RES_MODE       = "md3_res_mode";
     public static final String SP_KEY_RES_PRESET_IDX = "md3_res_preset_idx";
     public static final String SP_KEY_RES_CUSTOM_W   = "md3_res_custom_w";
@@ -144,13 +143,6 @@ public final class Md3Theme {
         getPrefs(ctx).edit().putBoolean(SP_KEY_DYNAMIC_COLOR, v).apply();
     }
 
-    public static boolean getImmersiveStatusBar(Context ctx) {
-        return getPrefs(ctx).getBoolean(SP_KEY_IMMERSIVE, false); // 默认不沉浸
-    }
-    public static void setImmersiveStatusBar(Context ctx, boolean v) {
-        getPrefs(ctx).edit().putBoolean(SP_KEY_IMMERSIVE, v).apply();
-    }
-
     public static int getSeedColor(Context ctx) {
         return getPrefs(ctx).getInt(SP_KEY_SEED_COLOR, SEED_PRESETS[0]);
     }
@@ -203,14 +195,17 @@ public final class Md3Theme {
 
     /**
      * 计算最终生效的分辨率宽高。
-     *   - DEVICE模式：返回{0,0}（表示不追加-w/-h，让引擎用设备分辨率）
+     *   - DEVICE模式：返回设备物理分辨率，覆盖引擎配置文件中的旧值
      *   - PRESET模式：返回RESOLUTION_PRESETS[idx]
      *   - CUSTOM模式：返回{customW, customH}
      */
     public static int[] getResolvedResolution(Context ctx) {
         String mode = getResolutionMode(ctx);
         if (RES_MODE_DEVICE.equals(mode)) {
-            return new int[]{ 0, 0 };
+            int[] size = getDeviceResolution(ctx);
+            int width = Math.max(size[0], size[1]);
+            int height = Math.min(size[0], size[1]);
+            return new int[]{ width, height };
         }
         if (RES_MODE_PRESET.equals(mode)) {
             int idx = getResolutionPresetIdx(ctx);
@@ -268,7 +263,7 @@ public final class Md3Theme {
         return null; // follow system → return real system locale below
     }
 
-    // 返回系统**真正**的Locale（Resources.getSystem().getConfiguration()不受我们手动改Locale.setDefault的影响）
+    // 返回系统资源配置中的 Locale，不受 Activity 的局部语言配置影响。
     public static Locale getRealSystemLocale() {
         try {
             Configuration sysCfg = Resources.getSystem().getConfiguration();
@@ -278,7 +273,7 @@ public final class Md3Theme {
                 if (sysCfg.locale != null) return sysCfg.locale;
             }
         } catch (Throwable ignore) {}
-        // 保底：虽然Locale.getDefault可能被我们污染，但总比null好；最后fallback = ENGLISH
+        // Resources.getSystem() 不可用时回退到进程默认 Locale。
         Locale fallback = Locale.getDefault();
         if (fallback == null) fallback = Locale.ENGLISH;
         return fallback;
@@ -300,7 +295,6 @@ public final class Md3Theme {
             } else {
                 cfg.locale = desired;
             }
-            Locale.setDefault(desired);
         } catch (Throwable ignore) {}
     }
 
@@ -316,13 +310,9 @@ public final class Md3Theme {
         } else {
             cur = (cfg.locale != null) ? cfg.locale : getRealSystemLocale();
         }
-        // 关键：跟随系统时用 getRealSystemLocale()，不要用 Locale.getDefault()
-        //     —因为手动选英文时我们调过 Locale.setDefault(ENGLISH)，
-        //      这时 Locale.getDefault 已经是污染值 ENGLISH，不再是系统真实Locale了
+        // 跟随系统时使用系统资源配置，不使用 Activity 当前的局部 Locale。
         Locale desired = (target == null) ? getRealSystemLocale() : target;
         if (desired.equals(cur)) {
-            // 即使Locale没变,也同步一下Locale.setDefault保证DateFormat等一致
-            Locale.setDefault(desired);
             return;
         }
 
@@ -334,9 +324,6 @@ public final class Md3Theme {
         }
         DisplayMetrics dm = res.getDisplayMetrics();
         res.updateConfiguration(cfg, dm);
-
-        // Also set default Locale so DateFormat etc. aligns
-        Locale.setDefault(desired);
     }
 
     // =========================================================
@@ -381,7 +368,14 @@ public final class Md3Theme {
             case THEME_DARK:  return true;
             default:
             case THEME_SYSTEM:
-                int ui = ctx.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                int ui;
+                try {
+                    // Activity resources are rewritten below for forced light/dark modes.
+                    // Read the independent system configuration when returning to follow-system.
+                    ui = Resources.getSystem().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                } catch (Throwable ignore) {
+                    ui = ctx.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                }
                 return ui == Configuration.UI_MODE_NIGHT_YES;
         }
     }
@@ -617,23 +611,17 @@ public final class Md3Theme {
         Window w = a.getWindow();
         if (w == null) return;
         try { w.setBackgroundDrawable(new ColorDrawable(t.surface)); } catch (Throwable ignore) {}
-        boolean immersive = getImmersiveStatusBar(a); // 默认false=不沉浸
         if (Build.VERSION.SDK_INT >= 21) {
             try {
                 w.setStatusBarColor(t.statusBar);
                 w.setNavigationBarColor(t.navBar);
-                // 沉浸式：内容延伸到状态栏下方（LIGHT/NO_ACTION_BAR 主题也能做到）；默认不沉浸
                 View dec = w.getDecorView();
                 if (dec != null) {
                     int sys = dec.getSystemUiVisibility();
                     int LAYOUT_FULLSCREEN = 0x00000400; // View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     int LAYOUT_STABLE     = 0x00000100; // View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    if (immersive) {
-                        sys |= (LAYOUT_FULLSCREEN | LAYOUT_STABLE);
-                    } else {
-                        sys &= ~LAYOUT_FULLSCREEN;
-                        sys &= ~LAYOUT_STABLE;
-                    }
+                    sys &= ~LAYOUT_FULLSCREEN;
+                    sys &= ~LAYOUT_STABLE;
                     dec.setSystemUiVisibility(sys);
                 }
             } catch (Throwable ignore) {}

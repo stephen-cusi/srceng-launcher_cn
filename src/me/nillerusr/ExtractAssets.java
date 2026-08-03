@@ -46,41 +46,61 @@ public class ExtractAssets
 		return ret;
 	}
 
-	public static void extractAsset(Context context, String asset, Boolean force)
+	public static boolean extractAsset(Context context, String asset, Boolean force)
 	{
 		android.content.res.AssetManager am = context.getAssets();
+		File asset_file = new File(context.getFilesDir(), asset);
+		File tmp = new File(context.getFilesDir(), asset + ".tmp");
+		File backup = new File(context.getFilesDir(), asset + ".bak");
+		InputStream is = null;
+		FileOutputStream os = null;
 		try {
-			String asset_path = context.getFilesDir().getPath() + "/" + asset;
-			File asset_file = new File(asset_path);
+			String asset_path = asset_file.getPath();
 			Boolean asset_exists = asset_file.exists();
 
 			if( !force && asset_exists )
-				return;
+				return true;
 
-			InputStream is = am.open(asset);
-			FileOutputStream os = new FileOutputStream(context.getFilesDir().getPath() + "/tmp");
+			long written = 0;
+			is = am.open(asset);
+			os = new FileOutputStream(tmp);
 			byte[] buffer = new byte[8192];
 			while (true) {
 				int length = is.read(buffer);
 				if (length <= 0)
 					break;
-
 				os.write(buffer, 0, length);
+				written += length;
 			}
-
+			os.getFD().sync();
 			os.close();
-			File tmp = new File(context.getFilesDir().getPath() + "/tmp");
-			if( asset_exists )
-				asset_file.delete();
-
-			File dst = new File(context.getFilesDir().getPath() + "/" + asset);
-			tmp.renameTo(dst);
+			os = null;
+			is.close();
+			is = null;
+			if( written <= 0 || tmp.length() != written )
+				throw new java.io.IOException("Incomplete asset copy");
+			if( backup.exists() && !backup.delete() )
+				throw new java.io.IOException("Failed to remove stale asset backup");
+			if( asset_exists && !asset_file.renameTo(backup) )
+				throw new java.io.IOException("Failed to preserve existing asset");
+			if( !tmp.renameTo(asset_file) ) {
+				if( backup.exists() ) backup.renameTo(asset_file);
+				throw new java.io.IOException("Failed to install extracted asset");
+			}
+			if( backup.exists() ) backup.delete();
+			chmod(asset_path, 0777);
+			return true;
 		}
 		catch (Exception e) {
+			if( !asset_file.exists() && backup.exists() && !backup.renameTo(asset_file) )
+				Log.e("SRCAPK", "Failed to restore previous " + asset);
 			Log.e("SRCAPK", "Failed to extract " + asset + ":" + e.toString());
+			return false;
 		}
 		finally {
-			chmod(context.getFilesDir().getPath() + "/" + asset, 0777);
+			try { if( os != null ) os.close(); } catch (Exception ignore) {}
+			try { if( is != null ) is.close(); } catch (Exception ignore) {}
+			if( tmp.exists() ) tmp.delete();
 		}
 	}
 
@@ -108,11 +128,8 @@ public class ExtractAssets
 		int version = mPref.getInt( "pakversion", 0 );
 		Boolean force = (version != PAK_VERSION);
 
-		extractAsset(context, VPK_NAME, force);
-
-		SharedPreferences.Editor editor = mPref.edit();
-		editor.putInt( "pakversion", PAK_VERSION );
-		editor.commit();
+		if( extractAsset(context, VPK_NAME, force) )
+			mPref.edit().putInt( "pakversion", PAK_VERSION ).apply();
 	}
 
 	// Old API kept for compatibility (not used anymore in 1.17)

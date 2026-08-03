@@ -87,7 +87,7 @@
     <!-- MD3 Game / Resolution section -->
     <string name="md3_section_game">Игра</string>
     <string name="md3_resolution">Разрешение</string>
-    <string name="md3_resolution_desc">Разрешение экрана игры. Добавляет \'-w &lt;ширина&gt; -h &lt;высота&gt;\' в командную строку запуска. При выборе «Использовать разрешение устройства» ничего не добавляется.</string>
+    <string name="md3_resolution_desc">Разрешение экрана игры. Добавляет \'-w &lt;ширина&gt; -h &lt;высота&gt;\' в командную строку. «Использовать разрешение устройства» передаёт физическое разрешение дисплея.</string>
     <string name="md3_res_mode_device">Нативное разрешение устройства</string>
     <string name="md3_res_mode_preset">Выбрать из пресетов</string>
     <string name="md3_res_mode_custom">Произвольная ширина × высота</string>

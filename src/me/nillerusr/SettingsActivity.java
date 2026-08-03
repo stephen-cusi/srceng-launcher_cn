@@ -33,12 +33,9 @@ import me.nillerusr.md3.Md3Tokens;
 public class SettingsActivity extends Activity {
     private static final String TAG = "SettingsActivity";
 
-    // 三档刷新策略
-    //   REFRESH_TOKEN_REDRAW: 仅重建Md3Tokens+重绘View(用于seed_color变化),无需重启
-    //   REFRESH_RECREATE:     recreate() SettingsActivity自己(深色/动态取色),主界面Launcher在onResume自动感知刷新
-    //   REFRESH_FULL_RESTART: CLEAR_TASK全栈重启LauncherActivity(仅用于语言变化,必须刷新所有inflation缓存)
+    // Theme/color changes redraw in place to preserve scroll position. Language changes
+    // still require a full restart so resources are inflated with the new locale.
     private static final int REFRESH_TOKEN_REDRAW   = 0;
-    private static final int REFRESH_RECREATE       = 1;
     private static final int REFRESH_FULL_RESTART   = 2;
 
     // Appearance
@@ -59,8 +56,6 @@ public class SettingsActivity extends Activity {
     private Spinner resPresetSpinner;
     private ArrayAdapter<String> resPresetAdapter;
     private EditText resCustomW, resCustomH;
-    // Immersive status bar
-    private Switch immersiveSwitch;
 
     private int lastDarkMode = Md3Theme.THEME_SYSTEM;
     private boolean lastDynamic = false;
@@ -71,7 +66,6 @@ public class SettingsActivity extends Activity {
     private String lastResMode = Md3Theme.RES_MODE_DEVICE;
     private int lastResPresetIdx = 0;
     private int lastResCustomW = 1280, lastResCustomH = 720;
-    private boolean lastImmersive = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +123,6 @@ public class SettingsActivity extends Activity {
         resPresetSpinner = optFind(R.id.md3_res_preset_spinner);
         resCustomW       = optFind(R.id.md3_res_custom_w);
         resCustomH       = optFind(R.id.md3_res_custom_h);
-        immersiveSwitch  = optFind(R.id.md3_immersive_switch);
 
         ImageButton back = optFind(R.id.md3_button_back);
         if (back != null) {
@@ -210,9 +203,6 @@ public class SettingsActivity extends Activity {
         if (resCustomH != null) {
             try { resCustomH.setText(String.valueOf(lastResCustomH)); } catch (Throwable ignore) {}
         }
-        // Immersive status bar
-        lastImmersive = Md3Theme.getImmersiveStatusBar(this);
-        setCheckedSafe(immersiveSwitch, lastImmersive);
     }
 
     // ========= UI language Spinner (10 languages: system/zh_CN/zh_TW/en/ru/ja/ko/fr/de/es) =========
@@ -467,7 +457,7 @@ public class SettingsActivity extends Activity {
                     if (checkedId == R.id.md3_dark_off) mode = Md3Theme.THEME_LIGHT;
                     else if (checkedId == R.id.md3_dark_on) mode = Md3Theme.THEME_DARK;
                     Md3Theme.setThemeMode(SettingsActivity.this, mode);
-                    if (mode != lastDarkMode) { lastDarkMode = mode; refreshTheme(REFRESH_RECREATE); }
+                    if (mode != lastDarkMode) { lastDarkMode = mode; refreshTheme(REFRESH_TOKEN_REDRAW); }
                 }
             });
         }
@@ -484,15 +474,7 @@ public class SettingsActivity extends Activity {
                     if (isChecked) {
                         try { Toast.makeText(SettingsActivity.this, R.string.md3_dynamic_color_on_hint, Toast.LENGTH_LONG).show(); } catch (Throwable ignore) {}
                     }
-                    if (isChecked != lastDynamic) { lastDynamic = isChecked; refreshTheme(REFRESH_RECREATE); }
-                }
-            });
-        }
-        if (immersiveSwitch != null) {
-            immersiveSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Md3Theme.setImmersiveStatusBar(SettingsActivity.this, isChecked);
-                    if (isChecked != lastImmersive) { lastImmersive = isChecked; refreshTheme(REFRESH_RECREATE); }
+                    if (isChecked != lastDynamic) { lastDynamic = isChecked; refreshTheme(REFRESH_TOKEN_REDRAW); }
                 }
             });
         }
@@ -723,20 +705,17 @@ public class SettingsActivity extends Activity {
         } catch (Throwable t) { return dp * 2; }
     }
 
-    private void refreshTheme() {
-        // 历史兼容入口(默认走REFRESH_RECREATE,不做全栈重启)
-        refreshTheme(REFRESH_RECREATE);
-    }
-
     private void refreshTheme(int level) {
         try {
             if (level == REFRESH_TOKEN_REDRAW) {
-                // ========= 档1：仅SeedColor变化 → 立刻重绘当前Activity & 预览卡片 =========
-                //   SettingsActivity里所有颜色都是从Md3Tokens.buildTokens动态生成
-                //   → 只需applyAfterSetContentView重新token化,不需要recreate
+                // Apply the selected theme and redraw the existing hierarchy in place.
+                // Keeping the same ScrollView preserves its exact scroll position.
+                try { Md3Theme.applyBeforeOnCreate(this); } catch (Throwable ignore) {}
                 try { Md3Theme.applyAfterSetContentView(this); } catch (Throwable ignore) {}
-                // 手动刷新seed ring ring颜色（因为ring是buildSeedColors时创建的token.primary.color）
                 try { buildSeedColors(); } catch (Throwable ignore) {}
+                try { if (uiLangAdapter != null) uiLangAdapter.notifyDataSetChanged(); } catch (Throwable ignore) {}
+                try { if (gameLangAdapter != null) gameLangAdapter.notifyDataSetChanged(); } catch (Throwable ignore) {}
+                try { if (resPresetAdapter != null) resPresetAdapter.notifyDataSetChanged(); } catch (Throwable ignore) {}
                 return;
             }
             if (level == REFRESH_FULL_RESTART) {
@@ -750,14 +729,6 @@ public class SettingsActivity extends Activity {
                     else finish();
                 } catch (Throwable ignore) {}
                 return;
-            }
-            // ========= 档2：深色/动态取色变化 → recreate SettingsActivity自己,Launcher onResume感知 =========
-            try {
-                if (Build.VERSION.SDK_INT >= 11) recreate();
-                else { finish(); startActivity(getIntent()); }
-                return;
-            } catch (Throwable t) {
-                Log.w(TAG, "refreshTheme(RECREATE) failed", t);
             }
         } catch (Throwable t) {
             Log.w(TAG, "refreshTheme level=" + level + " failed", t);

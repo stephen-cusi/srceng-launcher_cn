@@ -51,8 +51,6 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="md3_dynamic_color_not_available">当前系统不支持动态取色</string>
     <string name="md3_dynamic_color_on_hint">已开启动态取色，主题色优先使用壁纸颜色；仅当壁纸无法提取颜色时，手动选择的主题色才会生效。</string>
     <string name="md3_seed_ignored_when_dynamic">动态取色已开启，当前手动选择的主题色不会生效。如需使用手动主题色，请先关闭动态取色。</string>
-    <string name="md3_immersive">状态栏沉浸</string>
-    <string name="md3_immersive_desc">让页面内容延伸到状态栏下方（默认：关闭）</string>
     <string name="md3_seed_color">主题色</string>
     <string name="md3_preview">预览</string>
     <string name="md3_preview_primary">主色调按钮</string>
@@ -91,7 +89,7 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <!-- MD3 Game / Resolution section -->
     <string name="md3_section_game">游戏设置</string>
     <string name="md3_resolution">分辨率</string>
-    <string name="md3_resolution_desc">游戏画面分辨率。会自动在启动参数中追加 \'-w {宽度} -h {高度}\'（选择「使用本机分辨率」时不追加，由引擎用设备物理分辨率）。</string>
+    <string name="md3_resolution_desc">游戏画面分辨率。会自动在启动参数中追加 \'-w {宽度} -h {高度}\'；选择「使用本机分辨率」时传入设备物理分辨率。</string>
     <string name="md3_res_mode_device">使用本机分辨率</string>
     <string name="md3_res_mode_preset">从预设列表选择</string>
     <string name="md3_res_mode_custom">自定义宽 × 高</string>

@@ -87,7 +87,7 @@
     <!-- MD3 Game / Resolution section -->
     <string name="md3_section_game">ゲーム</string>
     <string name="md3_resolution">解像度</string>
-    <string name="md3_resolution_desc">ゲーム画面の解像度。起動コマンドラインに \'-w &lt;幅&gt; -h &lt;高さ&gt;\' を追加します。「デバイスのネイティブ解像度を使用」の場合は追加されません。</string>
+    <string name="md3_resolution_desc">ゲーム画面の解像度。起動コマンドラインに \'-w &lt;幅&gt; -h &lt;高さ&gt;\' を追加します。「デバイスのネイティブ解像度を使用」では物理ディスプレイ解像度を渡します。</string>
     <string name="md3_res_mode_device">デバイスネイティブ解像度を使用</string>
     <string name="md3_res_mode_preset">プリセットから選択</string>
     <string name="md3_res_mode_custom">カスタム幅 × 高さ</string>

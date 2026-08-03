@@ -5,7 +5,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -42,6 +44,7 @@ import android.graphics.Bitmap;
 import java.util.Arrays;
 import android.view.MotionEvent;
 import android.view.View.OnTouchListener;
+import me.nillerusr.md3.Md3Theme;
 
 public class DirchActivity extends Activity implements OnTouchListener{
 	public static final int sdk = Integer.valueOf(Build.VERSION.SDK).intValue();
@@ -107,6 +110,18 @@ public class DirchActivity extends Activity implements OnTouchListener{
 			body.addView(view);
 			view.setOnTouchListener(this);
 		}
+		Md3Theme.applyAfterSetContentView(this);
+	}
+
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		try {
+			Configuration cfg = new Configuration(newBase.getResources().getConfiguration());
+			Md3Theme.applyUiLocaleConfiguration(cfg, Md3Theme.getUiLang(newBase));
+			super.attachBaseContext(newBase.createConfigurationContext(cfg));
+			return;
+		} catch (Throwable ignore) {}
+		super.attachBaseContext(newBase);
 	}
 
 	public List<String> getExtStoragePaths() {
@@ -123,17 +138,13 @@ public class DirchActivity extends Activity implements OnTouchListener{
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
+		Md3Theme.applyBeforeOnCreate(this);
 		super.onCreate(savedInstanceState);
 
 		mPref = getSharedPreferences("mod", 0);
 
-		requestWindowFeature(1);
-		if (sdk >= 21)
-			super.setTheme(16974372);
-		else
-			super.setTheme(16973829);
-
 		setContentView(R.layout.activity_directory_choice);
+		Md3Theme.applyAfterSetContentView(this);
 		cur_dir = null;
 		body = (LinearLayout)findViewById(R.id.bodych);
 		TextView header = (TextView)findViewById(R.id.header_txt);
@@ -153,8 +164,6 @@ public class DirchActivity extends Activity implements OnTouchListener{
 				}
 			}
 		});
-
-		LauncherActivity.changeButtonsStyle((ViewGroup)this.getWindow().getDecorView());
 
 		List<String> l = getExtStoragePaths();
 		if( l == null || l.isEmpty() ) {
@@ -176,5 +185,6 @@ public class DirchActivity extends Activity implements OnTouchListener{
 			body.addView(view);
 			view.setOnTouchListener(this);
 		}
+		Md3Theme.applyAfterSetContentView(this);
 	}
 }

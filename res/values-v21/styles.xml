@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- API 17-20 compatibility; values-v21 overrides these with Material themes. -->
-    <style name="SrcEng.MD3" parent="@android:style/Theme.Holo.Light.NoActionBar">
+    <style name="SrcEng.MD3" parent="@android:style/Theme.Material.Light.NoActionBar">
         <item name="android:windowBackground">@color/md3_surface</item>
         <item name="android:colorBackground">@color/md3_surface</item>
+        <item name="android:colorPrimary">@color/md3_primary</item>
+        <item name="android:colorPrimaryDark">@color/md3_status_bar</item>
+        <item name="android:colorAccent">@color/md3_tertiary</item>
+        <item name="android:statusBarColor">@color/md3_status_bar</item>
+        <item name="android:navigationBarColor">@color/md3_nav_bar</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowContentTransitions">false</item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Activity</item>
         <item name="android:windowSoftInputMode">adjustResize|stateHidden</item>
@@ -15,14 +20,19 @@
         <item name="android:listDivider">@color/md3_outline_variant</item>
     </style>
 
-    <style name="SrcEng.MD3.Dark" parent="@android:style/Theme.Holo.NoActionBar">
+    <style name="SrcEng.MD3.Dark" parent="@android:style/Theme.Material.NoActionBar">
         <item name="android:windowBackground">@color/md3_surface</item>
         <item name="android:colorBackground">@color/md3_surface</item>
+        <item name="android:colorPrimary">@color/md3_primary</item>
+        <item name="android:colorPrimaryDark">@color/md3_status_bar</item>
+        <item name="android:colorAccent">@color/md3_tertiary</item>
+        <item name="android:statusBarColor">@color/md3_status_bar</item>
+        <item name="android:navigationBarColor">@color/md3_nav_bar</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowSoftInputMode">adjustResize|stateHidden</item>
         <item name="android:textColorPrimary">@color/md3_on_surface</item>
         <item name="android:textColorSecondary">@color/md3_on_surface_variant</item>
         <item name="android:textColorHint">@color/md3_outline</item>
         <item name="android:divider">@color/md3_outline_variant</item>
     </style>
-
 </resources>
