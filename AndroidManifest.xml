@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:label="@string/md3_settings" android:name="me.nillerusr.SettingsActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize" android:windowSoftInputMode="adjustResize|stateHidden" android:parentActivityName="me.nillerusr.LauncherActivity" android:theme="@style/SrcEng.MD3"/>
+        <activity android:exported="false" android:label="@string/vpk_tool" android:name="me.nillerusr.VpkToolActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize" android:windowSoftInputMode="adjustResize|stateHidden" android:parentActivityName="me.nillerusr.SettingsActivity" android:theme="@style/SrcEng.MD3"/>
         <activity android:label="Directory" android:name="me.nillerusr.DirchActivity" android:windowSoftInputMode="adjustResize|stateHidden" android:theme="@style/SrcEng.MD3">
             <intent-filter>
                 <action android:name="android.intent.action.DIRCH"/>

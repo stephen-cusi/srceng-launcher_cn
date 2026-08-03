@@ -364,6 +364,47 @@
             <com.google.android.material.button.MaterialButton android:id="@+id/md3_check_update" style="@style/Widget.Material3.Button" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="@string/md3_update_check" android:tag="filled"/>
         </LinearLayout>
 
+        <!-- ========== Tools ========== -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="8dp"
+            android:tag="primary"
+            android:text="@string/md3_section_tools"
+            android:textAllCaps="true"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/md3_vpk_tool"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:tag="card_outlined">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/vpk_tool"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:tag="subtitle"
+                android:text="@string/vpk_tool_desc"
+                android:textSize="12sp" />
+        </LinearLayout>
+
         <!-- ========== Appearance section title ========== -->
         <TextView
             android:layout_width="wrap_content"

@@ -121,4 +121,40 @@
     <string name="md3_res_custom_label">Eigene Auflösung</string>
     <string name="md3_res_width">Breite (px)</string>
     <string name="md3_res_height">Höhe (px)</string>
+    <string name="md3_section_tools">Werkzeuge</string>
+    <string name="vpk_tool">VPK-Werkzeug</string>
+    <string name="vpk_tool_desc">VPK-Archive der Versionen 1 und 2 erstellen, anzeigen und entpacken.</string>
+    <string name="vpk_actions">Archivaktionen</string>
+    <string name="vpk_actions_desc">Beim Erstellen wird eine eigenständige eingebettete VPK erzeugt. Bei geteilten Archiven _dir.vpk und alle nummerierten VPK-Teile zusammen auswählen.</string>
+    <string name="vpk_create">VPK erstellen</string>
+    <string name="vpk_open">VPK öffnen und anzeigen</string>
+    <string name="vpk_extract">Alle Dateien entpacken</string>
+    <string name="vpk_create_version">Ausgabeformat</string>
+    <string name="vpk_version_1">VPK Version 1</string>
+    <string name="vpk_version_2">VPK Version 2</string>
+    <string name="vpk_ready">Aktion auswählen.</string>
+    <string name="vpk_reading">VPK wird gelesen…</string>
+    <string name="vpk_creating">VPK wird erstellt…</string>
+    <string name="vpk_extracting">VPK wird entpackt…</string>
+    <string name="vpk_opened">VPK%1$d · %2$d Dateien</string>
+    <string name="vpk_entry_line">%1$s  ·  %2$s</string>
+    <string name="vpk_progress">%1$d/%2$d · %3$s</string>
+    <string name="vpk_create_done_short">VPK wurde erfolgreich erstellt.</string>
+    <string name="vpk_extract_done">Alle Dateien wurden entpackt und geprüft.</string>
+    <string name="vpk_no_archive">Zuerst eine VPK öffnen.</string>
+    <string name="vpk_failed">Vorgang fehlgeschlagen: %1$s</string>
+    <string name="vpk_picker_title">Dateien und Ordner auswählen</string>
+    <string name="vpk_picker_folder">Ordner · Zeile zum Öffnen antippen</string>
+    <string name="vpk_picker_selected">Ausgewählt: %1$d</string>
+    <string name="vpk_picker_done">Auswahl verwenden</string>
+    <string name="vpk_picker_empty">Mindestens eine Datei oder einen Ordner auswählen.</string>
+    <string name="vpk_picker_unreadable">Dieser Ordner kann nicht gelesen werden.</string>
+    <string name="vpk_output_name">Name der Ausgabe-VPK</string>
+    <string name="vpk_output_name_invalid">Gültigen Dateinamen eingeben.</string>
+    <string name="vpk_create_done_path">VPK Version %1$d erstellt unter %2$s</string>
+    <string name="vpk_file_manager">VPK-Dateimanager</string><string name="vpk_manager_folder">Ordner · Zum Öffnen antippen</string><string name="vpk_manager_archive">VPK-Archiv · %1$s</string><string name="vpk_folder_empty">Dieser Ordner ist leer.</string>
+    <string name="vpk_copy">Kopieren</string><string name="vpk_move">Verschieben</string><string name="vpk_pack">Packen</string><string name="vpk_delete">Löschen</string><string name="vpk_paste_here">Hier einfügen</string>
+    <string name="vpk_copy_destination">%1$d Element(e) kopieren: Zielordner auswählen.</string><string name="vpk_move_destination">%1$d Element(e) verschieben: Zielordner auswählen.</string>
+    <string name="vpk_copying">Dateien werden kopiert…</string><string name="vpk_moving">Dateien werden verschoben…</string><string name="vpk_deleting">Dateien werden gelöscht…</string><string name="vpk_copy_done">Dateien wurden kopiert.</string><string name="vpk_move_done">Dateien wurden verschoben.</string><string name="vpk_delete_done">Dateien wurden gelöscht.</string>
+    <string name="vpk_delete_confirm_title">Auswahl löschen?</string><string name="vpk_delete_confirm">%1$d ausgewählte Element(e) dauerhaft löschen? Dies kann nicht rückgängig gemacht werden.</string><string name="vpk_output_exists">Eine Datei mit diesem Namen ist bereits vorhanden.</string><string name="vpk_extract_here">Hier entpacken</string>
 </resources>

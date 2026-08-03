@@ -121,4 +121,40 @@
     <string name="md3_res_custom_label">사용자 지정 해상도</string>
     <string name="md3_res_width">너비(픽셀)</string>
     <string name="md3_res_height">높이(픽셀)</string>
+    <string name="md3_section_tools">도구</string>
+    <string name="vpk_tool">VPK 도구</string>
+    <string name="vpk_tool_desc">VPK1 및 VPK2 아카이브를 만들고 보고 압축 해제합니다.</string>
+    <string name="vpk_actions">아카이브 작업</string>
+    <string name="vpk_actions_desc">만들기는 단일 내장 VPK를 출력합니다. 분할 아카이브를 열 때는 _dir.vpk와 번호가 지정된 모든 VPK 조각을 함께 선택하세요.</string>
+    <string name="vpk_create">VPK 만들기</string>
+    <string name="vpk_open">VPK 열기 및 보기</string>
+    <string name="vpk_extract">모든 파일 압축 해제</string>
+    <string name="vpk_create_version">출력 형식</string>
+    <string name="vpk_version_1">VPK1</string>
+    <string name="vpk_version_2">VPK2</string>
+    <string name="vpk_ready">작업을 선택하세요.</string>
+    <string name="vpk_reading">VPK 읽는 중…</string>
+    <string name="vpk_creating">VPK 만드는 중…</string>
+    <string name="vpk_extracting">VPK 압축 해제 중…</string>
+    <string name="vpk_opened">VPK%1$d · 파일 %2$d개</string>
+    <string name="vpk_entry_line">%1$s  ·  %2$s</string>
+    <string name="vpk_progress">%1$d/%2$d · %3$s</string>
+    <string name="vpk_create_done_short">VPK를 만들었습니다.</string>
+    <string name="vpk_extract_done">모든 파일을 압축 해제하고 검증했습니다.</string>
+    <string name="vpk_no_archive">먼저 VPK를 여세요.</string>
+    <string name="vpk_failed">작업 실패: %1$s</string>
+    <string name="vpk_picker_title">파일 및 폴더 선택</string>
+    <string name="vpk_picker_folder">폴더 · 행을 눌러 열기</string>
+    <string name="vpk_picker_selected">선택됨: %1$d</string>
+    <string name="vpk_picker_done">선택 항목 사용</string>
+    <string name="vpk_picker_empty">파일 또는 폴더를 하나 이상 선택하세요.</string>
+    <string name="vpk_picker_unreadable">이 폴더를 읽을 수 없습니다.</string>
+    <string name="vpk_output_name">출력 VPK 이름</string>
+    <string name="vpk_output_name_invalid">올바른 파일 이름을 입력하세요.</string>
+    <string name="vpk_create_done_path">VPK 버전 %1$d 생성 위치: %2$s</string>
+    <string name="vpk_file_manager">VPK 파일 관리자</string><string name="vpk_manager_folder">폴더 · 탭하여 열기</string><string name="vpk_manager_archive">VPK 아카이브 · %1$s</string><string name="vpk_folder_empty">이 폴더는 비어 있습니다.</string>
+    <string name="vpk_copy">복사</string><string name="vpk_move">이동</string><string name="vpk_pack">패키징</string><string name="vpk_delete">삭제</string><string name="vpk_paste_here">여기에 붙여넣기</string>
+    <string name="vpk_copy_destination">%1$d개 항목 복사: 대상 폴더를 선택하세요.</string><string name="vpk_move_destination">%1$d개 항목 이동: 대상 폴더를 선택하세요.</string>
+    <string name="vpk_copying">파일 복사 중…</string><string name="vpk_moving">파일 이동 중…</string><string name="vpk_deleting">파일 삭제 중…</string><string name="vpk_copy_done">파일을 복사했습니다.</string><string name="vpk_move_done">파일을 이동했습니다.</string><string name="vpk_delete_done">파일을 삭제했습니다.</string>
+    <string name="vpk_delete_confirm_title">선택 항목을 삭제할까요?</string><string name="vpk_delete_confirm">선택한 %1$d개 항목을 영구 삭제합니다. 이 작업은 취소할 수 없습니다.</string><string name="vpk_output_exists">같은 이름의 파일이 이미 있습니다.</string><string name="vpk_extract_here">여기에 압축 풀기</string>
 </resources>

@@ -121,4 +121,40 @@
     <string name="md3_res_custom_label">カスタム解像度</string>
     <string name="md3_res_width">幅（ピクセル）</string>
     <string name="md3_res_height">高さ（ピクセル）</string>
+    <string name="md3_section_tools">ツール</string>
+    <string name="vpk_tool">VPK ツール</string>
+    <string name="vpk_tool_desc">VPK1 と VPK2 アーカイブの作成、表示、展開。</string>
+    <string name="vpk_actions">アーカイブ操作</string>
+    <string name="vpk_actions_desc">作成時は埋め込み型の単一 VPK を出力します。分割アーカイブを開く場合は、_dir.vpk と番号付き VPK をすべて選択してください。</string>
+    <string name="vpk_create">VPK を作成</string>
+    <string name="vpk_open">VPK を開いて表示</string>
+    <string name="vpk_extract">すべて展開</string>
+    <string name="vpk_create_version">出力形式</string>
+    <string name="vpk_version_1">VPK1</string>
+    <string name="vpk_version_2">VPK2</string>
+    <string name="vpk_ready">操作を選択してください。</string>
+    <string name="vpk_reading">VPK を読み込み中…</string>
+    <string name="vpk_creating">VPK を作成中…</string>
+    <string name="vpk_extracting">VPK を展開中…</string>
+    <string name="vpk_opened">VPK%1$d · %2$d ファイル</string>
+    <string name="vpk_entry_line">%1$s  ·  %2$s</string>
+    <string name="vpk_progress">%1$d/%2$d · %3$s</string>
+    <string name="vpk_create_done_short">VPK を作成しました。</string>
+    <string name="vpk_extract_done">すべてのファイルを展開して検証しました。</string>
+    <string name="vpk_no_archive">先に VPK を開いてください。</string>
+    <string name="vpk_failed">操作に失敗しました：%1$s</string>
+    <string name="vpk_picker_title">ファイルとフォルダーを選択</string>
+    <string name="vpk_picker_folder">フォルダー · 行をタップして開く</string>
+    <string name="vpk_picker_selected">選択済み：%1$d</string>
+    <string name="vpk_picker_done">選択項目を使用</string>
+    <string name="vpk_picker_empty">ファイルまたはフォルダーを1つ以上選択してください。</string>
+    <string name="vpk_picker_unreadable">このフォルダーは読み取れません。</string>
+    <string name="vpk_output_name">出力 VPK 名</string>
+    <string name="vpk_output_name_invalid">有効なファイル名を入力してください。</string>
+    <string name="vpk_create_done_path">VPK バージョン %1$d を %2$s に作成しました</string>
+    <string name="vpk_file_manager">VPK ファイルマネージャー</string><string name="vpk_manager_folder">フォルダー · タップして開く</string><string name="vpk_manager_archive">VPK アーカイブ · %1$s</string><string name="vpk_folder_empty">このフォルダーは空です。</string>
+    <string name="vpk_copy">コピー</string><string name="vpk_move">移動</string><string name="vpk_pack">パック</string><string name="vpk_delete">削除</string><string name="vpk_paste_here">ここに貼り付け</string>
+    <string name="vpk_copy_destination">%1$d 件をコピー：移動先フォルダーを選択してください。</string><string name="vpk_move_destination">%1$d 件を移動：移動先フォルダーを選択してください。</string>
+    <string name="vpk_copying">ファイルをコピー中…</string><string name="vpk_moving">ファイルを移動中…</string><string name="vpk_deleting">ファイルを削除中…</string><string name="vpk_copy_done">ファイルをコピーしました。</string><string name="vpk_move_done">ファイルを移動しました。</string><string name="vpk_delete_done">ファイルを削除しました。</string>
+    <string name="vpk_delete_confirm_title">選択項目を削除しますか？</string><string name="vpk_delete_confirm">選択した %1$d 件を完全に削除します。この操作は元に戻せません。</string><string name="vpk_output_exists">同名のファイルが既に存在します。</string><string name="vpk_extract_here">ここに展開</string>
 </resources>

@@ -121,4 +121,40 @@
     <string name="md3_res_custom_label">Resolución personalizada</string>
     <string name="md3_res_width">Ancho (px)</string>
     <string name="md3_res_height">Alto (px)</string>
+    <string name="md3_section_tools">Herramientas</string>
+    <string name="vpk_tool">Herramienta VPK</string>
+    <string name="vpk_tool_desc">Crear, consultar y extraer archivos VPK1 y VPK2.</string>
+    <string name="vpk_actions">Acciones del archivo</string>
+    <string name="vpk_actions_desc">La creación genera un VPK integrado independiente. Para un archivo dividido, selecciona _dir.vpk y todas las partes VPK numeradas.</string>
+    <string name="vpk_create">Crear VPK</string>
+    <string name="vpk_open">Abrir y consultar VPK</string>
+    <string name="vpk_extract">Extraer todos los archivos</string>
+    <string name="vpk_create_version">Formato de salida</string>
+    <string name="vpk_version_1">VPK versión 1</string>
+    <string name="vpk_version_2">VPK versión 2</string>
+    <string name="vpk_ready">Elige una acción.</string>
+    <string name="vpk_reading">Leyendo VPK…</string>
+    <string name="vpk_creating">Creando VPK…</string>
+    <string name="vpk_extracting">Extrayendo VPK…</string>
+    <string name="vpk_opened">VPK%1$d · %2$d archivos</string>
+    <string name="vpk_entry_line">%1$s  ·  %2$s</string>
+    <string name="vpk_progress">%1$d/%2$d · %3$s</string>
+    <string name="vpk_create_done_short">VPK creado correctamente.</string>
+    <string name="vpk_extract_done">Todos los archivos se extrajeron y verificaron.</string>
+    <string name="vpk_no_archive">Abre primero un VPK.</string>
+    <string name="vpk_failed">Error en la operación: %1$s</string>
+    <string name="vpk_picker_title">Seleccionar archivos y carpetas</string>
+    <string name="vpk_picker_folder">Carpeta · Toca la fila para abrirla</string>
+    <string name="vpk_picker_selected">Seleccionados: %1$d</string>
+    <string name="vpk_picker_done">Usar selección</string>
+    <string name="vpk_picker_empty">Selecciona al menos un archivo o carpeta.</string>
+    <string name="vpk_picker_unreadable">No se puede leer esta carpeta.</string>
+    <string name="vpk_output_name">Nombre del VPK de salida</string>
+    <string name="vpk_output_name_invalid">Introduce un nombre de archivo válido.</string>
+    <string name="vpk_create_done_path">VPK versión %1$d creado en %2$s</string>
+    <string name="vpk_file_manager">Gestor de archivos VPK</string><string name="vpk_manager_folder">Carpeta · Toca para abrir</string><string name="vpk_manager_archive">Archivo VPK · %1$s</string><string name="vpk_folder_empty">Esta carpeta está vacía.</string>
+    <string name="vpk_copy">Copiar</string><string name="vpk_move">Mover</string><string name="vpk_pack">Empaquetar</string><string name="vpk_delete">Eliminar</string><string name="vpk_paste_here">Pegar aquí</string>
+    <string name="vpk_copy_destination">Copiando %1$d elemento(s): elige la carpeta de destino.</string><string name="vpk_move_destination">Moviendo %1$d elemento(s): elige la carpeta de destino.</string>
+    <string name="vpk_copying">Copiando archivos…</string><string name="vpk_moving">Moviendo archivos…</string><string name="vpk_deleting">Eliminando archivos…</string><string name="vpk_copy_done">Archivos copiados.</string><string name="vpk_move_done">Archivos movidos.</string><string name="vpk_delete_done">Archivos eliminados.</string>
+    <string name="vpk_delete_confirm_title">¿Eliminar la selección?</string><string name="vpk_delete_confirm">¿Eliminar permanentemente %1$d elemento(s)? Esta acción no se puede deshacer.</string><string name="vpk_output_exists">Ya existe un archivo con este nombre.</string><string name="vpk_extract_here">Extraer aquí</string>
 </resources>

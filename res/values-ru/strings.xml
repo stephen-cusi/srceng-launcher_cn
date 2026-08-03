@@ -121,4 +121,40 @@
     <string name="md3_res_custom_label">Произвольное разрешение</string>
     <string name="md3_res_width">Ширина (px)</string>
     <string name="md3_res_height">Высота (px)</string>
+    <string name="md3_section_tools">Инструменты</string>
+    <string name="vpk_tool">Инструмент VPK</string>
+    <string name="vpk_tool_desc">Создание, просмотр и распаковка архивов VPK1 и VPK2.</string>
+    <string name="vpk_actions">Действия с архивом</string>
+    <string name="vpk_actions_desc">Создание формирует одиночный встроенный VPK. Для разделённого архива выберите _dir.vpk и все нумерованные части VPK.</string>
+    <string name="vpk_create">Создать VPK</string>
+    <string name="vpk_open">Открыть и просмотреть VPK</string>
+    <string name="vpk_extract">Извлечь все файлы</string>
+    <string name="vpk_create_version">Формат вывода</string>
+    <string name="vpk_version_1">VPK1</string>
+    <string name="vpk_version_2">VPK2</string>
+    <string name="vpk_ready">Выберите действие.</string>
+    <string name="vpk_reading">Чтение VPK…</string>
+    <string name="vpk_creating">Создание VPK…</string>
+    <string name="vpk_extracting">Распаковка VPK…</string>
+    <string name="vpk_opened">VPK%1$d · файлов: %2$d</string>
+    <string name="vpk_entry_line">%1$s  ·  %2$s</string>
+    <string name="vpk_progress">%1$d/%2$d · %3$s</string>
+    <string name="vpk_create_done_short">VPK успешно создан.</string>
+    <string name="vpk_extract_done">Все файлы извлечены и проверены.</string>
+    <string name="vpk_no_archive">Сначала откройте VPK.</string>
+    <string name="vpk_failed">Ошибка операции: %1$s</string>
+    <string name="vpk_picker_title">Выбор файлов и папок</string>
+    <string name="vpk_picker_folder">Папка · Нажмите строку, чтобы открыть</string>
+    <string name="vpk_picker_selected">Выбрано: %1$d</string>
+    <string name="vpk_picker_done">Использовать выбранное</string>
+    <string name="vpk_picker_empty">Выберите хотя бы один файл или папку.</string>
+    <string name="vpk_picker_unreadable">Эту папку невозможно прочитать.</string>
+    <string name="vpk_output_name">Имя выходного VPK</string>
+    <string name="vpk_output_name_invalid">Введите допустимое имя файла.</string>
+    <string name="vpk_create_done_path">VPK версии %1$d создан: %2$s</string>
+    <string name="vpk_file_manager">Файловый менеджер VPK</string><string name="vpk_manager_folder">Папка · Нажмите, чтобы открыть</string><string name="vpk_manager_archive">Архив VPK · %1$s</string><string name="vpk_folder_empty">Эта папка пуста.</string>
+    <string name="vpk_copy">Копировать</string><string name="vpk_move">Переместить</string><string name="vpk_pack">Упаковать</string><string name="vpk_delete">Удалить</string><string name="vpk_paste_here">Вставить сюда</string>
+    <string name="vpk_copy_destination">Копирование элементов (%1$d): выберите папку назначения.</string><string name="vpk_move_destination">Перемещение элементов (%1$d): выберите папку назначения.</string>
+    <string name="vpk_copying">Копирование файлов…</string><string name="vpk_moving">Перемещение файлов…</string><string name="vpk_deleting">Удаление файлов…</string><string name="vpk_copy_done">Файлы скопированы.</string><string name="vpk_move_done">Файлы перемещены.</string><string name="vpk_delete_done">Файлы удалены.</string>
+    <string name="vpk_delete_confirm_title">Удалить выбранное?</string><string name="vpk_delete_confirm">Удалить выбранные элементы (%1$d) без возможности восстановления?</string><string name="vpk_output_exists">Файл с таким именем уже существует.</string><string name="vpk_extract_here">Распаковать сюда</string>
 </resources>

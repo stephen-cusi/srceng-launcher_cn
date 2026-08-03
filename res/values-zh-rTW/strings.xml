@@ -116,4 +116,45 @@
     <string name="md3_res_custom_label">自訂解析度</string>
     <string name="md3_res_width">寬度（像素）</string>
     <string name="md3_res_height">高度（像素）</string>
+    <string name="md3_section_tools">工具</string>
+    <string name="vpk_tool">VPK 工具</string>
+    <string name="vpk_tool_desc">建立、檢視和解壓縮 VPK1 與 VPK2 檔案。</string>
+    <string name="vpk_actions">檔案操作</string>
+    <string name="vpk_actions_desc">建立功能會產生單檔內嵌 VPK。開啟分卷檔案時，請同時選取 _dir.vpk 和所有編號 VPK 分卷。</string>
+    <string name="vpk_create">建立 VPK</string>
+    <string name="vpk_open">開啟並檢視 VPK</string>
+    <string name="vpk_extract">解壓縮全部檔案</string>
+    <string name="vpk_create_version">輸出格式</string>
+    <string name="vpk_version_1">VPK1</string>
+    <string name="vpk_version_2">VPK2</string>
+    <string name="vpk_ready">請選擇要執行的操作。</string>
+    <string name="vpk_reading">正在讀取 VPK…</string>
+    <string name="vpk_creating">正在建立 VPK…</string>
+    <string name="vpk_extracting">正在解壓縮 VPK…</string>
+    <string name="vpk_opened">VPK%1$d · %2$d 個檔案</string>
+    <string name="vpk_entry_line">%1$s  ·  %2$s</string>
+    <string name="vpk_progress">%1$d/%2$d · %3$s</string>
+    <string name="vpk_create_done_short">VPK 建立成功。</string>
+    <string name="vpk_extract_done">全部檔案已解壓縮並通過驗證。</string>
+    <string name="vpk_no_archive">請先開啟一個 VPK。</string>
+    <string name="vpk_failed">操作失敗：%1$s</string>
+    <string name="vpk_picker_title">選擇檔案和資料夾</string>
+    <string name="vpk_picker_folder">資料夾 · 點擊項目進入</string>
+    <string name="vpk_picker_selected">已選擇：%1$d</string>
+    <string name="vpk_picker_done">使用所選內容</string>
+    <string name="vpk_picker_empty">請至少選擇一個檔案或資料夾。</string>
+    <string name="vpk_picker_unreadable">無法讀取此目錄。</string>
+    <string name="vpk_output_name">輸出 VPK 檔名</string>
+    <string name="vpk_output_name_invalid">請輸入有效的檔名。</string>
+    <string name="vpk_create_done_path">VPK%1$d 已建立於 %2$s</string>
+    <string name="vpk_file_manager">VPK 檔案管理器</string>
+    <string name="vpk_manager_folder">資料夾 · 點擊進入</string>
+    <string name="vpk_manager_archive">VPK 檔案 · %1$s</string>
+    <string name="vpk_folder_empty">此資料夾是空的。</string>
+    <string name="vpk_copy">複製</string><string name="vpk_move">移動</string><string name="vpk_pack">打包</string><string name="vpk_delete">刪除</string><string name="vpk_paste_here">貼到此處</string>
+    <string name="vpk_copy_destination">正在複製 %1$d 個項目：請選擇目標資料夾。</string><string name="vpk_move_destination">正在移動 %1$d 個項目：請選擇目標資料夾。</string>
+    <string name="vpk_copying">正在複製檔案…</string><string name="vpk_moving">正在移動檔案…</string><string name="vpk_deleting">正在刪除檔案…</string>
+    <string name="vpk_copy_done">檔案複製成功。</string><string name="vpk_move_done">檔案移動成功。</string><string name="vpk_delete_done">檔案已刪除。</string>
+    <string name="vpk_delete_confirm_title">刪除所選項目？</string><string name="vpk_delete_confirm">永久刪除所選的 %1$d 個項目？此操作無法復原。</string>
+    <string name="vpk_output_exists">已存在同名檔案。</string><string name="vpk_extract_here">解壓縮到目前目錄</string>
 </resources>
