@@ -1,0 +1,2698 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.13.2" type="baseline" client="gradle" dependencies="false" name="AGP (8.13.2)" variant="all" version="8.13.2">
+
+    <issue
+        id="MissingPermission"
+        message="Missing permissions required by Vibrator.vibrate: android.permission.VIBRATE"
+        errorLine1="                haptic.vib.vibrate(VibrationEffect.createOneShot(length, vibeValue));"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLControllerManager.java"
+            line="428"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="MissingPermission"
+        message="Missing permissions required by Vibrator.vibrate: android.permission.VIBRATE"
+        errorLine1="                haptic.vib.vibrate(length);"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLControllerManager.java"
+            line="433"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="MissingPermission"
+        message="Missing permissions required by Vibrator.vibrate: android.permission.VIBRATE"
+        errorLine1="            haptic.vib.vibrate(length);"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLControllerManager.java"
+            line="456"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingPermission"
+        message="Missing permissions required by Vibrator.cancel: android.permission.VIBRATE"
+        errorLine1="            haptic.vib.cancel();"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLControllerManager.java"
+            line="463"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingLeanbackLauncher"
+        message="Expecting an activity to have `android.intent.category.LEANBACK_LAUNCHER` intent filter"
+        errorLine1="&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; android:installLocation=&quot;auto&quot;>"
+        errorLine2=" ~~~~~~~~">
+        <location
+            file="AndroidManifest.xml"
+            line="2"
+            column="2"/>
+    </issue>
+
+    <issue
+        id="ApplySharedPref"
+        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
+        errorLine1="                editor.commit()"
+        errorLine2="                       ~~~~~~~~">
+        <location
+            file="src/me/nillerusr/DirchActivity.kt"
+            line="127"
+            column="24"/>
+    </issue>
+
+    <issue
+        id="ApplySharedPref"
+        message="Consider using `apply()` instead; `commit` writes its data to persistent storage immediately, whereas `apply` will handle it in the background"
+        errorLine1="        editor.commit()"
+        errorLine2="               ~~~~~~~~">
+        <location
+            file="src/me/nillerusr/LauncherActivity.kt"
+            line="242"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `toLowerCase(Locale)` instead. For strings meant to be internal use `Locale.ROOT`, otherwise `Locale.getDefault()`."
+        errorLine1="     if( f.getName().toLowerCase().equals(&quot;gameinfo.txt&quot;) )"
+        errorLine2="                     ~~~~~~~~~~~">
+        <location
+            file="src/com/valvesoftware/ValveActivity2.java"
+            line="45"
+            column="22"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `toLowerCase(Locale)` instead. For strings meant to be internal use `Locale.ROOT`, otherwise `Locale.getDefault()`."
+        errorLine1="   if( file.getName().toLowerCase().equals(&quot;platform&quot;) )"
+        errorLine2="                      ~~~~~~~~~~~">
+        <location
+            file="src/com/valvesoftware/ValveActivity2.java"
+            line="50"
+            column="23"/>
+    </issue>
+
+    <issue
+        id="DefaultLocale"
+        message="Implicitly using the default locale is a common source of bugs: Use `toLowerCase(Locale)` instead. For strings meant to be internal use `Locale.ROOT`, otherwise `Locale.getDefault()`."
+        errorLine1="   if( file.isFile() &amp;&amp; file.getName().toLowerCase().equals(&quot;gameinfo.txt&quot;) )"
+        errorLine2="                                       ~~~~~~~~~~~">
+        <location
+            file="src/com/valvesoftware/ValveActivity2.java"
+            line="71"
+            column="40"/>
+    </issue>
+
+    <issue
+        id="InlinedApi"
+        message="Field requires API level 21 (current min is 17): `android.media.AudioTrack#WRITE_BLOCKING`"
+        errorLine1="            int result = mAudioTrack.write(buffer, i, buffer.length - i, AudioTrack.WRITE_BLOCKING);"
+        errorLine2="                                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLAudioManager.java"
+            line="253"
+            column="74"/>
+    </issue>
+
+    <issue
+        id="InlinedApi"
+        message="Field requires API level 23 (current min is 17): `android.media.AudioRecord#READ_BLOCKING`"
+        errorLine1="        return mAudioRecord.read(buffer, 0, buffer.length, blocking ? AudioRecord.READ_BLOCKING : AudioRecord.READ_NON_BLOCKING);"
+        errorLine2="                                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLAudioManager.java"
+            line="330"
+            column="71"/>
+    </issue>
+
+    <issue
+        id="InlinedApi"
+        message="Field requires API level 23 (current min is 17): `android.media.AudioRecord#READ_NON_BLOCKING`"
+        errorLine1="        return mAudioRecord.read(buffer, 0, buffer.length, blocking ? AudioRecord.READ_BLOCKING : AudioRecord.READ_NON_BLOCKING);"
+        errorLine2="                                                                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLAudioManager.java"
+            line="330"
+            column="99"/>
+    </issue>
+
+    <issue
+        id="InlinedApi"
+        message="Field requires API level 24 (current min is 17): `android.view.MotionEvent#AXIS_RELATIVE_X`"
+        errorLine1="                    float x = event.getAxisValue(MotionEvent.AXIS_RELATIVE_X);"
+        errorLine2="                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLControllerManager.java"
+            line="636"
+            column="50"/>
+    </issue>
+
+    <issue
+        id="InlinedApi"
+        message="Field requires API level 24 (current min is 17): `android.view.MotionEvent#AXIS_RELATIVE_Y`"
+        errorLine1="                    float y = event.getAxisValue(MotionEvent.AXIS_RELATIVE_Y);"
+        errorLine2="                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLControllerManager.java"
+            line="637"
+            column="50"/>
+    </issue>
+
+    <issue
+        id="InlinedApi"
+        message="Field requires API level 24 (current min is 17): `android.view.MotionEvent#AXIS_RELATIVE_X`"
+        errorLine1="            return event.getAxisValue(MotionEvent.AXIS_RELATIVE_X);"
+        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLControllerManager.java"
+            line="667"
+            column="39"/>
+    </issue>
+
+    <issue
+        id="InlinedApi"
+        message="Field requires API level 24 (current min is 17): `android.view.MotionEvent#AXIS_RELATIVE_Y`"
+        errorLine1="            return event.getAxisValue(MotionEvent.AXIS_RELATIVE_Y);"
+        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLControllerManager.java"
+            line="676"
+            column="39"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 23 (current min is 17): `android.content.ContextWrapper#checkSelfPermission`"
+        errorLine1="            if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/LauncherActivity.kt"
+            line="123"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 23 (current min is 17): `android.app.Activity#requestPermissions`"
+        errorLine1="            requestPermissions(requestPermissions.toTypedArray(), code)"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/LauncherActivity.kt"
+            line="129"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 23 (current min is 21): `android.widget.Switch#setThumbTintList`"
+        errorLine1="            if(v is CompoundButton){if(v is RadioButton){if(Build.VERSION.SDK_INT>=21)try{v.buttonTintList=tintList(t.primary.color,t.outline)}catch(_:Throwable){};v.setTextColor(t.onSurface);val p=dp(v.context,4);v.setPadding(l+p,top,r+p,bottom)}else{try{if(Build.VERSION.SDK_INT>=21){v.buttonTintList=tintList(t.primary.color,t.outline);if(v is Switch){v.trackTintList=tintList(withAlpha(t.primary.color,0x66),t.outlineVariant);v.thumbTintList=tintList(t.primary.color,t.surfaceContainerHighest)}}}catch(_:Throwable){};v.setTextColor(t.onSurface)}}"
+        errorLine2="                                                                                                                                                                                                                                                                                                                                                                                                                                                ~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="322"
+            column="433"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 23 (current min is 21): `android.widget.Switch#setThumbTintList`"
+        errorLine1="            if(v is CompoundButton){if(v is RadioButton){if(Build.VERSION.SDK_INT>=21)try{v.buttonTintList=tintList(t.primary.color,t.outline)}catch(_:Throwable){};v.setTextColor(t.onSurface);val p=dp(v.context,4);v.setPadding(l+p,top,r+p,bottom)}else{try{if(Build.VERSION.SDK_INT>=21){v.buttonTintList=tintList(t.primary.color,t.outline);if(v is Switch){v.trackTintList=tintList(withAlpha(t.primary.color,0x66),t.outlineVariant);v.thumbTintList=tintList(t.primary.color,t.surfaceContainerHighest)}}}catch(_:Throwable){};v.setTextColor(t.onSurface)}}"
+        errorLine2="                                                                                                                                                                                                                                                                                                                                                                                                                                                             ~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="322"
+            column="446"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 23 (current min is 21): `android.widget.Switch#setTrackTintList`"
+        errorLine1="            if(v is CompoundButton){if(v is RadioButton){if(Build.VERSION.SDK_INT>=21)try{v.buttonTintList=tintList(t.primary.color,t.outline)}catch(_:Throwable){};v.setTextColor(t.onSurface);val p=dp(v.context,4);v.setPadding(l+p,top,r+p,bottom)}else{try{if(Build.VERSION.SDK_INT>=21){v.buttonTintList=tintList(t.primary.color,t.outline);if(v is Switch){v.trackTintList=tintList(withAlpha(t.primary.color,0x66),t.outlineVariant);v.thumbTintList=tintList(t.primary.color,t.surfaceContainerHighest)}}}catch(_:Throwable){};v.setTextColor(t.onSurface)}}"
+        errorLine2="                                                                                                                                                                                                                                                                                                                                                                     ~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="322"
+            column="358"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 23 (current min is 21): `android.widget.Switch#setTrackTintList`"
+        errorLine1="            if(v is CompoundButton){if(v is RadioButton){if(Build.VERSION.SDK_INT>=21)try{v.buttonTintList=tintList(t.primary.color,t.outline)}catch(_:Throwable){};v.setTextColor(t.onSurface);val p=dp(v.context,4);v.setPadding(l+p,top,r+p,bottom)}else{try{if(Build.VERSION.SDK_INT>=21){v.buttonTintList=tintList(t.primary.color,t.outline);if(v is Switch){v.trackTintList=tintList(withAlpha(t.primary.color,0x66),t.outlineVariant);v.thumbTintList=tintList(t.primary.color,t.surfaceContainerHighest)}}}catch(_:Throwable){};v.setTextColor(t.onSurface)}}"
+        errorLine2="                                                                                                                                                                                                                                                                                                                                                                                  ~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="322"
+            column="371"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 23 (current min is 17): `android.content.ContextWrapper#checkSelfPermission`"
+        errorLine1="   if( checkSelfPermission(permissions[i]) != PackageManager.PERMISSION_GRANTED )"
+        errorLine2="       ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="218"
+            column="8"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 23 (current min is 17): `android.app.Activity#requestPermissions`"
+        errorLine1="   requestPermissions(requestPermissionsArray, code);"
+        errorLine2="   ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="226"
+            column="4"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 23 (current min is 17): `android.content.ContextWrapper#checkSelfPermission`"
+        errorLine1="        if( checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &amp;&amp; "
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="411"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 23 (current min is 17): `android.content.ContextWrapper#checkSelfPermission`"
+        errorLine1="            checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED )"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="412"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 21 (current min is 17): `android.media.AudioTrack#write`"
+        errorLine1="            int result = mAudioTrack.write(buffer, i, buffer.length - i, AudioTrack.WRITE_BLOCKING);"
+        errorLine2="                                     ~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLAudioManager.java"
+            line="253"
+            column="38"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 23 (current min is 17): `android.media.AudioRecord#read`"
+        errorLine1="        return mAudioRecord.read(buffer, 0, buffer.length, blocking ? AudioRecord.READ_BLOCKING : AudioRecord.READ_NON_BLOCKING);"
+        errorLine2="                            ~~~~">
+        <location
+            file="src/org/libsdl/app/SDLAudioManager.java"
+            line="330"
+            column="29"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 19 (current min is 17): `android.view.InputDevice#getProductId`"
+        errorLine1="        return joystickDevice.getProductId();"
+        errorLine2="                              ~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLControllerManager.java"
+            line="305"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 19 (current min is 17): `android.view.InputDevice#getVendorId`"
+        errorLine1="        return joystickDevice.getVendorId();"
+        errorLine2="                              ~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLControllerManager.java"
+            line="310"
+            column="31"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 19 (current min is 17): `android.view.InputDevice#hasKeys`"
+        errorLine1="        boolean[] has_keys = joystickDevice.hasKeys(keys);"
+        errorLine2="                                            ~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLControllerManager.java"
+            line="397"
+            column="45"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 26 (current min is 17): `android.os.VibrationEffect#createOneShot`"
+        errorLine1="                haptic.vib.vibrate(VibrationEffect.createOneShot(length, vibeValue));"
+        errorLine2="                                                   ~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLControllerManager.java"
+            line="428"
+            column="52"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 26 (current min is 17): `android.os.Vibrator#vibrate`"
+        errorLine1="                haptic.vib.vibrate(VibrationEffect.createOneShot(length, vibeValue));"
+        errorLine2="                           ~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLControllerManager.java"
+            line="428"
+            column="28"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 26 (current min is 17): `android.view.View#requestPointerCapture`"
+        errorLine1="                SDLActivity.getContentView().requestPointerCapture();"
+        errorLine2="                                             ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLControllerManager.java"
+            line="762"
+            column="46"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 26 (current min is 17): `android.view.View#releasePointerCapture`"
+        errorLine1="                SDLActivity.getContentView().releasePointerCapture();"
+        errorLine2="                                             ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLControllerManager.java"
+            line="764"
+            column="46"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 26 (current min is 17): `android.view.View#requestPointerCapture`"
+        errorLine1="            SDLActivity.getContentView().requestPointerCapture();"
+        errorLine2="                                         ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLControllerManager.java"
+            line="777"
+            column="42"/>
+    </issue>
+
+    <issue
+        id="NewApi"
+        message="Call requires API level 23 (current min is 21): `android.view.View#setForeground`"
+        errorLine1="                    wrapper.foreground = RippleDrawable(ColorStateList(arrayOf(intArrayOf()), intArrayOf(0x22000000)), null, null)"
+        errorLine2="                                       ~">
+        <location
+            file="src/me/nillerusr/SettingsActivity.kt"
+            line="586"
+            column="40"/>
+    </issue>
+
+    <issue
+        id="SdCardPath"
+        message="Do not hardcode &quot;/sdcard/&quot;; use `Environment.getExternalStorageDirectory().getPath()` instead"
+        errorLine1="            val dir = Environment.getExternalStorageDirectory() ?: return &quot;/sdcard/&quot;"
+        errorLine2="                                                                           ~~~~~~~~">
+        <location
+            file="src/me/nillerusr/LauncherActivity.kt"
+            line="66"
+            column="76"/>
+    </issue>
+
+    <issue
+        id="SdCardPath"
+        message="Do not hardcode &quot;/sdcard/&quot;; use `Environment.getExternalStorageDirectory().getPath()` instead"
+        errorLine1="            val dir = Environment.getExternalStorageDirectory() ?: return &quot;/sdcard/&quot;"
+        errorLine2="                                                                           ~~~~~~~~">
+        <location
+            file="src/me/nillerusr/LauncherActivity.kt"
+            line="66"
+            column="76"/>
+    </issue>
+
+    <issue
+        id="SdCardPath"
+        message="Do not hardcode &quot;/sdcard/&quot;; use `Environment.getExternalStorageDirectory().getPath()` instead"
+        errorLine1="                return &quot;/sdcard/&quot;"
+        errorLine2="                        ~~~~~~~~">
+        <location
+            file="src/me/nillerusr/LauncherActivity.kt"
+            line="68"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="SdCardPath"
+        message="Do not hardcode &quot;/sdcard/&quot;; use `Environment.getExternalStorageDirectory().getPath()` instead"
+        errorLine1="                return &quot;/sdcard/&quot;"
+        errorLine2="                        ~~~~~~~~">
+        <location
+            file="src/me/nillerusr/LauncherActivity.kt"
+            line="68"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="SuspiciousIndentation"
+        message="Suspicious indentation: This is indented but is not nested under the previous expression (`if (Build.VERSION.SD`...)"
+        errorLine1="        mSurface = new SDLSurface(getApplication());"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="363"
+            column="9"/>
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="359"
+            column="5"
+            message="Previous statement here"/>
+    </issue>
+
+    <issue
+        id="SuspiciousIndentation"
+        message="Suspicious indentation: This is indented but is not nested under the previous expression (`if( keyCode == KeyEv`...)"
+        errorLine1="        if (SDLControllerManager.isDeviceSDLJoystick(deviceId)) {"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="1945"
+            column="9"/>
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="1929"
+            column="5"
+            message="Previous statement here"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `allowAudioPlaybackCapture` is only used in API level 29 and higher (current min is 17)"
+        errorLine1="    &lt;application android:icon=&quot;@drawable/ic_launcher&quot; android:debuggable=&quot;true&quot; android:label=&quot;@string/srceng_app_name&quot; android:allowAudioPlaybackCapture=&quot;true&quot; android:requestLegacyExternalStorage=&quot;true&quot;>"
+        errorLine2="                                                                                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="AndroidManifest.xml"
+            line="13"
+            column="121"/>
+    </issue>
+
+    <issue
+        id="WrongConstant"
+        message="Must be one or more of: Intent.FLAG_GRANT_READ_URI_PERMISSION, Intent.FLAG_GRANT_WRITE_URI_PERMISSION, Intent.FLAG_FROM_BACKGROUND, Intent.FLAG_DEBUG_LOG_RESOLUTION, Intent.FLAG_EXCLUDE_STOPPED_PACKAGES, Intent.FLAG_INCLUDE_STOPPED_PACKAGES, Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION, Intent.FLAG_GRANT_PREFIX_URI_PERMISSION, Intent.FLAG_ACTIVITY_MATCH_EXTERNAL, Intent.FLAG_ACTIVITY_NO_HISTORY, Intent.FLAG_ACTIVITY_SINGLE_TOP, Intent.FLAG_ACTIVITY_NEW_TASK, Intent.FLAG_ACTIVITY_MULTIPLE_TASK, Intent.FLAG_ACTIVITY_CLEAR_TOP, Intent.FLAG_ACTIVITY_FORWARD_RESULT, Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP, Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS, Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT, Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED, Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY, Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET, Intent.FLAG_ACTIVITY_NEW_DOCUMENT, Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET, Intent.FLAG_ACTIVITY_NO_USER_ACTION, Intent.FLAG_ACTIVITY_REORDER_TO_FRONT, Intent.FLAG_ACTIVITY_NO_ANIMATION, Intent.FLAG_ACTIVITY_CLEAR_TASK, Intent.FLAG_ACTIVITY_TASK_ON_HOME, Intent.FLAG_ACTIVITY_RETAIN_IN_RECENTS, Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT, Intent.FLAG_RECEIVER_REGISTERED_ONLY, Intent.FLAG_RECEIVER_REPLACE_PENDING, Intent.FLAG_RECEIVER_FOREGROUND, Intent.FLAG_RECEIVER_NO_ABORT, Intent.FLAG_RECEIVER_VISIBLE_TO_INSTANT_APPS"
+        errorLine1="     intent.addFlags(268435456);"
+        errorLine2="                     ~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="315"
+            column="22"/>
+    </issue>
+
+    <issue
+        id="WrongConstant"
+        message="Must be one or more of: LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT, LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES, LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER"
+        errorLine1="        getWindow().getAttributes().layoutInDisplayCutoutMode = 1;"
+        errorLine2="                                                                ~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="360"
+            column="65"/>
+    </issue>
+
+    <issue
+        id="WrongConstant"
+        message="Flag not allowed here"
+        errorLine1="        notification.priority = notification.priority or Notification.PRIORITY_HIGH"
+        errorLine2="                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/UpdateService.kt"
+            line="45"
+            column="33"/>
+    </issue>
+
+    <issue
+        id="AppBundleLocaleChanges"
+        message="Found dynamic locale changes, but did not find corresponding Play Core library calls for downloading languages and splitting by language is not disabled in the `bundle` configuration"
+        errorLine1="                if (Build.VERSION.SDK_INT >= 17) cfg.setLocale(desired) else cfg.locale = desired"
+        errorLine2="                                                 ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="157"
+            column="50"/>
+    </issue>
+
+    <issue
+        id="LeanbackUsesWifi"
+        message="Requiring Wifi permissions limits app availability on TVs that support only Ethernet"
+        errorLine1="    &lt;uses-permission android:name=&quot;android.permission.ACCESS_WIFI_STATE&quot;/>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="AndroidManifest.xml"
+            line="6"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="RedundantLabel"
+        message="Redundant label can be removed"
+        errorLine1="        &lt;activity android:label=&quot;@string/srceng_app_name&quot; android:name=&quot;me.nillerusr.LauncherActivity&quot; android:configChanges=&quot;keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize&quot; android:windowSoftInputMode=&quot;adjustResize|stateHidden&quot; android:theme=&quot;@style/SrcEng.MD3&quot;>"
+        errorLine2="                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="AndroidManifest.xml"
+            line="14"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="RedundantLabel"
+        message="Redundant label can be removed"
+        errorLine1="          &lt;activity android:configChanges=&quot;keyboard|keyboardHidden|layoutDirection|locale|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode&quot; android:label=&quot;@string/srceng_app_name&quot; android:name=&quot;org.libsdl.app.SDLActivity&quot; android:screenOrientation=&quot;sensorLandscape&quot; android:launchMode=&quot;singleTask&quot; android:theme=&quot;@android:style/Theme.NoTitleBar.Fullscreen&quot;>"
+        errorLine2="                                                                                                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="AndroidManifest.xml"
+            line="27"
+            column="165"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of com.android.application than 8.13.2 is available: 9.3.1"
+        errorLine1="    id(&quot;com.android.application&quot;) version &quot;8.13.2&quot;"
+        errorLine2="                                          ~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="4"
+            column="43"/>
+    </issue>
+
+    <issue
+        id="AndroidGradlePluginVersion"
+        message="A newer version of Gradle than 8.13 is available: 8.14.5"
+        errorLine1="distributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="gradle/wrapper/gradle-wrapper.properties"
+            line="3"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        message="A newer version of `compileSdkVersion` than 29 is available: 36"
+        errorLine1="    compileSdk = 29"
+        errorLine2="    ~~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="10"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of org.jetbrains.kotlin.android than 2.3.10 is available: 2.4.10"
+        errorLine1="    id(&quot;org.jetbrains.kotlin.android&quot;) version &quot;2.3.10&quot;"
+        errorLine2="                                               ~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="5"
+            column="48"/>
+    </issue>
+
+    <issue
+        id="PermissionImpliesUnsupportedHardware"
+        message="Permission exists without corresponding hardware `&lt;uses-feature android:name=&quot;android.hardware.microphone&quot; required=&quot;false&quot;>` tag"
+        errorLine1="    &lt;uses-permission android:name=&quot;android.permission.RECORD_AUDIO&quot;/>"
+        errorLine2="     ~~~~~~~~~~~~~~~">
+        <location
+            file="AndroidManifest.xml"
+            line="8"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="DiscouragedApi"
+        message="Fixed screen orientations will be ignored in most cases, starting from Android 16. Android is moving toward a model where apps are expected to adapt to various orientations, display sizes, and aspect ratios."
+        errorLine1="          &lt;activity android:configChanges=&quot;keyboard|keyboardHidden|layoutDirection|locale|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode&quot; android:label=&quot;@string/srceng_app_name&quot; android:name=&quot;org.libsdl.app.SDLActivity&quot; android:screenOrientation=&quot;sensorLandscape&quot; android:launchMode=&quot;singleTask&quot; android:theme=&quot;@android:style/Theme.NoTitleBar.Fullscreen&quot;>"
+        errorLine2="                                                                                                                                                                                                                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="AndroidManifest.xml"
+            line="27"
+            column="247"/>
+    </issue>
+
+    <issue
+        id="UseRequiresApi"
+        message="Use `@RequiresApi(27) instead of `@TargetApi` to propagate the requirement to callers of `tryGetWallpaperSeed`"
+        errorLine1="        @TargetApi(27)"
+        errorLine2="        ~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="197"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UseRequiresApi"
+        message="Use `@RequiresApi(21) instead of `@TargetApi` to propagate the requirement to callers of `applyWindow`"
+        errorLine1="        @TargetApi(21) private fun applyWindow(a:Activity,t:Md3Tokens) {"
+        errorLine2="        ~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="303"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;last_commit&quot; is not translated in &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;ko&quot; (Korean), &quot;ja&quot; (Japanese), &quot;fr&quot; (French), &quot;es&quot; (Spanish), &quot;zh&quot; (Chinese)"
+        errorLine1="&lt;string name=&quot;last_commit&quot;>&lt;/string>"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/build_info.xml"
+            line="3"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;deploy_branch&quot; is not translated in &quot;de&quot; (German), &quot;ru&quot; (Russian), &quot;ko&quot; (Korean), &quot;ja&quot; (Japanese), &quot;fr&quot; (French), &quot;es&quot; (Spanish), &quot;zh&quot; (Chinese)"
+        errorLine1="&lt;string name=&quot;deploy_branch&quot;>&lt;/string>"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/build_info.xml"
+            line="4"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;srceng_launcher_set&quot; is not translated in &quot;zh&quot; (Chinese)"
+        errorLine1="    &lt;string name=&quot;srceng_launcher_set&quot;>Set&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="8"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="MissingTranslation"
+        message="&quot;srceng_launcher_error_find_gameinfo&quot; is not translated in &quot;zh&quot; (Chinese)"
+        errorLine1="    &lt;string name=&quot;srceng_launcher_error_find_gameinfo&quot;>Couldn\&apos;t find game resources. Did you set the path correctly?&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="15"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="Did you mean &quot;unknownandlost!!&quot; instead of &quot;unknownandlost11&quot;?"
+        errorLine1="    &lt;string name=&quot;srceng_launcher_about_text&quot;>\nGracias a nillerusr y Jusic por el porteo\nValve por el motor Source\n\n¡No para uso comercial!\nContacto: unknownandlost11@gmail.com\n\nDonar: https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg&lt;/string>"
+        errorLine2="                                                                                                                                                           ~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values-es/strings.xml"
+            line="6"
+            column="156"/>
+    </issue>
+
+    <issue
+        id="Typos"
+        message="Did you mean &quot;unknownandlost!!&quot; instead of &quot;unknownandlost11&quot;?"
+        errorLine1="    &lt;string name=&quot;srceng_launcher_about_text&quot;>\nThanks to nillerusr and jusic for port\nvalve for source engine\n\nNot for commercial use!\nContact Us: unknownandlost11@gmail.com\n\nDonate: https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg&lt;/string> &lt;!--- Not available -->"
+        errorLine2="                                                                                                                                                        ~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="6"
+            column="153"/>
+    </issue>
+
+    <issue
+        id="UnsafeImplicitIntentLaunch"
+        message="The intent action `android.intent.action.MAIN (used to start an activity)` matches the intent filter of a non-exported component `me.nillerusr.LauncherActivity` from a manifest. If you are trying to invoke this specific component via the action then you should make the intent explicit by calling `Intent.set{Component,Class,ClassName}`."
+        errorLine1="        Intent startMain = new Intent(Intent.ACTION_MAIN);"
+        errorLine2="                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="993"
+            column="28"/>
+    </issue>
+
+    <issue
+        id="HardcodedDebugMode"
+        message="Avoid hardcoding the debug mode; leaving it out allows debug and release builds to automatically assign one"
+        errorLine1="    &lt;application android:icon=&quot;@drawable/ic_launcher&quot; android:debuggable=&quot;true&quot; android:label=&quot;@string/srceng_app_name&quot; android:allowAudioPlaybackCapture=&quot;true&quot; android:requestLegacyExternalStorage=&quot;true&quot;>"
+        errorLine2="                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="AndroidManifest.xml"
+            line="13"
+            column="55"/>
+    </issue>
+
+    <issue
+        id="IntentFilterExportedReceiver"
+        message="As of Android 12, `android:exported` must be set; use `true` to make the activity available to other apps, and `false` otherwise. For launcher activities, this should be set to `true`."
+        errorLine1="        &lt;activity android:label=&quot;@string/srceng_app_name&quot; android:name=&quot;me.nillerusr.LauncherActivity&quot; android:configChanges=&quot;keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize&quot; android:windowSoftInputMode=&quot;adjustResize|stateHidden&quot; android:theme=&quot;@style/SrcEng.MD3&quot;>"
+        errorLine2="         ~~~~~~~~">
+        <location
+            file="AndroidManifest.xml"
+            line="14"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="IntentFilterExportedReceiver"
+        message="As of Android 12, `android:exported` must be set; use `true` to make the activity available to other apps, and `false` otherwise."
+        errorLine1="        &lt;activity android:label=&quot;Directory&quot; android:name=&quot;me.nillerusr.DirchActivity&quot; android:windowSoftInputMode=&quot;adjustResize|stateHidden&quot; android:theme=&quot;@style/SrcEng.MD3&quot;>"
+        errorLine2="         ~~~~~~~~">
+        <location
+            file="AndroidManifest.xml"
+            line="21"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="IntentFilterExportedReceiver"
+        message="As of Android 12, `android:exported` must be set; use `true` to make the activity available to other apps, and `false` otherwise."
+        errorLine1="          &lt;activity android:configChanges=&quot;keyboard|keyboardHidden|layoutDirection|locale|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode&quot; android:label=&quot;@string/srceng_app_name&quot; android:name=&quot;org.libsdl.app.SDLActivity&quot; android:screenOrientation=&quot;sensorLandscape&quot; android:launchMode=&quot;singleTask&quot; android:theme=&quot;@android:style/Theme.NoTitleBar.Fullscreen&quot;>"
+        errorLine2="           ~~~~~~~~">
+        <location
+            file="AndroidManifest.xml"
+            line="27"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnspecifiedImmutableFlag"
+        message="Missing `PendingIntent` mutability flag"
+        errorLine1="        notification.contentIntent = PendingIntent.getActivity(this, 0, browserIntent, 0)"
+        errorLine2="                                                                                       ~">
+        <location
+            file="src/me/nillerusr/UpdateService.kt"
+            line="40"
+            column="88"/>
+    </issue>
+
+    <issue
+        id="ExpiredTargetSdkVersion"
+        message="Google Play requires that apps target API level 33 or higher."
+        errorLine1="        targetSdk = 29"
+        errorLine2="        ~~~~~~~~~~~~~~">
+        <location
+            file="build.gradle.kts"
+            line="15"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 17"
+        errorLine1="                    if (Build.VERSION.SDK_INT >= 17) {"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="114"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 17"
+        errorLine1="                    if (Build.VERSION.SDK_INT >= 17) {"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="114"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 17"
+        errorLine1="                if (Build.VERSION.SDK_INT >= 17) cfg.setLocale(desired) else cfg.locale = desired"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="157"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 17"
+        errorLine1="                if (Build.VERSION.SDK_INT >= 17) cfg.setLocale(desired) else cfg.locale = desired"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="157"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 17"
+        errorLine1="            if (Build.VERSION.SDK_INT >= 17) cfg.setLocale(desired) else cfg.locale = desired"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="172"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 17"
+        errorLine1="            if (Build.VERSION.SDK_INT >= 17) cfg.setLocale(desired) else cfg.locale = desired"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="172"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 21"
+        errorLine1="            if(Build.VERSION.SDK_INT>=21)try{w.statusBarColor=t.statusBar;w.navigationBarColor=t.navBar;w.decorView?.let{it.systemUiVisibility=it.systemUiVisibility and 0x400.inv() and 0x100.inv()}}catch(_:Throwable){}"
+        errorLine2="               ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/md3/Md3Theme.kt"
+            line="305"
+            column="16"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 17"
+        errorLine1="            if (Build.VERSION.SDK_INT >= 17) {"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="1844"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="Unnecessary; `SDK_INT` is always >= 17"
+        errorLine1="                try { if (Build.VERSION.SDK_INT >= 16) finishAffinity() else finish() } catch (_: Throwable) {}"
+        errorLine2="                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/SettingsActivity.kt"
+            line="635"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="StaticFieldLeak"
+        message="Do not place Android context classes in static fields; this is a memory leak"
+        errorLine1="        @JvmField"
+        errorLine2="        ^">
+        <location
+            file="src/me/nillerusr/DirchActivity.kt"
+            line="32"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="StaticFieldLeak"
+        message="Do not place Android context classes in static fields; this is a memory leak"
+        errorLine1="        @JvmField"
+        errorLine2="        ^">
+        <location
+            file="src/me/nillerusr/LauncherActivity.kt"
+            line="38"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="StaticFieldLeak"
+        message="Do not place Android context classes in static fields; this is a memory leak"
+        errorLine1="        @JvmField"
+        errorLine2="        ^">
+        <location
+            file="src/me/nillerusr/LauncherActivity.kt"
+            line="41"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="StaticFieldLeak"
+        message="Do not place Android context classes in static fields; this is a memory leak"
+        errorLine1="        @JvmField"
+        errorLine2="        ^">
+        <location
+            file="src/me/nillerusr/LauncherActivity.kt"
+            line="44"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="StaticFieldLeak"
+        message="Do not place Android context classes in static fields; this is a memory leak"
+        errorLine1="        @JvmField"
+        errorLine2="        ^">
+        <location
+            file="src/me/nillerusr/LauncherActivity.kt"
+            line="47"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="StaticFieldLeak"
+        message="Do not place Android context classes in static fields; this is a memory leak"
+        errorLine1="        @JvmField"
+        errorLine2="        ^">
+        <location
+            file="src/me/nillerusr/LauncherActivity.kt"
+            line="50"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="StaticFieldLeak"
+        message="Do not place Android context classes in static fields; this is a memory leak"
+        errorLine1="        @JvmField"
+        errorLine2="        ^">
+        <location
+            file="src/me/nillerusr/LauncherActivity.kt"
+            line="56"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="StaticFieldLeak"
+        message="Do not place Android context classes in static fields; this is a memory leak"
+        errorLine1="        @JvmField"
+        errorLine2="        ^">
+        <location
+            file="src/me/nillerusr/LauncherActivity.kt"
+            line="59"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="StaticFieldLeak"
+        message="Do not place Android context classes in static fields; this is a memory leak"
+        errorLine1="    protected static Context mContext;"
+        errorLine2="              ~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDL.java"
+            line="84"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="StaticFieldLeak"
+        message="Do not place Android context classes in static fields; this is a memory leak"
+        errorLine1="    protected static View mTextEdit;"
+        errorLine2="              ~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="116"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="StaticFieldLeak"
+        message="Do not place Android context classes in static fields; this is a memory leak"
+        errorLine1="    protected static ViewGroup mLayout;"
+        errorLine2="              ~~~~~~">
+        <location
+            file="src/org/libsdl/app/SDLActivity.java"
+            line="118"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="StaticFieldLeak"
+        message="This field leaks a context object"
+        errorLine1="    private val context: Context"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/UpdateSystem.kt"
+            line="37"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="StaticFieldLeak"
+        message="Do not place Android context classes in static fields; this is a memory leak"
+        errorLine1=" private static Activity mSingleton;"
+        errorLine2="         ~~~~~~">
+        <location
+            file="src/com/valvesoftware/ValveActivity2.java"
+            line="22"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="DisableBaselineAlignment"
+        message="Set `android:baselineAligned=&quot;false&quot;` on this element for better performance"
+        errorLine1="            &lt;LinearLayout"
+        errorLine2="             ~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="73"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="DisableBaselineAlignment"
+        message="Set `android:baselineAligned=&quot;false&quot;` on this element for better performance"
+        errorLine1="            &lt;LinearLayout"
+        errorLine2="             ~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="73"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="DisableBaselineAlignment"
+        message="Set `android:baselineAligned=&quot;false&quot;` on this element for better performance"
+        errorLine1="            &lt;LinearLayout"
+        errorLine2="             ~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="114"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="DisableBaselineAlignment"
+        message="Set `android:baselineAligned=&quot;false&quot;` on this element for better performance"
+        errorLine1="            &lt;LinearLayout"
+        errorLine2="             ~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="114"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="DisableBaselineAlignment"
+        message="Set `android:baselineAligned=&quot;false&quot;` on this element for better performance"
+        errorLine1="            &lt;LinearLayout"
+        errorLine2="             ~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="170"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="DisableBaselineAlignment"
+        message="Set `android:baselineAligned=&quot;false&quot;` on this element for better performance"
+        errorLine1="            &lt;LinearLayout"
+        errorLine2="             ~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="170"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="DisableBaselineAlignment"
+        message="Set `android:baselineAligned=&quot;false&quot;` on this element for better performance"
+        errorLine1="                &lt;LinearLayout"
+        errorLine2="                 ~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="264"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="DisableBaselineAlignment"
+        message="Set `android:baselineAligned=&quot;false&quot;` on this element for better performance"
+        errorLine1="                &lt;LinearLayout"
+        errorLine2="                 ~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="264"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="InefficientWeight"
+        message="Use a `layout_width` of `0dp` instead of `match_parent` for better performance"
+        errorLine1="    android:layout_width=&quot;match_parent&quot;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_directory_choice.xml"
+            line="34"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.deploy_branch` appears to be unused"
+        errorLine1="&lt;string name=&quot;deploy_branch&quot;>&lt;/string>"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/build_info.xml"
+            line="4"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.hl_color` appears to be unused"
+        errorLine1="    &lt;color name=&quot;hl_color&quot;>#FFF79A10&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="4"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.spin_color` appears to be unused"
+        errorLine1="    &lt;color name=&quot;spin_color&quot;>#FF3F3F3F&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="5"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_on_primary` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_on_primary&quot;>#FFFFFFFF&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="9"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_primary_container` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_primary_container&quot;>#FFFFDCC4&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="10"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_on_primary_container` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_on_primary_container&quot;>#FF3B1B00&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="11"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_secondary` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_secondary&quot;>#FF735A41&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="12"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_on_secondary` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_on_secondary&quot;>#FFFFFFFF&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="13"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_secondary_container` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_secondary_container&quot;>#FFFEDBC8&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="14"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_on_secondary_container` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_on_secondary_container&quot;>#FF2A1805&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="15"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_on_tertiary` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_on_tertiary&quot;>#FFFFFFFF&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="17"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_tertiary_container` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_tertiary_container&quot;>#FFDBE7B4&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="18"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_on_tertiary_container` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_on_tertiary_container&quot;>#FF161E01&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="19"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_error` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_error&quot;>#FFBA1A1A&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="20"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_on_error` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_on_error&quot;>#FFFFFFFF&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="21"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_error_container` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_error_container&quot;>#FFFFDAD6&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="22"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_on_error_container` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_on_error_container&quot;>#FF410002&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="23"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_surface_dim` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_surface_dim&quot;>#FFDED8D3&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="26"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_surface_bright` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_surface_bright&quot;>#FFFBF8F5&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="28"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_surface_container_lowest` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_surface_container_lowest&quot;>#FFFFFFFF&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="29"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_surface_container_low` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_surface_container_low&quot;>#FFF5EFE9&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="30"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_surface_container` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_surface_container&quot;>#FFEFEEE9&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="31"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_inverse_surface` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_inverse_surface&quot;>#FF34302B&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="40"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_inverse_on_surface` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_inverse_on_surface&quot;>#FFF9EFE8&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="41"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_inverse_primary` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_inverse_primary&quot;>#FFFFB782&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="42"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_scrim` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_scrim&quot;>#FF000000&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="43"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.md3_shadow` appears to be unused"
+        errorLine1="    &lt;color name=&quot;md3_shadow&quot;>#FF000000&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/colors.xml"
+            line="44"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.md3_btn_filled` appears to be unused"
+        errorLine1="&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="res/drawable/md3_btn_filled.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.md3_btn_outlined` appears to be unused"
+        errorLine1="&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="res/drawable/md3_btn_outlined.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.md3_btn_tonal` appears to be unused"
+        errorLine1="&lt;selector xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="res/drawable/md3_btn_tonal.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.md3_card` appears to be unused"
+        errorLine1="&lt;shape xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="res/drawable/md3_card.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.md3_card_filled` appears to be unused"
+        errorLine1="&lt;shape xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="res/drawable/md3_card_filled.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.md3_card_outlined` appears to be unused"
+        errorLine1="&lt;layer-list xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="res/drawable/md3_card_outlined.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.md3_color_seed` appears to be unused"
+        errorLine1="&lt;shape xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; android:shape=&quot;oval&quot;>"
+        errorLine2="^">
+        <location
+            file="res/drawable/md3_color_seed.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.md3_color_seed_checked` appears to be unused"
+        errorLine1="&lt;layer-list xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="res/drawable/md3_color_seed_checked.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.md3_divider` appears to be unused"
+        errorLine1="&lt;shape xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; android:shape=&quot;rectangle&quot;>"
+        errorLine2="^">
+        <location
+            file="res/drawable/md3_divider.xml"
+            line="2"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.spinner_item_v8` appears to be unused"
+        errorLine1="&lt;TextView  "
+        errorLine2="^">
+        <location
+            file="res/layout/spinner_item_v8.xml"
+            line="3"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.srceng_launcher_error_missing_obb_a` appears to be unused"
+        errorLine1="    &lt;string name=&quot;srceng_launcher_error_missing_obb_a&quot;>There are no&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="11"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.srceng_launcher_error_missing_obb_b` appears to be unused"
+        errorLine1="    &lt;string name=&quot;srceng_launcher_error_missing_obb_b&quot;>files on the path &lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="12"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.srceng_launcher_error_test_write` appears to be unused"
+        errorLine1="    &lt;string name=&quot;srceng_launcher_error_test_write&quot;>Test write failed, all files will be stored in &lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="13"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.srceng_launcher_game_menu` appears to be unused"
+        errorLine1="    &lt;string name=&quot;srceng_launcher_game_menu&quot;>Game&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="21"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.srceng_launcher_touch_controls` appears to be unused"
+        errorLine1="    &lt;string name=&quot;srceng_launcher_touch_controls&quot;>Show touch controls&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="22"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.srceng_launcher_volume_buttons` appears to be unused"
+        errorLine1="    &lt;string name=&quot;srceng_launcher_volume_buttons&quot;>Use volume buttons&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="23"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.srceng_launcher_volume_buttons_desc` appears to be unused"
+        errorLine1="    &lt;string name=&quot;srceng_launcher_volume_buttons_desc&quot;>Volume up button can bound as L_TRIGGER, and volume down as R_TRIGGER!!!&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="24"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.srceng_launcher_check_updates` appears to be unused"
+        errorLine1="    &lt;string name=&quot;srceng_launcher_check_updates&quot;>Check updates&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="26"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.srceng_launcher_immersive_mode` appears to be unused"
+        errorLine1="    &lt;string name=&quot;srceng_launcher_immersive_mode&quot;>Immersive mode&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="27"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.srceng_launcher_screen_resolution` appears to be unused"
+        errorLine1="    &lt;string name=&quot;srceng_launcher_screen_resolution&quot;>Fixed screen resolution&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="28"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.srceng_game_hl2` appears to be unused"
+        errorLine1="    &lt;string name=&quot;srceng_game_hl2&quot;>Half-Life 2&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="30"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.srceng_game_hl2ep1` appears to be unused"
+        errorLine1="    &lt;string name=&quot;srceng_game_hl2ep1&quot;>Half-Life 2 Episode 1&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="31"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.srceng_game_hl2ep2` appears to be unused"
+        errorLine1="    &lt;string name=&quot;srceng_game_hl2ep2&quot;>Half-Life 2 Episode 2&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="32"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.srceng_game_portal` appears to be unused"
+        errorLine1="    &lt;string name=&quot;srceng_game_portal&quot;>Portal&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="33"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.md3_appearance` appears to be unused"
+        errorLine1="    &lt;string name=&quot;md3_appearance&quot;>Appearance&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="42"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.md3_section_general` appears to be unused"
+        errorLine1="    &lt;string name=&quot;md3_section_general&quot;>General&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="64"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.md3_game_lang_hint_schinese` appears to be unused"
+        errorLine1="    &lt;string name=&quot;md3_game_lang_hint_schinese&quot;>简体中文 = schinese&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/values/strings.xml"
+            line="108"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UselessLeaf"
+        message="This `LinearLayout` view is unnecessary (no children, no `background`, no `id`, no `style`)"
+        errorLine1="        &lt;LinearLayout"
+        errorLine2="         ~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_launcher.xml"
+            line="179"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="UselessLeaf"
+        message="This `LinearLayout` view is unnecessary (no children, no `background`, no `id`, no `style`)"
+        errorLine1="        &lt;LinearLayout"
+        errorLine2="         ~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_launcher.xml"
+            line="179"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="UselessParent"
+        message="This `LinearLayout` layout or its `LinearLayout` parent is unnecessary"
+        errorLine1="   &lt;LinearLayout"
+        errorLine2="    ~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_directory_choice.xml"
+            line="48"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UselessParent"
+        message="This `ScrollView` layout or its `LinearLayout` parent is unnecessary"
+        errorLine1="    &lt;ScrollView"
+        errorLine2="     ~~~~~~~~~~">
+        <location
+            file="res/layout/activity_directory_choice.xml"
+            line="56"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="UselessParent"
+        message="This `LinearLayout` layout or its `LinearLayout` parent is unnecessary"
+        errorLine1="                &lt;LinearLayout"
+        errorLine2="                 ~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="79"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="UselessParent"
+        message="This `LinearLayout` layout or its `LinearLayout` parent is unnecessary"
+        errorLine1="                &lt;LinearLayout"
+        errorLine2="                 ~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="79"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="UselessParent"
+        message="This `LinearLayout` layout or its `LinearLayout` parent is unnecessary"
+        errorLine1="                &lt;LinearLayout"
+        errorLine2="                 ~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="120"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="UselessParent"
+        message="This `LinearLayout` layout or its `LinearLayout` parent is unnecessary"
+        errorLine1="                &lt;LinearLayout"
+        errorLine2="                 ~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="120"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="UselessParent"
+        message="This `LinearLayout` layout or its `LinearLayout` parent is unnecessary"
+        errorLine1="                &lt;LinearLayout"
+        errorLine2="                 ~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="176"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="UselessParent"
+        message="This `LinearLayout` layout or its `LinearLayout` parent is unnecessary"
+        errorLine1="                &lt;LinearLayout"
+        errorLine2="                 ~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="176"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="TooManyViews"
+        message="`activity_settings.xml` has more than 80 views, bad for performance"
+        errorLine1="                    &lt;TextView android:layout_width=&quot;24dp&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;G&quot;/>"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="527"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="TooManyViews"
+        message="`activity_settings.xml` has more than 80 views, bad for performance"
+        errorLine1="                    &lt;TextView android:layout_width=&quot;24dp&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;G&quot;/>"
+        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="527"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="IconColors"
+        message="Notification icons must be entirely white">
+        <location
+            file="res/drawable-hdpi/ic_launcher.png"/>
+        <location
+            file="src/me/nillerusr/UpdateService.kt"
+            line="37"
+            column="41"
+            message="Icon used in notification here"/>
+    </issue>
+
+    <issue
+        id="IconColors"
+        message="Notification icons must be entirely white">
+        <location
+            file="res/drawable-xhdpi/ic_launcher.png"/>
+        <location
+            file="src/me/nillerusr/UpdateService.kt"
+            line="37"
+            column="41"
+            message="Icon used in notification here"/>
+    </issue>
+
+    <issue
+        id="IconColors"
+        message="Notification icons must be entirely white">
+        <location
+            file="res/drawable-xxhdpi/ic_launcher.png"/>
+        <location
+            file="src/me/nillerusr/UpdateService.kt"
+            line="37"
+            column="41"
+            message="Icon used in notification here"/>
+    </issue>
+
+    <issue
+        id="IconColors"
+        message="Notification icons must be entirely white">
+        <location
+            file="res/drawable-xxxhdpi/ic_launcher.png"/>
+        <location
+            file="src/me/nillerusr/UpdateService.kt"
+            line="37"
+            column="41"
+            message="Icon used in notification here"/>
+    </issue>
+
+    <issue
+        id="IconColors"
+        message="Notification icons must be entirely white">
+        <location
+            file="res/drawable/ic_launcher.png"/>
+        <location
+            file="src/me/nillerusr/UpdateService.kt"
+            line="37"
+            column="41"
+            message="Icon used in notification here"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/folder.png` in densityless folder">
+        <location
+            file="res/drawable/folder.png"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/ic_launcher.png` in densityless folder">
+        <location
+            file="res/drawable/ic_launcher.png"/>
+    </issue>
+
+    <issue
+        id="IconMissingDensityFolder"
+        message="Missing density variation folders in `res`: drawable-mdpi">
+        <location
+            file="res"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
+        errorLine1="                &lt;Button"
+        errorLine2="                 ~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="585"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
+        errorLine1="                &lt;Button"
+        errorLine2="                 ~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="585"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
+        errorLine1="                &lt;Button"
+        errorLine2="                 ~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="593"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
+        errorLine1="                &lt;Button"
+        errorLine2="                 ~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="593"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
+        errorLine1="                &lt;Button"
+        errorLine2="                 ~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="601"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="ButtonStyle"
+        message="Buttons in button bars should be borderless; use `style=&quot;?android:attr/buttonBarButtonStyle&quot;` (and `?android:attr/buttonBarStyle` on the parent)"
+        errorLine1="                &lt;Button"
+        errorLine2="                 ~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="601"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="            &lt;EditText"
+        errorLine2="             ~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_launcher.xml"
+            line="101"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="            &lt;EditText"
+        errorLine2="             ~~~~~~~~">
+        <location
+            file="res/layout/activity_launcher.xml"
+            line="101"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="            &lt;EditText"
+        errorLine2="             ~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_launcher.xml"
+            line="120"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="            &lt;EditText"
+        errorLine2="             ~~~~~~~~">
+        <location
+            file="res/layout/activity_launcher.xml"
+            line="120"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="            &lt;EditText"
+        errorLine2="             ~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_launcher.xml"
+            line="158"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="            &lt;EditText"
+        errorLine2="             ~~~~~~~~">
+        <location
+            file="res/layout/activity_launcher.xml"
+            line="158"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="                        &lt;EditText"
+        errorLine2="                         ~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="281"
+            column="26"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="                        &lt;EditText"
+        errorLine2="                         ~~~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="281"
+            column="26"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="                        &lt;EditText"
+        errorLine2="                         ~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="303"
+            column="26"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="                        &lt;EditText"
+        errorLine2="                         ~~~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="303"
+            column="26"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="                    &lt;EditText"
+        errorLine2="                     ~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="502"
+            column="22"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="                    &lt;EditText"
+        errorLine2="                     ~~~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="502"
+            column="22"/>
+    </issue>
+
+    <issue
+        id="ClickableViewAccessibility"
+        message="`DirchActivity#onTouch` should call `View#performClick` when a click is detected"
+        errorLine1="    override fun onTouch(v: View, event: MotionEvent): Boolean {"
+        errorLine2="                 ~~~~~~~">
+        <location
+            file="src/me/nillerusr/DirchActivity.kt"
+            line="39"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1=" &lt;ImageView"
+        errorLine2="  ~~~~~~~~~">
+        <location
+            file="res/layout/directory.xml"
+            line="12"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="&lt;ImageView"
+        errorLine2=" ~~~~~~~~~">
+        <location
+            file="res/layout/update_notify.xml"
+            line="6"
+            column="2"/>
+    </issue>
+
+    <issue
+        id="LabelFor"
+        message="Missing accessibility label: provide either a view with an `android:labelFor` that references this view or provide an `android:hint`"
+        errorLine1="            &lt;EditText"
+        errorLine2="             ~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_launcher.xml"
+            line="101"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="LabelFor"
+        message="Missing accessibility label: provide either a view with an `android:labelFor` that references this view or provide an `android:hint`"
+        errorLine1="            &lt;EditText"
+        errorLine2="             ~~~~~~~~">
+        <location
+            file="res/layout/activity_launcher.xml"
+            line="101"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="LabelFor"
+        message="Missing accessibility label: provide either a view with an `android:labelFor` that references this view or provide an `android:hint`"
+        errorLine1="            &lt;EditText"
+        errorLine2="             ~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_launcher.xml"
+            line="120"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="LabelFor"
+        message="Missing accessibility label: provide either a view with an `android:labelFor` that references this view or provide an `android:hint`"
+        errorLine1="            &lt;EditText"
+        errorLine2="             ~~~~~~~~">
+        <location
+            file="res/layout/activity_launcher.xml"
+            line="120"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="LabelFor"
+        message="Missing accessibility label: provide either a view with an `android:labelFor` that references this view or provide an `android:hint`"
+        errorLine1="            &lt;EditText"
+        errorLine2="             ~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_launcher.xml"
+            line="158"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="LabelFor"
+        message="Missing accessibility label: provide either a view with an `android:labelFor` that references this view or provide an `android:hint`"
+        errorLine1="            &lt;EditText"
+        errorLine2="             ~~~~~~~~">
+        <location
+            file="res/layout/activity_launcher.xml"
+            line="158"
+            column="14"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+        errorLine1="                LauncherActivity.GamePath?.setText(&quot;$currentDirectory/&quot;)"
+        errorLine2="                                                   ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/DirchActivity.kt"
+            line="124"
+            column="52"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Number formatting does not take into account locale settings. Consider using `String.format` instead."
+        errorLine1="        try { resCustomW?.setText(lastResCustomW.toString()) } catch (_: Throwable) {}"
+        errorLine2="                                  ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/SettingsActivity.kt"
+            line="192"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Number formatting does not take into account locale settings. Consider using `String.format` instead."
+        errorLine1="        try { resCustomH?.setText(lastResCustomH.toString()) } catch (_: Throwable) {}"
+        errorLine2="                                  ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/SettingsActivity.kt"
+            line="193"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Number formatting does not take into account locale settings. Consider using `String.format` instead."
+        errorLine1="        try { resCustomW?.setText(width.toString()) } catch (_: Throwable) {}"
+        errorLine2="                                  ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/SettingsActivity.kt"
+            line="332"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Number formatting does not take into account locale settings. Consider using `String.format` instead."
+        errorLine1="        try { resCustomH?.setText(height.toString()) } catch (_: Throwable) {}"
+        errorLine2="                                  ~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/SettingsActivity.kt"
+            line="333"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Number formatting does not take into account locale settings. Consider using `String.format` instead."
+        errorLine1="            customRedValue?.text = red.toString()"
+        errorLine2="                                   ~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/SettingsActivity.kt"
+            line="537"
+            column="36"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Number formatting does not take into account locale settings. Consider using `String.format` instead."
+        errorLine1="            customGreenValue?.text = green.toString()"
+        errorLine2="                                     ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/SettingsActivity.kt"
+            line="538"
+            column="38"/>
+    </issue>
+
+    <issue
+        id="SetTextI18n"
+        message="Number formatting does not take into account locale settings. Consider using `String.format` instead."
+        errorLine1="            customBlueValue?.text = blue.toString()"
+        errorLine2="                                    ~~~~~~~~~~~~~~~">
+        <location
+            file="src/me/nillerusr/SettingsActivity.kt"
+            line="539"
+            column="37"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Dir???&quot;, should use `@string` resource"
+        errorLine1="    android:text=&quot;Dir???&quot;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_directory_choice.xml"
+            line="21"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;-nobackgroundlevel&quot;, should use `@string` resource"
+        errorLine1="                android:text=&quot;-nobackgroundlevel&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_launcher.xml"
+            line="107"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;-nobackgroundlevel&quot;, should use `@string` resource"
+        errorLine1="                android:text=&quot;-nobackgroundlevel&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_launcher.xml"
+            line="107"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;LIBGL_USEVBO=0&quot;, should use `@string` resource"
+        errorLine1="                android:text=&quot;LIBGL_USEVBO=0&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_launcher.xml"
+            line="124"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;LIBGL_USEVBO=0&quot;, should use `@string` resource"
+        errorLine1="                android:text=&quot;LIBGL_USEVBO=0&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_launcher.xml"
+            line="124"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;/sdcard/srceng/&quot;, should use `@string` resource"
+        errorLine1="                android:text=&quot;/sdcard/srceng/&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_launcher.xml"
+            line="164"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;/sdcard/srceng/&quot;, should use `@string` resource"
+        errorLine1="                android:text=&quot;/sdcard/srceng/&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_launcher.xml"
+            line="164"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;1280&quot;, should use `@string` resource"
+        errorLine1="                            android:hint=&quot;1280&quot;"
+        errorLine2="                            ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="286"
+            column="29"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;1280&quot;, should use `@string` resource"
+        errorLine1="                            android:hint=&quot;1280&quot;"
+        errorLine2="                            ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="286"
+            column="29"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;720&quot;, should use `@string` resource"
+        errorLine1="                            android:hint=&quot;720&quot;"
+        errorLine2="                            ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="308"
+            column="29"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;720&quot;, should use `@string` resource"
+        errorLine1="                            android:hint=&quot;720&quot;"
+        errorLine2="                            ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="308"
+            column="29"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;R&quot;, should use `@string` resource"
+        errorLine1="                    &lt;TextView android:layout_width=&quot;24dp&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;R&quot;/>"
+        errorLine2="                                                                                               ~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="518"
+            column="96"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;R&quot;, should use `@string` resource"
+        errorLine1="                    &lt;TextView android:layout_width=&quot;24dp&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;R&quot;/>"
+        errorLine2="                                                                                               ~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="518"
+            column="96"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;G&quot;, should use `@string` resource"
+        errorLine1="                    &lt;TextView android:layout_width=&quot;24dp&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;G&quot;/>"
+        errorLine2="                                                                                               ~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="527"
+            column="96"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;G&quot;, should use `@string` resource"
+        errorLine1="                    &lt;TextView android:layout_width=&quot;24dp&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;G&quot;/>"
+        errorLine2="                                                                                               ~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="527"
+            column="96"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;B&quot;, should use `@string` resource"
+        errorLine1="                    &lt;TextView android:layout_width=&quot;24dp&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;B&quot;/>"
+        errorLine2="                                                                                               ~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="536"
+            column="96"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;B&quot;, should use `@string` resource"
+        errorLine1="                    &lt;TextView android:layout_width=&quot;24dp&quot; android:layout_height=&quot;wrap_content&quot; android:text=&quot;B&quot;/>"
+        errorLine2="                                                                                               ~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="536"
+            column="96"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingRight` you should probably also define `paddingLeft` for right-to-left symmetry"
+        errorLine1="  android:paddingRight=&quot;5dip&quot;"
+        errorLine2="  ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/directory.xml"
+            line="19"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:layout_marginRight` with `android:layout_marginEnd=&quot;12dp&quot;` to better support right-to-left layouts"
+        errorLine1="                android:layout_marginRight=&quot;12dp&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_launcher.xml"
+            line="34"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:layout_marginRight` with `android:layout_marginEnd=&quot;12dp&quot;` to better support right-to-left layouts"
+        errorLine1="                android:layout_marginRight=&quot;12dp&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_launcher.xml"
+            line="34"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:layout_marginLeft` with `android:layout_marginStart=&quot;4dp&quot;` to better support right-to-left layouts"
+        errorLine1="                android:layout_marginLeft=&quot;4dp&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_launcher.xml"
+            line="35"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:layout_marginLeft` with `android:layout_marginStart=&quot;4dp&quot;` to better support right-to-left layouts"
+        errorLine1="                android:layout_marginLeft=&quot;4dp&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_launcher.xml"
+            line="35"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:layout_marginLeft` with `android:layout_marginStart=&quot;4dp&quot;` to better support right-to-left layouts"
+        errorLine1="                android:layout_marginLeft=&quot;4dp&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout-v21/activity_settings.xml"
+            line="43"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:layout_marginLeft` with `android:layout_marginStart=&quot;4dp&quot;` to better support right-to-left layouts"
+        errorLine1="                android:layout_marginLeft=&quot;4dp&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/activity_settings.xml"
+            line="43"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Use &quot;`start`&quot; instead of &quot;`left`&quot; to ensure correct behavior in right-to-left locales"
+        errorLine1="  android:gravity=&quot;left&quot;"
+        errorLine2="                   ~~~~">
+        <location
+            file="res/layout/directory.xml"
+            line="14"
+            column="20"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:paddingRight` with `android:paddingEnd=&quot;5dip&quot;` to better support right-to-left layouts"
+        errorLine1="  android:paddingRight=&quot;5dip&quot;"
+        errorLine2="  ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/directory.xml"
+            line="19"
+            column="3"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Use &quot;`start`&quot; instead of &quot;`left`&quot; to ensure correct behavior in right-to-left locales"
+        errorLine1=" android:gravity=&quot;left&quot;"
+        errorLine2="                  ~~~~">
+        <location
+            file="res/layout/spinner_item_v8.xml"
+            line="8"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:layout_alignParentLeft` with `android:layout_alignParentStart=&quot;true&quot;` to better support right-to-left layouts"
+        errorLine1="    android:layout_alignParentLeft=&quot;true&quot;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/update_notify.xml"
+            line="11"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:layout_marginRight` with `android:layout_marginEnd=&quot;10dp&quot;` to better support right-to-left layouts"
+        errorLine1="    android:layout_marginRight=&quot;10dp&quot; />"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/update_notify.xml"
+            line="12"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:layout_toRightOf` with `android:layout_toEndOf=&quot;@id/image&quot;` to better support right-to-left layouts"
+        errorLine1="    android:layout_toRightOf=&quot;@id/image&quot;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/update_notify.xml"
+            line="18"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        message="Consider replacing `android:layout_toRightOf` with `android:layout_toEndOf=&quot;@id/image&quot;` to better support right-to-left layouts"
+        errorLine1="    android:layout_toRightOf=&quot;@id/image&quot;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="res/layout/update_notify.xml"
+            line="27"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="RtlEnabled"
+        message="The project references RTL attributes, but does not explicitly enable or disable RTL support with `android:supportsRtl` in the manifest">
+        <location
+            file="AndroidManifest.xml"/>
+    </issue>
+
+</issues>

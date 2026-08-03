@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
+set -eu
 
-export ANDROID_HOME=/home/jusic/android-sdk
-ant debug
+exec "$(dirname "$0")/gradlew" assembleDebug "$@"
