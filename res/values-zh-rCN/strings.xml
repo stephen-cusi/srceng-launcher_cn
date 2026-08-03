@@ -73,6 +73,13 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="md3_update_channel_desc">稳定版提供经过测试的版本；开发版提供最新测试构建。</string>
     <string name="md3_update_stable">稳定版</string>
     <string name="md3_update_dev">开发版</string>
+    <string name="md3_update_mirror">下载镜像</string>
+    <string name="md3_update_mirror_desc">自动模式优先尝试镜像，失败后回退 GitHub。公共镜像可用性可能随时变化。</string>
+    <string name="md3_update_mirror_auto">自动选择（镜像优先）</string>
+    <string name="md3_update_mirror_test">一键测试全部镜像</string>
+    <string name="md3_update_mirror_testing">正在测试镜像下载…</string>
+    <string name="md3_update_mirror_available">可下载</string>
+    <string name="md3_update_mirror_unavailable">无法访问</string>
     <string name="md3_update_check">检查更新</string>
     <string name="md3_update_checking">正在检查更新…</string>
     <string name="md3_update_current">当前版本：%1$s</string>

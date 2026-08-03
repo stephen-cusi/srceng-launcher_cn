@@ -71,6 +71,13 @@
     <string name="md3_update_channel_desc">Stable receives tested releases. Development receives the newest test builds.</string>
     <string name="md3_update_stable">Stable</string>
     <string name="md3_update_dev">Development</string>
+    <string name="md3_update_mirror">Download mirror</string>
+    <string name="md3_update_mirror_desc">Auto tries mirrors first and falls back to GitHub. Public mirror availability may change.</string>
+    <string name="md3_update_mirror_auto">Auto (mirrors first)</string>
+    <string name="md3_update_mirror_test">Test all mirrors</string>
+    <string name="md3_update_mirror_testing">Testing mirror downloads…</string>
+    <string name="md3_update_mirror_available">Available</string>
+    <string name="md3_update_mirror_unavailable">Unavailable</string>
     <string name="md3_update_check">Check for updates</string>
     <string name="md3_update_checking">Checking for updates…</string>
     <string name="md3_update_current">Current version: %1$s</string>

@@ -10,6 +10,9 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,8 +71,11 @@ public class SettingsActivity extends Activity {
 
     // Updates
     private Spinner updateChannelSpinner;
+    private Spinner updateMirrorSpinner;
     private Button checkUpdateButton;
+    private Button testMirrorsButton;
     private TextView updateStatus;
+    private TextView mirrorTestStatus;
 
     private int lastDarkMode = Md3Theme.THEME_SYSTEM;
     private boolean lastDynamic = false;
@@ -148,8 +154,11 @@ public class SettingsActivity extends Activity {
         resCustomW       = optFind(R.id.md3_res_custom_w);
         resCustomH       = optFind(R.id.md3_res_custom_h);
         updateChannelSpinner = optFind(R.id.md3_update_channel);
+        updateMirrorSpinner = optFind(R.id.md3_update_mirror);
         checkUpdateButton = optFind(R.id.md3_check_update);
+        testMirrorsButton = optFind(R.id.md3_test_mirrors);
         updateStatus = optFind(R.id.md3_update_status);
+        mirrorTestStatus = optFind(R.id.md3_mirror_test_status);
 
         ImageButton back = optFind(R.id.md3_button_back);
         if (back != null) {
@@ -495,6 +504,25 @@ public class SettingsActivity extends Activity {
             }
             @Override public void onNothingSelected(AdapterView<?> parent) {}
         });
+        if (updateMirrorSpinner != null) {
+            String[] mirrorLabels = new String[UpdateSystem.MIRROR_NAMES.length + 1];
+            mirrorLabels[0] = getString(R.string.md3_update_mirror_auto);
+            System.arraycopy(UpdateSystem.MIRROR_NAMES, 0, mirrorLabels, 1, UpdateSystem.MIRROR_NAMES.length);
+            ArrayAdapter<String> mirrorAdapter = new ArrayAdapter<String>(
+                    this, android.R.layout.simple_spinner_item, mirrorLabels);
+            mirrorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            updateMirrorSpinner.setAdapter(mirrorAdapter);
+            String selected = getSharedPreferences("mod", 0).getString(
+                    UpdateSystem.PREF_MIRROR, UpdateSystem.MIRROR_AUTO);
+            updateMirrorSpinner.setSelection(mirrorPosition(selected), false);
+            updateMirrorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    getSharedPreferences("mod", 0).edit().putString(
+                            UpdateSystem.PREF_MIRROR, mirrorId(position)).apply();
+                }
+                @Override public void onNothingSelected(AdapterView<?> parent) {}
+            });
+        }
         try {
             String current = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
             if (updateStatus != null) updateStatus.setText(getString(R.string.md3_update_current, current));
@@ -504,9 +532,10 @@ public class SettingsActivity extends Activity {
     private void checkForUpdates() {
         String channel = updateChannelSpinner != null && updateChannelSpinner.getSelectedItemPosition() == 1
                 ? UpdateSystem.CHANNEL_DEV : UpdateSystem.CHANNEL_STABLE;
+        String mirror = mirrorId(updateMirrorSpinner == null ? 0 : updateMirrorSpinner.getSelectedItemPosition());
         if (checkUpdateButton != null) checkUpdateButton.setEnabled(false);
         if (updateStatus != null) updateStatus.setText(R.string.md3_update_checking);
-        new UpdateSystem(this, channel, new UpdateSystem.Callback() {
+        new UpdateSystem(this, channel, mirror, new UpdateSystem.Callback() {
             @Override public void onUpdateResult(final UpdateSystem.Result result) {
                 if (checkUpdateButton != null) checkUpdateButton.setEnabled(true);
                 if (!result.success) {
@@ -534,6 +563,41 @@ public class SettingsActivity extends Activity {
                         }).show();
             }
         }).execute();
+    }
+
+    private static int mirrorPosition(String id) {
+        for (int i = 0; i < UpdateSystem.MIRROR_IDS.length; i++) {
+            if (UpdateSystem.MIRROR_IDS[i].equals(id)) return i + 1;
+        }
+        return 0;
+    }
+
+    private static String mirrorId(int position) {
+        return position > 0 && position <= UpdateSystem.MIRROR_IDS.length
+                ? UpdateSystem.MIRROR_IDS[position - 1] : UpdateSystem.MIRROR_AUTO;
+    }
+
+    private void testUpdateMirrors() {
+        if (testMirrorsButton != null) testMirrorsButton.setEnabled(false);
+        if (mirrorTestStatus != null) mirrorTestStatus.setText(R.string.md3_update_mirror_testing);
+        UpdateSystem.testMirrors(new UpdateSystem.MirrorTestCallback() {
+            @Override public void onMirrorTestResult(boolean[] available) {
+                if (testMirrorsButton != null) testMirrorsButton.setEnabled(true);
+                if (mirrorTestStatus == null) return;
+                SpannableStringBuilder text = new SpannableStringBuilder();
+                for (int i = 0; i < UpdateSystem.MIRROR_NAMES.length; i++) {
+                    if (i > 0) text.append('\n');
+                    int start = text.length();
+                    boolean ok = i < available.length && available[i];
+                    text.append(UpdateSystem.MIRROR_NAMES[i]).append(": ")
+                            .append(getString(ok ? R.string.md3_update_mirror_available
+                                    : R.string.md3_update_mirror_unavailable));
+                    text.setSpan(new ForegroundColorSpan(ok ? 0xFF2E7D32 : 0xFFC62828),
+                            start, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+                mirrorTestStatus.setText(text);
+            }
+        });
     }
 
     private void bindListeners() {
@@ -569,6 +633,11 @@ public class SettingsActivity extends Activity {
         if (checkUpdateButton != null) {
             checkUpdateButton.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) { checkForUpdates(); }
+            });
+        }
+        if (testMirrorsButton != null) {
+            testMirrorsButton.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) { testUpdateMirrors(); }
             });
         }
 
