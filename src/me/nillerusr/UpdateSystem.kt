@@ -54,7 +54,8 @@ open class UpdateSystem : AsyncTask<Void, Void, UpdateSystem.Result> {
         val candidates = if (MIRROR_AUTO == mirror) AUTO_MIRRORS else arrayOf(mirror)
         for (candidate in candidates) {
             try {
-                val manifest = JSONObject(fetchText(mirrorUrl(RAW_BASE + channel + "/manifest.json", candidate)!!, 10000, 15000))
+                val manifestUrl = cacheBust(mirrorUrl(RAW_BASE + channel + "/manifest.json", candidate)!!)
+                val manifest = JSONObject(fetchText(manifestUrl, 10000, 15000))
                 if (!manifest.optBoolean("published", true)) {
                     result.success = true
                     result.published = false
@@ -100,7 +101,7 @@ open class UpdateSystem : AsyncTask<Void, Void, UpdateSystem.Result> {
         val MIRROR_NAMES = arrayOf("GitHub Raw", "jsDelivr", "jsDelivr Fastly", "jsDelivr Cloudflare", "ghproxy.net", "gh-proxy.com")
 
         private const val RAW_BASE = "https://raw.githubusercontent.com/stephen-cusi/srceng-launcher-updates/main/"
-        private val AUTO_MIRRORS = arrayOf("jsdelivr", "jsdelivr_fastly", "jsdelivr_cloudflare", "ghproxy_net", "gh_proxy_com", "github")
+        private val AUTO_MIRRORS = arrayOf("github", "jsdelivr", "jsdelivr_fastly", "jsdelivr_cloudflare", "ghproxy_net", "gh_proxy_com")
 
         @JvmStatic
         fun testMirrors(callback: MirrorTestCallback?) {
@@ -111,7 +112,8 @@ open class UpdateSystem : AsyncTask<Void, Void, UpdateSystem.Result> {
                     val futures = MIRROR_IDS.map { source ->
                         executor.submit(Callable {
                             try {
-                                val manifest = JSONObject(fetchText(mirrorUrl(RAW_BASE + CHANNEL_DEV + "/manifest.json", source)!!, 6000, 8000))
+                                val manifestUrl = cacheBust(mirrorUrl(RAW_BASE + CHANNEL_DEV + "/manifest.json", source)!!)
+                                val manifest = JSONObject(fetchText(manifestUrl, 6000, 8000))
                                 manifest.optBoolean("published", false) && probeDownload(mirrorUrl(manifest.getString("apkUrl"), source)!!)
                             } catch (_: Exception) {
                                 false
@@ -157,6 +159,9 @@ open class UpdateSystem : AsyncTask<Void, Void, UpdateSystem.Result> {
             return if (parts.size == 4) "${parts[0]}/${parts[1]}@${parts[2]}/${parts[3]}" else path
         }
 
+        private fun cacheBust(address: String): String =
+            address + if ('?' in address) "&update=${System.currentTimeMillis()}" else "?update=${System.currentTimeMillis()}"
+
         @Throws(Exception::class)
         private fun probeDownload(address: String): Boolean {
             val connection = URL(address).openConnection() as HttpURLConnection
@@ -179,6 +184,7 @@ open class UpdateSystem : AsyncTask<Void, Void, UpdateSystem.Result> {
             connection.connectTimeout = connectTimeout
             connection.readTimeout = readTimeout
             connection.setRequestProperty("User-Agent", "srceng-launcher-update-checker")
+            connection.setRequestProperty("Cache-Control", "no-cache")
             try {
                 val status = connection.responseCode
                 if (status !in 200..299) throw Exception("HTTP $status")
