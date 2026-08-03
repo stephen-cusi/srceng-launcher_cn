@@ -1,18 +1,26 @@
 package me.nillerusr
 
 import android.app.Activity
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Environment
+import android.os.Build
 import android.text.InputType
 import android.view.View
+import android.view.HapticFeedbackConstants
+import android.view.MotionEvent
+import android.view.animation.OvershootInterpolator
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -25,12 +33,12 @@ import java.io.FileOutputStream
 import java.util.Locale
 import java.util.concurrent.Executors
 import me.nillerusr.md3.Md3Theme
-import me.nillerusr.vpk.VpkArchive
 import me.nillerusr.vpk.VpkWriter
 
 class VpkToolActivity : Activity() {
     private val executor = Executors.newSingleThreadExecutor()
     private val selected = linkedSetOf<String>()
+    private val scrollPositions = mutableMapOf<String, Int>()
     private var pendingFiles: List<File> = emptyList()
     private var pendingMove = false
     private var busy = false
@@ -40,6 +48,7 @@ class VpkToolActivity : Activity() {
     private lateinit var statusView: TextView
     private lateinit var progress: ProgressBar
     private lateinit var body: LinearLayout
+    private lateinit var scroll: ScrollView
     private lateinit var footer: View
     private lateinit var selectedView: TextView
     private lateinit var selectionActions: View
@@ -56,6 +65,7 @@ class VpkToolActivity : Activity() {
         statusView = findViewById(R.id.vpk_manager_status)
         progress = findViewById(R.id.vpk_manager_progress)
         body = findViewById(R.id.vpk_manager_body)
+        scroll = findViewById(R.id.vpk_manager_scroll)
         footer = findViewById(R.id.vpk_manager_footer)
         selectedView = findViewById(R.id.vpk_manager_selected)
         selectionActions = findViewById(R.id.vpk_manager_actions)
@@ -91,12 +101,12 @@ class VpkToolActivity : Activity() {
         if (busy) return
         if (selected.isNotEmpty()) {
             selected.clear()
-            renderDirectory()
+            renderDirectory(scroll.scrollY)
             return
         }
         val parent = currentDirectory.parentFile
         if (parent != null && parent.canRead()) {
-            showDirectory(parent)
+            showDirectory(parent, true)
         } else if (pendingFiles.isNotEmpty()) {
             cancelTransfer()
         } else {
@@ -104,19 +114,20 @@ class VpkToolActivity : Activity() {
         }
     }
 
-    private fun showDirectory(directory: File) {
+    private fun showDirectory(directory: File, animate: Boolean = false) {
         if (busy) return
         val canonical = canonicalFile(directory)
         if (!canonical.isDirectory || !canonical.canRead() || canonical.listFiles() == null) {
             Toast.makeText(this, R.string.vpk_picker_unreadable, Toast.LENGTH_LONG).show()
             return
         }
+        if (::currentDirectory.isInitialized) scrollPositions[currentDirectory.path] = scroll.scrollY
         currentDirectory = canonical
         selected.clear()
-        renderDirectory()
+        renderDirectory(scrollPositions[canonical.path] ?: 0, animate)
     }
 
-    private fun renderDirectory() {
+    private fun renderDirectory(restoreY: Int = scroll.scrollY, animate: Boolean = false) {
         pathView.text = currentDirectory.path
         body.removeAllViews()
         val children = currentDirectory.listFiles()?.filter { it.canRead() }?.sortedWith(
@@ -135,30 +146,55 @@ class VpkToolActivity : Activity() {
         }
         updateFooter()
         Md3Theme.applyAfterSetContentView(this)
+        scroll.post { scroll.scrollTo(0, restoreY) }
+        if (animate) animateDirectory(body)
     }
 
     private fun addEntry(file: File) {
         val row = layoutInflater.inflate(R.layout.vpk_file_picker_entry, body, false)
+        bindPressAnimation(row)
         val checkBox = row.findViewById<CheckBox>(R.id.vpk_picker_check)
+        val icon = row.findViewById<ImageView>(R.id.vpk_picker_icon)
         val name = row.findViewById<TextView>(R.id.vpk_picker_name)
         val detail = row.findViewById<TextView>(R.id.vpk_picker_detail)
         val path = canonicalFile(file).path
-        checkBox.visibility = if (selected.isNotEmpty()) View.VISIBLE else View.GONE
+        val selecting = selected.isNotEmpty()
+        checkBox.visibility = if (selecting) View.VISIBLE else View.INVISIBLE
+        icon.visibility = if (selecting) View.INVISIBLE else View.VISIBLE
+        icon.setImageResource(when {
+            file.isDirectory -> R.drawable.ic_vpk_folder
+            file.isSupportedArchive() -> R.drawable.ic_vpk_archive
+            else -> R.drawable.ic_vpk_file
+        })
         checkBox.isChecked = path in selected
+        if (selecting) {
+            checkBox.alpha = 0f
+            checkBox.scaleX = 0.72f
+            checkBox.scaleY = 0.72f
+            checkBox.animate()
+                .alpha(1f)
+                .scaleX(1f)
+                .scaleY(1f)
+                .setInterpolator(OvershootInterpolator(1.6f))
+                .setDuration(180)
+                .start()
+        }
         name.text = file.name
         detail.text = when {
             file.isDirectory -> getString(R.string.vpk_manager_folder)
             file.extension.equals("vpk", true) -> getString(R.string.vpk_manager_archive, formatSize(file.length()))
+            file.extension.equals("gma", true) -> getString(R.string.gma_manager_archive, formatSize(file.length()))
             else -> formatSize(file.length())
         }
         checkBox.setOnCheckedChangeListener { _, checked ->
             if (checked) selected += path else selected -= path
-            renderDirectory()
+            renderDirectory(scroll.scrollY)
         }
         row.setOnLongClickListener {
             if (!busy && pendingFiles.isEmpty()) {
+                row.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
                 selected += path
-                renderDirectory()
+                renderDirectory(scroll.scrollY)
             }
             true
         }
@@ -167,10 +203,13 @@ class VpkToolActivity : Activity() {
                 busy -> Unit
                 selected.isNotEmpty() -> {
                     if (path in selected) selected -= path else selected += path
-                    renderDirectory()
+                    renderDirectory(scroll.scrollY)
                 }
-                file.isDirectory -> showDirectory(file)
-                file.extension.equals("vpk", true) -> inspectArchive(file)
+                file.isDirectory -> showDirectory(file, true)
+                file.isSupportedArchive() -> {
+                    startActivity(Intent(this, VpkArchiveActivity::class.java).putExtra(VpkArchiveActivity.EXTRA_ARCHIVE_PATH, file.path))
+                    applyOpenTransition()
+                }
             }
         }
         body.addView(row)
@@ -334,40 +373,6 @@ class VpkToolActivity : Activity() {
         dialog.show()
     }
 
-    private fun inspectArchive(file: File) = runTask(R.string.vpk_reading) {
-        val archive = VpkArchive.open(file)
-        runOnUiThread {
-            val contents = archive.entries.joinToString("\n") { getString(R.string.vpk_entry_line, it.path, formatSize(it.size)) }
-            val message = getString(R.string.vpk_opened, archive.version, archive.entries.size) + "\n\n" + contents
-            MaterialAlertDialogBuilder(this)
-                .setTitle(file.name)
-                .setMessage(message)
-                .setNegativeButton(android.R.string.cancel) { _, _ -> archive.close() }
-                .setPositiveButton(R.string.vpk_extract_here) { _, _ ->
-                    val withoutExtension = file.name.dropLast(4)
-                    val base = Regex("_(?:dir|\\d{3})$", RegexOption.IGNORE_CASE).replace(withoutExtension, "")
-                    val destination = File(currentDirectory, base)
-                    runTask(R.string.vpk_extracting) {
-                        require(!destination.exists()) { "File already exists: ${destination.name}" }
-                        try {
-                            archive.extract(destination, ::updateProgress)
-                        } catch (error: Throwable) {
-                            deleteItem(destination)
-                            throw error
-                        } finally {
-                            archive.close()
-                        }
-                        runOnUiThread {
-                            Toast.makeText(this, R.string.vpk_extract_done, Toast.LENGTH_LONG).show()
-                            renderDirectory()
-                        }
-                    }
-                }
-                .setOnCancelListener { archive.close() }
-                .show()
-        }
-    }
-
     private fun selectedFiles(): List<File> = selected.map(::File).sortedBy { it.path.length }.filter { candidate ->
         val candidatePath = canonicalFile(candidate).path
         selected.none { other ->
@@ -405,12 +410,14 @@ class VpkToolActivity : Activity() {
 
     private fun setBusy(value: Boolean) {
         busy = value
-        statusArea.visibility = if (value) View.VISIBLE else View.GONE
+        statusArea.visibility = if (value) View.VISIBLE else View.INVISIBLE
         progress.progress = 0
         updateFooter()
     }
 
     private fun canonicalFile(file: File): File = try { file.canonicalFile } catch (_: Throwable) { file.absoluteFile }
+
+    private fun File.isSupportedArchive(): Boolean = extension.equals("vpk", true) || extension.equals("gma", true)
 
     private fun formatSize(size: Long): String = when {
         size >= 1024L * 1024L * 1024L -> String.format(Locale.getDefault(), "%.2f GiB", size / (1024.0 * 1024.0 * 1024.0))
@@ -420,6 +427,50 @@ class VpkToolActivity : Activity() {
     }
 
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
+
+    private fun animateDirectory(view: View) {
+        view.animate().cancel()
+        view.alpha = 0f
+        view.translationX = dp(12).toFloat()
+        view.animate().alpha(1f).translationX(0f).setDuration(180).start()
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun bindPressAnimation(view: View) {
+        view.setOnTouchListener { touched, event ->
+            when (event.actionMasked) {
+                MotionEvent.ACTION_DOWN -> {
+                    touched.animate().cancel()
+                    touched.animate()
+                        .scaleX(0.975f)
+                        .scaleY(0.975f)
+                        .alpha(0.88f)
+                        .setDuration(80)
+                        .start()
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    touched.animate().cancel()
+                    touched.animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .alpha(1f)
+                        .setInterpolator(OvershootInterpolator(1.4f))
+                        .setDuration(180)
+                        .start()
+                }
+            }
+            false
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun applyOpenTransition() {
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+        } else {
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+    }
 
     override fun onDestroy() {
         executor.shutdownNow()

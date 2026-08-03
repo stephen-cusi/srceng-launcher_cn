@@ -122,7 +122,7 @@
     <string name="md3_res_width">Largeur (px)</string>
     <string name="md3_res_height">Hauteur (px)</string>
     <string name="md3_section_tools">Outils</string>
-    <string name="vpk_tool">Outil VPK</string>
+    <string name="vpk_tool">Outils VPK et GMA</string>
     <string name="vpk_tool_desc">Créer, consulter et extraire des archives VPK1 et VPK2.</string>
     <string name="vpk_actions">Actions sur l’archive</string>
     <string name="vpk_actions_desc">La création produit un VPK autonome intégré. Pour une archive fractionnée, sélectionnez _dir.vpk et toutes les parties VPK numérotées.</string>
@@ -152,9 +152,10 @@
     <string name="vpk_output_name">Nom du VPK de sortie</string>
     <string name="vpk_output_name_invalid">Saisissez un nom de fichier valide.</string>
     <string name="vpk_create_done_path">VPK version %1$d créé dans %2$s</string>
-    <string name="vpk_file_manager">Gestionnaire de fichiers VPK</string><string name="vpk_manager_folder">Dossier · Touchez pour ouvrir</string><string name="vpk_manager_archive">Archive VPK · %1$s</string><string name="vpk_folder_empty">Ce dossier est vide.</string>
+    <string name="vpk_file_manager">Gestionnaire de fichiers VPK et GMA</string><string name="vpk_manager_folder">Dossier · Touchez pour ouvrir</string><string name="vpk_manager_archive">Archive VPK · %1$s</string><string name="gma_manager_archive">Archive GMA · %1$s</string><string name="vpk_folder_empty">Ce dossier est vide.</string>
     <string name="vpk_copy">Copier</string><string name="vpk_move">Déplacer</string><string name="vpk_pack">Empaqueter</string><string name="vpk_delete">Supprimer</string><string name="vpk_paste_here">Coller ici</string>
     <string name="vpk_copy_destination">Copie de %1$d élément(s) : choisissez le dossier de destination.</string><string name="vpk_move_destination">Déplacement de %1$d élément(s) : choisissez le dossier de destination.</string>
     <string name="vpk_copying">Copie des fichiers…</string><string name="vpk_moving">Déplacement des fichiers…</string><string name="vpk_deleting">Suppression des fichiers…</string><string name="vpk_copy_done">Fichiers copiés.</string><string name="vpk_move_done">Fichiers déplacés.</string><string name="vpk_delete_done">Fichiers supprimés.</string>
     <string name="vpk_delete_confirm_title">Supprimer la sélection ?</string><string name="vpk_delete_confirm">Supprimer définitivement %1$d élément(s) ? Cette action est irréversible.</string><string name="vpk_output_exists">Un fichier de ce nom existe déjà.</string><string name="vpk_extract_here">Extraire ici</string>
+    <string name="vpk_archive_browser">Explorateur d’archives VPK et GMA</string><string name="vpk_archive_summary">VPK version %1$d · Fichiers : %2$d</string><string name="gma_archive_summary">GMA version %1$d · Fichiers : %2$d · %3$s</string><string name="vpk_archive_folder">Dossier · Touchez pour ouvrir</string><string name="vpk_extract_all">Tout extraire</string><string name="vpk_extract_selected">Extraire la sélection</string><string name="vpk_overwrite_title">Remplacer les fichiers existants ?</string><string name="vpk_overwrite_message">Certains fichiers existent déjà. Remplacer uniquement les fichiers en conflit ?</string><string name="vpk_overwrite">Remplacer</string><string name="vpk_extract_done_path">Extraction terminée : %1$s</string>
 </resources>

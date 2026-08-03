@@ -124,8 +124,8 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="md3_res_width">宽度（像素）</string>
     <string name="md3_res_height">高度（像素）</string>
     <string name="md3_section_tools">工具</string>
-    <string name="vpk_tool">VPK 工具</string>
-    <string name="vpk_tool_desc">创建、查看和解压 VPK1 与 VPK2 文件。</string>
+    <string name="vpk_tool">VPK 和 GMA 工具</string>
+    <string name="vpk_tool_desc">浏览和解压 VPK、GMA（包括 gmad 创建的文件），同时支持创建 VPK。</string>
     <string name="vpk_actions">文件操作</string>
     <string name="vpk_actions_desc">创建功能会生成单文件内嵌 VPK。打开分卷文件时，请同时选择 _dir.vpk 和所有带编号的 VPK 分卷。</string>
     <string name="vpk_create">创建 VPK</string>
@@ -154,9 +154,10 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="vpk_output_name">输出 VPK 文件名</string>
     <string name="vpk_output_name_invalid">请输入有效的文件名。</string>
     <string name="vpk_create_done_path">VPK%1$d 已创建到 %2$s</string>
-    <string name="vpk_file_manager">VPK 文件管理器</string>
+    <string name="vpk_file_manager">VPK 和 GMA 文件管理器</string>
     <string name="vpk_manager_folder">文件夹 · 点击进入</string>
     <string name="vpk_manager_archive">VPK 文件 · %1$s</string>
+    <string name="gma_manager_archive">GMA 文件 · %1$s</string>
     <string name="vpk_folder_empty">此文件夹为空。</string>
     <string name="vpk_copy">复制</string>
     <string name="vpk_move">移动</string>
@@ -175,4 +176,14 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="vpk_delete_confirm">永久删除所选的 %1$d 项？此操作无法撤销。</string>
     <string name="vpk_output_exists">已存在同名文件。</string>
     <string name="vpk_extract_here">解压到当前目录</string>
+    <string name="vpk_archive_browser">VPK 和 GMA 内容浏览器</string>
+    <string name="vpk_archive_summary">VPK%1$d · %2$d 个文件</string>
+    <string name="gma_archive_summary">GMA%1$d · %2$d 个文件 · %3$s</string>
+    <string name="vpk_archive_folder">文件夹 · 点击进入</string>
+    <string name="vpk_extract_all">全部解压</string>
+    <string name="vpk_extract_selected">解压所选内容</string>
+    <string name="vpk_overwrite_title">覆盖已有文件？</string>
+    <string name="vpk_overwrite_message">部分待解压文件已经存在，是否仅覆盖发生冲突的文件？</string>
+    <string name="vpk_overwrite">覆盖</string>
+    <string name="vpk_extract_done_path">解压完成：%1$s</string>
 </resources>

@@ -122,7 +122,7 @@
     <string name="md3_res_width">幅（ピクセル）</string>
     <string name="md3_res_height">高さ（ピクセル）</string>
     <string name="md3_section_tools">ツール</string>
-    <string name="vpk_tool">VPK ツール</string>
+    <string name="vpk_tool">VPK・GMA ツール</string>
     <string name="vpk_tool_desc">VPK1 と VPK2 アーカイブの作成、表示、展開。</string>
     <string name="vpk_actions">アーカイブ操作</string>
     <string name="vpk_actions_desc">作成時は埋め込み型の単一 VPK を出力します。分割アーカイブを開く場合は、_dir.vpk と番号付き VPK をすべて選択してください。</string>
@@ -152,9 +152,10 @@
     <string name="vpk_output_name">出力 VPK 名</string>
     <string name="vpk_output_name_invalid">有効なファイル名を入力してください。</string>
     <string name="vpk_create_done_path">VPK バージョン %1$d を %2$s に作成しました</string>
-    <string name="vpk_file_manager">VPK ファイルマネージャー</string><string name="vpk_manager_folder">フォルダー · タップして開く</string><string name="vpk_manager_archive">VPK アーカイブ · %1$s</string><string name="vpk_folder_empty">このフォルダーは空です。</string>
+    <string name="vpk_file_manager">VPK・GMA ファイルマネージャー</string><string name="vpk_manager_folder">フォルダー · タップして開く</string><string name="vpk_manager_archive">VPK アーカイブ · %1$s</string><string name="gma_manager_archive">GMA アーカイブ · %1$s</string><string name="vpk_folder_empty">このフォルダーは空です。</string>
     <string name="vpk_copy">コピー</string><string name="vpk_move">移動</string><string name="vpk_pack">パック</string><string name="vpk_delete">削除</string><string name="vpk_paste_here">ここに貼り付け</string>
     <string name="vpk_copy_destination">%1$d 件をコピー：移動先フォルダーを選択してください。</string><string name="vpk_move_destination">%1$d 件を移動：移動先フォルダーを選択してください。</string>
     <string name="vpk_copying">ファイルをコピー中…</string><string name="vpk_moving">ファイルを移動中…</string><string name="vpk_deleting">ファイルを削除中…</string><string name="vpk_copy_done">ファイルをコピーしました。</string><string name="vpk_move_done">ファイルを移動しました。</string><string name="vpk_delete_done">ファイルを削除しました。</string>
     <string name="vpk_delete_confirm_title">選択項目を削除しますか？</string><string name="vpk_delete_confirm">選択した %1$d 件を完全に削除します。この操作は元に戻せません。</string><string name="vpk_output_exists">同名のファイルが既に存在します。</string><string name="vpk_extract_here">ここに展開</string>
+    <string name="vpk_archive_browser">VPK・GMA アーカイブブラウザー</string><string name="vpk_archive_summary">VPK バージョン %1$d · ファイル: %2$d</string><string name="gma_archive_summary">GMA バージョン %1$d · ファイル: %2$d · %3$s</string><string name="vpk_archive_folder">フォルダー · タップして開く</string><string name="vpk_extract_all">すべて展開</string><string name="vpk_extract_selected">選択項目を展開</string><string name="vpk_overwrite_title">既存ファイルを上書きしますか？</string><string name="vpk_overwrite_message">一部のファイルが既に存在します。競合するファイルのみ上書きしますか？</string><string name="vpk_overwrite">上書き</string><string name="vpk_extract_done_path">展開完了: %1$s</string>
 </resources>

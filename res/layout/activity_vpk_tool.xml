@@ -54,11 +54,11 @@
     <LinearLayout
         android:id="@+id/vpk_manager_status_area"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_below="@id/md3_app_bar"
         android:orientation="vertical"
         android:paddingBottom="8dp"
-        android:visibility="gone">
+        android:visibility="invisible">
 
         <TextView
             android:id="@+id/vpk_manager_status"
@@ -76,6 +76,7 @@
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/vpk_manager_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/vpk_manager_footer"

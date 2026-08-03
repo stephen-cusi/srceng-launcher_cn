@@ -123,8 +123,8 @@
     <string name="md3_res_custom_label">Custom resolution</string>
     <string name="md3_res_width">Width (px)</string>
     <string name="md3_res_height">Height (px)</string>
-    <string name="vpk_tool">VPK tool</string>
-    <string name="vpk_tool_desc">Create, inspect, and extract VPK version 1 and version 2 archives.</string>
+    <string name="vpk_tool">VPK and GMA tools</string>
+    <string name="vpk_tool_desc">Browse and extract VPK and GMA archives created by tools such as gmad. VPK creation is also supported.</string>
     <string name="vpk_actions" tools:ignore="UnusedResources">Archive actions</string>
     <string name="vpk_actions_desc" tools:ignore="UnusedResources">Creation writes a standalone embedded archive. When opening a split archive, select its _dir.vpk and all numbered VPK chunks together.</string>
     <string name="vpk_create" tools:ignore="UnusedResources">Create VPK</string>
@@ -137,11 +137,11 @@
     <string name="vpk_reading">Reading VPK…</string>
     <string name="vpk_creating">Creating VPK…</string>
     <string name="vpk_extracting">Extracting VPK…</string>
-    <string name="vpk_opened">VPK version %1$d · Files: %2$d</string>
-    <string name="vpk_entry_line">%1$s  ·  %2$s</string>
+    <string name="vpk_opened" tools:ignore="UnusedResources">VPK version %1$d · Files: %2$d</string>
+    <string name="vpk_entry_line" tools:ignore="UnusedResources">%1$s  ·  %2$s</string>
     <string name="vpk_progress">%1$d/%2$d · %3$s</string>
     <string name="vpk_create_done_short">VPK created successfully.</string>
-    <string name="vpk_extract_done">All files were extracted and verified.</string>
+    <string name="vpk_extract_done" tools:ignore="UnusedResources">All files were extracted and verified.</string>
     <string name="vpk_no_archive" tools:ignore="UnusedResources">Open a VPK first.</string>
     <string name="vpk_failed" tools:ignore="UnusedResources">Operation failed: %1$s</string>
     <string name="vpk_picker_title" tools:ignore="UnusedResources">Select files and folders</string>
@@ -154,9 +154,10 @@
     <string name="vpk_output_name_invalid">Enter a valid file name.</string>
     <string name="vpk_create_done_path" tools:ignore="UnusedResources">Created VPK version %1$d at %2$s</string>
     <string name="vpk_default_filename" translatable="false">pak01.vpk</string>
-    <string name="vpk_file_manager">VPK file manager</string>
+    <string name="vpk_file_manager">VPK and GMA file manager</string>
     <string name="vpk_manager_folder">Folder · Tap to open</string>
     <string name="vpk_manager_archive">VPK archive · %1$s</string>
+    <string name="gma_manager_archive">GMA archive · %1$s</string>
     <string name="vpk_folder_empty">This folder is empty.</string>
     <string name="vpk_copy">Copy</string>
     <string name="vpk_move">Move</string>
@@ -174,5 +175,15 @@
     <string name="vpk_delete_confirm_title">Delete selected items?</string>
     <string name="vpk_delete_confirm">Permanently delete the selection? This cannot be undone. Selected: %1$d</string>
     <string name="vpk_output_exists">A file with this name already exists.</string>
-    <string name="vpk_extract_here">Extract here</string>
+    <string name="vpk_extract_here" tools:ignore="UnusedResources">Extract here</string>
+    <string name="vpk_archive_browser">VPK archive browser</string>
+    <string name="vpk_archive_summary">VPK version %1$d · Files: %2$d</string>
+    <string name="gma_archive_summary">GMA version %1$d · Files: %2$d · %3$s</string>
+    <string name="vpk_archive_folder">Folder · Tap to open</string>
+    <string name="vpk_extract_all">Extract all</string>
+    <string name="vpk_extract_selected">Extract selected</string>
+    <string name="vpk_overwrite_title">Overwrite existing files?</string>
+    <string name="vpk_overwrite_message">Some extracted files already exist. Replace only the conflicting files?</string>
+    <string name="vpk_overwrite">Overwrite</string>
+    <string name="vpk_extract_done_path">Extraction complete: %1$s</string>
 </resources>

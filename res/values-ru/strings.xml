@@ -122,7 +122,7 @@
     <string name="md3_res_width">Ширина (px)</string>
     <string name="md3_res_height">Высота (px)</string>
     <string name="md3_section_tools">Инструменты</string>
-    <string name="vpk_tool">Инструмент VPK</string>
+    <string name="vpk_tool">Инструменты VPK и GMA</string>
     <string name="vpk_tool_desc">Создание, просмотр и распаковка архивов VPK1 и VPK2.</string>
     <string name="vpk_actions">Действия с архивом</string>
     <string name="vpk_actions_desc">Создание формирует одиночный встроенный VPK. Для разделённого архива выберите _dir.vpk и все нумерованные части VPK.</string>
@@ -152,9 +152,10 @@
     <string name="vpk_output_name">Имя выходного VPK</string>
     <string name="vpk_output_name_invalid">Введите допустимое имя файла.</string>
     <string name="vpk_create_done_path">VPK версии %1$d создан: %2$s</string>
-    <string name="vpk_file_manager">Файловый менеджер VPK</string><string name="vpk_manager_folder">Папка · Нажмите, чтобы открыть</string><string name="vpk_manager_archive">Архив VPK · %1$s</string><string name="vpk_folder_empty">Эта папка пуста.</string>
+    <string name="vpk_file_manager">Файловый менеджер VPK и GMA</string><string name="vpk_manager_folder">Папка · Нажмите, чтобы открыть</string><string name="vpk_manager_archive">Архив VPK · %1$s</string><string name="gma_manager_archive">Архив GMA · %1$s</string><string name="vpk_folder_empty">Эта папка пуста.</string>
     <string name="vpk_copy">Копировать</string><string name="vpk_move">Переместить</string><string name="vpk_pack">Упаковать</string><string name="vpk_delete">Удалить</string><string name="vpk_paste_here">Вставить сюда</string>
     <string name="vpk_copy_destination">Копирование элементов (%1$d): выберите папку назначения.</string><string name="vpk_move_destination">Перемещение элементов (%1$d): выберите папку назначения.</string>
     <string name="vpk_copying">Копирование файлов…</string><string name="vpk_moving">Перемещение файлов…</string><string name="vpk_deleting">Удаление файлов…</string><string name="vpk_copy_done">Файлы скопированы.</string><string name="vpk_move_done">Файлы перемещены.</string><string name="vpk_delete_done">Файлы удалены.</string>
     <string name="vpk_delete_confirm_title">Удалить выбранное?</string><string name="vpk_delete_confirm">Удалить выбранные элементы (%1$d) без возможности восстановления?</string><string name="vpk_output_exists">Файл с таким именем уже существует.</string><string name="vpk_extract_here">Распаковать сюда</string>
+    <string name="vpk_archive_browser">Просмотр архивов VPK и GMA</string><string name="vpk_archive_summary">VPK версии %1$d · Файлов: %2$d</string><string name="gma_archive_summary">GMA версии %1$d · Файлов: %2$d · %3$s</string><string name="vpk_archive_folder">Папка · Нажмите, чтобы открыть</string><string name="vpk_extract_all">Извлечь всё</string><string name="vpk_extract_selected">Извлечь выбранное</string><string name="vpk_overwrite_title">Заменить существующие файлы?</string><string name="vpk_overwrite_message">Некоторые файлы уже существуют. Заменить только конфликтующие файлы?</string><string name="vpk_overwrite">Заменить</string><string name="vpk_extract_done_path">Извлечение завершено: %1$s</string>
 </resources>
