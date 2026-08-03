@@ -445,6 +445,20 @@ public class SettingsActivity extends Activity {
         } catch (Throwable ignore) { return fallback; }
     }
 
+    private void saveCustomResolutionInputs() {
+        if (!Md3Theme.RES_MODE_CUSTOM.equals(lastResMode)) return;
+        int w = readIntEt(resCustomW, lastResCustomW);
+        int h = readIntEt(resCustomH, lastResCustomH);
+        if (w < 320) w = 320; else if (w > 8192) w = 8192;
+        if (h < 240) h = 240; else if (h > 8192) h = 8192;
+        Md3Theme.setResolutionCustomW(this, w);
+        Md3Theme.setResolutionCustomH(this, h);
+        lastResCustomW = w;
+        lastResCustomH = h;
+        try { if (resCustomW != null) resCustomW.setText(String.valueOf(w)); } catch (Throwable ignore) {}
+        try { if (resCustomH != null) resCustomH.setText(String.valueOf(h)); } catch (Throwable ignore) {}
+    }
+
     private void bindListeners() {
         if (darkGroup != null) {
             darkGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -531,20 +545,7 @@ public class SettingsActivity extends Activity {
                     String newMode = Md3Theme.RES_MODE_DEVICE;
                     if (checkedId == R.id.md3_res_mode_preset)       newMode = Md3Theme.RES_MODE_PRESET;
                     else if (checkedId == R.id.md3_res_mode_custom)  newMode = Md3Theme.RES_MODE_CUSTOM;
-                    // 切到 CUSTOM 模式的那一瞬间，把当前 EditText 已经存在的值（bindState 填的/上次残留的）立即同步并落盘，
-                    // 保证启动游戏读到的是 UI 上实际显示的数字（避免 TextWatcher 还没触发导致 SP 中残留脏值）。
-                    if (Md3Theme.RES_MODE_CUSTOM.equals(newMode)) {
-                        int w = readIntEt(resCustomW, lastResCustomW);
-                        if (w < 320) w = 320; else if (w > 8192) w = 8192;
-                        int h = readIntEt(resCustomH, lastResCustomH);
-                        if (h < 240) h = 240; else if (h > 8192) h = 8192;
-                        Md3Theme.setResolutionCustomW(SettingsActivity.this, w);
-                        Md3Theme.setResolutionCustomH(SettingsActivity.this, h);
-                        lastResCustomW = w;
-                        lastResCustomH = h;
-                        try { if (resCustomW != null) resCustomW.setText(String.valueOf(w)); } catch (Throwable ignore) {}
-                        try { if (resCustomH != null) resCustomH.setText(String.valueOf(h)); } catch (Throwable ignore) {}
-                    }
+                    if (!Md3Theme.RES_MODE_CUSTOM.equals(newMode)) saveCustomResolutionInputs();
                     Md3Theme.setResolutionMode(SettingsActivity.this, newMode);
                     lastResMode = newMode;
                     updateResolutionVisibility();
@@ -562,15 +563,15 @@ public class SettingsActivity extends Activity {
                 @Override public void onNothingSelected(AdapterView<?> parent) {}
             });
         }
-        // 自定义宽高：输入变化时立刻保存（仅当 CUSTOM 模式激活才写入，避免误存旧值/默认值）
+        // Only persist complete valid values. Clamping partial input such as "1" or "19"
+        // immediately would overwrite the requested resolution with the minimum value.
         android.text.TextWatcher customWch = new android.text.TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override public void afterTextChanged(android.text.Editable s) {
                 if (!Md3Theme.RES_MODE_CUSTOM.equals(lastResMode)) return;
                 int w = readIntEt(resCustomW, lastResCustomW);
-                if (w < 320) w = 320; else if (w > 8192) w = 8192;
-                if (w != lastResCustomW) {
+                if (w >= 320 && w <= 8192 && w != lastResCustomW) {
                     Md3Theme.setResolutionCustomW(SettingsActivity.this, w);
                     lastResCustomW = w;
                 }
@@ -582,8 +583,7 @@ public class SettingsActivity extends Activity {
             @Override public void afterTextChanged(android.text.Editable s) {
                 if (!Md3Theme.RES_MODE_CUSTOM.equals(lastResMode)) return;
                 int h = readIntEt(resCustomH, lastResCustomH);
-                if (h < 240) h = 240; else if (h > 8192) h = 8192;
-                if (h != lastResCustomH) {
+                if (h >= 240 && h <= 8192 && h != lastResCustomH) {
                     Md3Theme.setResolutionCustomH(SettingsActivity.this, h);
                     lastResCustomH = h;
                 }
@@ -595,6 +595,12 @@ public class SettingsActivity extends Activity {
         if (resCustomH != null) {
             try { resCustomH.addTextChangedListener(customHch); } catch (Throwable ignore) {}
         }
+    }
+
+    @Override
+    protected void onPause() {
+        saveCustomResolutionInputs();
+        super.onPause();
     }
 
     private void updateSeedVisualState() {

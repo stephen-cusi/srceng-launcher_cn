@@ -132,6 +132,9 @@ public class ValveActivity2 { // not activity, i am lazy to change native method
 			int w = res[0], h = res[1];
 			// Sanitize: reasonable range (320..8192 for both)
 			if( w >= 320 && w <= 8192 && h >= 240 && h <= 8192 ) {
+				// The launcher command field may contain old resolution arguments. Source's
+				// command-line parser can select the first duplicate, so keep one final pair.
+				argv = argv.replaceAll("(?i)(^|\\s)-(?:w|width|h|height)(?:\\s+|=)\\S+", "$1").trim();
 				argv = argv + " -w " + w + " -h " + h;
 			}
 		}
