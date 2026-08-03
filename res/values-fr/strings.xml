@@ -66,6 +66,27 @@
     <string name="md3_title_launcher">Lanceur Source Engine</string>
     <string name="md3_game_config_card">Configuration du jeu</string>
     <string name="md3_paths_card">Chemins</string>
+    <string name="md3_section_updates">Mises à jour</string>
+    <string name="md3_update_channel">Canal de mise à jour</string>
+    <string name="md3_update_channel_desc">Le canal stable reçoit les versions testées ; le canal développement reçoit les dernières versions de test.</string>
+    <string name="md3_update_stable">Stable</string>
+    <string name="md3_update_dev">Développement</string>
+    <string name="md3_update_mirror">Miroir de téléchargement</string>
+    <string name="md3_update_mirror_desc">Le mode automatique essaie d\'abord les miroirs, puis GitHub. La disponibilité des miroirs publics peut changer.</string>
+    <string name="md3_update_mirror_auto">Auto (miroirs en priorité)</string>
+    <string name="md3_update_mirror_test">Tester tous les miroirs</string>
+    <string name="md3_update_mirror_testing">Test des téléchargements depuis les miroirs…</string>
+    <string name="md3_update_mirror_available">Disponible</string>
+    <string name="md3_update_mirror_unavailable">Indisponible</string>
+    <string name="md3_update_check">Rechercher des mises à jour</string>
+    <string name="md3_update_checking">Recherche de mises à jour…</string>
+    <string name="md3_update_current">Version actuelle : %1$s</string>
+    <string name="md3_update_latest">Vous utilisez déjà la dernière version de ce canal.</string>
+    <string name="md3_update_unpublished">Aucune version n\'a encore été publiée sur ce canal.</string>
+    <string name="md3_update_available">La version %1$s est disponible</string>
+    <string name="md3_update_failed">Échec de la recherche de mise à jour : %1$s</string>
+    <string name="md3_update_download">Télécharger l\'APK</string>
+    <string name="md3_update_open_failed">Impossible d\'ouvrir le lien de téléchargement de l\'APK.</string>
 
     <!-- MD3 Language section -->
     <string name="md3_section_language">Langue</string>

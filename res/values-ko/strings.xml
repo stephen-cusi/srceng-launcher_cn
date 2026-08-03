@@ -66,6 +66,27 @@
     <string name="md3_title_launcher">Source Engine 런처</string>
     <string name="md3_game_config_card">게임 구성</string>
     <string name="md3_paths_card">경로</string>
+    <string name="md3_section_updates">업데이트</string>
+    <string name="md3_update_channel">업데이트 채널</string>
+    <string name="md3_update_channel_desc">안정 버전은 테스트된 릴리스를, 개발 버전은 최신 테스트 빌드를 제공합니다.</string>
+    <string name="md3_update_stable">안정 버전</string>
+    <string name="md3_update_dev">개발 버전</string>
+    <string name="md3_update_mirror">다운로드 미러</string>
+    <string name="md3_update_mirror_desc">자동 모드는 미러를 먼저 시도하고 실패하면 GitHub를 사용합니다. 공개 미러의 가용성은 변경될 수 있습니다.</string>
+    <string name="md3_update_mirror_auto">자동(미러 우선)</string>
+    <string name="md3_update_mirror_test">모든 미러 테스트</string>
+    <string name="md3_update_mirror_testing">미러 다운로드 테스트 중…</string>
+    <string name="md3_update_mirror_available">다운로드 가능</string>
+    <string name="md3_update_mirror_unavailable">접속 불가</string>
+    <string name="md3_update_check">업데이트 확인</string>
+    <string name="md3_update_checking">업데이트 확인 중…</string>
+    <string name="md3_update_current">현재 버전: %1$s</string>
+    <string name="md3_update_latest">이 채널의 최신 버전을 사용 중입니다.</string>
+    <string name="md3_update_unpublished">이 채널에는 아직 게시된 버전이 없습니다.</string>
+    <string name="md3_update_available">버전 %1$s 사용 가능</string>
+    <string name="md3_update_failed">업데이트 확인 실패: %1$s</string>
+    <string name="md3_update_download">APK 다운로드</string>
+    <string name="md3_update_open_failed">APK 다운로드 링크를 열 수 없습니다.</string>
 
     <!-- MD3 Language section -->
     <string name="md3_section_language">언어</string>

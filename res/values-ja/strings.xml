@@ -66,6 +66,27 @@
     <string name="md3_title_launcher">Source Engine ランチャー</string>
     <string name="md3_game_config_card">ゲーム設定</string>
     <string name="md3_paths_card">パス</string>
+    <string name="md3_section_updates">アップデート</string>
+    <string name="md3_update_channel">更新チャンネル</string>
+    <string name="md3_update_channel_desc">安定版ではテスト済みのリリース、開発版では最新のテストビルドを受け取ります。</string>
+    <string name="md3_update_stable">安定版</string>
+    <string name="md3_update_dev">開発版</string>
+    <string name="md3_update_mirror">ダウンロードミラー</string>
+    <string name="md3_update_mirror_desc">自動ではミラーを優先し、失敗時に GitHub を使用します。公開ミラーの利用可否は変わる場合があります。</string>
+    <string name="md3_update_mirror_auto">自動（ミラー優先）</string>
+    <string name="md3_update_mirror_test">すべてのミラーをテスト</string>
+    <string name="md3_update_mirror_testing">ミラーからのダウンロードをテスト中…</string>
+    <string name="md3_update_mirror_available">利用可能</string>
+    <string name="md3_update_mirror_unavailable">利用不可</string>
+    <string name="md3_update_check">更新を確認</string>
+    <string name="md3_update_checking">更新を確認中…</string>
+    <string name="md3_update_current">現在のバージョン：%1$s</string>
+    <string name="md3_update_latest">このチャンネルの最新バージョンです。</string>
+    <string name="md3_update_unpublished">このチャンネルにはまだ公開済みバージョンがありません。</string>
+    <string name="md3_update_available">バージョン %1$s が利用可能です</string>
+    <string name="md3_update_failed">更新の確認に失敗しました：%1$s</string>
+    <string name="md3_update_download">APK をダウンロード</string>
+    <string name="md3_update_open_failed">APK のダウンロードリンクを開けませんでした。</string>
 
     <!-- MD3 Language section -->
     <string name="md3_section_language">言語</string>

@@ -66,6 +66,27 @@
     <string name="md3_title_launcher">Source Engine лаунчер</string>
     <string name="md3_game_config_card">Конфиг игры</string>
     <string name="md3_paths_card">Пути</string>
+    <string name="md3_section_updates">Обновления</string>
+    <string name="md3_update_channel">Канал обновлений</string>
+    <string name="md3_update_channel_desc">Стабильный канал получает проверенные версии, канал разработки — новейшие тестовые сборки.</string>
+    <string name="md3_update_stable">Стабильный</string>
+    <string name="md3_update_dev">Разработка</string>
+    <string name="md3_update_mirror">Зеркало загрузки</string>
+    <string name="md3_update_mirror_desc">Автовыбор сначала пробует зеркала, затем GitHub. Доступность публичных зеркал может меняться.</string>
+    <string name="md3_update_mirror_auto">Авто (сначала зеркала)</string>
+    <string name="md3_update_mirror_test">Проверить все зеркала</string>
+    <string name="md3_update_mirror_testing">Проверка загрузки с зеркал…</string>
+    <string name="md3_update_mirror_available">Доступно</string>
+    <string name="md3_update_mirror_unavailable">Недоступно</string>
+    <string name="md3_update_check">Проверить обновления</string>
+    <string name="md3_update_checking">Проверка обновлений…</string>
+    <string name="md3_update_current">Текущая версия: %1$s</string>
+    <string name="md3_update_latest">Установлена последняя версия для этого канала.</string>
+    <string name="md3_update_unpublished">В этом канале пока нет опубликованных версий.</string>
+    <string name="md3_update_available">Доступна версия %1$s</string>
+    <string name="md3_update_failed">Не удалось проверить обновления: %1$s</string>
+    <string name="md3_update_download">Скачать APK</string>
+    <string name="md3_update_open_failed">Не удалось открыть ссылку для загрузки APK.</string>
 
     <!-- MD3 Language section -->
     <string name="md3_section_language">Язык</string>

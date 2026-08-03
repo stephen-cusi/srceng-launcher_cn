@@ -61,6 +61,27 @@
     <string name="md3_title_launcher">起源引擎啟動器</string>
     <string name="md3_game_config_card">遊戲設定</string>
     <string name="md3_paths_card">資源路徑</string>
+    <string name="md3_section_updates">軟體更新</string>
+    <string name="md3_update_channel">更新頻道</string>
+    <string name="md3_update_channel_desc">穩定版提供經過測試的版本；開發版提供最新測試版本。</string>
+    <string name="md3_update_stable">穩定版</string>
+    <string name="md3_update_dev">開發版</string>
+    <string name="md3_update_mirror">下載鏡像</string>
+    <string name="md3_update_mirror_desc">自動模式會優先嘗試鏡像，失敗後改用 GitHub。公共鏡像的可用性可能隨時變化。</string>
+    <string name="md3_update_mirror_auto">自動選擇（鏡像優先）</string>
+    <string name="md3_update_mirror_test">一鍵測試全部鏡像</string>
+    <string name="md3_update_mirror_testing">正在測試鏡像下載…</string>
+    <string name="md3_update_mirror_available">可下載</string>
+    <string name="md3_update_mirror_unavailable">無法存取</string>
+    <string name="md3_update_check">檢查更新</string>
+    <string name="md3_update_checking">正在檢查更新…</string>
+    <string name="md3_update_current">目前版本：%1$s</string>
+    <string name="md3_update_latest">目前已是此頻道的最新版本。</string>
+    <string name="md3_update_unpublished">此頻道目前沒有已發布的版本。</string>
+    <string name="md3_update_available">發現新版本 %1$s</string>
+    <string name="md3_update_failed">檢查更新失敗：%1$s</string>
+    <string name="md3_update_download">下載 APK</string>
+    <string name="md3_update_open_failed">無法開啟 APK 下載連結。</string>
 
     <!-- MD3 Language section -->
     <string name="md3_section_language">語言設定</string>

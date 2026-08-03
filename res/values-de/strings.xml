@@ -66,6 +66,27 @@
     <string name="md3_title_launcher">Source Engine Launcher</string>
     <string name="md3_game_config_card">Spielkonfiguration</string>
     <string name="md3_paths_card">Pfade</string>
+    <string name="md3_section_updates">Updates</string>
+    <string name="md3_update_channel">Update-Kanal</string>
+    <string name="md3_update_channel_desc">Der stabile Kanal erhält getestete Versionen, der Entwicklungskanal die neuesten Test-Builds.</string>
+    <string name="md3_update_stable">Stabil</string>
+    <string name="md3_update_dev">Entwicklung</string>
+    <string name="md3_update_mirror">Download-Spiegelserver</string>
+    <string name="md3_update_mirror_desc">Automatisch versucht zuerst Spiegelserver und danach GitHub. Die Verfügbarkeit öffentlicher Spiegelserver kann sich ändern.</string>
+    <string name="md3_update_mirror_auto">Automatisch (Spiegelserver zuerst)</string>
+    <string name="md3_update_mirror_test">Alle Spiegelserver testen</string>
+    <string name="md3_update_mirror_testing">Spiegelserver-Downloads werden getestet…</string>
+    <string name="md3_update_mirror_available">Verfügbar</string>
+    <string name="md3_update_mirror_unavailable">Nicht verfügbar</string>
+    <string name="md3_update_check">Nach Updates suchen</string>
+    <string name="md3_update_checking">Updates werden gesucht…</string>
+    <string name="md3_update_current">Aktuelle Version: %1$s</string>
+    <string name="md3_update_latest">Du verwendest bereits die neueste Version dieses Kanals.</string>
+    <string name="md3_update_unpublished">In diesem Kanal wurde noch keine Version veröffentlicht.</string>
+    <string name="md3_update_available">Version %1$s ist verfügbar</string>
+    <string name="md3_update_failed">Update-Prüfung fehlgeschlagen: %1$s</string>
+    <string name="md3_update_download">APK herunterladen</string>
+    <string name="md3_update_open_failed">Der APK-Downloadlink konnte nicht geöffnet werden.</string>
 
     <!-- MD3 Language section -->
     <string name="md3_section_language">Sprache</string>
