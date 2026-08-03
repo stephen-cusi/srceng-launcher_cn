@@ -1,11 +1,13 @@
 package me.nillerusr;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -43,7 +46,13 @@ public class SettingsActivity extends Activity {
     private RadioButton darkSystem, darkOff, darkOn;
     private Switch dynamicSwitch;
     private LinearLayout seedContainer;
+    private LinearLayout customColorContainer;
+    private View customColorPreview;
+    private SeekBar customRed, customGreen, customBlue;
+    private TextView customRedValue, customGreenValue, customBlueValue;
+    private EditText customHex;
     private Button previewFilled, previewTonal, previewOutlined;
+    private boolean updatingColorControls;
 
     // Language
     private Spinner uiLangSpinner, gameLangSpinner;
@@ -56,6 +65,11 @@ public class SettingsActivity extends Activity {
     private Spinner resPresetSpinner;
     private ArrayAdapter<String> resPresetAdapter;
     private EditText resCustomW, resCustomH;
+
+    // Updates
+    private Spinner updateChannelSpinner;
+    private Button checkUpdateButton;
+    private TextView updateStatus;
 
     private int lastDarkMode = Md3Theme.THEME_SYSTEM;
     private boolean lastDynamic = false;
@@ -80,6 +94,7 @@ public class SettingsActivity extends Activity {
         buildUiLangSpinner();
         buildGameLangSpinner();
         buildResolutionPresetSpinner();
+        buildUpdateChannelSpinner();
         bindListeners();
         updateSeedVisualState();
         updateResolutionVisibility();
@@ -106,6 +121,15 @@ public class SettingsActivity extends Activity {
         darkOn = optFind(R.id.md3_dark_on);
         dynamicSwitch = optFind(R.id.md3_dynamic_switch);
         seedContainer = optFind(R.id.md3_seed_container);
+        customColorContainer = optFind(R.id.md3_seed_custom_container);
+        customColorPreview = optFind(R.id.md3_seed_custom_preview);
+        customRed = optFind(R.id.md3_seed_red);
+        customGreen = optFind(R.id.md3_seed_green);
+        customBlue = optFind(R.id.md3_seed_blue);
+        customRedValue = optFind(R.id.md3_seed_red_value);
+        customGreenValue = optFind(R.id.md3_seed_green_value);
+        customBlueValue = optFind(R.id.md3_seed_blue_value);
+        customHex = optFind(R.id.md3_seed_hex);
         previewFilled = optFind(R.id.md3_preview_btn_filled);
         previewTonal = optFind(R.id.md3_preview_btn_tonal);
         previewOutlined = optFind(R.id.md3_preview_btn_outlined);
@@ -123,6 +147,9 @@ public class SettingsActivity extends Activity {
         resPresetSpinner = optFind(R.id.md3_res_preset_spinner);
         resCustomW       = optFind(R.id.md3_res_custom_w);
         resCustomH       = optFind(R.id.md3_res_custom_h);
+        updateChannelSpinner = optFind(R.id.md3_update_channel);
+        checkUpdateButton = optFind(R.id.md3_check_update);
+        updateStatus = optFind(R.id.md3_update_status);
 
         ImageButton back = optFind(R.id.md3_button_back);
         if (back != null) {
@@ -172,6 +199,7 @@ public class SettingsActivity extends Activity {
         lastDarkMode = mode;
         lastDynamic = dyn;
         lastSeed = Md3Theme.getSeedColor(this);
+        updateCustomColorControls(lastSeed);
 
         // UI language — Spinner selection; done in buildUiLangSpinner()
         lastUiLang = Md3Theme.getUiLang(this);
@@ -449,6 +477,65 @@ public class SettingsActivity extends Activity {
         try { if (resCustomH != null) resCustomH.setText(String.valueOf(h)); } catch (Throwable ignore) {}
     }
 
+    private void buildUpdateChannelSpinner() {
+        if (updateChannelSpinner == null) return;
+        String[] labels = new String[]{
+                getString(R.string.md3_update_stable), getString(R.string.md3_update_dev)
+        };
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, labels);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        updateChannelSpinner.setAdapter(adapter);
+        String channel = getSharedPreferences("mod", 0).getString(
+                UpdateSystem.PREF_CHANNEL, UpdateSystem.CHANNEL_STABLE);
+        updateChannelSpinner.setSelection(UpdateSystem.CHANNEL_DEV.equals(channel) ? 1 : 0, false);
+        updateChannelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selected = position == 1 ? UpdateSystem.CHANNEL_DEV : UpdateSystem.CHANNEL_STABLE;
+                getSharedPreferences("mod", 0).edit().putString(UpdateSystem.PREF_CHANNEL, selected).apply();
+            }
+            @Override public void onNothingSelected(AdapterView<?> parent) {}
+        });
+        try {
+            String current = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            if (updateStatus != null) updateStatus.setText(getString(R.string.md3_update_current, current));
+        } catch (Throwable ignore) {}
+    }
+
+    private void checkForUpdates() {
+        String channel = updateChannelSpinner != null && updateChannelSpinner.getSelectedItemPosition() == 1
+                ? UpdateSystem.CHANNEL_DEV : UpdateSystem.CHANNEL_STABLE;
+        if (checkUpdateButton != null) checkUpdateButton.setEnabled(false);
+        if (updateStatus != null) updateStatus.setText(R.string.md3_update_checking);
+        new UpdateSystem(this, channel, new UpdateSystem.Callback() {
+            @Override public void onUpdateResult(final UpdateSystem.Result result) {
+                if (checkUpdateButton != null) checkUpdateButton.setEnabled(true);
+                if (!result.success) {
+                    if (updateStatus != null) updateStatus.setText(getString(R.string.md3_update_failed, result.error));
+                    return;
+                }
+                if (!result.published) {
+                    if (updateStatus != null) updateStatus.setText(R.string.md3_update_unpublished);
+                    return;
+                }
+                if (!result.available) {
+                    if (updateStatus != null) updateStatus.setText(R.string.md3_update_latest);
+                    return;
+                }
+                if (updateStatus != null) updateStatus.setText(getString(R.string.md3_update_available, result.versionName));
+                new AlertDialog.Builder(SettingsActivity.this)
+                        .setTitle(getString(R.string.md3_update_available, result.versionName))
+                        .setMessage(result.changelog)
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setPositiveButton(R.string.md3_update_download, new android.content.DialogInterface.OnClickListener() {
+                            @Override public void onClick(android.content.DialogInterface dialog, int which) {
+                                try { startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(result.apkUrl))); }
+                                catch (Throwable t) { Toast.makeText(SettingsActivity.this, R.string.md3_update_open_failed, Toast.LENGTH_LONG).show(); }
+                            }
+                        }).show();
+            }
+        }).execute();
+    }
+
     private void bindListeners() {
         if (darkGroup != null) {
             darkGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -476,6 +563,12 @@ public class SettingsActivity extends Activity {
                     }
                     if (isChecked != lastDynamic) { lastDynamic = isChecked; refreshTheme(REFRESH_TOKEN_REDRAW); }
                 }
+            });
+        }
+        bindCustomColorControls();
+        if (checkUpdateButton != null) {
+            checkUpdateButton.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) { checkForUpdates(); }
             });
         }
 
@@ -586,9 +679,74 @@ public class SettingsActivity extends Activity {
     }
 
     private void updateSeedVisualState() {
-        if (seedContainer == null) return;
         boolean dyn = Md3Theme.isDynamicColorAvailable() && Md3Theme.getDynamicColor(this);
         try { seedContainer.setAlpha(dyn ? 0.42f : 1.0f); } catch (Throwable ignore) {}
+        try { customColorContainer.setAlpha(dyn ? 0.42f : 1.0f); } catch (Throwable ignore) {}
+    }
+
+    private void bindCustomColorControls() {
+        SeekBar.OnSeekBarChangeListener listener = new SeekBar.OnSeekBarChangeListener() {
+            @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser && !updatingColorControls) applyCustomColorFromSliders();
+            }
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
+        };
+        if (customRed != null) customRed.setOnSeekBarChangeListener(listener);
+        if (customGreen != null) customGreen.setOnSeekBarChangeListener(listener);
+        if (customBlue != null) customBlue.setOnSeekBarChangeListener(listener);
+        if (customHex != null) {
+            customHex.addTextChangedListener(new android.text.TextWatcher() {
+                @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                @Override public void afterTextChanged(android.text.Editable s) {
+                    if (updatingColorControls) return;
+                    String value = s == null ? "" : s.toString().trim();
+                    if (value.startsWith("#")) value = value.substring(1);
+                    if (!value.matches("(?i)[0-9a-f]{6}")) return;
+                    try { applyCustomSeed(0xFF000000 | Integer.parseInt(value, 16)); } catch (Throwable ignore) {}
+                }
+            });
+        }
+    }
+
+    private void applyCustomColorFromSliders() {
+        int r = customRed == null ? 0 : customRed.getProgress();
+        int g = customGreen == null ? 0 : customGreen.getProgress();
+        int b = customBlue == null ? 0 : customBlue.getProgress();
+        applyCustomSeed(Color.rgb(r, g, b));
+    }
+
+    private void applyCustomSeed(int color) {
+        color |= 0xFF000000;
+        Md3Theme.setSeedColor(this, color);
+        lastSeed = color;
+        updateCustomColorControls(color);
+        refreshTheme(REFRESH_TOKEN_REDRAW);
+    }
+
+    private void updateCustomColorControls(int color) {
+        updatingColorControls = true;
+        try {
+            int r = Color.red(color), g = Color.green(color), b = Color.blue(color);
+            if (customRed != null) customRed.setProgress(r);
+            if (customGreen != null) customGreen.setProgress(g);
+            if (customBlue != null) customBlue.setProgress(b);
+            if (customRedValue != null) customRedValue.setText(String.valueOf(r));
+            if (customGreenValue != null) customGreenValue.setText(String.valueOf(g));
+            if (customBlueValue != null) customBlueValue.setText(String.valueOf(b));
+            if (customHex != null) customHex.setText(String.format("#%06X", color & 0x00FFFFFF));
+            if (customColorPreview != null) {
+                GradientDrawable preview = new GradientDrawable();
+                preview.setShape(GradientDrawable.RECTANGLE);
+                preview.setCornerRadius(dp(12));
+                preview.setColor(color);
+                preview.setStroke(dp(1), 0x55000000);
+                customColorPreview.setBackground(preview);
+            }
+        } finally {
+            updatingColorControls = false;
+        }
     }
 
     private void buildSeedColors() {
@@ -677,6 +835,7 @@ public class SettingsActivity extends Activity {
                     Md3Theme.setSeedColor(SettingsActivity.this, color);
                     if (lastSeed != color) {
                         lastSeed = color;
+                        updateCustomColorControls(color);
                         for (int j = 0; j < seedContainer.getChildCount(); j++) {
                             try {
                                 ViewGroup c = (ViewGroup) seedContainer.getChildAt(j);

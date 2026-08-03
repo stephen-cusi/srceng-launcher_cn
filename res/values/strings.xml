@@ -50,6 +50,8 @@
     <string name="md3_dynamic_color_on_hint">Dynamic color enabled. Accent colors will be sourced from your wallpaper; manual seed colors will take effect only when wallpaper colors are unavailable.</string>
     <string name="md3_seed_ignored_when_dynamic">Dynamic color is active — seed color currently has no effect. Turn off dynamic color to use the manual seed.</string>
     <string name="md3_seed_color">Accent color</string>
+    <string name="md3_custom_color">Custom color</string>
+    <string name="md3_hex_color_hint">#RRGGBB</string>
     <string name="md3_preview">Preview</string>
     <string name="md3_preview_primary">Primary</string>
     <string name="md3_preview_secondary">Filled tonal</string>
@@ -64,6 +66,20 @@
     <string name="md3_title_launcher">Source Engine Launcher</string>
     <string name="md3_game_config_card">Game configuration</string>
     <string name="md3_paths_card">Paths</string>
+    <string name="md3_section_updates">Updates</string>
+    <string name="md3_update_channel">Update channel</string>
+    <string name="md3_update_channel_desc">Stable receives tested releases. Development receives the newest test builds.</string>
+    <string name="md3_update_stable">Stable</string>
+    <string name="md3_update_dev">Development</string>
+    <string name="md3_update_check">Check for updates</string>
+    <string name="md3_update_checking">Checking for updates…</string>
+    <string name="md3_update_current">Current version: %1$s</string>
+    <string name="md3_update_latest">You already have the latest version for this channel.</string>
+    <string name="md3_update_unpublished">No version has been published to this channel yet.</string>
+    <string name="md3_update_available">Version %1$s is available</string>
+    <string name="md3_update_failed">Update check failed: %1$s</string>
+    <string name="md3_update_download">Download APK</string>
+    <string name="md3_update_open_failed">Could not open the APK download link.</string>
 
     <!-- MD3 Language section -->
     <string name="md3_section_language">Language</string>

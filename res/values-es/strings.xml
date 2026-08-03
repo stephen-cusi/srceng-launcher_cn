@@ -50,6 +50,8 @@
     <string name="md3_dynamic_color_on_hint">Colores dinámicos activados: los acentos se toman del fondo de pantalla; los acentos manuales solo se aplican si el fondo no proporciona colores.</string>
     <string name="md3_seed_ignored_when_dynamic">Colores dinámicos activos — el acento manual no se aplica. Desactiva los colores dinámicos para usar el acento elegido.</string>
     <string name="md3_seed_color">Color de acento</string>
+    <string name="md3_custom_color">Color personalizado</string>
+    <string name="md3_hex_color_hint">#RRGGBB</string>
     <string name="md3_preview">Vista previa</string>
     <string name="md3_preview_primary">Primario</string>
     <string name="md3_preview_secondary">Secundario</string>

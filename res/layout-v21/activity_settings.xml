@@ -313,6 +313,33 @@
             </LinearLayout>
         </LinearLayout>
 
+        <!-- ========== Updates ========== -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/md3_section_updates"
+            android:textAllCaps="true"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:tag="primary"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp"
+            android:tag="card_outlined">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/md3_update_channel" android:textStyle="bold" android:textSize="16sp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/md3_update_channel_desc" android:textSize="12sp" android:layout_marginTop="4dp" android:tag="subtitle"/>
+            <Spinner android:id="@+id/md3_update_channel" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:spinnerMode="dialog"/>
+            <TextView android:id="@+id/md3_update_status" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:tag="subtitle"/>
+            <Button android:id="@+id/md3_check_update" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="@string/md3_update_check" android:tag="filled"/>
+        </LinearLayout>
+
         <!-- ========== Appearance section title ========== -->
         <TextView
             android:layout_width="wrap_content"
@@ -431,13 +458,80 @@
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:layout_marginBottom="12dp"/>
-            <LinearLayout
-                android:id="@+id/md3_seed_container"
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="start">
-                <!-- 4 seed color dots will be appended at runtime -->
+                android:scrollbars="none"
+                android:fillViewport="true">
+                <LinearLayout
+                    android:id="@+id/md3_seed_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="start"/>
+            </HorizontalScrollView>
+
+            <LinearLayout
+                android:id="@+id/md3_seed_custom_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/md3_custom_color"
+                    android:textStyle="bold"
+                    android:textSize="14sp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <View
+                        android:id="@+id/md3_seed_custom_preview"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="12dp"/>
+                    <EditText
+                        android:id="@+id/md3_seed_hex"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/md3_hex_color_hint"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="7"
+                        android:singleLine="true"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <TextView android:layout_width="24dp" android:layout_height="wrap_content" android:text="R"/>
+                    <SeekBar android:id="@+id/md3_seed_red" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:max="255"/>
+                    <TextView android:id="@+id/md3_seed_red_value" android:layout_width="40dp" android:layout_height="wrap_content" android:gravity="end"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <TextView android:layout_width="24dp" android:layout_height="wrap_content" android:text="G"/>
+                    <SeekBar android:id="@+id/md3_seed_green" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:max="255"/>
+                    <TextView android:id="@+id/md3_seed_green_value" android:layout_width="40dp" android:layout_height="wrap_content" android:gravity="end"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <TextView android:layout_width="24dp" android:layout_height="wrap_content" android:text="B"/>
+                    <SeekBar android:id="@+id/md3_seed_blue" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:max="255"/>
+                    <TextView android:id="@+id/md3_seed_blue_value" android:layout_width="40dp" android:layout_height="wrap_content" android:gravity="end"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 

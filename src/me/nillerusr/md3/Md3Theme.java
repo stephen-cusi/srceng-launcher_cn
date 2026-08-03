@@ -119,6 +119,10 @@ public final class Md3Theme {
         0xFF7C4DFF, // purple
         0xFF0088FF, // blue
         0xFF00A66B, // green
+        0xFFE53935, // red
+        0xFFD81B60, // pink
+        0xFF00ACC1, // cyan
+        0xFFFFB300, // amber
     };
 
     // =========================================================

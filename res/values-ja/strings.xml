@@ -50,6 +50,8 @@
     <string name="md3_dynamic_color_on_hint">ダイナミックカラーが有効です。アクセントカラーは壁紙から取得され、壁紙の色が利用できない場合に手動選択したアクセントが適用されます。</string>
     <string name="md3_seed_ignored_when_dynamic">ダイナミックカラーが有効なため、アクセントカラーは現在適用されません。ダイナミックカラーをオフにしてください。</string>
     <string name="md3_seed_color">アクセントカラー</string>
+    <string name="md3_custom_color">カスタムカラー</string>
+    <string name="md3_hex_color_hint">#RRGGBB</string>
     <string name="md3_preview">プレビュー</string>
     <string name="md3_preview_primary">プライマリ</string>
     <string name="md3_preview_secondary">トーン</string>

@@ -1,71 +1,104 @@
 package me.nillerusr;
 
-import android.content.*;
-import java.io.*;
-import java.net.*;
-import com.valvesoftware.source.R;
+import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.os.AsyncTask;
-import java.net.URL;
-import java.net.URLConnection;
-import java.io.InputStream;
-import java.io.BufferedInputStream;
+
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
-import android.util.Log;
-import me.nillerusr.UpdateService;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-public class UpdateSystem extends AsyncTask<String, Integer, String> {
-	private static final String git_url = "https://raw.githubusercontent.com/nillerusr/srceng-deploy";
-	private static final String app = "srceng-debug.apk";
+public class UpdateSystem extends AsyncTask<Void, Void, UpdateSystem.Result> {
+    public static final String CHANNEL_STABLE = "stable";
+    public static final String CHANNEL_DEV = "dev";
+    public static final String PREF_CHANNEL = "update_channel";
+    private static final String RAW_BASE = "https://raw.githubusercontent.com/stephen-cusi/srceng-launcher-updates/main/";
 
-	String deploy_branch, last_commit;
-	Context mContext;
+    public interface Callback {
+        void onUpdateResult(Result result);
+    }
 
-	public UpdateSystem( Context context )
-	{
-		mContext = context; // save application context
-		deploy_branch = context.getResources().getString(R.string.deploy_branch);
-		last_commit = context.getResources().getString(R.string.last_commit);
-	}
+    public static class Result {
+        public boolean success;
+        public boolean published;
+        public boolean available;
+        public String error;
+        public String versionName;
+        public int build;
+        public String apkUrl;
+        public String changelogUrl;
+        public String changelog;
+        public String sha256;
+    }
 
-	private static String toString(InputStream inputStream)
-	{
+    private final Context context;
+    private final String channel;
+    private final Callback callback;
+
+    public UpdateSystem(Context context, String channel, Callback callback) {
+        this.context = context.getApplicationContext();
+        this.channel = CHANNEL_DEV.equals(channel) ? CHANNEL_DEV : CHANNEL_STABLE;
+        this.callback = callback;
+    }
+
+    @Override
+    protected Result doInBackground(Void... ignored) {
+        Result result = new Result();
         try {
-			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-			String inputLine;
-			StringBuilder stringBuilder = new StringBuilder();
-			while ((inputLine = bufferedReader.readLine()) != null) {
-				stringBuilder.append(inputLine);
-			}
-			return stringBuilder.toString();
+            JSONObject manifest = new JSONObject(fetchText(RAW_BASE + channel + "/manifest.json"));
+            if (!manifest.optBoolean("published", true)) {
+                result.success = true;
+                result.published = false;
+                result.available = false;
+                return result;
+            }
+            result.published = true;
+            result.versionName = manifest.getString("versionName");
+            result.build = manifest.getInt("build");
+            result.apkUrl = manifest.getString("apkUrl");
+            result.changelogUrl = manifest.getString("changelogUrl");
+            result.sha256 = manifest.optString("sha256", "");
+            result.changelog = fetchText(result.changelogUrl);
+
+            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            int localBuild = context.getResources().getInteger(com.valvesoftware.source.R.integer.update_build);
+            result.available = !result.versionName.equals(info.versionName) && result.build > localBuild;
+            result.success = true;
+        } catch (Exception e) {
+            result.error = e.getMessage() == null ? e.toString() : e.getMessage();
         }
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+        return result;
+    }
 
-		return "";
-	}
+    @Override
+    protected void onPostExecute(Result result) {
+        if (callback != null) callback.onUpdateResult(result);
+    }
 
-	@Override
-	protected String doInBackground(String... params) {
-		URL urlObject;
-		URLConnection urlConnection;
-
-		try {
-			urlObject = new URL(git_url+"/"+deploy_branch+"/version");
-			urlConnection = urlObject.openConnection();
-			return toString(urlConnection.getInputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return null;
-	}
-
-	protected void onPostExecute(String result) {
-		if( result != null && !result.equals("") && !last_commit.equals(result) ) {
-			Intent notif = new Intent(mContext, UpdateService.class);
-			notif.putExtra("update_url", git_url+"/"+deploy_branch+"/"+app);
-			mContext.startService(notif);
-		}
-	}
+    private static String fetchText(String address) throws Exception {
+        HttpURLConnection connection = (HttpURLConnection) new URL(address).openConnection();
+        connection.setConnectTimeout(10000);
+        connection.setReadTimeout(15000);
+        connection.setRequestProperty("User-Agent", "srceng-launcher-update-checker");
+        try {
+            int status = connection.getResponseCode();
+            if (status < 200 || status >= 300) throw new Exception("HTTP " + status);
+            InputStream input = connection.getInputStream();
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(input, "UTF-8"));
+                StringBuilder text = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) text.append(line).append('\n');
+                return text.toString().trim();
+            } finally {
+                input.close();
+            }
+        } finally {
+            connection.disconnect();
+        }
+    }
 }

@@ -45,6 +45,8 @@
     <string name="md3_dynamic_color_on_hint">已開啟動態取色，主題色優先使用桌布顏色；僅當桌布無法擷取顏色時，手動選擇的主題色才會生效。</string>
     <string name="md3_seed_ignored_when_dynamic">動態取色已開啟，目前手動選擇的主題色不會生效。如需使用手動主題色，請先關閉動態取色。</string>
     <string name="md3_seed_color">主題色</string>
+    <string name="md3_custom_color">自訂顏色</string>
+    <string name="md3_hex_color_hint">#RRGGBB</string>
     <string name="md3_preview">預覽</string>
     <string name="md3_preview_primary">主要按鈕</string>
     <string name="md3_preview_secondary">輔助按鈕</string>

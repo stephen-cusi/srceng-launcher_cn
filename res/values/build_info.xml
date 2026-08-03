@@ -2,4 +2,5 @@
 <resources>
 <string name="last_commit"></string>
 <string name="deploy_branch"></string>
+<integer name="update_build">3</integer>
 </resources>

@@ -50,6 +50,8 @@
     <string name="md3_dynamic_color_on_hint">Динамические цвета включены: акцентные цвета берутся из обоев; вручную выбранный акцент работает только если цвета обоев недоступны.</string>
     <string name="md3_seed_ignored_when_dynamic">Динамические цвета активны — акцентный цвет не применяется. Отключите динамические цвета для использования вручную выбранного акцента.</string>
     <string name="md3_seed_color">Акцентный цвет</string>
+    <string name="md3_custom_color">Пользовательский цвет</string>
+    <string name="md3_hex_color_hint">#RRGGBB</string>
     <string name="md3_preview">Превью</string>
     <string name="md3_preview_primary">Основная</string>
     <string name="md3_preview_secondary">Вторичная</string>

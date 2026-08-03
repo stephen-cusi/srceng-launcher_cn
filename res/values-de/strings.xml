@@ -50,6 +50,8 @@
     <string name="md3_dynamic_color_on_hint">Dynamische Farben aktiviert: Akzentfarben stammen aus dem Hintergrundbild; manuelle Akzente wirken nur, falls Hintergrundfarben nicht verfügbar sind.</string>
     <string name="md3_seed_ignored_when_dynamic">Dynamische Farben aktiv — manuelle Akzentfarbe wird nicht angewendet. Deaktiviere dynamische Farben, um den gewählten Akzent zu nutzen.</string>
     <string name="md3_seed_color">Akzentfarbe</string>
+    <string name="md3_custom_color">Benutzerdefinierte Farbe</string>
+    <string name="md3_hex_color_hint">#RRGGBB</string>
     <string name="md3_preview">Vorschau</string>
     <string name="md3_preview_primary">Primär</string>
     <string name="md3_preview_secondary">Tonal</string>
