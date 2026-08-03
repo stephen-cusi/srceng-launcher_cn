@@ -5,8 +5,8 @@
     <string name="srceng_launcher_changelog">更新日志</string>
     <string name="srceng_launcher_changelog_version">更新日志 · %1$s</string>
     <string name="srceng_launcher_changelog_failed">无法加载当前版本的更新日志：%1$s</string>
-    <string name="srceng_launcher_about_text">"感谢nillerusr和jusic提供的端口
-起源源引擎的Valve
+    <string name="srceng_launcher_about_text">"感谢nillerusr和jusic提供的移植
+开发起源引擎的Valve
 
 不用于商业用途!
 联系我们: unknownandlost11@gmail.com
