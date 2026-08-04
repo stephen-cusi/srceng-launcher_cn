@@ -158,4 +158,19 @@
     <string name="vpk_copying">파일 복사 중…</string><string name="vpk_moving">파일 이동 중…</string><string name="vpk_deleting">파일 삭제 중…</string><string name="vpk_copy_done">파일을 복사했습니다.</string><string name="vpk_move_done">파일을 이동했습니다.</string><string name="vpk_delete_done">파일을 삭제했습니다.</string>
     <string name="vpk_delete_confirm_title">선택 항목을 삭제할까요?</string><string name="vpk_delete_confirm">선택한 %1$d개 항목을 영구 삭제합니다. 이 작업은 취소할 수 없습니다.</string><string name="vpk_output_exists">같은 이름의 파일이 이미 있습니다.</string><string name="vpk_extract_here">여기에 압축 풀기</string>
     <string name="vpk_archive_browser">VPK 및 GMA 아카이브 브라우저</string><string name="vpk_archive_summary">VPK 버전 %1$d · 파일: %2$d</string><string name="gma_archive_summary">GMA 버전 %1$d · 파일: %2$d · %3$s</string><string name="vpk_archive_folder">폴더 · 탭하여 열기</string><string name="vpk_extract_all">모두 압축 풀기</string><string name="vpk_extract_selected">선택 항목 압축 풀기</string><string name="vpk_overwrite_title">기존 파일을 덮어쓸까요?</string><string name="vpk_overwrite_message">일부 파일이 이미 있습니다. 충돌하는 파일만 바꿀까요?</string><string name="vpk_overwrite">덮어쓰기</string><string name="vpk_extract_done_path">압축 풀기 완료: %1$s</string>
+    <string name="vpk_extract_destination_title">압축 풀 위치</string>
+    <string name="vpk_extract_current_directory">현재 폴더에 압축 풀기</string>
+    <string name="vpk_extract_named_directory">%1$s 폴더에 압축 풀기</string>
+    <string name="vpk_extract_choose_directory">압축 풀 위치 선택</string>
+    <string name="vpk_choose_destination">압축 풀 폴더 선택</string>
+    <string name="vpk_choose_destination_prompt">대상 폴더를 연 다음 현재 폴더를 선택하세요.</string>
+    <string name="vpk_select_directory">현재 폴더 선택</string>
+    <string name="vpk_conflict_title">파일 충돌</string>
+    <string name="vpk_conflict_message">이 파일이 이미 있습니다:\n%1$s</string>
+    <string name="vpk_conflict_apply_all">남은 모든 충돌에 적용</string>
+    <string name="vpk_skip">건너뛰기</string>
+    <string name="md3_launcher_subtitle">게임 리소스를 설정하고 시작합니다</string>
+    <string name="md3_section_navigation">탐색</string>
+    <string name="md3_predictive_back">예측 뒤로가기</string>
+    <string name="md3_predictive_back_desc">뒤로가기 중 대상 화면 미리보기(Android 13+)</string>
 </resources>

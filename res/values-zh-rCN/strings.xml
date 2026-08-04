@@ -67,8 +67,12 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="md3_preview_text">这是一张预览卡片，展示当前主题方案下卡片、按钮与文字的视觉效果。</string>
     <string name="md3_back">返回</string>
     <string name="md3_section_general">通用</string>
+    <string name="md3_section_navigation">导航</string>
+    <string name="md3_predictive_back">预见式返回</string>
+    <string name="md3_predictive_back_desc">返回手势过程中预览目标界面（Android 13+）</string>
     <string name="md3_section_look">视觉效果</string>
     <string name="md3_title_launcher">起源引擎启动器</string>
+    <string name="md3_launcher_subtitle">配置游戏资源并快速启动</string>
     <string name="md3_game_config_card">游戏配置</string>
     <string name="md3_paths_card">资源路径</string>
     <string name="md3_section_updates">软件更新</string>
@@ -186,4 +190,15 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="vpk_overwrite_message">部分待解压文件已经存在，是否仅覆盖发生冲突的文件？</string>
     <string name="vpk_overwrite">覆盖</string>
     <string name="vpk_extract_done_path">解压完成：%1$s</string>
+    <string name="vpk_extract_destination_title">解压到</string>
+    <string name="vpk_extract_current_directory">解压到当前目录</string>
+    <string name="vpk_extract_named_directory">解压到 %1$s</string>
+    <string name="vpk_extract_choose_directory">选择解压位置</string>
+    <string name="vpk_choose_destination">选择解压目录</string>
+    <string name="vpk_choose_destination_prompt">进入目标文件夹，然后选择当前目录。</string>
+    <string name="vpk_select_directory">选择当前目录</string>
+    <string name="vpk_conflict_title">文件冲突</string>
+    <string name="vpk_conflict_message">以下文件已经存在：\n%1$s</string>
+    <string name="vpk_conflict_apply_all">全部（对后续冲突执行相同操作）</string>
+    <string name="vpk_skip">跳过</string>
 </resources>

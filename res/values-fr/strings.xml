@@ -158,4 +158,19 @@
     <string name="vpk_copying">Copie des fichiers…</string><string name="vpk_moving">Déplacement des fichiers…</string><string name="vpk_deleting">Suppression des fichiers…</string><string name="vpk_copy_done">Fichiers copiés.</string><string name="vpk_move_done">Fichiers déplacés.</string><string name="vpk_delete_done">Fichiers supprimés.</string>
     <string name="vpk_delete_confirm_title">Supprimer la sélection ?</string><string name="vpk_delete_confirm">Supprimer définitivement %1$d élément(s) ? Cette action est irréversible.</string><string name="vpk_output_exists">Un fichier de ce nom existe déjà.</string><string name="vpk_extract_here">Extraire ici</string>
     <string name="vpk_archive_browser">Explorateur d’archives VPK et GMA</string><string name="vpk_archive_summary">VPK version %1$d · Fichiers : %2$d</string><string name="gma_archive_summary">GMA version %1$d · Fichiers : %2$d · %3$s</string><string name="vpk_archive_folder">Dossier · Touchez pour ouvrir</string><string name="vpk_extract_all">Tout extraire</string><string name="vpk_extract_selected">Extraire la sélection</string><string name="vpk_overwrite_title">Remplacer les fichiers existants ?</string><string name="vpk_overwrite_message">Certains fichiers existent déjà. Remplacer uniquement les fichiers en conflit ?</string><string name="vpk_overwrite">Remplacer</string><string name="vpk_extract_done_path">Extraction terminée : %1$s</string>
+    <string name="vpk_extract_destination_title">Extraire vers</string>
+    <string name="vpk_extract_current_directory">Extraire dans le dossier actuel</string>
+    <string name="vpk_extract_named_directory">Extraire dans %1$s</string>
+    <string name="vpk_extract_choose_directory">Choisir l’emplacement d’extraction</string>
+    <string name="vpk_choose_destination">Choisir le dossier d’extraction</string>
+    <string name="vpk_choose_destination_prompt">Ouvrez le dossier cible, puis sélectionnez le dossier actuel.</string>
+    <string name="vpk_select_directory">Sélectionner le dossier actuel</string>
+    <string name="vpk_conflict_title">Conflit de fichier</string>
+    <string name="vpk_conflict_message">Ce fichier existe déjà :\n%1$s</string>
+    <string name="vpk_conflict_apply_all">Appliquer à tous les conflits restants</string>
+    <string name="vpk_skip">Ignorer</string>
+    <string name="md3_launcher_subtitle">Configurer les ressources et lancer le jeu</string>
+    <string name="md3_section_navigation">Navigation</string>
+    <string name="md3_predictive_back">Retour prédictif</string>
+    <string name="md3_predictive_back_desc">Prévisualiser la destination du retour (Android 13+)</string>
 </resources>

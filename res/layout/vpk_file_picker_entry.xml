@@ -3,30 +3,35 @@
     android:baselineAligned="false"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
+    android:layout_marginBottom="6dp"
     android:clickable="true"
     android:focusable="true"
     android:gravity="center_vertical"
-    android:minHeight="56dp"
+    android:minHeight="72dp"
     android:orientation="horizontal"
-    android:padding="8dp"
-    android:tag="card_outlined">
+    android:paddingStart="12dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="8dp"
+    android:tag="list_item">
 
     <FrameLayout
-        android:layout_width="48dp"
-        android:layout_height="48dp">
+        android:id="@+id/vpk_picker_icon_container"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="12dp">
 
         <ImageView
             android:id="@+id/vpk_picker_icon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center"
             android:contentDescription="@null" />
 
         <CheckBox
             android:id="@+id/vpk_picker_check"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:buttonTint="?attr/colorPrimary"
             android:gravity="center"
             android:visibility="invisible" />
@@ -44,8 +49,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="middle"
             android:maxLines="1"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textSize="16sp"
+            android:textStyle="normal" />
 
         <TextView
             android:id="@+id/vpk_picker_detail"
@@ -55,4 +60,13 @@
             android:textSize="12sp"
             android:tag="subtitle" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/vpk_picker_trailing"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_chevron_right"
+        android:tag="trailing_icon" />
 </LinearLayout>

@@ -19,12 +19,17 @@
         <item name="colorOutlineVariant">@color/md3_outline_variant</item>
         <item name="android:windowBackground">@color/md3_surface</item>
         <item name="android:colorBackground">@color/md3_surface</item>
+        <item name="android:statusBarColor">@color/md3_surface</item>
+        <item name="android:navigationBarColor">@color/md3_surface_container_highest</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowSoftInputMode">adjustResize|stateHidden</item>
         <item name="android:fontFamily">sans</item>
         <item name="materialButtonStyle">@style/Widget.Material3.Button</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Material3.MaterialAlertDialog</item>
     </style>
 
-    <style name="SrcEng.MD3.Dark" parent="SrcEng.MD3" />
+    <style name="SrcEng.MD3.Dark" parent="SrcEng.MD3">
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
 
 </resources>

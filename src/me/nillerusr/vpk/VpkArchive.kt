@@ -59,7 +59,8 @@ class VpkArchive private constructor(
     fun extract(
         destination: File,
         selectedPaths: Set<String>? = null,
-        overwrite: Boolean = false,
+        overwritePaths: Set<String> = emptySet(),
+        skippedPaths: Set<String> = emptySet(),
         progress: (Int, Int, String) -> Unit
     ) {
         require(destination.isDirectory || destination.mkdirs()) { "Cannot create ${destination.path}" }
@@ -68,11 +69,12 @@ class VpkArchive private constructor(
             selectedPaths.any { selected -> entry.path == selected || entry.path.startsWith("$selected/") }
         }
         require(selectedEntries.isNotEmpty()) { "No files selected" }
-        selectedEntries.forEachIndexed { index, entry ->
+        val extractedEntries = selectedEntries.filterNot { it.path in skippedPaths }
+        extractedEntries.forEachIndexed { index, entry ->
             validateArchivePath(entry.path)
             val output = File(root, entry.path).canonicalFile
             check(output.path.startsWith(root.path + File.separator)) { "Unsafe VPK path: ${entry.path}" }
-            require(overwrite || !output.exists()) { "File already exists: ${output.path}" }
+            require(!output.exists() || entry.path in overwritePaths) { "File already exists: ${output.path}" }
             require(output.parentFile?.isDirectory == true || output.parentFile?.mkdirs() == true) {
                 "Cannot create ${output.parent}"
             }
@@ -83,7 +85,7 @@ class VpkArchive private constructor(
                 entry.parts.forEach { part -> copyPart(part, stream, crc) }
             }
             check(crc.value == entry.crc) { "CRC mismatch: ${entry.path}" }
-            progress(index + 1, selectedEntries.size, entry.path)
+            progress(index + 1, extractedEntries.size, entry.path)
         }
     }
 

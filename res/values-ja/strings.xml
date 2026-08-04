@@ -158,4 +158,19 @@
     <string name="vpk_copying">ファイルをコピー中…</string><string name="vpk_moving">ファイルを移動中…</string><string name="vpk_deleting">ファイルを削除中…</string><string name="vpk_copy_done">ファイルをコピーしました。</string><string name="vpk_move_done">ファイルを移動しました。</string><string name="vpk_delete_done">ファイルを削除しました。</string>
     <string name="vpk_delete_confirm_title">選択項目を削除しますか？</string><string name="vpk_delete_confirm">選択した %1$d 件を完全に削除します。この操作は元に戻せません。</string><string name="vpk_output_exists">同名のファイルが既に存在します。</string><string name="vpk_extract_here">ここに展開</string>
     <string name="vpk_archive_browser">VPK・GMA アーカイブブラウザー</string><string name="vpk_archive_summary">VPK バージョン %1$d · ファイル: %2$d</string><string name="gma_archive_summary">GMA バージョン %1$d · ファイル: %2$d · %3$s</string><string name="vpk_archive_folder">フォルダー · タップして開く</string><string name="vpk_extract_all">すべて展開</string><string name="vpk_extract_selected">選択項目を展開</string><string name="vpk_overwrite_title">既存ファイルを上書きしますか？</string><string name="vpk_overwrite_message">一部のファイルが既に存在します。競合するファイルのみ上書きしますか？</string><string name="vpk_overwrite">上書き</string><string name="vpk_extract_done_path">展開完了: %1$s</string>
+    <string name="vpk_extract_destination_title">展開先</string>
+    <string name="vpk_extract_current_directory">現在のフォルダーに展開</string>
+    <string name="vpk_extract_named_directory">%1$s に展開</string>
+    <string name="vpk_extract_choose_directory">展開先を選択</string>
+    <string name="vpk_choose_destination">展開先フォルダーを選択</string>
+    <string name="vpk_choose_destination_prompt">展開先フォルダーを開き、現在のフォルダーを選択してください。</string>
+    <string name="vpk_select_directory">現在のフォルダーを選択</string>
+    <string name="vpk_conflict_title">ファイルの競合</string>
+    <string name="vpk_conflict_message">このファイルは既に存在します：\n%1$s</string>
+    <string name="vpk_conflict_apply_all">残りの競合すべてに適用</string>
+    <string name="vpk_skip">スキップ</string>
+    <string name="md3_launcher_subtitle">ゲームリソースを設定して起動</string>
+    <string name="md3_section_navigation">ナビゲーション</string>
+    <string name="md3_predictive_back">予測型「戻る」</string>
+    <string name="md3_predictive_back_desc">戻る操作中に移動先をプレビュー（Android 13+）</string>
 </resources>

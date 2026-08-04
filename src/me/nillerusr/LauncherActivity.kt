@@ -28,6 +28,7 @@ import me.nillerusr.md3.Md3Theme
 import org.libsdl.app.SDLActivity
 
 open class LauncherActivity : Activity() {
+    private lateinit var predictiveBack: PredictiveBackController
     companion object {
         @JvmField
         var PKG_NAME: String? = null
@@ -134,6 +135,8 @@ open class LauncherActivity : Activity() {
         mPref = getSharedPreferences("mod", 0)
         setContentView(R.layout.activity_launcher)
         Md3Theme.applyAfterSetContentView(this)
+        predictiveBack = PredictiveBackController(this) { finish() }
+        predictiveBack.sync()
 
         cachedThemeMode = Md3Theme.getThemeMode(this)
         cachedDark = Md3Theme.resolveDark(this)
@@ -173,11 +176,11 @@ open class LauncherActivity : Activity() {
                             .setTitle(getString(R.string.srceng_launcher_changelog_version, version))
                             .setMessage(changelog ?: getString(R.string.srceng_launcher_changelog_failed, error))
                             .setPositiveButton(android.R.string.ok, null)
-                            .show()
+                            .show().also { Md3Theme.applyDialog(it) }
                     }
                 }
                 .setPositiveButton(android.R.string.ok, null)
-                .show()
+                .show().also { Md3Theme.applyDialog(it) }
         }
 
         findViewById<Button>(R.id.button_gamedir).setOnClickListener {
@@ -226,6 +229,7 @@ open class LauncherActivity : Activity() {
 
     override fun onResume() {
         super.onResume()
+        if (::predictiveBack.isInitialized) predictiveBack.sync()
         try {
             val newMode = Md3Theme.getThemeMode(this)
             val newDark = Md3Theme.resolveDark(this)
@@ -249,5 +253,10 @@ open class LauncherActivity : Activity() {
             }
         } catch (_: Throwable) {
         }
+    }
+
+    override fun onDestroy() {
+        if (::predictiveBack.isInitialized) predictiveBack.release()
+        super.onDestroy()
     }
 }

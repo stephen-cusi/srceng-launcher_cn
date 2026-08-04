@@ -32,6 +32,8 @@ open class SettingsActivity : Activity() {
     private var darkOff: RadioButton? = null
     private var darkOn: RadioButton? = null
     private var dynamicSwitch: SwitchMaterial? = null
+    private var predictiveBackSwitch: SwitchMaterial? = null
+    private lateinit var predictiveBack: PredictiveBackController
     private var seedContainer: LinearLayout? = null
     private var customColorContainer: LinearLayout? = null
     private var customColorPreview: View? = null
@@ -84,6 +86,8 @@ open class SettingsActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         Md3Theme.applyAfterSetContentView(this)
+        predictiveBack = PredictiveBackController(this) { finish() }
+        predictiveBack.sync()
         findViews()
         bindState()
         buildSeedColors()
@@ -113,6 +117,7 @@ open class SettingsActivity : Activity() {
         darkOff = optFind(R.id.md3_dark_off)
         darkOn = optFind(R.id.md3_dark_on)
         dynamicSwitch = optFind(R.id.md3_dynamic_switch)
+        predictiveBackSwitch = optFind(R.id.md3_predictive_back_switch)
         seedContainer = optFind(R.id.md3_seed_container)
         customColorContainer = optFind(R.id.md3_seed_custom_container)
         customColorPreview = optFind(R.id.md3_seed_custom_preview)
@@ -162,6 +167,8 @@ open class SettingsActivity : Activity() {
         val dynamicAvailable = Md3Theme.isDynamicColorAvailable()
         val dynamic = dynamicAvailable && Md3Theme.getDynamicColor(this)
         setCheckedSafe(dynamicSwitch, dynamic)
+        setCheckedSafe(predictiveBackSwitch, getSharedPreferences(PredictiveBackController.PREFS_NAME, 0).getBoolean(PredictiveBackController.PREF_KEY, true))
+        if (Build.VERSION.SDK_INT < 33) setEnabledSafe(predictiveBackSwitch, false)
         if (!dynamicAvailable) {
             setCheckedSafe(dynamicSwitch, false)
             setEnabledSafe(dynamicSwitch, false)
@@ -284,7 +291,7 @@ open class SettingsActivity : Activity() {
                     }
                 }
                 .setNegativeButton(android.R.string.cancel, null)
-                .show()
+                .show().also { Md3Theme.applyDialog(it) }
         }
     }
 
@@ -310,7 +317,7 @@ open class SettingsActivity : Activity() {
                     dialog.dismiss()
                 }
                 .setNegativeButton(android.R.string.cancel, null)
-                .show()
+                .show().also { Md3Theme.applyDialog(it) }
         }
     }
 
@@ -332,7 +339,7 @@ open class SettingsActivity : Activity() {
                     dialog.dismiss()
                 }
                 .setNegativeButton(android.R.string.cancel, null)
-                .show()
+                .show().also { Md3Theme.applyDialog(it) }
         }
     }
 
@@ -376,7 +383,7 @@ open class SettingsActivity : Activity() {
                     dialog.dismiss()
                 }
                 .setNegativeButton(android.R.string.cancel, null)
-                .show()
+                .show().also { Md3Theme.applyDialog(it) }
         }
         updateMirrorButton?.let { mirrorButton ->
             val labels = arrayOf(getString(R.string.md3_update_mirror_auto), *UpdateSystem.MIRROR_NAMES)
@@ -394,7 +401,7 @@ open class SettingsActivity : Activity() {
                         dialog.dismiss()
                     }
                     .setNegativeButton(android.R.string.cancel, null)
-                    .show()
+                    .show().also { Md3Theme.applyDialog(it) }
             }
         }
         try {
@@ -431,7 +438,7 @@ open class SettingsActivity : Activity() {
                     .setPositiveButton(R.string.md3_update_download) { _, _ ->
                         try { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(result.apkUrl))) }
                         catch (_: Throwable) { Toast.makeText(this@SettingsActivity, R.string.md3_update_open_failed, Toast.LENGTH_LONG).show() }
-                    }.show()
+                    }.show().also { Md3Theme.applyDialog(it) }
             }
         }).execute()
     }
@@ -475,6 +482,10 @@ open class SettingsActivity : Activity() {
                 if (checked != lastDynamic) { lastDynamic = checked; refreshTheme(REFRESH_TOKEN_REDRAW) }
             }
         }
+        predictiveBackSwitch?.setOnCheckedChangeListener { _, checked ->
+            getSharedPreferences(PredictiveBackController.PREFS_NAME, 0).edit().putBoolean(PredictiveBackController.PREF_KEY, checked).apply()
+            predictiveBack.sync()
+        }
         bindCustomColorControls()
         checkUpdateButton?.setOnClickListener { checkForUpdates() }
         testMirrorsButton?.setOnClickListener { testUpdateMirrors() }
@@ -512,6 +523,11 @@ open class SettingsActivity : Activity() {
     override fun onPause() {
         saveCustomResolutionInputs()
         super.onPause()
+    }
+
+    override fun onDestroy() {
+        if (::predictiveBack.isInitialized) predictiveBack.release()
+        super.onDestroy()
     }
 
     private fun updateSeedVisualState() {

@@ -158,4 +158,19 @@
     <string name="vpk_copying">Dateien werden kopiert…</string><string name="vpk_moving">Dateien werden verschoben…</string><string name="vpk_deleting">Dateien werden gelöscht…</string><string name="vpk_copy_done">Dateien wurden kopiert.</string><string name="vpk_move_done">Dateien wurden verschoben.</string><string name="vpk_delete_done">Dateien wurden gelöscht.</string>
     <string name="vpk_delete_confirm_title">Auswahl löschen?</string><string name="vpk_delete_confirm">%1$d ausgewählte Element(e) dauerhaft löschen? Dies kann nicht rückgängig gemacht werden.</string><string name="vpk_output_exists">Eine Datei mit diesem Namen ist bereits vorhanden.</string><string name="vpk_extract_here">Hier entpacken</string>
     <string name="vpk_archive_browser">VPK- und GMA-Archivbrowser</string><string name="vpk_archive_summary">VPK-Version %1$d · Dateien: %2$d</string><string name="gma_archive_summary">GMA-Version %1$d · Dateien: %2$d · %3$s</string><string name="vpk_archive_folder">Ordner · Zum Öffnen antippen</string><string name="vpk_extract_all">Alles entpacken</string><string name="vpk_extract_selected">Auswahl entpacken</string><string name="vpk_overwrite_title">Vorhandene Dateien überschreiben?</string><string name="vpk_overwrite_message">Einige Dateien sind bereits vorhanden. Nur die betroffenen Dateien ersetzen?</string><string name="vpk_overwrite">Überschreiben</string><string name="vpk_extract_done_path">Entpacken abgeschlossen: %1$s</string>
+    <string name="vpk_extract_destination_title">Entpacken nach</string>
+    <string name="vpk_extract_current_directory">In das aktuelle Verzeichnis entpacken</string>
+    <string name="vpk_extract_named_directory">In %1$s entpacken</string>
+    <string name="vpk_extract_choose_directory">Entpackziel auswählen</string>
+    <string name="vpk_choose_destination">Entpackverzeichnis auswählen</string>
+    <string name="vpk_choose_destination_prompt">Zielordner öffnen und dann das aktuelle Verzeichnis auswählen.</string>
+    <string name="vpk_select_directory">Aktuelles Verzeichnis auswählen</string>
+    <string name="vpk_conflict_title">Dateikonflikt</string>
+    <string name="vpk_conflict_message">Diese Datei ist bereits vorhanden:\n%1$s</string>
+    <string name="vpk_conflict_apply_all">Auf alle verbleibenden Konflikte anwenden</string>
+    <string name="vpk_skip">Überspringen</string>
+    <string name="md3_launcher_subtitle">Ressourcen konfigurieren und Spiel starten</string>
+    <string name="md3_section_navigation">Navigation</string>
+    <string name="md3_predictive_back">Vorausschauende Zurück-Geste</string>
+    <string name="md3_predictive_back_desc">Ziel beim Zurückwischen anzeigen (Android 13+)</string>
 </resources>

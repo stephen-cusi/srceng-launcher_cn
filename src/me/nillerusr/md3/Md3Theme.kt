@@ -15,9 +15,11 @@ import android.os.Build
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.WindowManager
 import android.widget.*
 import androidx.core.widget.CompoundButtonCompat
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -293,15 +295,27 @@ class Md3Theme private constructor() {
             var cfg=activity.resources.configuration
             val wanted=if(dark)Configuration.UI_MODE_NIGHT_YES else Configuration.UI_MODE_NIGHT_NO
             if(cfg.uiMode and Configuration.UI_MODE_NIGHT_MASK != wanted){cfg=Configuration(cfg);cfg.uiMode=cfg.uiMode and Configuration.UI_MODE_NIGHT_MASK.inv() or wanted;activity.resources.updateConfiguration(cfg,activity.resources.displayMetrics)}
+            applyWindow(activity.window,buildTokens(activity))
         }
         @JvmStatic fun applyAfterSetContentView(activity: Activity) {
             val t=buildTokens(activity); applyWindow(activity,t); val root=activity.findViewById<View>(android.R.id.content)
             try { root?.setBackgroundDrawable(ColorDrawable(t.surface)) } catch (_:Throwable) {}
             if(root!=null)applyViewTree(root,t)
         }
+        @JvmStatic fun applyDialog(dialog: AlertDialog) {
+            val t=buildTokens(dialog.context);val window=dialog.window?:return
+            applyWindow(window,t)
+            try{window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))}catch(_:Throwable){}
+            val content=window.findViewById<View>(android.R.id.content)?:window.decorView
+            setBg(content,t.surfaceContainerHigh,28,Color.TRANSPARENT,0,0,0);applyViewTree(content,t)
+            for(which in intArrayOf(AlertDialog.BUTTON_POSITIVE,AlertDialog.BUTTON_NEGATIVE,AlertDialog.BUTTON_NEUTRAL))try{dialog.getButton(which)?.let{button->applyButtonStyle(button,"text",t);button.setPadding(dp(button.context,12),button.paddingTop,dp(button.context,12),button.paddingBottom)}}catch(_:Throwable){}
+        }
         @TargetApi(21) private fun applyWindow(a:Activity,t:Md3Tokens) {
-            val w=a.window?:return; try{w.setBackgroundDrawable(ColorDrawable(t.surface))}catch(_:Throwable){}
-            try{w.statusBarColor=t.statusBar;w.navigationBarColor=t.navBar;w.decorView?.let{it.systemUiVisibility=it.systemUiVisibility and 0x400.inv() and 0x100.inv()}}catch(_:Throwable){}
+            applyWindow(a.window?:return,t)
+        }
+        @TargetApi(21) private fun applyWindow(w:Window,t:Md3Tokens) {
+            try{w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS or WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);w.setBackgroundDrawable(ColorDrawable(t.surface))}catch(_:Throwable){}
+            try{w.statusBarColor=t.statusBar;w.navigationBarColor=t.navBar;w.decorView.let{it.systemUiVisibility=it.systemUiVisibility and 0x400.inv() and 0x100.inv()}}catch(_:Throwable){}
             val d=w.decorView?:return;var sys=d.systemUiVisibility;val light=!t.dark&&luminance(t.statusBar)>.70f;sys=if(light)sys or 0x2000 else sys and 0x2000.inv();if(Build.VERSION.SDK_INT>=26){val nav=!t.dark&&luminance(t.navBar)>.70f;sys=if(nav)sys or 0x08000000 else sys and 0x08000000.inv()};d.systemUiVisibility=sys
         }
         private fun applyViewTree(v:View,t:Md3Tokens){applySingleView(v,t);if(v is ViewGroup)for(i in 0 until v.childCount)applyViewTree(v.getChildAt(i),t)}
@@ -311,18 +325,19 @@ class Md3Theme private constructor() {
             val l=op?.get(0)?:v.paddingLeft;val top=op?.get(1)?:v.paddingTop;val r=op?.get(2)?:v.paddingRight;val bottom=op?.get(3)?:v.paddingBottom
             if(v.id==R.id.md3_preserve_bg)return
             if(v.id==R.id.md3_app_bar)setBg(v,t.surface,0,Color.TRANSPARENT,0,0,0)
-            if(v is MaterialCardView){val outlined=hasStrTag(v,"card_outlined");v.setCardBackgroundColor(if(hasStrTag(v,"preview_primary"))t.primary.container else if(outlined)t.surfaceContainerLow else t.surfaceContainerHigh);v.strokeColor=if(outlined)t.outlineVariant else Color.TRANSPARENT;v.strokeWidth=if(outlined)dp(v.context,1) else 0;v.radius=dpF(v.context,20)}
-            else {if(hasStrTag(v,"card"))setBg(v,t.surfaceContainerHigh,20,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"card_outlined"))setBg(v,t.surfaceContainerLow,20,t.outlineVariant,1,0,0);if(hasStrTag(v,"card_filled")||hasStrTag(v,"preview_primary"))setBg(v,t.primary.container,20,Color.TRANSPARENT,0,0,0)}
+            if(v is MaterialCardView){val outlined=hasStrTag(v,"card_outlined");v.setCardBackgroundColor(if(hasStrTag(v,"preview_primary"))t.primary.container else if(outlined)t.surfaceContainerLow else t.surfaceContainerHigh);v.strokeColor=Color.TRANSPARENT;v.strokeWidth=0;v.radius=dpF(v.context,16)}
+            else {if(hasStrTag(v,"card"))setBg(v,t.surfaceContainerHigh,16,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"card_outlined")||hasStrTag(v,"feature_card"))setBg(v,t.surfaceContainerLow,16,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"card_filled")||hasStrTag(v,"preview_primary"))setBg(v,t.primary.container,16,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"feature_icon_container"))setBg(v,t.primary.container,14,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"list_item"))setBg(v,t.surfaceContainerLow,16,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"folder_container"))setBg(v,t.primary.container,12,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"vpk_archive_container"))setBg(v,t.tertiary.container,12,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"gma_archive_container"))setBg(v,t.secondary.container,12,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"file_container"))setBg(v,t.surfaceContainerHighest,12,Color.TRANSPARENT,0,0,0)}
             if(hasStrTag(v,"divider"))setBg(v,t.outlineVariant,0,Color.TRANSPARENT,0,0,0)
-            if(v is TextView&&v !is Button&&v !is EditText&&v !is CompoundButton){v.setTextColor(when(getStrTag(v)){"on_primary_container"->t.primary.onContainer;"on_secondary_container"->t.secondary.onContainer;"on_surface_variant","subtitle"->t.onSurfaceVariant;"outline"->t.outline;"primary"->t.primary.color;else->t.onSurface});v.setHintTextColor(t.outline)}
+            if(v is TextView&&v !is Button&&v !is EditText&&v !is CompoundButton){v.setTextColor(when(getStrTag(v)){"on_primary_container"->t.primary.onContainer;"on_secondary_container"->t.secondary.onContainer;"on_surface_variant","subtitle"->t.onSurfaceVariant;"outline"->t.outline;"primary"->t.primary.color;else->t.onSurface});v.setHintTextColor(t.outline);v.setLinkTextColor(t.primary.color)}
             if(v is MaterialButton)applyMaterialButtonStyle(v,getStrTag(v)?:"filled",t)
             else if(v is Button&&v !is CompoundButton){applyButtonStyle(v,getStrTag(v)?:"filled",t);v.minHeight=dp(v.context,40);val h=dp(v.context,24);val pv=dp(v.context,10);v.setPadding(l+h,top+pv,r+h,bottom+pv);v.isAllCaps=false}
             if(v is TextInputLayout){v.boxBackgroundColor=t.surfaceContainerHigh;v.boxStrokeColor=t.primary.color;v.hintTextColor=ColorStateList.valueOf(t.primary.color);v.defaultHintTextColor=ColorStateList.valueOf(t.onSurfaceVariant)}
             if(v is EditText){val fill=t.surfaceContainerHigh;v.setTextColor(ensureContrastColor(fill,t.onSurface,0xFF1C1B17.toInt(),0xFFF5F1EC.toInt()));v.setHintTextColor(t.outline);if(v !is TextInputEditText)setEditTextBg(v,fill,t.outline);try{v.highlightColor=withAlpha(t.primary.color,0x33)}catch(_:Throwable){};trySetColorFilterField(v,"mCursorDrawable",t.primary.color);trySetColorFilterField(v,"mTextSelectHandleLeftRes",t.primary.color);trySetColorFilterField(v,"mTextSelectHandleRightRes",t.primary.color);trySetColorFilterField(v,"mTextSelectHandleRes",t.primary.color);if(v !is TextInputEditText)tryEtBackgroundTint(v,t.primary.color,t.outline)}
             if(v is CompoundButton){CompoundButtonCompat.setButtonTintList(v,tintList(t.primary.color,t.outline));if(v is SwitchMaterial){v.trackTintList=tintList(withAlpha(t.primary.color,0x66),t.outlineVariant);v.thumbTintList=tintList(t.primary.color,t.surfaceContainerHighest)};v.setTextColor(t.onSurface)}
             if((v is ImageButton||v is ImageView)&&hasStrTag(v,"icon")){try{v.setBackgroundDrawable(makeRippleBg(t.surfaceContainerHighest,t.surfaceContainerHigh))}catch(_:Throwable){};if(v is ImageView){v.setColorFilter(t.onSurfaceVariant,PorterDuff.Mode.SRC_IN);v.scaleType=ImageView.ScaleType.CENTER_INSIDE;val p=dp(v.context,8);v.setPadding(l+p,top+p,r+p,bottom+p)}}
+            if(v is ImageView){when(getStrTag(v)){"feature_icon","folder_icon"->v.setColorFilter(t.primary.onContainer,PorterDuff.Mode.SRC_IN);"vpk_archive_icon"->v.setColorFilter(t.tertiary.onContainer,PorterDuff.Mode.SRC_IN);"gma_archive_icon"->v.setColorFilter(t.secondary.onContainer,PorterDuff.Mode.SRC_IN);"file_icon","trailing_icon"->v.setColorFilter(t.onSurfaceVariant,PorterDuff.Mode.SRC_IN)}}
         }
-        private fun applyMaterialButtonStyle(b:MaterialButton,style:String,t:Md3Tokens){val fill:Int;val text:Int;val outlined:Boolean;when(style){"tonal"->{fill=t.secondary.container;text=t.secondary.onContainer;outlined=false};"outlined"->{fill=Color.TRANSPARENT;text=t.primary.color;outlined=true};"text"->{fill=Color.TRANSPARENT;text=t.primary.color;outlined=false};else->{fill=t.primary.color;text=ensureContrastColor(fill,t.primary.onColor,0xFF1C1B17.toInt(),Color.WHITE);outlined=false}};b.backgroundTintList=ColorStateList.valueOf(fill);b.setTextColor(text);b.rippleColor=ColorStateList.valueOf(withAlpha(text,0x1F));b.cornerRadius=dp(b.context,if(style=="launch")28 else 20);b.strokeColor=ColorStateList.valueOf(if(outlined)t.outline else Color.TRANSPARENT);b.strokeWidth=if(outlined)dp(b.context,1) else 0;b.isAllCaps=false}
+        private fun applyMaterialButtonStyle(b:MaterialButton,style:String,t:Md3Tokens){val fill:Int;val text:Int;val outlined:Boolean;when(style){"tonal"->{fill=t.secondary.container;text=t.secondary.onContainer;outlined=false};"outlined"->{fill=Color.TRANSPARENT;text=t.primary.color;outlined=true};"text"->{fill=Color.TRANSPARENT;text=t.primary.color;outlined=false};else->{fill=t.primary.color;text=ensureContrastColor(fill,t.primary.onColor,0xFF1C1B17.toInt(),Color.WHITE);outlined=false}};b.backgroundTintList=ColorStateList.valueOf(fill);b.setTextColor(text);b.iconTint=ColorStateList.valueOf(text);b.rippleColor=ColorStateList.valueOf(withAlpha(text,0x1F));b.cornerRadius=dp(b.context,if(style=="launch")28 else 20);b.strokeColor=ColorStateList.valueOf(if(outlined)t.outline else Color.TRANSPARENT);b.strokeWidth=if(outlined)dp(b.context,1) else 0;b.isAllCaps=false}
         private fun ensureContrastColor(bg:Int,preferred:Int,dark:Int,light:Int)=if(abs(luminance(bg)-luminance(preferred))<.40f)if(luminance(bg)>.55f)dark else light else preferred
         private fun setBg(v:View,fill:Int,radius:Int,stroke:Int,strokeDp:Int,px:Int,py:Int){try{val shape=MaterialShapeDrawable(ShapeAppearanceModel.builder().setAllCornerSizes(dpF(v.context,radius)).build());shape.fillColor=ColorStateList.valueOf(fill);if(strokeDp>0)shape.setStroke(dpF(v.context,strokeDp),stroke);if(px>0||py>0)v.setPadding(dp(v.context,px),dp(v.context,py),dp(v.context,px),dp(v.context,py));v.background=shape}catch(_:Throwable){}}
         private fun setEditTextBg(v:EditText,fill:Int,stroke:Int){try{val g=GradientDrawable();g.shape=GradientDrawable.RECTANGLE;g.setColor(fill);val r=dpF(v.context,12);g.cornerRadii=floatArrayOf(r,r,r,r,0f,0f,0f,0f);v.setBackgroundDrawable(withRipple(g,fill,12))}catch(_:Throwable){}}

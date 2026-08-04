@@ -36,12 +36,14 @@ import me.nillerusr.md3.Md3Theme
 import me.nillerusr.vpk.VpkWriter
 
 class VpkToolActivity : Activity() {
+    private lateinit var predictiveBack: PredictiveBackController
     private val executor = Executors.newSingleThreadExecutor()
     private val selected = linkedSetOf<String>()
     private val scrollPositions = mutableMapOf<String, Int>()
     private var pendingFiles: List<File> = emptyList()
     private var pendingMove = false
     private var busy = false
+    private var directoryPicker = false
     private lateinit var currentDirectory: File
     private lateinit var pathView: TextView
     private lateinit var statusArea: View
@@ -59,6 +61,8 @@ class VpkToolActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vpk_tool)
         Md3Theme.applyAfterSetContentView(this)
+        predictiveBack = PredictiveBackController(this, ::navigateBack)
+        predictiveBack.sync()
 
         pathView = findViewById(R.id.vpk_manager_path)
         statusArea = findViewById(R.id.vpk_manager_status_area)
@@ -70,6 +74,7 @@ class VpkToolActivity : Activity() {
         selectedView = findViewById(R.id.vpk_manager_selected)
         selectionActions = findViewById(R.id.vpk_manager_actions)
         pasteActions = findViewById(R.id.vpk_manager_paste_actions)
+        directoryPicker = intent.getBooleanExtra(EXTRA_PICK_DIRECTORY, false)
         findViewById<ImageButton>(R.id.md3_button_back).setOnClickListener { navigateBack() }
         findViewById<Button>(R.id.vpk_manager_copy).setOnClickListener { beginTransfer(false) }
         findViewById<Button>(R.id.vpk_manager_move).setOnClickListener { beginTransfer(true) }
@@ -77,8 +82,18 @@ class VpkToolActivity : Activity() {
         findViewById<Button>(R.id.vpk_manager_delete).setOnClickListener { confirmDelete() }
         findViewById<Button>(R.id.vpk_manager_cancel).setOnClickListener { cancelTransfer() }
         findViewById<Button>(R.id.vpk_manager_paste).setOnClickListener { pasteHere() }
+        if (directoryPicker) {
+            findViewById<TextView>(R.id.vpk_manager_title).setText(R.string.vpk_choose_destination)
+            findViewById<Button>(R.id.vpk_manager_cancel).setOnClickListener { finish() }
+            findViewById<Button>(R.id.vpk_manager_paste).apply {
+                setText(R.string.vpk_select_directory)
+                setOnClickListener { returnSelectedDirectory() }
+            }
+        }
 
-        val start = File(LauncherActivity.getDefaultDir()).takeIf { it.isDirectory && it.canRead() }
+        val requestedStart = intent.getStringExtra(EXTRA_START_DIRECTORY)?.let(::File)
+        val start = requestedStart?.takeIf { it.isDirectory && it.canRead() }
+            ?: File(LauncherActivity.getDefaultDir()).takeIf { it.isDirectory && it.canRead() }
             ?: Environment.getExternalStorageDirectory()
         showDirectory(start)
     }
@@ -99,7 +114,7 @@ class VpkToolActivity : Activity() {
 
     private fun navigateBack() {
         if (busy) return
-        if (selected.isNotEmpty()) {
+        if (!directoryPicker && selected.isNotEmpty()) {
             selected.clear()
             renderDirectory(scroll.scrollY)
             return
@@ -154,18 +169,30 @@ class VpkToolActivity : Activity() {
         val row = layoutInflater.inflate(R.layout.vpk_file_picker_entry, body, false)
         bindPressAnimation(row)
         val checkBox = row.findViewById<CheckBox>(R.id.vpk_picker_check)
+        val iconContainer = row.findViewById<View>(R.id.vpk_picker_icon_container)
         val icon = row.findViewById<ImageView>(R.id.vpk_picker_icon)
+        val trailing = row.findViewById<ImageView>(R.id.vpk_picker_trailing)
         val name = row.findViewById<TextView>(R.id.vpk_picker_name)
         val detail = row.findViewById<TextView>(R.id.vpk_picker_detail)
         val path = canonicalFile(file).path
-        val selecting = selected.isNotEmpty()
+        val selecting = !directoryPicker && selected.isNotEmpty()
         checkBox.visibility = if (selecting) View.VISIBLE else View.INVISIBLE
         icon.visibility = if (selecting) View.INVISIBLE else View.VISIBLE
         icon.setImageResource(when {
             file.isDirectory -> R.drawable.ic_vpk_folder
-            file.isSupportedArchive() -> R.drawable.ic_vpk_archive
+            file.extension.equals("vpk", true) -> R.drawable.ic_vpk_archive
+            file.extension.equals("gma", true) -> R.drawable.ic_gma_archive
             else -> R.drawable.ic_vpk_file
         })
+        val iconRole = when {
+            file.isDirectory -> "folder"
+            file.extension.equals("vpk", true) -> "vpk_archive"
+            file.extension.equals("gma", true) -> "gma_archive"
+            else -> "file"
+        }
+        iconContainer.tag = "${iconRole}_container"
+        icon.tag = "${iconRole}_icon"
+        trailing.visibility = if (file.isDirectory) View.VISIBLE else View.GONE
         checkBox.isChecked = path in selected
         if (selecting) {
             checkBox.alpha = 0f
@@ -191,7 +218,7 @@ class VpkToolActivity : Activity() {
             renderDirectory(scroll.scrollY)
         }
         row.setOnLongClickListener {
-            if (!busy && pendingFiles.isEmpty()) {
+            if (!directoryPicker && !busy && pendingFiles.isEmpty()) {
                 row.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
                 selected += path
                 renderDirectory(scroll.scrollY)
@@ -201,6 +228,8 @@ class VpkToolActivity : Activity() {
         row.setOnClickListener {
             when {
                 busy -> Unit
+                directoryPicker && file.isDirectory -> showDirectory(file, true)
+                directoryPicker -> Unit
                 selected.isNotEmpty() -> {
                     if (path in selected) selected -= path else selected += path
                     renderDirectory(scroll.scrollY)
@@ -216,6 +245,13 @@ class VpkToolActivity : Activity() {
     }
 
     private fun updateFooter() {
+        if (directoryPicker) {
+            footer.visibility = View.VISIBLE
+            selectionActions.visibility = View.GONE
+            pasteActions.visibility = View.VISIBLE
+            selectedView.setText(R.string.vpk_choose_destination_prompt)
+            return
+        }
         val transferring = pendingFiles.isNotEmpty()
         footer.visibility = if (selected.isNotEmpty() || transferring) View.VISIBLE else View.GONE
         selectionActions.visibility = if (selected.isNotEmpty() && !transferring) View.VISIBLE else View.GONE
@@ -225,6 +261,11 @@ class VpkToolActivity : Activity() {
         } else {
             getString(R.string.vpk_picker_selected, selected.size)
         }
+    }
+
+    private fun returnSelectedDirectory() {
+        setResult(RESULT_OK, Intent().putExtra(EXTRA_SELECTED_DIRECTORY, currentDirectory.path))
+        finish()
     }
 
     private fun beginTransfer(move: Boolean) {
@@ -410,7 +451,7 @@ class VpkToolActivity : Activity() {
 
     private fun setBusy(value: Boolean) {
         busy = value
-        statusArea.visibility = if (value) View.VISIBLE else View.INVISIBLE
+        statusArea.visibility = if (value) View.VISIBLE else View.GONE
         progress.progress = 0
         updateFooter()
     }
@@ -473,11 +514,15 @@ class VpkToolActivity : Activity() {
     }
 
     override fun onDestroy() {
+        if (::predictiveBack.isInitialized) predictiveBack.release()
         executor.shutdownNow()
         super.onDestroy()
     }
 
     companion object {
         private const val BUFFER_SIZE = 64 * 1024
+        const val EXTRA_PICK_DIRECTORY = "vpk_pick_directory"
+        const val EXTRA_START_DIRECTORY = "vpk_start_directory"
+        const val EXTRA_SELECTED_DIRECTORY = "vpk_selected_directory"
     }
 }

@@ -66,8 +66,12 @@
     <string name="md3_preview_text">This is a preview card showing how cards, buttons and text look with the currently selected scheme.</string>
     <string name="md3_back">Back</string>
     <string name="md3_section_general">General</string>
+    <string name="md3_section_navigation">Navigation</string>
+    <string name="md3_predictive_back">Predictive back</string>
+    <string name="md3_predictive_back_desc">Preview the destination while swiping back (Android 13+)</string>
     <string name="md3_section_look">Look &amp; feel</string>
     <string name="md3_title_launcher">Source Engine Launcher</string>
+    <string name="md3_launcher_subtitle">Configure resources and start the game</string>
     <string name="md3_game_config_card">Game configuration</string>
     <string name="md3_paths_card">Paths</string>
     <string name="md3_section_updates">Updates</string>
@@ -186,4 +190,15 @@
     <string name="vpk_overwrite_message">Some extracted files already exist. Replace only the conflicting files?</string>
     <string name="vpk_overwrite">Overwrite</string>
     <string name="vpk_extract_done_path">Extraction complete: %1$s</string>
+    <string name="vpk_extract_destination_title">Extract to</string>
+    <string name="vpk_extract_current_directory">Current directory</string>
+    <string name="vpk_extract_named_directory">Folder: %1$s</string>
+    <string name="vpk_extract_choose_directory">Choose another directory</string>
+    <string name="vpk_choose_destination">Choose extraction directory</string>
+    <string name="vpk_choose_destination_prompt">Open a folder, then select the current directory.</string>
+    <string name="vpk_select_directory">Select current directory</string>
+    <string name="vpk_conflict_title">File conflict</string>
+    <string name="vpk_conflict_message">This file already exists:\n%1$s</string>
+    <string name="vpk_conflict_apply_all">Apply to all remaining conflicts</string>
+    <string name="vpk_skip">Skip</string>
 </resources>

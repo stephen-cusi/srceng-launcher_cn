@@ -60,6 +60,9 @@
     <string name="md3_preview_text">這是預覽卡片，展示目前主題配色下卡片、按鈕與文字的視覺效果。</string>
     <string name="md3_back">返回</string>
     <string name="md3_section_general">一般</string>
+    <string name="md3_section_navigation">導覽</string>
+    <string name="md3_predictive_back">預測返回</string>
+    <string name="md3_predictive_back_desc">返回手勢期間預覽目標畫面（Android 13+）</string>
     <string name="md3_section_look">視覺</string>
     <string name="md3_title_launcher">起源引擎啟動器</string>
     <string name="md3_game_config_card">遊戲設定</string>
@@ -161,4 +164,16 @@
     <string name="vpk_archive_browser">VPK 和 GMA 內容瀏覽器</string><string name="vpk_archive_summary">VPK%1$d · %2$d 個檔案</string><string name="vpk_archive_folder">資料夾 · 點擊進入</string>
     <string name="gma_archive_summary">GMA%1$d · %2$d 個檔案 · %3$s</string>
     <string name="vpk_extract_all">全部解壓縮</string><string name="vpk_extract_selected">解壓縮所選內容</string><string name="vpk_overwrite_title">覆寫現有檔案？</string><string name="vpk_overwrite_message">部分檔案已存在，是否只覆寫衝突的檔案？</string><string name="vpk_overwrite">覆寫</string><string name="vpk_extract_done_path">解壓縮完成：%1$s</string>
+    <string name="vpk_extract_destination_title">解壓縮到</string>
+    <string name="vpk_extract_current_directory">解壓縮到目前目錄</string>
+    <string name="vpk_extract_named_directory">解壓縮到 %1$s</string>
+    <string name="vpk_extract_choose_directory">選擇解壓縮位置</string>
+    <string name="vpk_choose_destination">選擇解壓縮目錄</string>
+    <string name="vpk_choose_destination_prompt">進入目標資料夾，然後選擇目前目錄。</string>
+    <string name="vpk_select_directory">選擇目前目錄</string>
+    <string name="vpk_conflict_title">檔案衝突</string>
+    <string name="vpk_conflict_message">以下檔案已存在：\n%1$s</string>
+    <string name="vpk_conflict_apply_all">全部（對後續衝突執行相同操作）</string>
+    <string name="vpk_skip">略過</string>
+    <string name="md3_launcher_subtitle">設定遊戲資源並快速啟動</string>
 </resources>

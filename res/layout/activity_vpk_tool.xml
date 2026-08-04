@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="12dp"
-    android:paddingRight="12dp">
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
 
     <LinearLayout
         android:id="@+id/md3_app_bar"
@@ -13,7 +13,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingTop="44dp"
-        android:paddingBottom="12dp">
+        android:paddingBottom="16dp">
 
         <ImageButton
             android:id="@+id/md3_button_back"
@@ -22,13 +22,13 @@
             android:background="@drawable/md3_btn_icon"
             android:contentDescription="@string/md3_back"
             android:scaleType="centerInside"
-            android:src="@android:drawable/ic_menu_revert"
+            android:src="@drawable/ic_arrow_back"
             android:tag="icon" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="12dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/vpk_file_manager"
-                android:textSize="20sp"
+                android:textSize="21sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -58,7 +58,7 @@
         android:layout_below="@id/md3_app_bar"
         android:orientation="vertical"
         android:paddingBottom="8dp"
-        android:visibility="invisible">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/vpk_manager_status"

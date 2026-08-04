@@ -25,7 +25,8 @@ class GmaArchive private constructor(
     fun extract(
         destination: File,
         selectedPaths: Set<String>? = null,
-        overwrite: Boolean = false,
+        overwritePaths: Set<String> = emptySet(),
+        skippedPaths: Set<String> = emptySet(),
         progress: (Int, Int, String) -> Unit
     ) {
         require(destination.isDirectory || destination.mkdirs()) { "Cannot create ${destination.path}" }
@@ -34,11 +35,12 @@ class GmaArchive private constructor(
             selectedPaths.any { selected -> entry.path == selected || entry.path.startsWith("$selected/") }
         }
         require(chosen.isNotEmpty()) { "No files selected" }
+        val extractedEntries = chosen.filterNot { it.path in skippedPaths }
         RandomAccessFile(source, "r").use { input ->
-            chosen.forEachIndexed { index, entry ->
+            extractedEntries.forEachIndexed { index, entry ->
                 val output = File(root, entry.path).canonicalFile
                 check(output.path.startsWith(root.path + File.separator)) { "Unsafe GMA path: ${entry.path}" }
-                require(overwrite || !output.exists()) { "File already exists: ${output.path}" }
+                require(!output.exists() || entry.path in overwritePaths) { "File already exists: ${output.path}" }
                 require(output.parentFile?.isDirectory == true || output.parentFile?.mkdirs() == true) {
                     "Cannot create ${output.parent}"
                 }
@@ -48,7 +50,7 @@ class GmaArchive private constructor(
                     copyRange(input, stream, entry.size, crc)
                 }
                 check(entry.crc == 0L || crc.value == entry.crc) { "CRC mismatch: ${entry.path}" }
-                progress(index + 1, chosen.size, entry.path)
+                progress(index + 1, extractedEntries.size, entry.path)
             }
         }
     }

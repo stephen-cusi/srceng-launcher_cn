@@ -158,4 +158,19 @@
     <string name="vpk_copying">Копирование файлов…</string><string name="vpk_moving">Перемещение файлов…</string><string name="vpk_deleting">Удаление файлов…</string><string name="vpk_copy_done">Файлы скопированы.</string><string name="vpk_move_done">Файлы перемещены.</string><string name="vpk_delete_done">Файлы удалены.</string>
     <string name="vpk_delete_confirm_title">Удалить выбранное?</string><string name="vpk_delete_confirm">Удалить выбранные элементы (%1$d) без возможности восстановления?</string><string name="vpk_output_exists">Файл с таким именем уже существует.</string><string name="vpk_extract_here">Распаковать сюда</string>
     <string name="vpk_archive_browser">Просмотр архивов VPK и GMA</string><string name="vpk_archive_summary">VPK версии %1$d · Файлов: %2$d</string><string name="gma_archive_summary">GMA версии %1$d · Файлов: %2$d · %3$s</string><string name="vpk_archive_folder">Папка · Нажмите, чтобы открыть</string><string name="vpk_extract_all">Извлечь всё</string><string name="vpk_extract_selected">Извлечь выбранное</string><string name="vpk_overwrite_title">Заменить существующие файлы?</string><string name="vpk_overwrite_message">Некоторые файлы уже существуют. Заменить только конфликтующие файлы?</string><string name="vpk_overwrite">Заменить</string><string name="vpk_extract_done_path">Извлечение завершено: %1$s</string>
+    <string name="vpk_extract_destination_title">Распаковать в</string>
+    <string name="vpk_extract_current_directory">Распаковать в текущую папку</string>
+    <string name="vpk_extract_named_directory">Распаковать в %1$s</string>
+    <string name="vpk_extract_choose_directory">Выбрать место распаковки</string>
+    <string name="vpk_choose_destination">Выберите папку распаковки</string>
+    <string name="vpk_choose_destination_prompt">Откройте нужную папку и выберите текущий каталог.</string>
+    <string name="vpk_select_directory">Выбрать текущую папку</string>
+    <string name="vpk_conflict_title">Конфликт файлов</string>
+    <string name="vpk_conflict_message">Этот файл уже существует:\n%1$s</string>
+    <string name="vpk_conflict_apply_all">Применить ко всем оставшимся конфликтам</string>
+    <string name="vpk_skip">Пропустить</string>
+    <string name="md3_launcher_subtitle">Настройка ресурсов и запуск игры</string>
+    <string name="md3_section_navigation">Навигация</string>
+    <string name="md3_predictive_back">Предиктивный возврат</string>
+    <string name="md3_predictive_back_desc">Предпросмотр экрана при возврате (Android 13+)</string>
 </resources>

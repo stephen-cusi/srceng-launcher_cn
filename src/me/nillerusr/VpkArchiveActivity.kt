@@ -3,6 +3,7 @@ package me.nillerusr
 import android.app.Activity
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Build
@@ -12,6 +13,7 @@ import android.view.MotionEvent
 import android.view.animation.OvershootInterpolator
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -29,6 +31,7 @@ import me.nillerusr.gma.GmaArchive
 import me.nillerusr.vpk.VpkArchive
 
 class VpkArchiveActivity : Activity() {
+    private lateinit var predictiveBack: PredictiveBackController
     private data class Item(val name: String, val path: String, val directory: Boolean, val size: Long)
 
     private val executor = Executors.newSingleThreadExecutor()
@@ -40,6 +43,7 @@ class VpkArchiveActivity : Activity() {
     private var gmaArchive: GmaArchive? = null
     private var currentPath = ""
     private var busy = false
+    private var pendingExtractionPaths: Set<String>? = null
     private lateinit var archiveFile: File
     private lateinit var title: TextView
     private lateinit var pathView: TextView
@@ -56,6 +60,8 @@ class VpkArchiveActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vpk_archive)
         Md3Theme.applyAfterSetContentView(this)
+        predictiveBack = PredictiveBackController(this, ::navigateBack)
+        predictiveBack.sync()
 
         title = findViewById(R.id.vpk_archive_title)
         pathView = findViewById(R.id.vpk_archive_path)
@@ -197,26 +203,106 @@ class VpkArchiveActivity : Activity() {
 
     private fun prepareExtraction() {
         val paths = selected.takeIf { it.isNotEmpty() }?.toSet()
-        val destination = File(archiveFile.parentFile, archiveBaseName())
-        val conflicts = archiveEntries().asSequence()
-            .filter { entry -> paths == null || paths.any { entry.path == it || entry.path.startsWith("$it/") } }
-            .any { File(destination, it.path).exists() }
-        if (conflicts) {
-            MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.vpk_overwrite_title)
-                .setMessage(R.string.vpk_overwrite_message)
-                .setNegativeButton(android.R.string.cancel, null)
-                .setPositiveButton(R.string.vpk_overwrite) { _, _ -> extract(paths, destination, true) }
-                .show()
-        } else {
-            extract(paths, destination, false)
+        val parent = archiveFile.parentFile ?: return
+        val choices = arrayOf(
+            getString(R.string.vpk_extract_current_directory),
+            getString(R.string.vpk_extract_named_directory, archiveBaseName()),
+            getString(R.string.vpk_extract_choose_directory)
+        )
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.vpk_extract_destination_title)
+            .setItems(choices) { _, choice ->
+                when (choice) {
+                    0 -> resolveConflicts(paths, parent)
+                    1 -> resolveConflicts(paths, File(parent, archiveBaseName()))
+                    else -> {
+                        pendingExtractionPaths = paths
+                        startActivityForResult(
+                            Intent(this, VpkToolActivity::class.java)
+                                .putExtra(VpkToolActivity.EXTRA_PICK_DIRECTORY, true)
+                                .putExtra(VpkToolActivity.EXTRA_START_DIRECTORY, parent.path),
+                            REQUEST_EXTRACTION_DIRECTORY
+                        )
+                    }
+                }
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    @Deprecated("Uses the classic activity result callback")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_EXTRACTION_DIRECTORY && resultCode == RESULT_OK) {
+            val destination = data?.getStringExtra(VpkToolActivity.EXTRA_SELECTED_DIRECTORY)?.let(::File) ?: return
+            val paths = pendingExtractionPaths
+            pendingExtractionPaths = null
+            resolveConflicts(paths, destination)
         }
     }
 
-    private fun extract(paths: Set<String>?, destination: File, overwrite: Boolean) = runTask(R.string.vpk_extracting) {
+    private fun resolveConflicts(paths: Set<String>?, destination: File) {
+        val conflicts = archiveEntries().filter { entry ->
+            (paths == null || paths.any { entry.path == it || entry.path.startsWith("$it/") }) &&
+                File(destination, entry.path).exists()
+        }
+        if (conflicts.isEmpty()) {
+            extract(paths, destination, emptySet(), emptySet())
+            return
+        }
+        val overwrite = linkedSetOf<String>()
+        val skipped = linkedSetOf<String>()
+        fun ask(index: Int) {
+            if (index >= conflicts.size) {
+                extract(paths, destination, overwrite, skipped)
+                return
+            }
+            val applyToAll = CheckBox(this).apply {
+                setText(R.string.vpk_conflict_apply_all)
+                setPadding(dp(20), dp(4), dp(20), dp(4))
+            }
+            val container = FrameLayout(this).apply { addView(applyToAll) }
+            val conflict = conflicts[index]
+            val dialog = MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.vpk_conflict_title)
+                .setMessage(getString(R.string.vpk_conflict_message, conflict.path))
+                .setView(container)
+                .setNegativeButton(R.string.vpk_skip, null)
+                .setPositiveButton(R.string.vpk_overwrite, null)
+                .create()
+            dialog.setOnShowListener {
+                dialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE).setOnClickListener {
+                    if (applyToAll.isChecked) {
+                        conflicts.drop(index).forEach { skipped += it.path }
+                        dialog.dismiss()
+                        extract(paths, destination, overwrite, skipped)
+                    } else {
+                        skipped += conflict.path
+                        dialog.dismiss()
+                        ask(index + 1)
+                    }
+                }
+                dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                    if (applyToAll.isChecked) {
+                        conflicts.drop(index).forEach { overwrite += it.path }
+                        dialog.dismiss()
+                        extract(paths, destination, overwrite, skipped)
+                    } else {
+                        overwrite += conflict.path
+                        dialog.dismiss()
+                        ask(index + 1)
+                    }
+                }
+            }
+            dialog.show()
+        }
+        ask(0)
+    }
+
+    private fun extract(paths: Set<String>?, destination: File, overwrite: Set<String>, skipped: Set<String>) = runTask(R.string.vpk_extracting) {
         when {
-            vpkArchive != null -> vpkArchive!!.extract(destination, paths, overwrite, ::updateProgress)
-            gmaArchive != null -> gmaArchive!!.extract(destination, paths, overwrite, ::updateProgress)
+            vpkArchive != null -> vpkArchive!!.extract(destination, paths, overwrite, skipped, ::updateProgress)
+            gmaArchive != null -> gmaArchive!!.extract(destination, paths, overwrite, skipped, ::updateProgress)
             else -> error(getString(R.string.vpk_no_archive))
         }
         runOnUiThread {
@@ -321,7 +407,10 @@ class VpkArchiveActivity : Activity() {
         else -> "$size B"
     }
 
+    private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
+
     override fun onDestroy() {
+        if (::predictiveBack.isInitialized) predictiveBack.release()
         vpkArchive?.close()
         gmaArchive?.close()
         executor.shutdownNow()
@@ -330,5 +419,6 @@ class VpkArchiveActivity : Activity() {
 
     companion object {
         const val EXTRA_ARCHIVE_PATH = "vpk_archive_path"
+        private const val REQUEST_EXTRACTION_DIRECTORY = 1001
     }
 }
