@@ -18,6 +18,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -59,6 +60,7 @@ import java.util.ArrayList;
 import java.util.List;
 import android.Manifest;
 import me.nillerusr.DirchActivity;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import me.nillerusr.md3.Md3Theme;
 
@@ -1393,7 +1395,6 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         final Context themedContext = new ContextThemeWrapper(this, R.style.SrcEng_MD3);
         final androidx.appcompat.app.AlertDialog dialog = new MaterialAlertDialogBuilder(themedContext).create();
-        dialog.setTitle(args.getString("title"));
         dialog.setCancelable(false);
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
@@ -1404,11 +1405,26 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
             }
         });
 
-        // create text
+        final float density = getResources().getDisplayMetrics().density;
+        final int spacingSmall = Math.round(8 * density);
+        final int spacingMedium = Math.round(16 * density);
+        final int spacingLarge = Math.round(24 * density);
+
+        // create title and text
+
+        TextView title = new TextView(themedContext);
+        title.setText(args.getString("title"));
+        title.setTextSize(24);
+        title.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+        title.setGravity(Gravity.START);
 
         TextView message = new TextView(themedContext);
-        message.setGravity(Gravity.CENTER);
+        message.setGravity(Gravity.START);
         message.setText(args.getString("message"));
+        message.setTextSize(16);
+        message.setLineSpacing(0, 1.15f);
+        message.setPadding(0, spacingMedium, 0, 0);
+        message.setTag("subtitle");
         if (textColor != Color.TRANSPARENT) {
             message.setTextColor(textColor);
         }
@@ -1423,9 +1439,10 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         LinearLayout buttons = new LinearLayout(themedContext);
         buttons.setOrientation(LinearLayout.HORIZONTAL);
-        buttons.setGravity(Gravity.CENTER);
+        buttons.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
+        buttons.setPadding(0, spacingLarge, 0, 0);
         for (int i = 0; i < buttonTexts.length; ++i) {
-            Button button = new Button(themedContext);
+            MaterialButton button = new MaterialButton(themedContext);
             final int id = buttonIds[i];
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1444,6 +1461,11 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                 }
             }
             button.setText(buttonTexts[i]);
+            button.setTextSize(14);
+            button.setAllCaps(false);
+            button.setMinWidth(Math.round(88 * density));
+            button.setMinHeight(Math.round(48 * density));
+            button.setTag("tonal");
             if (textColor != Color.TRANSPARENT) {
                 button.setTextColor(textColor);
             }
@@ -1463,13 +1485,18 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
             if (buttonSelectedColor != Color.TRANSPARENT) {
                 // TODO set color for selected messagebox button
             }
-            buttons.addView(button);
+            LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, Math.round(48 * density));
+            buttonParams.setMarginStart(spacingSmall);
+            buttons.addView(button, buttonParams);
         }
 
         // create content
 
         LinearLayout content = new LinearLayout(themedContext);
         content.setOrientation(LinearLayout.VERTICAL);
+        content.setPadding(spacingLarge, spacingLarge, spacingLarge, spacingLarge);
+        content.addView(title);
         content.addView(message);
         content.addView(buttons);
         if (backgroundColor != Color.TRANSPARENT) {
@@ -1495,6 +1522,13 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         dialog.show();
         Md3Theme.applyDialog(dialog);
+        Window dialogWindow = dialog.getWindow();
+        if (dialogWindow != null) {
+            DisplayMetrics metrics = getResources().getDisplayMetrics();
+            int maxWidth = Math.round(520 * density);
+            int availableWidth = metrics.widthPixels - Math.round(48 * density);
+            dialogWindow.setLayout(Math.min(maxWidth, availableWidth), ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
     }
 
     private final Runnable rehideSystemUi = new Runnable() {
