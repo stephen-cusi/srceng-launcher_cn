@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     id("com.android.application") version "8.13.2"
@@ -6,6 +7,11 @@ plugins {
 }
 
 android {
+    val releaseSigningPropertiesFile = rootProject.file("release-signing.properties")
+    val releaseBuildRequested = gradle.startParameter.taskNames.any {
+        it.contains("release", ignoreCase = true)
+    }
+
     namespace = "com.valvesoftware.source"
     compileSdk = 34
 
@@ -24,11 +30,28 @@ android {
             keyAlias = "androiddebugkey"
             keyPassword = "android"
         }
+        create("release") {
+            check(!releaseBuildRequested || releaseSigningPropertiesFile.isFile) {
+                "Missing release-signing.properties. Release builds require the dedicated signing certificate."
+            }
+            if (releaseSigningPropertiesFile.isFile) {
+                val signingProperties = Properties().apply {
+                    releaseSigningPropertiesFile.inputStream().use(::load)
+                }
+                storeFile = rootProject.file(signingProperties.getProperty("storeFile"))
+                storePassword = signingProperties.getProperty("storePassword")
+                keyAlias = signingProperties.getProperty("keyAlias")
+                keyPassword = signingProperties.getProperty("keyPassword")
+            }
+        }
     }
 
     buildTypes {
-        getByName("release") {
+        getByName("debug") {
             signingConfig = signingConfigs.getByName("debug")
+        }
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
         }
     }

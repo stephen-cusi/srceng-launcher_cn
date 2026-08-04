@@ -36,6 +36,9 @@
     <string name="srceng_game_portal">Portal</string>
 
     <string name="srceng_dir_choice_btn">Définir le répertoire courant</string>
+    <string name="srceng_dir_storage_prompt">Choisir un emplacement de stockage</string>
+    <string name="srceng_dir_current_path">Dossier actuel : %1$s</string>
+    <string name="srceng_dir_unreadable">Impossible d’ouvrir ce dossier</string>
     <string name="srceng_update">Mise à jour disponible!</string>
     <string name="srceng_launcher_error_find_platform">Le dossier platform est manquant!</string>
 

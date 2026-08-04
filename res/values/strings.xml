@@ -37,6 +37,9 @@
     <string name="srceng_game_portal">Portal</string>
 
     <string name="srceng_dir_choice_btn">Set current directory</string>
+    <string name="srceng_dir_storage_prompt">Choose a storage location</string>
+    <string name="srceng_dir_current_path">Current folder: %1$s</string>
+    <string name="srceng_dir_unreadable">This folder cannot be opened</string>
     <string name="srceng_update">Update available!</string>
     <string name="srceng_launcher_error_find_platform">platform directory is missing!</string>
 

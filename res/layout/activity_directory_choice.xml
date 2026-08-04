@@ -1,69 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:tools="http://schemas.android.com/tools"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		xmlns:ads="http://schemas.android.com/apk/res-auto">
-		<LinearLayout
-			android:id="@+id/header_ch"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignParentTop="true"
-			android:padding="12dp"
-			android:tag="card"
-			android:layout_gravity="center">
-			<TextView
-				android:id="@+id/header_txt"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:paddingLeft="4dp"
-				android:paddingRight="4dp"
-				android:text="Dir???"
-				android:textSize="14sp"
-				android:tag="on_surface"/>
-		</LinearLayout>
-		<LinearLayout
-			android:id="@+id/footer2"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignParentBottom="true"
-			android:padding="12dp"
-			android:orientation="horizontal">
-			<com.google.android.material.button.MaterialButton
-				android:id="@+id/button_choice"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:text="@string/srceng_dir_choice_btn"
-				android:layout_weight="1"
-				android:tag="filled"/>
-		</LinearLayout>
-		<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-			android:layout_above="@+id/footer2"
-			android:layout_below="@+id/header_ch"
-			android:paddingTop="5dp"
-			android:paddingBottom="5dp"
-			android:layout_gravity="center">
-			<LinearLayout
-				android:layout_width="fill_parent"
-				android:layout_height="fill_parent"
-				android:orientation="vertical"
-				android:paddingTop="1dp"
-				android:paddingLeft="2dp"
-				android:paddingRight="2dp"
-				android:paddingBottom="1dp">
-				<ScrollView
-		    			android:layout_width="fill_parent"
-					android:layout_height="fill_parent"
-		    			android:fillViewport="true">
-		    			<LinearLayout
-		    				android:id="@+id/bodych"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:orientation="vertical">
-					</LinearLayout>
-		    		</ScrollView>
-			</LinearLayout>
-		</LinearLayout>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp">
+
+    <LinearLayout
+        android:id="@+id/md3_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="44dp"
+        android:paddingBottom="14dp">
+
+        <ImageButton
+            android:id="@+id/md3_button_back"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/md3_btn_icon"
+            android:contentDescription="@string/md3_back"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_arrow_back"
+            android:tag="icon" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/srceng_launcher_set_game_path"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/header_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="start"
+                android:maxLines="1"
+                android:text="@string/srceng_dir_storage_prompt"
+                android:textSize="12sp"
+                android:tag="subtitle" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/footer2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="12dp">
+
+        <TextView
+            android:id="@+id/directory_choice_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:ellipsize="start"
+            android:maxLines="1"
+            android:text="@string/srceng_dir_storage_prompt"
+            android:textSize="12sp"
+            android:tag="subtitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_choice"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:enabled="false"
+            android:text="@string/srceng_dir_choice_btn"
+            android:tag="filled" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/directory_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/footer2"
+        android:layout_below="@id/md3_app_bar"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:paddingTop="4dp"
+        android:paddingBottom="8dp">
+
+        <LinearLayout
+            android:id="@+id/bodych"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 </RelativeLayout>

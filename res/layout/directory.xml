@@ -1,43 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="horizontal"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:padding="8dp"
-	android:tag="card_outlined"
-	android:clickable="true"
-	android:focusable="true"
-	android:focusableInTouchMode="true"
-	android:layout_marginTop="1dip">
-	<ImageView
-		android:duplicateParentState="true"
-		android:gravity="left"
-		android:clickable="false"
-		android:focusable="false"
-		android:layout_width="40dp"
-		android:layout_height="40dp"
-		android:paddingRight="5dip"
-		android:src="@drawable/folder"
-		android:tag="icon">
-	</ImageView>
-	<LinearLayout
-		android:orientation="vertical"
-		android:clickable="false"
-		android:focusable="false"
-		android:layout_width="fill_parent"
-		android:paddingTop="4dip"
-		android:paddingBottom="4dip"
-		android:duplicateParentState="true"
-		android:layout_height="wrap_content">
-		<TextView
-			android:duplicateParentState="true"
-			android:id="@+id/dirname"
-			android:clickable="false"
-			android:focusable="false"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text=""
-			android:textSize="14sp"
-			android:tag="on_surface"/>
-	</LinearLayout>
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="6dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:minHeight="64dp"
+    android:orientation="horizontal"
+    android:paddingStart="12dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="8dp"
+    android:tag="list_item">
+
+    <FrameLayout
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="12dp"
+        android:tag="folder_container">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_folder_open"
+            android:tag="folder_icon" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/dirname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ellipsize="middle"
+        android:maxLines="1"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_chevron_right"
+        android:tag="trailing_icon" />
 </LinearLayout>

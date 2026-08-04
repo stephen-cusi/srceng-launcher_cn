@@ -32,6 +32,9 @@
     <string name="srceng_game_portal">傳送門</string>
 
     <string name="srceng_dir_choice_btn">設定當前目錄為遊戲資源路徑</string>
+    <string name="srceng_dir_storage_prompt">請選擇儲存位置</string>
+    <string name="srceng_dir_current_path">目前目錄：%1$s</string>
+    <string name="srceng_dir_unreadable">無法開啟此目錄</string>
     <string name="srceng_launcher_error_find_platform">platform 目錄遺失！</string>
 
     <!-- MD3 Settings / Appearance -->

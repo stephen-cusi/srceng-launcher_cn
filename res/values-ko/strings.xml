@@ -36,6 +36,9 @@
     <string name="srceng_game_portal">Portal</string>
 
     <string name="srceng_dir_choice_btn">현재 디렉터리로 설정</string>
+    <string name="srceng_dir_storage_prompt">저장 위치 선택</string>
+    <string name="srceng_dir_current_path">현재 폴더: %1$s</string>
+    <string name="srceng_dir_unreadable">이 폴더를 열 수 없습니다</string>
     <string name="srceng_update">업데이트가 있습니다!</string>
     <string name="srceng_launcher_error_find_platform">platform 폴더가 없습니다!</string>
 

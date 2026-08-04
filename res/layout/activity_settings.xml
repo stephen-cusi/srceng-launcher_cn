@@ -161,8 +161,11 @@
             <Button
                 android:id="@+id/md3_ui_lang_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="64dp"
+                android:fontFamily="sans"
                 android:gravity="start|center_vertical"
+                android:includeFontPadding="true"
+                android:lineSpacingExtra="2dp"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:tag="outlined"/>
@@ -205,8 +208,11 @@
             <Button
                 android:id="@+id/md3_game_lang_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="64dp"
+                android:fontFamily="sans"
                 android:gravity="start|center_vertical"
+                android:includeFontPadding="true"
+                android:lineSpacingExtra="2dp"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:tag="outlined"/>

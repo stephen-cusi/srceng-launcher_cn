@@ -36,6 +36,9 @@
     <string name="srceng_game_portal">Portal</string>
 
     <string name="srceng_dir_choice_btn">Aktuelles Verzeichnis festlegen</string>
+    <string name="srceng_dir_storage_prompt">Speicherort auswählen</string>
+    <string name="srceng_dir_current_path">Aktueller Ordner: %1$s</string>
+    <string name="srceng_dir_unreadable">Dieser Ordner kann nicht geöffnet werden</string>
     <string name="srceng_update">Update verfügbar!</string>
     <string name="srceng_launcher_error_find_platform">platform-Ordner fehlt!</string>
 

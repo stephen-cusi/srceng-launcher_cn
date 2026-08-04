@@ -36,6 +36,9 @@
     <string name="srceng_game_portal">Portal</string>
 
     <string name="srceng_dir_choice_btn">Указать данный путь</string>
+    <string name="srceng_dir_storage_prompt">Выберите хранилище</string>
+    <string name="srceng_dir_current_path">Текущая папка: %1$s</string>
+    <string name="srceng_dir_unreadable">Не удалось открыть эту папку</string>
     <string name="srceng_update">Доступно обновление</string>
     <string name="srceng_launcher_error_find_platform">Папка platform отсутствует!</string>
 

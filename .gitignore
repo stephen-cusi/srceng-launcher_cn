@@ -11,6 +11,7 @@ apk*/
 local.properties
 ant.properties
 release.keystore
+release-signing.properties
 .gradle/
 build/
 *.log
