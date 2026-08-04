@@ -12,6 +12,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.text.util.Linkify
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.valvesoftware.source.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import io.noties.markwon.Markwon
 import java.io.File
 import me.nillerusr.md3.Md3Theme
 import org.libsdl.app.SDLActivity
@@ -172,9 +174,19 @@ open class LauncherActivity : Activity() {
                 .setView(scroll)
                 .setNegativeButton(R.string.srceng_launcher_changelog) { _, _ ->
                     UpdateSystem.loadCurrentChangelog(this) { version, changelog, error ->
+                        val content = TextView(this)
+                        content.setPadding(padding, 0, padding, padding)
+                        content.movementMethod = LinkMovementMethod.getInstance()
+                        if (changelog != null) {
+                            Markwon.builder(this).build().setMarkdown(content, changelog)
+                        } else {
+                            content.text = getString(R.string.srceng_launcher_changelog_failed, error)
+                        }
+                        val scroll = ScrollView(this)
+                        scroll.addView(content)
                         MaterialAlertDialogBuilder(this)
                             .setTitle(getString(R.string.srceng_launcher_changelog_version, version))
-                            .setMessage(changelog ?: getString(R.string.srceng_launcher_changelog_failed, error))
+                            .setView(scroll)
                             .setPositiveButton(android.R.string.ok, null)
                             .show().also { Md3Theme.applyDialog(it) }
                     }

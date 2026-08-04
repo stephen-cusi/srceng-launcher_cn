@@ -86,6 +86,7 @@ android {
 
 dependencies {
     implementation("com.google.android.material:material:1.12.0")
+    implementation("io.noties.markwon:core:4.6.2")
 }
 
 kotlin {

@@ -3,7 +3,6 @@ package org.libsdl.app;
 import com.valvesoftware.source.R;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.UiModeManager;
 import android.content.ClipboardManager;
@@ -43,6 +42,7 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ContextThemeWrapper;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -59,6 +59,8 @@ import java.util.ArrayList;
 import java.util.List;
 import android.Manifest;
 import me.nillerusr.DirchActivity;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import me.nillerusr.md3.Md3Theme;
 
 import com.valvesoftware.ValveActivity2;
 
@@ -271,7 +273,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         if (mBrokenLibraries)
         {
             mSingleton = this;
-            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+            MaterialAlertDialogBuilder dlgAlert  = new MaterialAlertDialogBuilder(new ContextThemeWrapper(this, R.style.SrcEng_MD3));
             dlgAlert.setMessage("An error occurred while trying to start the application. Please try again and/or reinstall."
                   + System.getProperty("line.separator")
                   + System.getProperty("line.separator")
@@ -286,7 +288,9 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                     }
                 });
            dlgAlert.setCancelable(false);
-           dlgAlert.create().show();
+           androidx.appcompat.app.AlertDialog dlg = dlgAlert.create();
+           dlg.show();
+           Md3Theme.applyDialog(dlg);
 
            return;
         }
@@ -302,7 +306,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         {
         	mBrokenLibraries = true; // Funny hack, but should work
             mSingleton = this;
-            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+            MaterialAlertDialogBuilder dlgAlert = new MaterialAlertDialogBuilder(new ContextThemeWrapper(this, R.style.SrcEng_MD3));
             dlgAlert.setTitle(getResources().getString(R.string.srceng_launcher_error));
             if( preinitResult == -1 )
                 dlgAlert.setMessage(getResources().getString(R.string.srceng_launcher_error_find_platform));
@@ -325,7 +329,9 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                 }
             });
             dlgAlert.setCancelable(false);
-            dlgAlert.create().show();
+            androidx.appcompat.app.AlertDialog dlg = dlgAlert.create();
+            dlg.show();
+            Md3Theme.applyDialog(dlg);
 
             return;
         }
@@ -1385,7 +1391,8 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         // create dialog with title and a listener to wake up calling thread
 
-        final AlertDialog dialog = new AlertDialog.Builder(this).create();
+        final Context themedContext = new ContextThemeWrapper(this, R.style.SrcEng_MD3);
+        final androidx.appcompat.app.AlertDialog dialog = new MaterialAlertDialogBuilder(themedContext).create();
         dialog.setTitle(args.getString("title"));
         dialog.setCancelable(false);
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -1399,7 +1406,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         // create text
 
-        TextView message = new TextView(this);
+        TextView message = new TextView(themedContext);
         message.setGravity(Gravity.CENTER);
         message.setText(args.getString("message"));
         if (textColor != Color.TRANSPARENT) {
@@ -1414,11 +1421,11 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         final SparseArray<Button> mapping = new SparseArray<Button>();
 
-        LinearLayout buttons = new LinearLayout(this);
+        LinearLayout buttons = new LinearLayout(themedContext);
         buttons.setOrientation(LinearLayout.HORIZONTAL);
         buttons.setGravity(Gravity.CENTER);
         for (int i = 0; i < buttonTexts.length; ++i) {
-            Button button = new Button(this);
+            Button button = new Button(themedContext);
             final int id = buttonIds[i];
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1461,7 +1468,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         // create content
 
-        LinearLayout content = new LinearLayout(this);
+        LinearLayout content = new LinearLayout(themedContext);
         content.setOrientation(LinearLayout.VERTICAL);
         content.addView(message);
         content.addView(buttons);
@@ -1487,6 +1494,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         });
 
         dialog.show();
+        Md3Theme.applyDialog(dialog);
     }
 
     private final Runnable rehideSystemUi = new Runnable() {
