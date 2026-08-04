@@ -135,6 +135,15 @@
     <string name="md3_res_height">Height (px)</string>
     <string name="vpk_tool">VPK and GMA tools</string>
     <string name="vpk_tool_desc">Browse and extract VPK and GMA archives created by tools such as gmad. VPK creation is also supported.</string>
+    <string name="engine_log_viewer">Engine log viewer</string>
+    <string name="engine_log_viewer_desc">Read engine.log with color-coded levels and filtering.</string>
+    <string name="engine_log_refresh">Refresh</string>
+    <string name="engine_log_filter_all">All</string>
+    <string name="engine_log_filter_error">Errors</string>
+    <string name="engine_log_filter_warning">Warnings</string>
+    <string name="engine_log_filter_info">Info</string>
+    <string name="engine_log_not_found">engine.log not found in the game directory yet. It is generated while the game is running.</string>
+    <string name="engine_log_no_matches">No log entries match this filter.</string>
     <string name="vpk_actions" tools:ignore="UnusedResources">Archive actions</string>
     <string name="vpk_actions_desc" tools:ignore="UnusedResources">Creation writes a standalone embedded archive. When opening a split archive, select its _dir.vpk and all numbered VPK chunks together.</string>
     <string name="vpk_create" tools:ignore="UnusedResources">Create VPK</string>

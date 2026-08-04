@@ -130,6 +130,15 @@
     <string name="md3_section_tools">Outils</string>
     <string name="vpk_tool">Outils VPK et GMA</string>
     <string name="vpk_tool_desc">Créer, consulter et extraire des archives VPK1 et VPK2.</string>
+    <string name="engine_log_viewer">Visionneuse du journal moteur</string>
+    <string name="engine_log_viewer_desc">Lit engine.log avec niveaux colorés et filtrage.</string>
+    <string name="engine_log_refresh">Actualiser</string>
+    <string name="engine_log_filter_all">Tout</string>
+    <string name="engine_log_filter_error">Erreurs</string>
+    <string name="engine_log_filter_warning">Avertissements</string>
+    <string name="engine_log_filter_info">Infos</string>
+    <string name="engine_log_not_found">engine.log introuvable dans le répertoire du jeu pour le moment. Il est généré pendant l\'exécution du jeu.</string>
+    <string name="engine_log_no_matches">Aucune entrée de journal ne correspond à ce filtre.</string>
     <string name="vpk_actions">Actions sur l’archive</string>
     <string name="vpk_actions_desc">La création produit un VPK autonome intégré. Pour une archive fractionnée, sélectionnez _dir.vpk et toutes les parties VPK numérotées.</string>
     <string name="vpk_create">Créer un VPK</string>

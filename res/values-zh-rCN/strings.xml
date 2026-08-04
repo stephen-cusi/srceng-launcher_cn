@@ -136,6 +136,15 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="md3_section_tools">工具</string>
     <string name="vpk_tool">VPK 和 GMA 工具</string>
     <string name="vpk_tool_desc">浏览和解压 VPK、GMA（包括 gmad 创建的文件），同时支持创建 VPK。</string>
+    <string name="engine_log_viewer">引擎日志查看器</string>
+    <string name="engine_log_viewer_desc">读取 engine.log，按等级着色并支持筛选。</string>
+    <string name="engine_log_refresh">刷新</string>
+    <string name="engine_log_filter_all">全部</string>
+    <string name="engine_log_filter_error">错误</string>
+    <string name="engine_log_filter_warning">警告</string>
+    <string name="engine_log_filter_info">信息</string>
+    <string name="engine_log_not_found">在游戏目录中尚未找到 engine.log。游戏运行时会实时生成。</string>
+    <string name="engine_log_no_matches">没有符合该筛选条件的日志条目。</string>
     <string name="vpk_actions">文件操作</string>
     <string name="vpk_actions_desc">创建功能会生成单文件内嵌 VPK。打开分卷文件时，请同时选择 _dir.vpk 和所有带编号的 VPK 分卷。</string>
     <string name="vpk_create">创建 VPK</string>

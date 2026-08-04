@@ -502,6 +502,9 @@ open class SettingsActivity : Activity() {
         optFind<View>(R.id.md3_vpk_tool)?.setOnClickListener {
             startActivity(Intent(this, VpkToolActivity::class.java))
         }
+        optFind<View>(R.id.md3_engine_log_tool)?.setOnClickListener {
+            startActivity(Intent(this, EngineLogActivity::class.java))
+        }
         val previewClick = View.OnClickListener { view ->
             val message = if (view === previewFilled) R.string.md3_preview_hint_filled else if (view === previewTonal) R.string.md3_preview_hint_tonal else if (view === previewOutlined) R.string.md3_preview_hint_outlined else 0
             if (message != 0) try { Toast.makeText(this, message, Toast.LENGTH_SHORT).show() } catch (_: Throwable) {}

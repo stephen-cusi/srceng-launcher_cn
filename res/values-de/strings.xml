@@ -130,6 +130,15 @@
     <string name="md3_section_tools">Werkzeuge</string>
     <string name="vpk_tool">VPK- und GMA-Werkzeuge</string>
     <string name="vpk_tool_desc">VPK-Archive der Versionen 1 und 2 erstellen, anzeigen und entpacken.</string>
+    <string name="engine_log_viewer">Engine-Log-Betrachter</string>
+    <string name="engine_log_viewer_desc">Liest engine.log mit farbcodierten Stufen und Filterung.</string>
+    <string name="engine_log_refresh">Aktualisieren</string>
+    <string name="engine_log_filter_all">Alle</string>
+    <string name="engine_log_filter_error">Fehler</string>
+    <string name="engine_log_filter_warning">Warnungen</string>
+    <string name="engine_log_filter_info">Info</string>
+    <string name="engine_log_not_found">engine.log noch nicht im Spielverzeichnis gefunden. Er wird während des Spielens erzeugt.</string>
+    <string name="engine_log_no_matches">Keine Log-Einträge entsprechen diesem Filter.</string>
     <string name="vpk_actions">Archivaktionen</string>
     <string name="vpk_actions_desc">Beim Erstellen wird eine eigenständige eingebettete VPK erzeugt. Bei geteilten Archiven _dir.vpk und alle nummerierten VPK-Teile zusammen auswählen.</string>
     <string name="vpk_create">VPK erstellen</string>

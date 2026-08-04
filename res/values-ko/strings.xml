@@ -130,6 +130,15 @@
     <string name="md3_section_tools">도구</string>
     <string name="vpk_tool">VPK 및 GMA 도구</string>
     <string name="vpk_tool_desc">VPK1 및 VPK2 아카이브를 만들고 보고 압축 해제합니다.</string>
+    <string name="engine_log_viewer">엔진 로그 뷰어</string>
+    <string name="engine_log_viewer_desc">engine.log을 읽고 레벨별 색상 구분 및 필터링을 제공합니다.</string>
+    <string name="engine_log_refresh">새로고침</string>
+    <string name="engine_log_filter_all">전체</string>
+    <string name="engine_log_filter_error">오류</string>
+    <string name="engine_log_filter_warning">경고</string>
+    <string name="engine_log_filter_info">정보</string>
+    <string name="engine_log_not_found">게임 디렉터리에서 아직 engine.log을 찾을 수 없습니다. 게임 실행 중에 생성됩니다.</string>
+    <string name="engine_log_no_matches">이 필터에 일치하는 로그 항목이 없습니다.</string>
     <string name="vpk_actions">아카이브 작업</string>
     <string name="vpk_actions_desc">만들기는 단일 내장 VPK를 출력합니다. 분할 아카이브를 열 때는 _dir.vpk와 번호가 지정된 모든 VPK 조각을 함께 선택하세요.</string>
     <string name="vpk_create">VPK 만들기</string>

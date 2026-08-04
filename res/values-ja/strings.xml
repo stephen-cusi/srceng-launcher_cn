@@ -130,6 +130,15 @@
     <string name="md3_section_tools">ツール</string>
     <string name="vpk_tool">VPK・GMA ツール</string>
     <string name="vpk_tool_desc">VPK1 と VPK2 アーカイブの作成、表示、展開。</string>
+    <string name="engine_log_viewer">エンジンログビューアー</string>
+    <string name="engine_log_viewer_desc">engine.log を読み取り、レベル別の色分けとフィルタリングを行います。</string>
+    <string name="engine_log_refresh">更新</string>
+    <string name="engine_log_filter_all">すべて</string>
+    <string name="engine_log_filter_error">エラー</string>
+    <string name="engine_log_filter_warning">警告</string>
+    <string name="engine_log_filter_info">情報</string>
+    <string name="engine_log_not_found">ゲームディレクトリに engine.log が見つかりません。ゲーム実行中に生成されます。</string>
+    <string name="engine_log_no_matches">このフィルターに一致するログはありません。</string>
     <string name="vpk_actions">アーカイブ操作</string>
     <string name="vpk_actions_desc">作成時は埋め込み型の単一 VPK を出力します。分割アーカイブを開く場合は、_dir.vpk と番号付き VPK をすべて選択してください。</string>
     <string name="vpk_create">VPK を作成</string>

@@ -473,6 +473,33 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/md3_engine_log_tool"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:tag="card_outlined">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/engine_log_viewer"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:tag="subtitle"
+                android:text="@string/engine_log_viewer_desc"
+                android:textSize="12sp" />
+        </LinearLayout>
+
         <!-- ========== Appearance section title ========== -->
         <TextView
             android:layout_width="wrap_content"

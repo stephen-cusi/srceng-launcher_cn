@@ -128,6 +128,15 @@
     <string name="md3_section_tools">工具</string>
     <string name="vpk_tool">VPK 和 GMA 工具</string>
     <string name="vpk_tool_desc">建立、檢視和解壓縮 VPK1 與 VPK2 檔案。</string>
+    <string name="engine_log_viewer">引擎日誌檢視器</string>
+    <string name="engine_log_viewer_desc">讀取 engine.log，依等級著色並支援篩選。</string>
+    <string name="engine_log_refresh">重新整理</string>
+    <string name="engine_log_filter_all">全部</string>
+    <string name="engine_log_filter_error">錯誤</string>
+    <string name="engine_log_filter_warning">警告</string>
+    <string name="engine_log_filter_info">資訊</string>
+    <string name="engine_log_not_found">尚未在遊戲目錄中找到 engine.log。遊戲執行時會即時產生。</string>
+    <string name="engine_log_no_matches">沒有符合此篩選條件的日誌項目。</string>
     <string name="vpk_actions">檔案操作</string>
     <string name="vpk_actions_desc">建立功能會產生單檔內嵌 VPK。開啟分卷檔案時，請同時選取 _dir.vpk 和所有編號 VPK 分卷。</string>
     <string name="vpk_create">建立 VPK</string>

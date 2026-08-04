@@ -130,6 +130,15 @@
     <string name="md3_section_tools">Инструменты</string>
     <string name="vpk_tool">Инструменты VPK и GMA</string>
     <string name="vpk_tool_desc">Создание, просмотр и распаковка архивов VPK1 и VPK2.</string>
+    <string name="engine_log_viewer">Просмотр журнала движка</string>
+    <string name="engine_log_viewer_desc">Чтение engine.log с цветовой разметкой уровней и фильтрацией.</string>
+    <string name="engine_log_refresh">Обновить</string>
+    <string name="engine_log_filter_all">Все</string>
+    <string name="engine_log_filter_error">Ошибки</string>
+    <string name="engine_log_filter_warning">Предупреждения</string>
+    <string name="engine_log_filter_info">Инфо</string>
+    <string name="engine_log_not_found">engine.log ещё не найден в каталоге игры. Он создаётся во время работы игры.</string>
+    <string name="engine_log_no_matches">Нет записей журнала по этому фильтру.</string>
     <string name="vpk_actions">Действия с архивом</string>
     <string name="vpk_actions_desc">Создание формирует одиночный встроенный VPK. Для разделённого архива выберите _dir.vpk и все нумерованные части VPK.</string>
     <string name="vpk_create">Создать VPK</string>

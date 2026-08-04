@@ -130,6 +130,15 @@
     <string name="md3_section_tools">Herramientas</string>
     <string name="vpk_tool">Herramientas VPK y GMA</string>
     <string name="vpk_tool_desc">Crear, consultar y extraer archivos VPK1 y VPK2.</string>
+    <string name="engine_log_viewer">Visor de registro del motor</string>
+    <string name="engine_log_viewer_desc">Lee engine.log con niveles codificados por color y filtrado.</string>
+    <string name="engine_log_refresh">Actualizar</string>
+    <string name="engine_log_filter_all">Todo</string>
+    <string name="engine_log_filter_error">Errores</string>
+    <string name="engine_log_filter_warning">Advertencias</string>
+    <string name="engine_log_filter_info">Info</string>
+    <string name="engine_log_not_found">engine.log no encontrado aún en el directorio del juego. Se genera mientras el juego se ejecuta.</string>
+    <string name="engine_log_no_matches">Ninguna entrada de registro coincide con este filtro.</string>
     <string name="vpk_actions">Acciones del archivo</string>
     <string name="vpk_actions_desc">La creación genera un VPK integrado independiente. Para un archivo dividido, selecciona _dir.vpk y todas las partes VPK numeradas.</string>
     <string name="vpk_create">Crear VPK</string>
