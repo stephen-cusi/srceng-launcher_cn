@@ -149,6 +149,7 @@
     <string name="vpk_picker_title">ファイルとフォルダーを選択</string>
     <string name="vpk_picker_folder">フォルダー · 行をタップして開く</string>
     <string name="vpk_picker_selected">選択済み：%1$d</string>
+    <string name="vpk_select_all">すべて選択</string>
     <string name="vpk_picker_done">選択項目を使用</string>
     <string name="vpk_picker_empty">ファイルまたはフォルダーを1つ以上選択してください。</string>
     <string name="vpk_picker_unreadable">このフォルダーは読み取れません。</string>

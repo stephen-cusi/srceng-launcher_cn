@@ -149,6 +149,7 @@
     <string name="vpk_picker_title">Dateien und Ordner auswählen</string>
     <string name="vpk_picker_folder">Ordner · Zeile zum Öffnen antippen</string>
     <string name="vpk_picker_selected">Ausgewählt: %1$d</string>
+    <string name="vpk_select_all">Alle auswählen</string>
     <string name="vpk_picker_done">Auswahl verwenden</string>
     <string name="vpk_picker_empty">Mindestens eine Datei oder einen Ordner auswählen.</string>
     <string name="vpk_picker_unreadable">Dieser Ordner kann nicht gelesen werden.</string>

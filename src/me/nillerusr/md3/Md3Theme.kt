@@ -63,10 +63,11 @@ class Md3Theme private constructor() {
         const val THEME_DARK = 2
 
         @JvmField val RESOLUTION_PRESETS = arrayOf(
-            intArrayOf(1920, 1080), intArrayOf(1280, 720), intArrayOf(2560, 1440),
-            intArrayOf(3840, 2160), intArrayOf(1366, 768), intArrayOf(1600, 900),
-            intArrayOf(1680, 1050), intArrayOf(1920, 1200), intArrayOf(1280, 800),
-            intArrayOf(1024, 768), intArrayOf(1280, 1024), intArrayOf(800, 600)
+            intArrayOf(640, 295), intArrayOf(720, 332), intArrayOf(800, 369),
+            intArrayOf(1024, 472), intArrayOf(1152, 531), intArrayOf(1280, 591),
+            intArrayOf(1366, 630), intArrayOf(1386, 640), intArrayOf(1600, 738),
+            intArrayOf(1680, 775), intArrayOf(1920, 886), intArrayOf(1920, 1080),
+            intArrayOf(2772, 1280)
         )
         @JvmField val UI_LANG_VALUES = arrayOf(
             UI_LANG_SYSTEM, UI_LANG_ZH_CN, UI_LANG_ZH_TW, UI_LANG_EN, UI_LANG_RU,
@@ -326,7 +327,7 @@ class Md3Theme private constructor() {
             if(v.id==R.id.md3_preserve_bg)return
             if(v.id==R.id.md3_app_bar)setBg(v,t.surface,0,Color.TRANSPARENT,0,0,0)
             if(v is MaterialCardView){val outlined=hasStrTag(v,"card_outlined");v.setCardBackgroundColor(if(hasStrTag(v,"preview_primary"))t.primary.container else if(outlined)t.surfaceContainerLow else t.surfaceContainerHigh);v.strokeColor=Color.TRANSPARENT;v.strokeWidth=0;v.radius=dpF(v.context,16)}
-            else {if(hasStrTag(v,"card"))setBg(v,t.surfaceContainerHigh,16,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"card_outlined")||hasStrTag(v,"feature_card"))setBg(v,t.surfaceContainerLow,16,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"card_filled")||hasStrTag(v,"preview_primary"))setBg(v,t.primary.container,16,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"feature_icon_container"))setBg(v,t.primary.container,14,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"list_item"))setBg(v,t.surfaceContainerLow,16,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"folder_container"))setBg(v,t.primary.container,12,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"vpk_archive_container"))setBg(v,t.tertiary.container,12,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"gma_archive_container"))setBg(v,t.secondary.container,12,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"file_container"))setBg(v,t.surfaceContainerHighest,12,Color.TRANSPARENT,0,0,0)}
+            else {if(hasStrTag(v,"card"))setBg(v,t.surfaceContainerHigh,16,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"card_outlined")||hasStrTag(v,"feature_card"))setBg(v,t.surfaceContainerLow,16,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"card_filled")||hasStrTag(v,"preview_primary"))setBg(v,t.primary.container,16,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"feature_icon_container"))setBg(v,t.primary.container,14,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"list_item"))setBg(v,t.surfaceContainerLow,16,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"folder_container"))setBg(v,t.primary.container,12,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"vpk_archive_container"))setBg(v,t.tertiary.container,12,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"gma_archive_container"))setBg(v,t.secondary.container,12,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"file_container"))setBg(v,t.surfaceContainerHighest,12,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"selection_checked"))setBg(v,t.primary.color,16,Color.TRANSPARENT,0,0,0);if(hasStrTag(v,"selection_unchecked"))setBg(v,Color.TRANSPARENT,16,t.outline,2,0,0)}
             if(hasStrTag(v,"divider"))setBg(v,t.outlineVariant,0,Color.TRANSPARENT,0,0,0)
             if(v is TextView&&v !is Button&&v !is EditText&&v !is CompoundButton){v.setTextColor(when(getStrTag(v)){"on_primary_container"->t.primary.onContainer;"on_secondary_container"->t.secondary.onContainer;"on_surface_variant","subtitle"->t.onSurfaceVariant;"outline"->t.outline;"primary"->t.primary.color;else->t.onSurface});v.setHintTextColor(t.outline);v.setLinkTextColor(t.primary.color)}
             if(v is MaterialButton)applyMaterialButtonStyle(v,getStrTag(v)?:"filled",t)

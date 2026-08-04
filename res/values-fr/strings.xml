@@ -149,6 +149,7 @@
     <string name="vpk_picker_title">Sélectionner fichiers et dossiers</string>
     <string name="vpk_picker_folder">Dossier · Touchez la ligne pour l’ouvrir</string>
     <string name="vpk_picker_selected">Sélection : %1$d</string>
+    <string name="vpk_select_all">Tout sélectionner</string>
     <string name="vpk_picker_done">Utiliser la sélection</string>
     <string name="vpk_picker_empty">Sélectionnez au moins un fichier ou dossier.</string>
     <string name="vpk_picker_unreadable">Impossible de lire ce dossier.</string>

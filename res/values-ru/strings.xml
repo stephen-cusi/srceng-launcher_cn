@@ -149,6 +149,7 @@
     <string name="vpk_picker_title">Выбор файлов и папок</string>
     <string name="vpk_picker_folder">Папка · Нажмите строку, чтобы открыть</string>
     <string name="vpk_picker_selected">Выбрано: %1$d</string>
+    <string name="vpk_select_all">Выбрать все</string>
     <string name="vpk_picker_done">Использовать выбранное</string>
     <string name="vpk_picker_empty">Выберите хотя бы один файл или папку.</string>
     <string name="vpk_picker_unreadable">Эту папку невозможно прочитать.</string>

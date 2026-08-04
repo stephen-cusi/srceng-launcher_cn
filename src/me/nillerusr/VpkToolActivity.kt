@@ -44,6 +44,8 @@ class VpkToolActivity : Activity() {
     private var pendingMove = false
     private var busy = false
     private var directoryPicker = false
+    private var selectionMode = false
+    private var animateSelectionIndicators = false
     private lateinit var currentDirectory: File
     private lateinit var pathView: TextView
     private lateinit var statusArea: View
@@ -54,7 +56,9 @@ class VpkToolActivity : Activity() {
     private lateinit var footer: View
     private lateinit var selectedView: TextView
     private lateinit var selectionActions: View
+    private lateinit var selectAll: CheckBox
     private lateinit var pasteActions: View
+    private var updatingSelectAll = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Md3Theme.applyBeforeOnCreate(this)
@@ -73,6 +77,7 @@ class VpkToolActivity : Activity() {
         footer = findViewById(R.id.vpk_manager_footer)
         selectedView = findViewById(R.id.vpk_manager_selected)
         selectionActions = findViewById(R.id.vpk_manager_actions)
+        selectAll = findViewById(R.id.vpk_manager_select_all)
         pasteActions = findViewById(R.id.vpk_manager_paste_actions)
         directoryPicker = intent.getBooleanExtra(EXTRA_PICK_DIRECTORY, false)
         findViewById<ImageButton>(R.id.md3_button_back).setOnClickListener { navigateBack() }
@@ -82,6 +87,11 @@ class VpkToolActivity : Activity() {
         findViewById<Button>(R.id.vpk_manager_delete).setOnClickListener { confirmDelete() }
         findViewById<Button>(R.id.vpk_manager_cancel).setOnClickListener { cancelTransfer() }
         findViewById<Button>(R.id.vpk_manager_paste).setOnClickListener { pasteHere() }
+        selectAll.setOnCheckedChangeListener { _, checked ->
+            if (updatingSelectAll || directoryPicker || busy) return@setOnCheckedChangeListener
+            if (checked) selected.addAll(currentSelectablePaths()) else selected.clear()
+            renderDirectory(scroll.scrollY)
+        }
         if (directoryPicker) {
             findViewById<TextView>(R.id.vpk_manager_title).setText(R.string.vpk_choose_destination)
             findViewById<Button>(R.id.vpk_manager_cancel).setOnClickListener { finish() }
@@ -114,8 +124,9 @@ class VpkToolActivity : Activity() {
 
     private fun navigateBack() {
         if (busy) return
-        if (!directoryPicker && selected.isNotEmpty()) {
+        if (!directoryPicker && selectionMode) {
             selected.clear()
+            selectionMode = false
             renderDirectory(scroll.scrollY)
             return
         }
@@ -139,6 +150,7 @@ class VpkToolActivity : Activity() {
         if (::currentDirectory.isInitialized) scrollPositions[currentDirectory.path] = scroll.scrollY
         currentDirectory = canonical
         selected.clear()
+        selectionMode = false
         renderDirectory(scrollPositions[canonical.path] ?: 0, animate)
     }
 
@@ -168,16 +180,17 @@ class VpkToolActivity : Activity() {
     private fun addEntry(file: File) {
         val row = layoutInflater.inflate(R.layout.vpk_file_picker_entry, body, false)
         bindPressAnimation(row)
-        val checkBox = row.findViewById<CheckBox>(R.id.vpk_picker_check)
         val iconContainer = row.findViewById<View>(R.id.vpk_picker_icon_container)
         val icon = row.findViewById<ImageView>(R.id.vpk_picker_icon)
         val trailing = row.findViewById<ImageView>(R.id.vpk_picker_trailing)
+        val selectionIndicator = row.findViewById<View>(R.id.vpk_picker_selection)
+        val selectionCheck = row.findViewById<ImageView>(R.id.vpk_picker_selection_check)
         val name = row.findViewById<TextView>(R.id.vpk_picker_name)
         val detail = row.findViewById<TextView>(R.id.vpk_picker_detail)
         val path = canonicalFile(file).path
-        val selecting = !directoryPicker && selected.isNotEmpty()
-        checkBox.visibility = if (selecting) View.VISIBLE else View.INVISIBLE
-        icon.visibility = if (selecting) View.INVISIBLE else View.VISIBLE
+        val selecting = !directoryPicker && selectionMode
+        selectionIndicator.visibility = if (selecting) View.VISIBLE else View.GONE
+        icon.visibility = View.VISIBLE
         icon.setImageResource(when {
             file.isDirectory -> R.drawable.ic_vpk_folder
             file.extension.equals("vpk", true) -> R.drawable.ic_vpk_archive
@@ -192,13 +205,15 @@ class VpkToolActivity : Activity() {
         }
         iconContainer.tag = "${iconRole}_container"
         icon.tag = "${iconRole}_icon"
-        trailing.visibility = if (file.isDirectory) View.VISIBLE else View.GONE
-        checkBox.isChecked = path in selected
-        if (selecting) {
-            checkBox.alpha = 0f
-            checkBox.scaleX = 0.72f
-            checkBox.scaleY = 0.72f
-            checkBox.animate()
+        trailing.visibility = if (!selecting && file.isDirectory) View.VISIBLE else View.GONE
+        val checked = path in selected
+        selectionIndicator.tag = if (checked) "selection_checked" else "selection_unchecked"
+        selectionCheck.visibility = if (checked) View.VISIBLE else View.INVISIBLE
+        if (selecting && animateSelectionIndicators) {
+            selectionIndicator.alpha = 0f
+            selectionIndicator.scaleX = 0.72f
+            selectionIndicator.scaleY = 0.72f
+            selectionIndicator.animate()
                 .alpha(1f)
                 .scaleX(1f)
                 .scaleY(1f)
@@ -213,15 +228,15 @@ class VpkToolActivity : Activity() {
             file.extension.equals("gma", true) -> getString(R.string.gma_manager_archive, formatSize(file.length()))
             else -> formatSize(file.length())
         }
-        checkBox.setOnCheckedChangeListener { _, checked ->
-            if (checked) selected += path else selected -= path
-            renderDirectory(scroll.scrollY)
-        }
         row.setOnLongClickListener {
             if (!directoryPicker && !busy && pendingFiles.isEmpty()) {
                 row.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
+                val enteringSelectionMode = !selectionMode
+                selectionMode = true
                 selected += path
+                animateSelectionIndicators = enteringSelectionMode
                 renderDirectory(scroll.scrollY)
+                animateSelectionIndicators = false
             }
             true
         }
@@ -230,7 +245,7 @@ class VpkToolActivity : Activity() {
                 busy -> Unit
                 directoryPicker && file.isDirectory -> showDirectory(file, true)
                 directoryPicker -> Unit
-                selected.isNotEmpty() -> {
+                selectionMode -> {
                     if (path in selected) selected -= path else selected += path
                     renderDirectory(scroll.scrollY)
                 }
@@ -248,20 +263,33 @@ class VpkToolActivity : Activity() {
         if (directoryPicker) {
             footer.visibility = View.VISIBLE
             selectionActions.visibility = View.GONE
+            selectAll.visibility = View.GONE
             pasteActions.visibility = View.VISIBLE
             selectedView.setText(R.string.vpk_choose_destination_prompt)
             return
         }
         val transferring = pendingFiles.isNotEmpty()
-        footer.visibility = if (selected.isNotEmpty() || transferring) View.VISIBLE else View.GONE
-        selectionActions.visibility = if (selected.isNotEmpty() && !transferring) View.VISIBLE else View.GONE
+        footer.visibility = if (selectionMode || transferring) View.VISIBLE else View.GONE
+        selectionActions.visibility = if (selectionMode && selected.isNotEmpty() && !transferring) View.VISIBLE else View.GONE
+        selectAll.visibility = if (selectionMode && !transferring) View.VISIBLE else View.GONE
         pasteActions.visibility = if (transferring) View.VISIBLE else View.GONE
+        val selectable = currentSelectablePaths()
+        updatingSelectAll = true
+        selectAll.isChecked = selectable.isNotEmpty() && selectable.all(selected::contains)
+        updatingSelectAll = false
         selectedView.text = if (transferring) {
             getString(if (pendingMove) R.string.vpk_move_destination else R.string.vpk_copy_destination, pendingFiles.size)
         } else {
             getString(R.string.vpk_picker_selected, selected.size)
         }
     }
+
+    private fun currentSelectablePaths(): Set<String> = currentDirectory.listFiles()
+        ?.asSequence()
+        ?.filter { it.canRead() }
+        ?.map { canonicalFile(it).path }
+        ?.toSet()
+        .orEmpty()
 
     private fun returnSelectedDirectory() {
         setResult(RESULT_OK, Intent().putExtra(EXTRA_SELECTED_DIRECTORY, currentDirectory.path))
@@ -272,6 +300,7 @@ class VpkToolActivity : Activity() {
         pendingFiles = selectedFiles()
         pendingMove = move
         selected.clear()
+        selectionMode = false
         renderDirectory()
     }
 
@@ -351,6 +380,7 @@ class VpkToolActivity : Activity() {
                     }
                     runOnUiThread {
                         selected.clear()
+                        selectionMode = false
                         Toast.makeText(this, R.string.vpk_delete_done, Toast.LENGTH_LONG).show()
                         renderDirectory()
                     }
@@ -405,6 +435,7 @@ class VpkToolActivity : Activity() {
                     VpkWriter.create(inputs, output, version, ::updateProgress)
                     runOnUiThread {
                         selected.clear()
+                        selectionMode = false
                         Toast.makeText(this, R.string.vpk_create_done_short, Toast.LENGTH_LONG).show()
                         renderDirectory()
                     }

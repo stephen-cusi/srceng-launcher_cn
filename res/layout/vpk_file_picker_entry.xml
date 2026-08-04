@@ -28,13 +28,6 @@
             android:layout_gravity="center"
             android:contentDescription="@null" />
 
-        <CheckBox
-            android:id="@+id/vpk_picker_check"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:buttonTint="?attr/colorPrimary"
-            android:gravity="center"
-            android:visibility="invisible" />
     </FrameLayout>
 
     <LinearLayout
@@ -60,6 +53,22 @@
             android:textSize="12sp"
             android:tag="subtitle" />
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/vpk_picker_selection"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/vpk_picker_selection_check"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_check" />
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/vpk_picker_trailing"

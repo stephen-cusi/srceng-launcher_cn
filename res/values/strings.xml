@@ -154,6 +154,7 @@
     <string name="vpk_picker_title" tools:ignore="UnusedResources">Select files and folders</string>
     <string name="vpk_picker_folder" tools:ignore="UnusedResources">Folder · Tap the row to open</string>
     <string name="vpk_picker_selected">Selected: %1$d</string>
+    <string name="vpk_select_all">Select all</string>
     <string name="vpk_picker_done" tools:ignore="UnusedResources">Use selection</string>
     <string name="vpk_picker_empty" tools:ignore="UnusedResources">Select at least one file or folder.</string>
     <string name="vpk_picker_unreadable">This directory cannot be read.</string>

@@ -36,6 +36,8 @@ class VpkArchiveActivity : Activity() {
 
     private val executor = Executors.newSingleThreadExecutor()
     private val selected = linkedSetOf<String>()
+    private var selectionMode = false
+    private var animateSelectionIndicators = false
     private val scrollPositions = mutableMapOf<String, Int>()
     private data class ArchiveEntry(val path: String, val size: Long)
 
@@ -103,8 +105,9 @@ class VpkArchiveActivity : Activity() {
 
     private fun navigateBack() {
         if (busy) return
-        if (selected.isNotEmpty()) {
+        if (selectionMode) {
             selected.clear()
+            selectionMode = false
             renderDirectory(scroll.scrollY)
         } else if (currentPath.isNotEmpty()) {
             scrollPositions[currentPath] = scroll.scrollY
@@ -149,20 +152,25 @@ class VpkArchiveActivity : Activity() {
     private fun addEntry(item: Item) {
         val row = layoutInflater.inflate(R.layout.vpk_file_picker_entry, body, false)
         bindPressAnimation(row)
-        val checkBox = row.findViewById<CheckBox>(R.id.vpk_picker_check)
         val icon = row.findViewById<ImageView>(R.id.vpk_picker_icon)
+        val trailing = row.findViewById<ImageView>(R.id.vpk_picker_trailing)
+        val selectionIndicator = row.findViewById<View>(R.id.vpk_picker_selection)
+        val selectionCheck = row.findViewById<ImageView>(R.id.vpk_picker_selection_check)
         val name = row.findViewById<TextView>(R.id.vpk_picker_name)
         val detail = row.findViewById<TextView>(R.id.vpk_picker_detail)
-        val selecting = selected.isNotEmpty()
-        checkBox.visibility = if (selecting) View.VISIBLE else View.INVISIBLE
-        icon.visibility = if (selecting) View.INVISIBLE else View.VISIBLE
+        val selecting = selectionMode
+        selectionIndicator.visibility = if (selecting) View.VISIBLE else View.GONE
+        icon.visibility = View.VISIBLE
+        trailing.visibility = if (!selecting && item.directory) View.VISIBLE else View.GONE
         icon.setImageResource(if (item.directory) R.drawable.ic_vpk_folder else R.drawable.ic_vpk_file)
-        checkBox.isChecked = item.path in selected
-        if (selecting) {
-            checkBox.alpha = 0f
-            checkBox.scaleX = 0.72f
-            checkBox.scaleY = 0.72f
-            checkBox.animate()
+        val checked = item.path in selected
+        selectionIndicator.tag = if (checked) "selection_checked" else "selection_unchecked"
+        selectionCheck.visibility = if (checked) View.VISIBLE else View.INVISIBLE
+        if (selecting && animateSelectionIndicators) {
+            selectionIndicator.alpha = 0f
+            selectionIndicator.scaleX = 0.72f
+            selectionIndicator.scaleY = 0.72f
+            selectionIndicator.animate()
                 .alpha(1f)
                 .scaleX(1f)
                 .scaleY(1f)
@@ -172,22 +180,22 @@ class VpkArchiveActivity : Activity() {
         }
         name.text = item.name
         detail.text = if (item.directory) getString(R.string.vpk_archive_folder) else formatSize(item.size)
-        checkBox.setOnCheckedChangeListener { _, checked ->
-            if (checked) selected += item.path else selected -= item.path
-            renderDirectory(scroll.scrollY)
-        }
         row.setOnLongClickListener {
             if (!busy) {
                 row.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
+                val enteringSelectionMode = !selectionMode
+                selectionMode = true
                 selected += item.path
+                animateSelectionIndicators = enteringSelectionMode
                 renderDirectory(scroll.scrollY)
+                animateSelectionIndicators = false
             }
             true
         }
         row.setOnClickListener {
             when {
                 busy -> Unit
-                selected.isNotEmpty() -> {
+                selectionMode -> {
                     if (item.path in selected) selected -= item.path else selected += item.path
                     renderDirectory(scroll.scrollY)
                 }
@@ -307,6 +315,7 @@ class VpkArchiveActivity : Activity() {
         }
         runOnUiThread {
             selected.clear()
+            selectionMode = false
             Toast.makeText(this, getString(R.string.vpk_extract_done_path, destination.path), Toast.LENGTH_LONG).show()
             renderDirectory()
         }

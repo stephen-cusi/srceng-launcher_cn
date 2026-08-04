@@ -100,57 +100,83 @@
         android:paddingBottom="12dp"
         android:visibility="gone">
 
-        <TextView
-            android:id="@+id/vpk_manager_selected"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="4dp"
-            android:tag="subtitle" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp">
 
-        <HorizontalScrollView
+            <TextView
+                android:id="@+id/vpk_manager_selected"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:tag="subtitle" />
+
+            <CheckBox
+                android:id="@+id/vpk_manager_select_all"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:buttonTint="?attr/colorPrimary"
+                android:gravity="center_vertical"
+                android:minWidth="96dp"
+                android:text="@string/vpk_select_all"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/vpk_manager_actions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fillViewport="true"
-            android:scrollbars="none">
+            android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/vpk_manager_actions"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/vpk_manager_copy"
                     style="@style/Widget.Material3.Button.TonalButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/vpk_copy" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/vpk_manager_move"
                     style="@style/Widget.Material3.Button.TonalButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
                     android:text="@string/vpk_move" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/vpk_manager_pack"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
                     android:text="@string/vpk_pack" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/vpk_manager_delete"
                     style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
                     android:text="@string/vpk_delete" />
             </LinearLayout>
-        </HorizontalScrollView>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/vpk_manager_paste_actions"

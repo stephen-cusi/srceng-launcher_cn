@@ -13,6 +13,7 @@ import android.view.animation.OvershootInterpolator
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import com.valvesoftware.source.R
@@ -29,7 +30,9 @@ open class DirchActivity : Activity() {
     private lateinit var header: TextView
     private lateinit var selectionHint: TextView
     private lateinit var choiceButton: Button
+    private lateinit var scroll: ScrollView
     private var currentDirectory: String? = null
+    private val scrollPositions = mutableMapOf<String, Int>()
 
     @JvmField
     var mPref: SharedPreferences? = null
@@ -53,6 +56,7 @@ open class DirchActivity : Activity() {
         } catch (_: IOException) {
             directory.absolutePath
         }
+        currentDirectory?.let { scrollPositions[it] = scroll.scrollY }
         currentDirectory = canonicalPath
         header.text = canonicalPath
         selectionHint.text = getString(R.string.srceng_dir_current_path, canonicalPath)
@@ -63,6 +67,7 @@ open class DirchActivity : Activity() {
         directory.parentFile?.let { addDirectoryView(inflater, "..", it.absolutePath) }
         for (child in directories) addDirectoryView(inflater, child.name, child.absolutePath)
         Md3Theme.applyAfterSetContentView(this)
+        scroll.post { scroll.scrollTo(0, scrollPositions[canonicalPath] ?: 0) }
     }
 
     private fun addDirectoryView(inflater: LayoutInflater, name: String, path: String) {
@@ -169,6 +174,7 @@ open class DirchActivity : Activity() {
         predictiveBack.sync()
 
         body = findViewById(R.id.bodych)
+        scroll = findViewById(R.id.directory_scroll)
         header = findViewById(R.id.header_txt)
         selectionHint = findViewById(R.id.directory_choice_hint)
         choiceButton = findViewById(R.id.button_choice)

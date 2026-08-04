@@ -149,6 +149,7 @@
     <string name="vpk_picker_title">파일 및 폴더 선택</string>
     <string name="vpk_picker_folder">폴더 · 행을 눌러 열기</string>
     <string name="vpk_picker_selected">선택됨: %1$d</string>
+    <string name="vpk_select_all">모두 선택</string>
     <string name="vpk_picker_done">선택 항목 사용</string>
     <string name="vpk_picker_empty">파일 또는 폴더를 하나 이상 선택하세요.</string>
     <string name="vpk_picker_unreadable">이 폴더를 읽을 수 없습니다.</string>

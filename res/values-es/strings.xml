@@ -149,6 +149,7 @@
     <string name="vpk_picker_title">Seleccionar archivos y carpetas</string>
     <string name="vpk_picker_folder">Carpeta · Toca la fila para abrirla</string>
     <string name="vpk_picker_selected">Seleccionados: %1$d</string>
+    <string name="vpk_select_all">Seleccionar todo</string>
     <string name="vpk_picker_done">Usar selección</string>
     <string name="vpk_picker_empty">Selecciona al menos un archivo o carpeta.</string>
     <string name="vpk_picker_unreadable">No se puede leer esta carpeta.</string>
