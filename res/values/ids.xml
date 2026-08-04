@@ -16,6 +16,7 @@
     <item type="id" name="md3_tint"/>
     <!-- R.id.md3_app_bar：Top bar 容器 id，背景 surfaceContainer -->
     <item type="id" name="md3_app_bar"/>
+    <item type="id" name="vpk_entry_path"/>
     <!-- Top bar 按钮 -->
     <item type="id" name="md3_button_settings"/>
     <item type="id" name="md3_button_back"/>

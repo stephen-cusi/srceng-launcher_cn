@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Rect
 import android.os.Bundle
 import android.os.Environment
 import android.os.Build
@@ -59,6 +60,10 @@ class VpkToolActivity : Activity() {
     private lateinit var selectAll: CheckBox
     private lateinit var pasteActions: View
     private var updatingSelectAll = false
+    private lateinit var copyButton: Button
+    private lateinit var moveButton: Button
+    private lateinit var packButton: Button
+    private lateinit var deleteButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Md3Theme.applyBeforeOnCreate(this)
@@ -81,10 +86,14 @@ class VpkToolActivity : Activity() {
         pasteActions = findViewById(R.id.vpk_manager_paste_actions)
         directoryPicker = intent.getBooleanExtra(EXTRA_PICK_DIRECTORY, false)
         findViewById<ImageButton>(R.id.md3_button_back).setOnClickListener { navigateBack() }
-        findViewById<Button>(R.id.vpk_manager_copy).setOnClickListener { beginTransfer(false) }
-        findViewById<Button>(R.id.vpk_manager_move).setOnClickListener { beginTransfer(true) }
-        findViewById<Button>(R.id.vpk_manager_pack).setOnClickListener { choosePackVersion() }
-        findViewById<Button>(R.id.vpk_manager_delete).setOnClickListener { confirmDelete() }
+        copyButton = findViewById(R.id.vpk_manager_copy)
+        moveButton = findViewById(R.id.vpk_manager_move)
+        packButton = findViewById(R.id.vpk_manager_pack)
+        deleteButton = findViewById(R.id.vpk_manager_delete)
+        copyButton.setOnClickListener { beginTransfer(false) }
+        moveButton.setOnClickListener { beginTransfer(true) }
+        packButton.setOnClickListener { choosePackVersion() }
+        deleteButton.setOnClickListener { confirmDelete() }
         findViewById<Button>(R.id.vpk_manager_cancel).setOnClickListener { cancelTransfer() }
         findViewById<Button>(R.id.vpk_manager_paste).setOnClickListener { pasteHere() }
         selectAll.setOnCheckedChangeListener { _, checked ->
@@ -154,7 +163,7 @@ class VpkToolActivity : Activity() {
         renderDirectory(scrollPositions[canonical.path] ?: 0, animate)
     }
 
-    private fun renderDirectory(restoreY: Int = scroll.scrollY, animate: Boolean = false) {
+    private fun renderDirectory(restoreY: Int = scroll.scrollY, animate: Boolean = false, revealPath: String? = null) {
         pathView.text = currentDirectory.path
         body.removeAllViews()
         val children = currentDirectory.listFiles()?.filter { it.canRead() }?.sortedWith(
@@ -173,7 +182,10 @@ class VpkToolActivity : Activity() {
         }
         updateFooter()
         Md3Theme.applyAfterSetContentView(this)
-        scroll.post { scroll.scrollTo(0, restoreY) }
+        scroll.post {
+            scroll.scrollTo(0, restoreY)
+            revealPath?.let(::revealEntry)
+        }
         if (animate) animateDirectory(body)
     }
 
@@ -188,6 +200,7 @@ class VpkToolActivity : Activity() {
         val name = row.findViewById<TextView>(R.id.vpk_picker_name)
         val detail = row.findViewById<TextView>(R.id.vpk_picker_detail)
         val path = canonicalFile(file).path
+        row.setTag(R.id.vpk_entry_path, path)
         val selecting = !directoryPicker && selectionMode
         selectionIndicator.visibility = if (selecting) View.VISIBLE else View.GONE
         icon.visibility = View.VISIBLE
@@ -235,7 +248,7 @@ class VpkToolActivity : Activity() {
                 selectionMode = true
                 selected += path
                 animateSelectionIndicators = enteringSelectionMode
-                renderDirectory(scroll.scrollY)
+                renderDirectory(scroll.scrollY, revealPath = path)
                 animateSelectionIndicators = false
             }
             true
@@ -247,7 +260,7 @@ class VpkToolActivity : Activity() {
                 directoryPicker -> Unit
                 selectionMode -> {
                     if (path in selected) selected -= path else selected += path
-                    renderDirectory(scroll.scrollY)
+                    renderDirectory(scroll.scrollY, revealPath = path)
                 }
                 file.isDirectory -> showDirectory(file, true)
                 file.isSupportedArchive() -> {
@@ -270,9 +283,14 @@ class VpkToolActivity : Activity() {
         }
         val transferring = pendingFiles.isNotEmpty()
         footer.visibility = if (selectionMode || transferring) View.VISIBLE else View.GONE
-        selectionActions.visibility = if (selectionMode && selected.isNotEmpty() && !transferring) View.VISIBLE else View.GONE
+        selectionActions.visibility = if (selectionMode && !transferring) View.VISIBLE else View.GONE
         selectAll.visibility = if (selectionMode && !transferring) View.VISIBLE else View.GONE
         pasteActions.visibility = if (transferring) View.VISIBLE else View.GONE
+        val hasSelection = selected.isNotEmpty()
+        copyButton.isEnabled = hasSelection
+        moveButton.isEnabled = hasSelection
+        packButton.isEnabled = hasSelection
+        deleteButton.isEnabled = hasSelection
         val selectable = currentSelectablePaths()
         updatingSelectAll = true
         selectAll.isChecked = selectable.isNotEmpty() && selectable.all(selected::contains)
@@ -290,6 +308,14 @@ class VpkToolActivity : Activity() {
         ?.map { canonicalFile(it).path }
         ?.toSet()
         .orEmpty()
+
+    private fun revealEntry(path: String) {
+        val row = (0 until body.childCount)
+            .map(body::getChildAt)
+            .firstOrNull { it.getTag(R.id.vpk_entry_path) == path }
+            ?: return
+        scroll.requestChildRectangleOnScreen(row, Rect(0, 0, row.width, row.height), false)
+    }
 
     private fun returnSelectedDirectory() {
         setResult(RESULT_OK, Intent().putExtra(EXTRA_SELECTED_DIRECTORY, currentDirectory.path))
