@@ -51,9 +51,9 @@
     <string name="md3_dark_on">Вкл</string>
     <string name="md3_dark_off">Выкл</string>
     <string name="md3_dynamic_color">Динамические цвета</string>
-    <string name="md3_dynamic_color_desc">Цвета из обоев (Android 8.1+)</string>
+    <string name="md3_dynamic_color_desc">Использовать системную динамическую схему (Android 12+)</string>
     <string name="md3_dynamic_color_not_available">Динамические цвета не поддерживаются</string>
-    <string name="md3_dynamic_color_on_hint">Динамические цвета включены: акцентные цвета берутся из обоев; вручную выбранный акцент работает только если цвета обоев недоступны.</string>
+    <string name="md3_dynamic_color_on_hint">Динамические цвета включены: на Android 12+ цвета следуют системе Material You, на старых системах используются цвета обоев.</string>
     <string name="md3_seed_ignored_when_dynamic">Динамические цвета активны — акцентный цвет не применяется. Отключите динамические цвета для использования вручную выбранного акцента.</string>
     <string name="md3_seed_color">Акцентный цвет</string>
     <string name="md3_custom_color">Пользовательский цвет</string>

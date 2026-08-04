@@ -51,9 +51,9 @@
     <string name="md3_dark_on">Activé</string>
     <string name="md3_dark_off">Désactivé</string>
     <string name="md3_dynamic_color">Couleurs dynamiques</string>
-    <string name="md3_dynamic_color_desc">Utiliser les couleurs de votre papier peint (Android 8.1+)</string>
+    <string name="md3_dynamic_color_desc">Utiliser le schéma de couleurs dynamique du système (Android 12+)</string>
     <string name="md3_dynamic_color_not_available">Les couleurs dynamiques ne sont pas disponibles sur ce système</string>
-    <string name="md3_dynamic_color_on_hint">Couleurs dynamiques activées: les couleurs d\'accent proviennent du papier peint; les couleurs d\'accent manuelles ne s\'appliquent que si le papier peint n\'en fournit pas.</string>
+    <string name="md3_dynamic_color_on_hint">Couleurs dynamiques activées: sur Android 12+ les couleurs suivent la palette Material You du système; sur les anciennes versions, les couleurs du papier peint sont utilisées.</string>
     <string name="md3_seed_ignored_when_dynamic">Couleurs dynamiques actives — l\'accent manuel n\'est pas appliqué. Désactivez les couleurs dynamiques pour utiliser l\'accent choisi.</string>
     <string name="md3_seed_color">Couleur d\'accent</string>
     <string name="md3_custom_color">Couleur personnalisée</string>

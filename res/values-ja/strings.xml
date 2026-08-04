@@ -51,9 +51,9 @@
     <string name="md3_dark_on">オン</string>
     <string name="md3_dark_off">オフ</string>
     <string name="md3_dynamic_color">ダイナミックカラー</string>
-    <string name="md3_dynamic_color_desc">壁紙から色を取得（Android 8.1+）</string>
+    <string name="md3_dynamic_color_desc">システムの動的取色スキームを使用（Android 12+）</string>
     <string name="md3_dynamic_color_not_available">このシステムではダイナミックカラーは利用できません</string>
-    <string name="md3_dynamic_color_on_hint">ダイナミックカラーが有効です。アクセントカラーは壁紙から取得され、壁紙の色が利用できない場合に手動選択したアクセントが適用されます。</string>
+    <string name="md3_dynamic_color_on_hint">ダイナミックカラーが有効です。Android 12+ ではシステムの Material You 配色に従い、旧バージョンでは壁紙の色を使用します。</string>
     <string name="md3_seed_ignored_when_dynamic">ダイナミックカラーが有効なため、アクセントカラーは現在適用されません。ダイナミックカラーをオフにしてください。</string>
     <string name="md3_seed_color">アクセントカラー</string>
     <string name="md3_custom_color">カスタムカラー</string>

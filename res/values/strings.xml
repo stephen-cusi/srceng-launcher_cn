@@ -52,9 +52,9 @@
     <string name="md3_dark_on">On</string>
     <string name="md3_dark_off">Off</string>
     <string name="md3_dynamic_color">Dynamic color</string>
-    <string name="md3_dynamic_color_desc">Use colors from your wallpaper (Android 8.1+)</string>
+    <string name="md3_dynamic_color_desc">Use the system dynamic color scheme (Android 12+)</string>
     <string name="md3_dynamic_color_not_available">Dynamic color is not available on this system</string>
-    <string name="md3_dynamic_color_on_hint">Dynamic color enabled. Accent colors will be sourced from your wallpaper; manual seed colors will take effect only when wallpaper colors are unavailable.</string>
+    <string name="md3_dynamic_color_on_hint">Dynamic color enabled. On Android 12+ colors follow the system Material You palette; on older systems wallpaper colors are used.</string>
     <string name="md3_seed_ignored_when_dynamic">Dynamic color is active — seed color currently has no effect. Turn off dynamic color to use the manual seed.</string>
     <string name="md3_seed_color">Accent color</string>
     <string name="md3_custom_color">Custom color</string>

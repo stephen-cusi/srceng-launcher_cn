@@ -53,9 +53,9 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="md3_dark_on">开启</string>
     <string name="md3_dark_off">关闭</string>
     <string name="md3_dynamic_color">动态取色</string>
-    <string name="md3_dynamic_color_desc">从壁纸提取颜色作为主题色（Android 8.1+）</string>
+    <string name="md3_dynamic_color_desc">使用系统动态取色方案（Android 12+）</string>
     <string name="md3_dynamic_color_not_available">当前系统不支持动态取色</string>
-    <string name="md3_dynamic_color_on_hint">已开启动态取色，主题色优先使用壁纸颜色；仅当壁纸无法提取颜色时，手动选择的主题色才会生效。</string>
+    <string name="md3_dynamic_color_on_hint">已开启动态取色。Android 12+ 将跟随系统的 Material You 配色；低版本系统使用壁纸颜色。</string>
     <string name="md3_seed_ignored_when_dynamic">动态取色已开启，当前手动选择的主题色不会生效。如需使用手动主题色，请先关闭动态取色。</string>
     <string name="md3_seed_color">主题色</string>
     <string name="md3_custom_color">自定义颜色</string>

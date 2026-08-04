@@ -51,9 +51,9 @@
     <string name="md3_dark_on">An</string>
     <string name="md3_dark_off">Aus</string>
     <string name="md3_dynamic_color">Dynamische Farben</string>
-    <string name="md3_dynamic_color_desc">Farben aus deinem Hintergrundbild verwenden (Android 8.1+)</string>
+    <string name="md3_dynamic_color_desc">System-Farbschema dynamisch verwenden (Android 12+)</string>
     <string name="md3_dynamic_color_not_available">Dynamische Farben sind auf diesem System nicht verfügbar</string>
-    <string name="md3_dynamic_color_on_hint">Dynamische Farben aktiviert: Akzentfarben stammen aus dem Hintergrundbild; manuelle Akzente wirken nur, falls Hintergrundfarben nicht verfügbar sind.</string>
+    <string name="md3_dynamic_color_on_hint">Dynamische Farben aktiviert: Auf Android 12+ folgen die Farben der Material-You-Palette des Systems, auf älteren Systemen werden Hintergrundbildfarben verwendet.</string>
     <string name="md3_seed_ignored_when_dynamic">Dynamische Farben aktiv — manuelle Akzentfarbe wird nicht angewendet. Deaktiviere dynamische Farben, um den gewählten Akzent zu nutzen.</string>
     <string name="md3_seed_color">Akzentfarbe</string>
     <string name="md3_custom_color">Benutzerdefinierte Farbe</string>

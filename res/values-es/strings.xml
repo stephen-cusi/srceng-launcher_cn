@@ -51,9 +51,9 @@
     <string name="md3_dark_on">Activado</string>
     <string name="md3_dark_off">Desactivado</string>
     <string name="md3_dynamic_color">Colores dinámicos</string>
-    <string name="md3_dynamic_color_desc">Usar colores del fondo de pantalla (Android 8.1+)</string>
+    <string name="md3_dynamic_color_desc">Usar el esquema de colores dinámicos del sistema (Android 12+)</string>
     <string name="md3_dynamic_color_not_available">Los colores dinámicos no están disponibles en este sistema</string>
-    <string name="md3_dynamic_color_on_hint">Colores dinámicos activados: los acentos se toman del fondo de pantalla; los acentos manuales solo se aplican si el fondo no proporciona colores.</string>
+    <string name="md3_dynamic_color_on_hint">Colores dinámicos activados: en Android 12+ los colores siguen la paleta Material You del sistema; en versiones antiguas se usan los colores del fondo de pantalla.</string>
     <string name="md3_seed_ignored_when_dynamic">Colores dinámicos activos — el acento manual no se aplica. Desactiva los colores dinámicos para usar el acento elegido.</string>
     <string name="md3_seed_color">Color de acento</string>
     <string name="md3_custom_color">Color personalizado</string>

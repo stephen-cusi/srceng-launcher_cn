@@ -1,5 +1,6 @@
 package me.nillerusr.md3
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.app.WallpaperManager
@@ -22,6 +23,10 @@ import androidx.core.widget.CompoundButtonCompat
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.color.utilities.DynamicColor
+import com.google.android.material.color.utilities.Hct
+import com.google.android.material.color.utilities.MaterialDynamicColors
+import com.google.android.material.color.utilities.SchemeTonalSpot
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -215,8 +220,45 @@ class Md3Theme private constructor() {
         }
 
         @JvmStatic fun resolveSeedColor(ctx: Context): Int = if (getDynamicColor(ctx)) tryGetWallpaperSeed(ctx) ?: getSeedColor(ctx) else getSeedColor(ctx)
+
+        @TargetApi(31)
+        @SuppressLint("RestrictedApi")
+        private fun buildTokensFromSystemDynamic(ctx: Context, dark: Boolean): Md3Tokens? {
+            return try {
+                val resources = ctx.resources
+                val theme = ctx.theme
+                val seed = resources.getColor(android.R.color.system_accent1_500, theme)
+                val scheme = SchemeTonalSpot(Hct.fromInt(seed), dark, 0.0)
+                val mdc = MaterialDynamicColors()
+                fun argb(color: DynamicColor): Int = color.getArgb(scheme)
+                val t = Md3Tokens()
+                t.dark = dark
+                t.primary.color = argb(mdc.primary()); t.primary.onColor = argb(mdc.onPrimary())
+                t.primary.container = argb(mdc.primaryContainer()); t.primary.onContainer = argb(mdc.onPrimaryContainer())
+                t.secondary.color = argb(mdc.secondary()); t.secondary.onColor = argb(mdc.onSecondary())
+                t.secondary.container = argb(mdc.secondaryContainer()); t.secondary.onContainer = argb(mdc.onSecondaryContainer())
+                t.tertiary.color = argb(mdc.tertiary()); t.tertiary.onColor = argb(mdc.onTertiary())
+                t.tertiary.container = argb(mdc.tertiaryContainer()); t.tertiary.onContainer = argb(mdc.onTertiaryContainer())
+                t.error.color = argb(mdc.error()); t.error.onColor = argb(mdc.onError())
+                t.error.container = argb(mdc.errorContainer()); t.error.onContainer = argb(mdc.onErrorContainer())
+                t.surfaceDim = argb(mdc.surfaceDim()); t.surface = argb(mdc.surface()); t.surfaceBright = argb(mdc.surfaceBright())
+                t.surfaceContainerLowest = argb(mdc.surfaceContainerLowest()); t.surfaceContainerLow = argb(mdc.surfaceContainerLow())
+                t.surfaceContainer = argb(mdc.surfaceContainer()); t.surfaceContainerHigh = argb(mdc.surfaceContainerHigh())
+                t.surfaceContainerHighest = argb(mdc.surfaceContainerHighest())
+                t.onSurface = argb(mdc.onSurface()); t.onSurfaceVariant = argb(mdc.onSurfaceVariant())
+                t.outline = argb(mdc.outline()); t.outlineVariant = argb(mdc.outlineVariant())
+                t.inverseSurface = argb(mdc.inverseSurface()); t.inverseOnSurface = argb(mdc.inverseOnSurface())
+                t.inversePrimary = argb(mdc.inversePrimary())
+                t.statusBar = t.surface; t.navBar = t.surfaceContainer
+                t
+            } catch (_: Throwable) { null }
+        }
+
         @JvmStatic fun buildTokens(ctx: Context): Md3Tokens {
             val dark = resolveDark(ctx)
+            if (Build.VERSION.SDK_INT >= 31 && getDynamicColor(ctx)) {
+                buildTokensFromSystemDynamic(ctx, dark)?.let { return it }
+            }
             val hsv = FloatArray(3)
             Color.colorToHSV(resolveSeedColor(ctx), hsv)
             val hue = hsv[0]

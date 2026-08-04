@@ -51,9 +51,9 @@
     <string name="md3_dark_on">켜기</string>
     <string name="md3_dark_off">끄기</string>
     <string name="md3_dynamic_color">동적 색상</string>
-    <string name="md3_dynamic_color_desc">배경화면에서 색상 가져오기 (Android 8.1+)</string>
+    <string name="md3_dynamic_color_desc">시스템 동적 색상 체계 사용 (Android 12+)</string>
     <string name="md3_dynamic_color_not_available">이 시스템에서는 동적 색상을 사용할 수 없습니다</string>
-    <string name="md3_dynamic_color_on_hint">동적 색상이 활성화되었습니다. 강조 색상은 배경화면에서 가져오며, 배경화면 색상을 사용할 수 없는 경우 수동으로 선택한 액센트가 적용됩니다.</string>
+    <string name="md3_dynamic_color_on_hint">동적 색상이 활성화되었습니다. Android 12+에서는 시스템 Material You 색상을 따르고, 이전 버전에서는 배경화면 색상을 사용합니다.</string>
     <string name="md3_seed_ignored_when_dynamic">동적 색상이 활성 상태입니다 — 수동 액센트 색상은 적용되지 않습니다. 동적 색상을 끄면 수동으로 선택한 액센트가 적용됩니다.</string>
     <string name="md3_seed_color">액센트 색상</string>
     <string name="md3_custom_color">사용자 지정 색상</string>
