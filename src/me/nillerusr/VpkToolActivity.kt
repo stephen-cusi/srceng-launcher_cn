@@ -169,6 +169,9 @@ class VpkToolActivity : Activity() {
         val children = currentDirectory.listFiles()?.filter { it.canRead() }?.sortedWith(
             compareBy<File> { !it.isDirectory }.thenBy { it.name.lowercase(Locale.ROOT) }
         ).orEmpty()
+        if (!directoryPicker) {
+            currentDirectory.parentFile?.takeIf { it.canRead() }?.let(::addParentEntry)
+        }
         if (children.isEmpty()) {
             TextView(this).apply {
                 setText(R.string.vpk_folder_empty)
@@ -187,6 +190,25 @@ class VpkToolActivity : Activity() {
             revealPath?.let(::revealEntry)
         }
         if (animate) animateDirectory(body)
+    }
+
+    private fun addParentEntry(parent: File) {
+        val row = layoutInflater.inflate(R.layout.vpk_file_picker_entry, body, false)
+        bindPressAnimation(row)
+        row.findViewById<View>(R.id.vpk_picker_icon_container).tag = "folder_container"
+        row.findViewById<ImageView>(R.id.vpk_picker_icon).apply {
+            visibility = View.VISIBLE
+            setImageResource(R.drawable.ic_vpk_folder)
+            tag = "folder_icon"
+        }
+        row.findViewById<ImageView>(R.id.vpk_picker_trailing).visibility = View.VISIBLE
+        row.findViewById<View>(R.id.vpk_picker_selection).visibility = View.GONE
+        row.findViewById<TextView>(R.id.vpk_picker_name).text = ".."
+        row.findViewById<TextView>(R.id.vpk_picker_detail).setText(R.string.vpk_manager_folder)
+        row.setOnClickListener {
+            if (!busy && !selectionMode) showDirectory(parent, true)
+        }
+        body.addView(row)
     }
 
     private fun addEntry(file: File) {
@@ -235,12 +257,13 @@ class VpkToolActivity : Activity() {
                 .start()
         }
         name.text = file.name
-        detail.text = when {
+        val sizeText = when {
             file.isDirectory -> getString(R.string.vpk_manager_folder)
             file.extension.equals("vpk", true) -> getString(R.string.vpk_manager_archive, formatSize(file.length()))
             file.extension.equals("gma", true) -> getString(R.string.gma_manager_archive, formatSize(file.length()))
             else -> formatSize(file.length())
         }
+        detail.text = getString(R.string.vpk_manager_detail_with_date, sizeText, formatDate(file.lastModified()))
         row.setOnLongClickListener {
             if (!directoryPicker && !busy && pendingFiles.isEmpty()) {
                 row.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
@@ -523,6 +546,13 @@ class VpkToolActivity : Activity() {
         size >= 1024L -> String.format(Locale.getDefault(), "%.2f KiB", size / 1024.0)
         else -> "$size B"
     }
+
+    private fun formatDate(time: Long): String =
+        try {
+            java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(java.util.Date(time))
+        } catch (_: Throwable) {
+            ""
+        }
 
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 

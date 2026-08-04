@@ -31,6 +31,7 @@ open class SettingsActivity : Activity() {
     private var darkSystem: RadioButton? = null
     private var darkOff: RadioButton? = null
     private var darkOn: RadioButton? = null
+    private var amoledSwitch: SwitchMaterial? = null
     private var dynamicSwitch: SwitchMaterial? = null
     private var predictiveBackSwitch: SwitchMaterial? = null
     private lateinit var predictiveBack: PredictiveBackController
@@ -116,6 +117,7 @@ open class SettingsActivity : Activity() {
         darkSystem = optFind(R.id.md3_dark_system)
         darkOff = optFind(R.id.md3_dark_off)
         darkOn = optFind(R.id.md3_dark_on)
+        amoledSwitch = optFind(R.id.md3_amoled_switch)
         dynamicSwitch = optFind(R.id.md3_dynamic_switch)
         predictiveBackSwitch = optFind(R.id.md3_predictive_back_switch)
         seedContainer = optFind(R.id.md3_seed_container)
@@ -167,6 +169,8 @@ open class SettingsActivity : Activity() {
         val dynamicAvailable = Md3Theme.isDynamicColorAvailable()
         val dynamic = dynamicAvailable && Md3Theme.getDynamicColor(this)
         setCheckedSafe(dynamicSwitch, dynamic)
+        setCheckedSafe(amoledSwitch, Md3Theme.getAmoledBlack(this))
+        setEnabledSafe(amoledSwitch, Md3Theme.resolveDark(this))
         setCheckedSafe(predictiveBackSwitch, getSharedPreferences(PredictiveBackController.PREFS_NAME, 0).getBoolean(PredictiveBackController.PREF_KEY, true))
         if (Build.VERSION.SDK_INT < 33) setEnabledSafe(predictiveBackSwitch, false)
         if (!dynamicAvailable) {
@@ -469,7 +473,13 @@ open class SettingsActivity : Activity() {
         darkGroup?.setOnCheckedChangeListener { _, checkedId ->
             val mode = if (checkedId == R.id.md3_dark_off) Md3Theme.THEME_LIGHT else if (checkedId == R.id.md3_dark_on) Md3Theme.THEME_DARK else Md3Theme.THEME_SYSTEM
             Md3Theme.setThemeMode(this, mode)
+            setEnabledSafe(amoledSwitch, mode != Md3Theme.THEME_LIGHT)
             if (mode != lastDarkMode) { lastDarkMode = mode; refreshTheme(REFRESH_TOKEN_REDRAW) }
+        }
+        amoledSwitch?.setOnCheckedChangeListener { _, checked ->
+            Md3Theme.setAmoledBlack(this, checked)
+            if (checked) try { Toast.makeText(this, R.string.md3_amoled_black_on_hint, Toast.LENGTH_LONG).show() } catch (_: Throwable) {}
+            refreshTheme(REFRESH_TOKEN_REDRAW)
         }
         dynamicSwitch?.setOnCheckedChangeListener { _, checked ->
             if (!Md3Theme.isDynamicColorAvailable()) {

@@ -50,6 +50,9 @@
     <string name="md3_dark_follow_system">Système</string>
     <string name="md3_dark_on">Activé</string>
     <string name="md3_dark_off">Désactivé</string>
+    <string name="md3_amoled_black">Noir pur AMOLED</string>
+    <string name="md3_amoled_black_desc">Utiliser des fonds noirs purs en thème sombre (économise la batterie sur écran OLED)</string>
+    <string name="md3_amoled_black_on_hint">Noir pur activé. Les fonds du thème sombre deviendront noir pur.</string>
     <string name="md3_dynamic_color">Couleurs dynamiques</string>
     <string name="md3_dynamic_color_desc">Utiliser le schéma de couleurs dynamique du système (Android 12+)</string>
     <string name="md3_dynamic_color_not_available">Les couleurs dynamiques ne sont pas disponibles sur ce système</string>
@@ -157,6 +160,7 @@
     <string name="vpk_output_name_invalid">Saisissez un nom de fichier valide.</string>
     <string name="vpk_create_done_path">VPK version %1$d créé dans %2$s</string>
     <string name="vpk_file_manager">Gestionnaire de fichiers VPK et GMA</string><string name="vpk_manager_folder">Dossier · Touchez pour ouvrir</string><string name="vpk_manager_archive">Archive VPK · %1$s</string><string name="gma_manager_archive">Archive GMA · %1$s</string><string name="vpk_folder_empty">Ce dossier est vide.</string>
+    <string name="vpk_manager_detail_with_date">%1$s · %2$s</string>
     <string name="vpk_copy">Copier</string><string name="vpk_move">Déplacer</string><string name="vpk_pack">Empaqueter</string><string name="vpk_delete">Supprimer</string><string name="vpk_paste_here">Coller ici</string>
     <string name="vpk_copy_destination">Copie de %1$d élément(s) : choisissez le dossier de destination.</string><string name="vpk_move_destination">Déplacement de %1$d élément(s) : choisissez le dossier de destination.</string>
     <string name="vpk_copying">Copie des fichiers…</string><string name="vpk_moving">Déplacement des fichiers…</string><string name="vpk_deleting">Suppression des fichiers…</string><string name="vpk_copy_done">Fichiers copiés.</string><string name="vpk_move_done">Fichiers déplacés.</string><string name="vpk_delete_done">Fichiers supprimés.</string>

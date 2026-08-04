@@ -84,6 +84,7 @@ open class LauncherActivity : Activity() {
 
     private var cachedThemeMode = Md3Theme.THEME_SYSTEM
     private var cachedDark = false
+    private var cachedAmoled = false
     private var cachedDynamic = false
     private var cachedSeedColor = Md3Theme.SEED_PRESETS[0]
     private var cachedUiLang = Md3Theme.UI_LANG_SYSTEM
@@ -142,6 +143,7 @@ open class LauncherActivity : Activity() {
 
         cachedThemeMode = Md3Theme.getThemeMode(this)
         cachedDark = Md3Theme.resolveDark(this)
+        cachedAmoled = Md3Theme.getAmoledBlack(this)
         cachedDynamic = Md3Theme.isDynamicColorAvailable() && Md3Theme.getDynamicColor(this)
         cachedSeedColor = Md3Theme.getSeedColor(this)
         cachedUiLang = Md3Theme.getUiLang(this)
@@ -245,9 +247,10 @@ open class LauncherActivity : Activity() {
         try {
             val newMode = Md3Theme.getThemeMode(this)
             val newDark = Md3Theme.resolveDark(this)
+            val newAmoled = Md3Theme.getAmoledBlack(this)
             val newDyn = Md3Theme.isDynamicColorAvailable() && Md3Theme.getDynamicColor(this)
             val newSeed = Md3Theme.getSeedColor(this)
-            if (newMode != cachedThemeMode || newDark != cachedDark ||
+            if (newMode != cachedThemeMode || newDark != cachedDark || newAmoled != cachedAmoled ||
                 newDyn != cachedDynamic || newSeed != cachedSeedColor
             ) {
                 try {
@@ -260,6 +263,7 @@ open class LauncherActivity : Activity() {
                 }
                 cachedThemeMode = newMode
                 cachedDark = newDark
+                cachedAmoled = newAmoled
                 cachedDynamic = newDyn
                 cachedSeedColor = newSeed
             }

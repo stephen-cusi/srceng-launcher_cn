@@ -50,6 +50,9 @@
     <string name="md3_dark_follow_system">Как в системе</string>
     <string name="md3_dark_on">Вкл</string>
     <string name="md3_dark_off">Выкл</string>
+    <string name="md3_amoled_black">AMOLED чёрный</string>
+    <string name="md3_amoled_black_desc">Чисто чёрный фон в тёмной теме (экономит заряд на OLED-экранах)</string>
+    <string name="md3_amoled_black_on_hint">Чёрный включён. Фон в тёмной теме станет чисто чёрным.</string>
     <string name="md3_dynamic_color">Динамические цвета</string>
     <string name="md3_dynamic_color_desc">Использовать системную динамическую схему (Android 12+)</string>
     <string name="md3_dynamic_color_not_available">Динамические цвета не поддерживаются</string>
@@ -157,6 +160,7 @@
     <string name="vpk_output_name_invalid">Введите допустимое имя файла.</string>
     <string name="vpk_create_done_path">VPK версии %1$d создан: %2$s</string>
     <string name="vpk_file_manager">Файловый менеджер VPK и GMA</string><string name="vpk_manager_folder">Папка · Нажмите, чтобы открыть</string><string name="vpk_manager_archive">Архив VPK · %1$s</string><string name="gma_manager_archive">Архив GMA · %1$s</string><string name="vpk_folder_empty">Эта папка пуста.</string>
+    <string name="vpk_manager_detail_with_date">%1$s · %2$s</string>
     <string name="vpk_copy">Копировать</string><string name="vpk_move">Переместить</string><string name="vpk_pack">Упаковать</string><string name="vpk_delete">Удалить</string><string name="vpk_paste_here">Вставить сюда</string>
     <string name="vpk_copy_destination">Копирование элементов (%1$d): выберите папку назначения.</string><string name="vpk_move_destination">Перемещение элементов (%1$d): выберите папку назначения.</string>
     <string name="vpk_copying">Копирование файлов…</string><string name="vpk_moving">Перемещение файлов…</string><string name="vpk_deleting">Удаление файлов…</string><string name="vpk_copy_done">Файлы скопированы.</string><string name="vpk_move_done">Файлы перемещены.</string><string name="vpk_delete_done">Файлы удалены.</string>

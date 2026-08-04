@@ -50,6 +50,9 @@
     <string name="md3_dark_follow_system">시스템 설정 따르기</string>
     <string name="md3_dark_on">켜기</string>
     <string name="md3_dark_off">끄기</string>
+    <string name="md3_amoled_black">AMOLED 순수 블랙</string>
+    <string name="md3_amoled_black_desc">다크 테마에서 순수 검은색 배경 사용 (OLED 화면 배터리 절약)</string>
+    <string name="md3_amoled_black_on_hint">순수 블랙이 활성화되었습니다. 다크 테마 배경이 순수 검은색이 됩니다.</string>
     <string name="md3_dynamic_color">동적 색상</string>
     <string name="md3_dynamic_color_desc">시스템 동적 색상 체계 사용 (Android 12+)</string>
     <string name="md3_dynamic_color_not_available">이 시스템에서는 동적 색상을 사용할 수 없습니다</string>
@@ -157,6 +160,7 @@
     <string name="vpk_output_name_invalid">올바른 파일 이름을 입력하세요.</string>
     <string name="vpk_create_done_path">VPK 버전 %1$d 생성 위치: %2$s</string>
     <string name="vpk_file_manager">VPK 및 GMA 파일 관리자</string><string name="vpk_manager_folder">폴더 · 탭하여 열기</string><string name="vpk_manager_archive">VPK 아카이브 · %1$s</string><string name="gma_manager_archive">GMA 아카이브 · %1$s</string><string name="vpk_folder_empty">이 폴더는 비어 있습니다.</string>
+    <string name="vpk_manager_detail_with_date">%1$s · %2$s</string>
     <string name="vpk_copy">복사</string><string name="vpk_move">이동</string><string name="vpk_pack">패키징</string><string name="vpk_delete">삭제</string><string name="vpk_paste_here">여기에 붙여넣기</string>
     <string name="vpk_copy_destination">%1$d개 항목 복사: 대상 폴더를 선택하세요.</string><string name="vpk_move_destination">%1$d개 항목 이동: 대상 폴더를 선택하세요.</string>
     <string name="vpk_copying">파일 복사 중…</string><string name="vpk_moving">파일 이동 중…</string><string name="vpk_deleting">파일 삭제 중…</string><string name="vpk_copy_done">파일을 복사했습니다.</string><string name="vpk_move_done">파일을 이동했습니다.</string><string name="vpk_delete_done">파일을 삭제했습니다.</string>

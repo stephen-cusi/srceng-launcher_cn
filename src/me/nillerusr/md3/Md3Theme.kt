@@ -42,6 +42,7 @@ import kotlin.math.roundToInt
 class Md3Theme private constructor() {
     companion object {
         const val SP_KEY_THEME_MODE = "md3_theme_mode"
+        const val SP_KEY_AMOLED_BLACK = "md3_amoled_black"
         const val SP_KEY_DYNAMIC_COLOR = "md3_dynamic_color"
         const val SP_KEY_SEED_COLOR = "md3_seed_color"
         const val SP_KEY_UI_LANG = "md3_ui_lang"
@@ -92,6 +93,8 @@ class Md3Theme private constructor() {
         @JvmStatic fun getPrefs(ctx: Context): SharedPreferences = ctx.getSharedPreferences("mod", Context.MODE_PRIVATE)
         @JvmStatic fun getThemeMode(ctx: Context) = getPrefs(ctx).getInt(SP_KEY_THEME_MODE, THEME_SYSTEM)
         @JvmStatic fun setThemeMode(ctx: Context, mode: Int) { getPrefs(ctx).edit().putInt(SP_KEY_THEME_MODE, mode).apply() }
+        @JvmStatic fun getAmoledBlack(ctx: Context) = getPrefs(ctx).getBoolean(SP_KEY_AMOLED_BLACK, false)
+        @JvmStatic fun setAmoledBlack(ctx: Context, value: Boolean) { getPrefs(ctx).edit().putBoolean(SP_KEY_AMOLED_BLACK, value).apply() }
         @JvmStatic fun getDynamicColor(ctx: Context) = Build.VERSION.SDK_INT >= 27 && getPrefs(ctx).getBoolean(SP_KEY_DYNAMIC_COLOR, true)
         @JvmStatic fun setDynamicColor(ctx: Context, value: Boolean) { getPrefs(ctx).edit().putBoolean(SP_KEY_DYNAMIC_COLOR, value).apply() }
         @JvmStatic fun getSeedColor(ctx: Context) = getPrefs(ctx).getInt(SP_KEY_SEED_COLOR, SEED_PRESETS[0])
@@ -257,7 +260,7 @@ class Md3Theme private constructor() {
         @JvmStatic fun buildTokens(ctx: Context): Md3Tokens {
             val dark = resolveDark(ctx)
             if (Build.VERSION.SDK_INT >= 31 && getDynamicColor(ctx)) {
-                buildTokensFromSystemDynamic(ctx, dark)?.let { return it }
+                buildTokensFromSystemDynamic(ctx, dark)?.let { return it.applyAmoled(dark, getAmoledBlack(ctx)) }
             }
             val hsv = FloatArray(3)
             Color.colorToHSV(resolveSeedColor(ctx), hsv)
@@ -271,7 +274,20 @@ class Md3Theme private constructor() {
             fillRole(t.tertiary, Color.HSVToColor(floatArrayOf(wrapHue(hue - 55), sat * .75f, value)), dark)
             fillRole(t.error, 0xFFBA1A1A.toInt(), dark)
             applyStableSurfaces(t, hue, max(.05f, sat * .12f), dark)
-            return t
+            return t.applyAmoled(dark, getAmoledBlack(ctx))
+        }
+
+        private fun Md3Tokens.applyAmoled(dark: Boolean, enabled: Boolean): Md3Tokens {
+            if (!dark || !enabled) return this
+            val black = 0xFF000000.toInt()
+            surfaceContainerLowest = black; surfaceDim = black; surface = black
+            surfaceContainerLow = black; surfaceContainer = black; surfaceContainerHigh = black
+            surfaceContainerHighest = black; surfaceBright = black
+            onSurface = 0xFFEDEDED.toInt(); onSurfaceVariant = 0xFFA6A6A6.toInt()
+            outline = 0xFF6E6E6E.toInt(); outlineVariant = 0xFF303030.toInt()
+            inverseSurface = 0xFFEDEDED.toInt(); inverseOnSurface = 0xFF111111.toInt()
+            statusBar = black; navBar = black
+            return this
         }
 
         private fun fillRole(role: Md3Tokens.Role, seed: Int, dark: Boolean) {

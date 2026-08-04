@@ -50,6 +50,9 @@
     <string name="md3_dark_follow_system">システムに従う</string>
     <string name="md3_dark_on">オン</string>
     <string name="md3_dark_off">オフ</string>
+    <string name="md3_amoled_black">AMOLED ピュアブラック</string>
+    <string name="md3_amoled_black_desc">ダークテーマで純黒の背景を使用（OLED 画面でバッテリーを節約）</string>
+    <string name="md3_amoled_black_on_hint">ピュアブラックを有効にしました。ダークテーマの背景が純黒になります。</string>
     <string name="md3_dynamic_color">ダイナミックカラー</string>
     <string name="md3_dynamic_color_desc">システムの動的取色スキームを使用（Android 12+）</string>
     <string name="md3_dynamic_color_not_available">このシステムではダイナミックカラーは利用できません</string>
@@ -157,6 +160,7 @@
     <string name="vpk_output_name_invalid">有効なファイル名を入力してください。</string>
     <string name="vpk_create_done_path">VPK バージョン %1$d を %2$s に作成しました</string>
     <string name="vpk_file_manager">VPK・GMA ファイルマネージャー</string><string name="vpk_manager_folder">フォルダー · タップして開く</string><string name="vpk_manager_archive">VPK アーカイブ · %1$s</string><string name="gma_manager_archive">GMA アーカイブ · %1$s</string><string name="vpk_folder_empty">このフォルダーは空です。</string>
+    <string name="vpk_manager_detail_with_date">%1$s · %2$s</string>
     <string name="vpk_copy">コピー</string><string name="vpk_move">移動</string><string name="vpk_pack">パック</string><string name="vpk_delete">削除</string><string name="vpk_paste_here">ここに貼り付け</string>
     <string name="vpk_copy_destination">%1$d 件をコピー：移動先フォルダーを選択してください。</string><string name="vpk_move_destination">%1$d 件を移動：移動先フォルダーを選択してください。</string>
     <string name="vpk_copying">ファイルをコピー中…</string><string name="vpk_moving">ファイルを移動中…</string><string name="vpk_deleting">ファイルを削除中…</string><string name="vpk_copy_done">ファイルをコピーしました。</string><string name="vpk_move_done">ファイルを移動しました。</string><string name="vpk_delete_done">ファイルを削除しました。</string>

@@ -540,6 +540,37 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"/>
             </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/md3_amoled_black"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/md3_amoled_black_desc"
+                        android:textSize="12sp"
+                        android:layout_marginTop="4dp"
+                        android:tag="subtitle"/>
+                </LinearLayout>
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/md3_amoled_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
         </LinearLayout>
 
         <!-- Dynamic color row -->

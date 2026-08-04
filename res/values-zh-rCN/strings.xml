@@ -52,6 +52,9 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="md3_dark_follow_system">跟随系统</string>
     <string name="md3_dark_on">开启</string>
     <string name="md3_dark_off">关闭</string>
+    <string name="md3_amoled_black">AMOLED 纯黑</string>
+    <string name="md3_amoled_black_desc">深色主题下使用纯黑背景（在 OLED 屏幕上更省电）</string>
+    <string name="md3_amoled_black_on_hint">已开启纯黑模式，深色主题背景将使用纯黑。</string>
     <string name="md3_dynamic_color">动态取色</string>
     <string name="md3_dynamic_color_desc">使用系统动态取色方案（Android 12+）</string>
     <string name="md3_dynamic_color_not_available">当前系统不支持动态取色</string>
@@ -166,6 +169,7 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="vpk_manager_folder">文件夹 · 点击进入</string>
     <string name="vpk_manager_archive">VPK 文件 · %1$s</string>
     <string name="gma_manager_archive">GMA 文件 · %1$s</string>
+    <string name="vpk_manager_detail_with_date">%1$s · %2$s</string>
     <string name="vpk_folder_empty">此文件夹为空。</string>
     <string name="vpk_copy">复制</string>
     <string name="vpk_move">移动</string>

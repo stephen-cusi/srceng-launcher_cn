@@ -51,6 +51,9 @@
     <string name="md3_dark_follow_system">Follow system</string>
     <string name="md3_dark_on">On</string>
     <string name="md3_dark_off">Off</string>
+    <string name="md3_amoled_black">AMOLED pure black</string>
+    <string name="md3_amoled_black_desc">Use pure black backgrounds in dark theme (saves battery on OLED screens)</string>
+    <string name="md3_amoled_black_on_hint">Pure black enabled. Backgrounds will use pure black in dark theme.</string>
     <string name="md3_dynamic_color">Dynamic color</string>
     <string name="md3_dynamic_color_desc">Use the system dynamic color scheme (Android 12+)</string>
     <string name="md3_dynamic_color_not_available">Dynamic color is not available on this system</string>
@@ -166,6 +169,7 @@
     <string name="vpk_manager_folder">Folder · Tap to open</string>
     <string name="vpk_manager_archive">VPK archive · %1$s</string>
     <string name="gma_manager_archive">GMA archive · %1$s</string>
+    <string name="vpk_manager_detail_with_date">%1$s · %2$s</string>
     <string name="vpk_folder_empty">This folder is empty.</string>
     <string name="vpk_copy">Copy</string>
     <string name="vpk_move">Move</string>
