@@ -357,7 +357,8 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     }
 
     if (Build.VERSION.SDK_INT >= 28)
-        getWindow().getAttributes().layoutInDisplayCutoutMode = 1;
+        getWindow().getAttributes().layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
 
         // Set up the surface
         mSurface = new SDLSurface(getApplication());

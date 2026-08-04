@@ -14,7 +14,7 @@ android {
         minSdk = 24
         targetSdk = 29
         versionCode = 1170040
-        versionName = "1.17.40-dev8"
+        versionName = "1.17.40-dev9"
     }
 
     signingConfigs {
@@ -32,7 +32,7 @@ android {
             java.setSrcDirs(listOf("src"))
             res.setSrcDirs(listOf("res"))
             assets.setSrcDirs(listOf("assets"))
-            jniLibs.setSrcDirs(listOf("libs"))
+            jniLibs.setSrcDirs(listOf("lib"))
         }
     }
 
@@ -43,6 +43,10 @@ android {
 
     buildFeatures {
         buildConfig = false
+    }
+
+    packaging {
+        jniLibs.useLegacyPackaging = true
     }
 
     lint {

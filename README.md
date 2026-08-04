@@ -21,4 +21,4 @@ Build the debug APK with the Gradle Wrapper:
 
 The APK is generated at `build/outputs/apk/debug/srceng-launcher-debug.apk`.
 
-Native engine libraries are optional during launcher-only development. To build a runnable engine package, place each ABI's libraries under `libs/<abi>/`, for example `libs/arm64-v8a/libSDL2.so` and `libs/arm64-v8a/liblauncher.so`.
+Native engine libraries are required for a runnable engine package. Place each ABI's libraries under `lib/<abi>/`, for example `lib/arm64-v8a/libSDL2.so` and `lib/arm64-v8a/liblauncher.so`.

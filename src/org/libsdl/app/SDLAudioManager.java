@@ -185,8 +185,13 @@ public class SDLAudioManager
 
         if (isCapture) {
             if (mAudioRecord == null) {
-                mAudioRecord = new AudioRecord(MediaRecorder.AudioSource.DEFAULT, sampleRate,
-                        channelConfig, audioFormat, desiredFrames * frameSize);
+                try {
+                    mAudioRecord = new AudioRecord(MediaRecorder.AudioSource.DEFAULT, sampleRate,
+                            channelConfig, audioFormat, desiredFrames * frameSize);
+                } catch (SecurityException e) {
+                    Log.e(TAG, "Microphone permission denied", e);
+                    return null;
+                }
 
                 // see notes about AudioTrack state in audioOpen(), above. Probably also applies here.
                 if (mAudioRecord.getState() != AudioRecord.STATE_INITIALIZED) {
