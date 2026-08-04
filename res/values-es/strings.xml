@@ -4,6 +4,9 @@
     <string name="srceng_app_name">Source Engine</string>
 
     <string name="srceng_launcher_about">Acerca de</string>
+    <string name="srceng_launcher_changelog">Registro de cambios</string>
+    <string name="srceng_launcher_changelog_version">Registro de cambios · %1$s</string>
+    <string name="srceng_launcher_changelog_failed">No se pudo cargar el registro de cambios de esta versión: %1$s</string>
     <string name="srceng_launcher_about_text">\nGracias a nillerusr y Jusic por el porteo\nValve por el motor Source\n\n¡No para uso comercial!\nContacto: unknownandlost11@gmail.com\n\nDonar: https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg</string>
     <string name="srceng_launcher_launch">Iniciar</string>
     <string name="srceng_launcher_set">Establecer</string>
@@ -16,7 +19,6 @@
     <string name="srceng_launcher_error_find_gameinfo">No se han podido encontrar los recursos del juego. ¿La ruta está correctamente configurada?</string>
 
     <string name="srceng_launcher_command_args">Argumentos de línea de comandos</string>
-    <string name="srceng_launcher_env">Variables de entorno</string>
     <string name="srceng_launcher_game_path">Ruta a los recursos del juego</string>
     <string name="srceng_launcher_set_game_path">Elegir directorio del juego</string>
     <string name="srceng_launcher_game_menu">Juego</string>

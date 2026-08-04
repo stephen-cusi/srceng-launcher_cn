@@ -14,7 +14,7 @@ android {
         minSdk = 24
         targetSdk = 29
         versionCode = 1170040
-        versionName = "1.17.40-dev9"
+        versionName = "1.17.40-dev10"
     }
 
     signingConfigs {
@@ -23,6 +23,13 @@ android {
             storePassword = "android"
             keyAlias = "androiddebugkey"
             keyPassword = "android"
+        }
+    }
+
+    buildTypes {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("debug")
+            isMinifyEnabled = false
         }
     }
 

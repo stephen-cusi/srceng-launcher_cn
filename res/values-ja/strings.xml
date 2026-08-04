@@ -4,6 +4,9 @@
     <string name="srceng_app_name">Source Engine</string>
 
     <string name="srceng_launcher_about">このポートについて</string>
+    <string name="srceng_launcher_changelog">更新履歴</string>
+    <string name="srceng_launcher_changelog_version">更新履歴 · %1$s</string>
+    <string name="srceng_launcher_changelog_failed">このバージョンの更新履歴を読み込めませんでした：%1$s</string>
     <string name="srceng_launcher_about_text">\nnillerusr と Jusic による移植\nValveによるSource Engine\n\n商用利用禁止！\nお問い合わせ: unknownandlost11@gmail.com\n\n寄付: https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg</string>
     <string name="srceng_launcher_launch">起動</string>
     <string name="srceng_launcher_set">設定</string>
@@ -16,7 +19,6 @@
     <string name="srceng_launcher_error_find_gameinfo">ゲームリソースが見つかりません。パスは正しく設定されていますか？</string>
 
     <string name="srceng_launcher_command_args">コマンドライン引数</string>
-    <string name="srceng_launcher_env">環境変数</string>
     <string name="srceng_launcher_game_path">ゲームリソースのパス</string>
     <string name="srceng_launcher_set_game_path">ゲームディレクトリを選択</string>
     <string name="srceng_launcher_game_menu">ゲーム</string>

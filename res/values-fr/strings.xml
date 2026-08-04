@@ -4,6 +4,9 @@
     <string name="srceng_app_name">Source Engine</string>
 
     <string name="srceng_launcher_about">À propos</string>
+    <string name="srceng_launcher_changelog">Journal des modifications</string>
+    <string name="srceng_launcher_changelog_version">Journal des modifications · %1$s</string>
+    <string name="srceng_launcher_changelog_failed">Impossible de charger le journal de cette version : %1$s</string>
     <string name="srceng_launcher_about_text">\nMerci à nillerusr et Jusic pour le portage\nValve pour le moteur Source\n\nPas d\'usage commercial!\nContact: unknownandlost11@gmail.com\n\nFaire un don: https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg</string>
     <string name="srceng_launcher_launch">Lancer</string>
     <string name="srceng_launcher_set">Définir</string>
@@ -16,7 +19,6 @@
     <string name="srceng_launcher_error_find_gameinfo">Impossible de trouver les ressources du jeu. Le chemin est-il correctement défini?</string>
 
     <string name="srceng_launcher_command_args">Arguments de ligne de commande</string>
-    <string name="srceng_launcher_env">Variables d\'environnement</string>
     <string name="srceng_launcher_game_path">Chemin vers les ressources du jeu</string>
     <string name="srceng_launcher_set_game_path">Définir le répertoire du jeu</string>
     <string name="srceng_launcher_game_menu">Jeu</string>

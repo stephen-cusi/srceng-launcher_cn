@@ -2,6 +2,9 @@
 <resources>
     <string name="srceng_launcher_rewrite_text">现代化重写说明\n启动器界面和应用逻辑已使用 Kotlin 重写，构建系统已迁移到 Gradle Wrapper 与 Android Gradle Plugin，界面使用官方 Material 3 主题和组件。为保持引擎行为稳定，SDL 与原生兼容层继续保留 Java 实现。</string>
     <string name="srceng_launcher_about">关于</string>
+    <string name="srceng_launcher_changelog">更新日志</string>
+    <string name="srceng_launcher_changelog_version">更新日志 · %1$s</string>
+    <string name="srceng_launcher_changelog_failed">无法加载当前版本的更新日志：%1$s</string>
     <string name="srceng_launcher_about_text">"感谢nillerusr和jusic提供的端口
 起源源引擎的Valve
 
@@ -20,7 +23,6 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="srceng_launcher_error_test_write">测试写入失败，所有文件将存储在</string>
     <string name="srceng_launcher_error_no_permission">没有权限，游戏就无法运行</string>
     <string name="srceng_launcher_command_args">命令行参数</string>
-    <string name="srceng_launcher_env">环境变量</string>
     <string name="srceng_launcher_game_path">游戏资源路径</string>
     <string name="srceng_launcher_set_game_path">选择游戏目录</string>
     <string name="srceng_launcher_game_menu">游戏</string>

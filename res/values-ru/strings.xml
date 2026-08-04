@@ -4,6 +4,9 @@
     <string name="srceng_app_name">Source Engine</string>
 
     <string name="srceng_launcher_about">О порте</string>
+    <string name="srceng_launcher_changelog">Список изменений</string>
+    <string name="srceng_launcher_changelog_version">Список изменений · %1$s</string>
+    <string name="srceng_launcher_changelog_failed">Не удалось загрузить список изменений этой версии: %1$s</string>
     <string name="srceng_launcher_about_text">\nОсобая благодарность:\nnillerusr,Jusic за порт \nvalve за source engine\n\nНе для коммерческого использования!\nКонтакты: unknownandlost11@gmail.com\n\nДонат: https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg</string>
     <string name="srceng_launcher_launch">Запустить</string>
     <string name="srceng_launcher_set">Выбрать</string>
@@ -16,7 +19,6 @@
     <string name="srceng_launcher_error_find_gameinfo">Не удалось обнаружить игровые ресурсы. Проверьте указанный путь к игре!</string>
 
     <string name="srceng_launcher_command_args">Аргументы командной строки</string>
-    <string name="srceng_launcher_env">Переменные окружения</string>
     <string name="srceng_launcher_game_path">Путь к игровым ресурсам</string>
     <string name="srceng_launcher_set_game_path">Указать путь</string>
     <string name="srceng_launcher_game_menu">Игра</string>

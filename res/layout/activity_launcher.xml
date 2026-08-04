@@ -105,8 +105,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="14dp">
+                    android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_cmdline"
@@ -115,29 +114,6 @@
                         android:maxLines="1"
                         android:inputType="text"
                         android:text="-nobackgroundlevel"
-                        android:textSize="14sp"/>
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <!-- Env -->
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/srceng_launcher_env"
-                    android:textSize="13sp"
-                    android:layout_marginBottom="4dp"
-                    android:tag="on_surface_variant"/>
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edit_env"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="LIBGL_USEVBO=0"
-                        android:maxLines="1"
-                        android:inputType="text"
                         android:textSize="14sp"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -219,22 +195,20 @@
             <com.google.android.material.button.MaterialButton
                 style="@style/Widget.Material3.Button.TextButton"
                 android:id="@+id/button_about"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:minWidth="0dp"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:text="@string/srceng_launcher_about"
                 android:textSize="14sp"
-                android:layout_marginEnd="12dp"
                 android:tag="text"/>
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"/>
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_launch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="180dp"
+                android:minWidth="160dp"
                 android:minHeight="56dp"
                 android:text="@string/srceng_launcher_launch"
                 android:textSize="15sp"

@@ -4,6 +4,9 @@
     <string name="srceng_app_name">Source Engine</string>
 
     <string name="srceng_launcher_about">Über</string>
+    <string name="srceng_launcher_changelog">Änderungsprotokoll</string>
+    <string name="srceng_launcher_changelog_version">Änderungsprotokoll · %1$s</string>
+    <string name="srceng_launcher_changelog_failed">Das Änderungsprotokoll dieser Version konnte nicht geladen werden: %1$s</string>
     <string name="srceng_launcher_about_text">\nDank an nillerusr und Jusic für den Port\nValve für die Source-Engine\n\nNicht für kommerzielle Nutzung!\nKontakt: unknownandlost11@gmail.com\n\nSpenden: https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg</string>
     <string name="srceng_launcher_launch">Starten</string>
     <string name="srceng_launcher_set">Festlegen</string>
@@ -16,7 +19,6 @@
     <string name="srceng_launcher_error_find_gameinfo">Spielressourcen konnten nicht gefunden werden. Ist der Pfad korrekt gesetzt?</string>
 
     <string name="srceng_launcher_command_args">Kommandozeilen-Argumente</string>
-    <string name="srceng_launcher_env">Umgebungsvariablen</string>
     <string name="srceng_launcher_game_path">Pfad zu den Spielressourcen</string>
     <string name="srceng_launcher_set_game_path">Spielverzeichnis wählen</string>
     <string name="srceng_launcher_game_menu">Spiel</string>

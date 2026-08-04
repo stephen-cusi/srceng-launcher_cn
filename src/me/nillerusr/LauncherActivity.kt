@@ -42,9 +42,6 @@ open class LauncherActivity : Activity() {
         var GamePath: EditText? = null
 
         @JvmField
-        var EnvEdit: EditText? = null
-
-        @JvmField
         var res_width: EditText? = null
 
         @JvmField
@@ -145,7 +142,6 @@ open class LauncherActivity : Activity() {
         cachedUiLang = Md3Theme.getUiLang(this)
 
         cmdArgs = findViewById(R.id.edit_cmdline)
-        EnvEdit = findViewById(R.id.edit_env)
         GamePath = findViewById(R.id.edit_gamepath)
 
         findViewById<View>(R.id.md3_button_settings)?.setOnClickListener {
@@ -171,6 +167,15 @@ open class LauncherActivity : Activity() {
             MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.srceng_launcher_about)
                 .setView(scroll)
+                .setNegativeButton(R.string.srceng_launcher_changelog) { _, _ ->
+                    UpdateSystem.loadCurrentChangelog(this) { version, changelog, error ->
+                        MaterialAlertDialogBuilder(this)
+                            .setTitle(getString(R.string.srceng_launcher_changelog_version, version))
+                            .setMessage(changelog ?: getString(R.string.srceng_launcher_changelog_failed, error))
+                            .setPositiveButton(android.R.string.ok, null)
+                            .show()
+                    }
+                }
                 .setPositiveButton(android.R.string.ok, null)
                 .show()
         }
@@ -184,7 +189,6 @@ open class LauncherActivity : Activity() {
         resources.getString(R.string.last_commit)
         cmdArgs!!.setText(mPref!!.getString("argv", "-nobackgroundlevel"))
         GamePath!!.setText(mPref!!.getString("gamepath", getDefaultDir() + "/srceng"))
-        EnvEdit!!.setText(mPref!!.getString("env", "LIBGL_USEVBO=0"))
 
         applyPermissions(
             arrayOf(
@@ -198,7 +202,6 @@ open class LauncherActivity : Activity() {
     open fun saveSettings(editor: SharedPreferences.Editor) {
         editor.putString("argv", cmdArgs!!.text.toString())
         editor.putString("gamepath", GamePath!!.text.toString())
-        editor.putString("env", EnvEdit!!.text.toString())
         editor.commit()
     }
 

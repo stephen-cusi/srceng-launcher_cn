@@ -47,10 +47,8 @@ open class SettingsActivity : Activity() {
     private var previewOutlined: Button? = null
     private var updatingColorControls = false
 
-    private var uiLangSpinner: Spinner? = null
-    private var gameLangSpinner: Spinner? = null
-    private var uiLangAdapter: ArrayAdapter<String>? = null
-    private var gameLangAdapter: ArrayAdapter<String>? = null
+    private var uiLangButton: Button? = null
+    private var gameLangButton: Button? = null
 
     private var resModeGroup: RadioGroup? = null
     private var resModeDevice: RadioButton? = null
@@ -58,8 +56,7 @@ open class SettingsActivity : Activity() {
     private var resModeCustom: RadioButton? = null
     private var resPresetRow: LinearLayout? = null
     private var resCustomRow: LinearLayout? = null
-    private var resPresetSpinner: Spinner? = null
-    private var resPresetAdapter: ArrayAdapter<String>? = null
+    private var resPresetButton: Button? = null
     private var resCustomW: EditText? = null
     private var resCustomH: EditText? = null
 
@@ -127,15 +124,15 @@ open class SettingsActivity : Activity() {
         previewFilled = optFind(R.id.md3_preview_btn_filled)
         previewTonal = optFind(R.id.md3_preview_btn_tonal)
         previewOutlined = optFind(R.id.md3_preview_btn_outlined)
-        uiLangSpinner = optFind(R.id.md3_ui_lang_spinner)
-        gameLangSpinner = optFind(R.id.md3_game_lang_spinner)
+        uiLangButton = optFind(R.id.md3_ui_lang_spinner)
+        gameLangButton = optFind(R.id.md3_game_lang_spinner)
         resModeGroup = optFind(R.id.md3_res_mode_group)
         resModeDevice = optFind(R.id.md3_res_mode_device)
         resModePreset = optFind(R.id.md3_res_mode_preset)
         resModeCustom = optFind(R.id.md3_res_mode_custom)
         resPresetRow = optFind(R.id.md3_res_preset_row)
         resCustomRow = optFind(R.id.md3_res_custom_row)
-        resPresetSpinner = optFind(R.id.md3_res_preset_spinner)
+        resPresetButton = optFind(R.id.md3_res_preset_spinner)
         resCustomW = optFind(R.id.md3_res_custom_w)
         resCustomH = optFind(R.id.md3_res_custom_h)
         updateChannelSpinner = optFind(R.id.md3_update_channel)
@@ -265,56 +262,76 @@ open class SettingsActivity : Activity() {
         return "$friendly  ·  $code"
     }
 
-    private fun themedAdapter(labels: Array<String>): ArrayAdapter<String> =
-        object : ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, labels) {
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val view = super.getView(position, convertView, parent)
-                try { (view as TextView).setTextColor(Md3Theme.buildTokens(context).onSurface) } catch (_: Throwable) {}
-                return view
-            }
-
-            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val view = super.getDropDownView(position, convertView, parent)
-                try {
-                    val tokens = Md3Theme.buildTokens(context)
-                    (view as TextView).setTextColor(tokens.onSurface)
-                    view.setPadding(dp(16), dp(12), dp(16), dp(12))
-                    view.setBackgroundColor(tokens.surfaceContainerHigh)
-                } catch (_: Throwable) {}
-                return view
-            }
-        }.also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
-
     private fun buildUiLangSpinner() {
-        val spinner = uiLangSpinner ?: return
+        val button = uiLangButton ?: return
         val values = Md3Theme.UI_LANG_VALUES
-        uiLangAdapter = themedAdapter(Array(values.size) { uiLangDisplayName(values[it]) })
-        spinner.adapter = uiLangAdapter
-        val selected = values.indexOfFirst { (it ?: "") == (lastUiLang ?: "") }.let { if (it < 0) 0 else it }
-        try { spinner.setSelection(selected, false) } catch (_: Throwable) {}
+        val initialSelection = values.indexOfFirst { (it ?: "") == (lastUiLang ?: "") }.let { if (it < 0) 0 else it }
+        button.text = uiLangDisplayName(values[initialSelection])
+        button.setOnClickListener {
+            val labels = Array(values.size) { uiLangDisplayName(values[it]) }
+            val selected = values.indexOfFirst { (it ?: "") == (lastUiLang ?: "") }.let { if (it < 0) 0 else it }
+            MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.md3_ui_language)
+                .setSingleChoiceItems(labels, selected) { dialog, position ->
+                    val value = values[position] ?: Md3Theme.UI_LANG_SYSTEM
+                    Md3Theme.setUiLang(this, value)
+                    dialog.dismiss()
+                    if (value != lastUiLang) {
+                        lastUiLang = value
+                        refreshTheme(REFRESH_FULL_RESTART)
+                    }
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
+        }
     }
 
     private fun buildGameLangSpinner() {
-        val spinner = gameLangSpinner ?: return
+        val button = gameLangButton ?: return
         val values = Md3Theme.GAME_LANG_VALUES
         val labels = Array(values.size) { index ->
             val value = values[index]
             if (value.isNullOrEmpty()) try { getString(R.string.md3_game_lang_default) } catch (_: Throwable) { "Auto" }
             else gameLangDisplayName(value)
         }
-        gameLangAdapter = themedAdapter(labels)
-        spinner.adapter = gameLangAdapter
-        val selected = values.indexOfFirst { (it ?: "") == (lastGameLang ?: "") }.let { if (it < 0) 0 else it }
-        try { spinner.setSelection(selected, false) } catch (_: Throwable) {}
+        val initialSelection = values.indexOfFirst { (it ?: "") == (lastGameLang ?: "") }.let { if (it < 0) 0 else it }
+        button.text = labels[initialSelection]
+        button.setOnClickListener {
+            val selected = values.indexOfFirst { (it ?: "") == (lastGameLang ?: "") }.let { if (it < 0) 0 else it }
+            MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.md3_game_language)
+                .setSingleChoiceItems(labels, selected) { dialog, position ->
+                    val value = values[position] ?: ""
+                    Md3Theme.setGameLang(this, value)
+                    lastGameLang = value
+                    button.text = labels[position]
+                    dialog.dismiss()
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
+        }
     }
 
     private fun buildResolutionPresetSpinner() {
-        val spinner = resPresetSpinner ?: return
+        val button = resPresetButton ?: return
         val presets = Md3Theme.RESOLUTION_PRESETS
-        resPresetAdapter = themedAdapter(Array(presets.size) { ratioLabel(presets[it][0], presets[it][1]) })
-        spinner.adapter = resPresetAdapter
-        val selected = if (lastResPresetIdx in presets.indices) lastResPresetIdx else 0
-        try { spinner.setSelection(selected, false) } catch (_: Throwable) {}
+        val labels = Array(presets.size) { ratioLabel(presets[it][0], presets[it][1]) }
+        val initialSelection = if (lastResPresetIdx in presets.indices) lastResPresetIdx else 0
+        lastResPresetIdx = initialSelection
+        button.text = labels[initialSelection]
+        button.setOnClickListener {
+            val selected = if (lastResPresetIdx in presets.indices) lastResPresetIdx else 0
+            MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.md3_res_preset_label)
+                .setSingleChoiceItems(labels, selected) { dialog, position ->
+                    Md3Theme.setResolutionPresetIdx(this, position)
+                    lastResPresetIdx = position
+                    button.text = labels[position]
+                    dialog.dismiss()
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
+        }
     }
 
     private fun updateResolutionVisibility() {
@@ -442,29 +459,12 @@ open class SettingsActivity : Activity() {
         previewFilled?.setOnClickListener(previewClick)
         previewTonal?.setOnClickListener(previewClick)
         previewOutlined?.setOnClickListener(previewClick)
-        uiLangSpinner?.onItemSelectedListener = itemSelected { position ->
-            try {
-                val value = Md3Theme.UI_LANG_VALUES[position] ?: Md3Theme.UI_LANG_SYSTEM
-                Md3Theme.setUiLang(this, value)
-                if (value != lastUiLang) { lastUiLang = value; refreshTheme(REFRESH_FULL_RESTART) }
-            } catch (_: Throwable) {}
-        }
-        gameLangSpinner?.onItemSelectedListener = itemSelected { position ->
-            try {
-                val value = Md3Theme.GAME_LANG_VALUES[position] ?: ""
-                Md3Theme.setGameLang(this, value)
-                lastGameLang = value
-            } catch (_: Throwable) {}
-        }
         resModeGroup?.setOnCheckedChangeListener { _, checkedId ->
             val mode = if (checkedId == R.id.md3_res_mode_preset) Md3Theme.RES_MODE_PRESET else if (checkedId == R.id.md3_res_mode_custom) Md3Theme.RES_MODE_CUSTOM else Md3Theme.RES_MODE_DEVICE
             if (Md3Theme.RES_MODE_CUSTOM != mode) saveCustomResolutionInputs()
             Md3Theme.setResolutionMode(this, mode)
             lastResMode = mode
             updateResolutionVisibility()
-        }
-        resPresetSpinner?.onItemSelectedListener = itemSelected { position ->
-            try { Md3Theme.setResolutionPresetIdx(this, position); lastResPresetIdx = position } catch (_: Throwable) {}
         }
         resCustomW?.addTextChangedListener(resolutionWatcher(320, { lastResCustomW }) { Md3Theme.setResolutionCustomW(this, it); lastResCustomW = it })
         resCustomH?.addTextChangedListener(resolutionWatcher(240, { lastResCustomH }) { Md3Theme.setResolutionCustomH(this, it); lastResCustomH = it })
@@ -622,9 +622,6 @@ open class SettingsActivity : Activity() {
                 try { Md3Theme.applyBeforeOnCreate(this) } catch (_: Throwable) {}
                 try { Md3Theme.applyAfterSetContentView(this) } catch (_: Throwable) {}
                 try { buildSeedColors() } catch (_: Throwable) {}
-                try { uiLangAdapter?.notifyDataSetChanged() } catch (_: Throwable) {}
-                try { gameLangAdapter?.notifyDataSetChanged() } catch (_: Throwable) {}
-                try { resPresetAdapter?.notifyDataSetChanged() } catch (_: Throwable) {}
                 return
             }
             if (level == REFRESH_FULL_RESTART) {

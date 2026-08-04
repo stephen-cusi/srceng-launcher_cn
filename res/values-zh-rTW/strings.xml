@@ -4,6 +4,9 @@
     <string name="srceng_app_name">起源引擎</string>
 
     <string name="srceng_launcher_about">關於</string>
+    <string name="srceng_launcher_changelog">更新日誌</string>
+    <string name="srceng_launcher_changelog_version">更新日誌 · %1$s</string>
+    <string name="srceng_launcher_changelog_failed">無法載入目前版本的更新日誌：%1$s</string>
     <string name="srceng_launcher_about_text">\n特別感謝：\nnillerusr 製作的 port 程式\nvalve 製作的起源引擎\n\n不得用於商業用途！\n\n給作者打賞點小錢：https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg</string>
     <string name="srceng_launcher_launch">啟動</string>
     <string name="srceng_launcher_ok">確定</string>
@@ -14,7 +17,6 @@
     <string name="srceng_launcher_error_no_permission">遊戲需要足夠的許可權才能執行。</string>
 
     <string name="srceng_launcher_command_args">命令列參數</string>
-    <string name="srceng_launcher_env">執行環境</string>
     <string name="srceng_launcher_game_path">遊戲資源路徑</string>
     <string name="srceng_launcher_set_game_path">設定遊戲資源路徑</string>
     <string name="srceng_launcher_game_menu">選擇遊戲</string>

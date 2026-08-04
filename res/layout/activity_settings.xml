@@ -61,7 +61,7 @@
             android:layout_marginBottom="8dp"
             android:tag="primary"/>
 
-        <!-- Launcher UI language (Spinner: 10 languages) -->
+        <!-- Launcher UI language -->
         <LinearLayout
             android:id="@+id/md3_lang_section"
             android:layout_width="match_parent"
@@ -96,11 +96,14 @@
                         android:tag="subtitle"/>
                 </LinearLayout>
             </LinearLayout>
-            <Spinner
+            <Button
                 android:id="@+id/md3_ui_lang_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:spinnerMode="dialog"/>
+                android:layout_height="56dp"
+                android:gravity="start|center_vertical"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:tag="outlined"/>
         </LinearLayout>
 
         <!-- In-game language -->
@@ -137,11 +140,14 @@
                         android:tag="subtitle"/>
                 </LinearLayout>
             </LinearLayout>
-            <Spinner
+            <Button
                 android:id="@+id/md3_game_lang_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:spinnerMode="dialog"/>
+                android:layout_height="56dp"
+                android:gravity="start|center_vertical"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:tag="outlined"/>
         </LinearLayout>
 
         <!-- ========== Game section title (resolution goes here) ========== -->
@@ -239,11 +245,14 @@
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="6dp"/>
-                <Spinner
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/md3_res_preset_spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:spinnerMode="dialog"/>
+                    android:layout_height="56dp"
+                    android:gravity="start|center_vertical"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:tag="outlined"/>
             </LinearLayout>
 
             <!-- Custom width/height (only visible when CUSTOM mode selected) -->

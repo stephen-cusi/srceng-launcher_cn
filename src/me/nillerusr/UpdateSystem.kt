@@ -21,6 +21,10 @@ open class UpdateSystem : AsyncTask<Void, Void, UpdateSystem.Result> {
         fun onMirrorTestResult(available: BooleanArray)
     }
 
+    fun interface ChangelogCallback {
+        fun onResult(version: String, changelog: String?, error: String?)
+    }
+
     open class Result {
         @JvmField var success = false
         @JvmField var published = false
@@ -132,6 +136,39 @@ open class UpdateSystem : AsyncTask<Void, Void, UpdateSystem.Result> {
 
                 override fun onPostExecute(results: BooleanArray) {
                     callback?.onMirrorTestResult(results)
+                }
+            }.execute()
+        }
+
+        @JvmStatic
+        fun loadCurrentChangelog(context: Context, callback: ChangelogCallback) {
+            val appContext = context.applicationContext
+            object : AsyncTask<Void, Void, Array<String?>>() {
+                override fun doInBackground(vararg ignored: Void?): Array<String?> {
+                    val version = try {
+                        appContext.packageManager.getPackageInfo(appContext.packageName, 0).versionName ?: ""
+                    } catch (error: Exception) {
+                        return arrayOf("", null, error.message ?: error.toString())
+                    }
+                    val channel = if ("-dev" in version) CHANNEL_DEV else CHANNEL_STABLE
+                    val configuredMirror = appContext.getSharedPreferences("mod", 0)
+                        .getString(PREF_MIRROR, MIRROR_AUTO)
+                    val candidates = if (MIRROR_AUTO == configuredMirror) AUTO_MIRRORS else arrayOf(configuredMirror)
+                    var lastError: Exception? = null
+                    for (candidate in candidates) {
+                        try {
+                            val rawUrl = RAW_BASE + channel + "/changelog/" + version + ".md"
+                            val address = cacheBust(mirrorUrl(rawUrl, candidate)!!)
+                            return arrayOf(version, fetchText(address, 10000, 15000), null)
+                        } catch (error: Exception) {
+                            lastError = error
+                        }
+                    }
+                    return arrayOf(version, null, lastError?.message ?: lastError.toString())
+                }
+
+                override fun onPostExecute(result: Array<String?>) {
+                    callback.onResult(result[0] ?: "", result[1], result[2])
                 }
             }.execute()
         }

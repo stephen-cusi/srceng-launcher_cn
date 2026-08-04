@@ -3,6 +3,9 @@
     <string name="srceng_app_name">Source Engine</string>
 
     <string name="srceng_launcher_about">About</string>
+    <string name="srceng_launcher_changelog">Changelog</string>
+    <string name="srceng_launcher_changelog_version">Changelog · %1$s</string>
+    <string name="srceng_launcher_changelog_failed">Could not load this version\'s changelog: %1$s</string>
     <string name="srceng_launcher_about_text">\nThanks to nillerusr and jusic for port\nvalve for source engine\n\nNot for commercial use!\nContact Us: unknownandlost11@gmail.com\n\nDonate: https://new.donatepay.ru/@nillerusr\nBTC(Bitcoin): bc1qnjq92jj9uqjtafcx2zvnwd48q89hgtd6w8a6na\nXMR(Monero): 48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4itsGh6EzNTzBty6ZDDevApCFNpsJg</string> <!--- Not available -->
     <string name="srceng_launcher_about_content" translatable="false">%1$s\n\n%2$s</string>
     <string name="srceng_launcher_rewrite_text">Modern launcher rewrite\nThe launcher UI and application logic have been rewritten in Kotlin. The build system now uses the Gradle Wrapper and Android Gradle Plugin, and the interface uses official Material 3 themes and components. The SDL and native compatibility layer remains in Java to preserve engine behavior.</string>
@@ -17,7 +20,6 @@
     <string name="srceng_launcher_error_find_gameinfo">Couldn\'t find game resources. Did you set the path correctly?</string>
 
     <string name="srceng_launcher_command_args">Command-line arguments</string>
-    <string name="srceng_launcher_env">Environment variables</string>
     <string name="srceng_launcher_game_path">Game resources path</string>
     <string name="srceng_launcher_set_game_path">Choose game directory</string>
     <string name="srceng_launcher_game_menu">Game</string>
