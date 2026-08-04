@@ -60,8 +60,8 @@ open class SettingsActivity : Activity() {
     private var resCustomW: EditText? = null
     private var resCustomH: EditText? = null
 
-    private var updateChannelSpinner: Spinner? = null
-    private var updateMirrorSpinner: Spinner? = null
+    private var updateChannelButton: Button? = null
+    private var updateMirrorButton: Button? = null
     private var checkUpdateButton: Button? = null
     private var testMirrorsButton: Button? = null
     private var updateStatus: TextView? = null
@@ -76,6 +76,8 @@ open class SettingsActivity : Activity() {
     private var lastResPresetIdx = 0
     private var lastResCustomW = 1280
     private var lastResCustomH = 720
+    private var selectedUpdateChannel = UpdateSystem.CHANNEL_STABLE
+    private var selectedUpdateMirror = UpdateSystem.MIRROR_AUTO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Md3Theme.applyBeforeOnCreate(this)
@@ -135,8 +137,8 @@ open class SettingsActivity : Activity() {
         resPresetButton = optFind(R.id.md3_res_preset_spinner)
         resCustomW = optFind(R.id.md3_res_custom_w)
         resCustomH = optFind(R.id.md3_res_custom_h)
-        updateChannelSpinner = optFind(R.id.md3_update_channel)
-        updateMirrorSpinner = optFind(R.id.md3_update_mirror)
+        updateChannelButton = optFind(R.id.md3_update_channel)
+        updateMirrorButton = optFind(R.id.md3_update_mirror)
         checkUpdateButton = optFind(R.id.md3_check_update)
         testMirrorsButton = optFind(R.id.md3_test_mirrors)
         updateStatus = optFind(R.id.md3_update_status)
@@ -352,24 +354,48 @@ open class SettingsActivity : Activity() {
     }
 
     private fun buildUpdateChannelSpinner() {
-        val spinner = updateChannelSpinner ?: return
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, arrayOf(
+        val channelButton = updateChannelButton ?: return
+        val channelLabels = arrayOf(
             getString(R.string.md3_update_stable), getString(R.string.md3_update_dev)
-        ))
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
+        )
         val preferences = getSharedPreferences("mod", 0)
-        spinner.setSelection(if (UpdateSystem.CHANNEL_DEV == preferences.getString(UpdateSystem.PREF_CHANNEL, UpdateSystem.CHANNEL_STABLE)) 1 else 0, false)
-        spinner.onItemSelectedListener = itemSelected { position ->
-            preferences.edit().putString(UpdateSystem.PREF_CHANNEL, if (position == 1) UpdateSystem.CHANNEL_DEV else UpdateSystem.CHANNEL_STABLE).apply()
+        selectedUpdateChannel = if (preferences.getString(UpdateSystem.PREF_CHANNEL, UpdateSystem.CHANNEL_STABLE) == UpdateSystem.CHANNEL_DEV) {
+            UpdateSystem.CHANNEL_DEV
+        } else {
+            UpdateSystem.CHANNEL_STABLE
         }
-        updateMirrorSpinner?.let { mirrorSpinner ->
+        channelButton.text = channelLabels[if (selectedUpdateChannel == UpdateSystem.CHANNEL_DEV) 1 else 0]
+        channelButton.setOnClickListener {
+            val selected = if (selectedUpdateChannel == UpdateSystem.CHANNEL_DEV) 1 else 0
+            MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.md3_update_channel)
+                .setSingleChoiceItems(channelLabels, selected) { dialog, position ->
+                    selectedUpdateChannel = if (position == 1) UpdateSystem.CHANNEL_DEV else UpdateSystem.CHANNEL_STABLE
+                    preferences.edit().putString(UpdateSystem.PREF_CHANNEL, selectedUpdateChannel).apply()
+                    channelButton.text = channelLabels[position]
+                    dialog.dismiss()
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
+        }
+        updateMirrorButton?.let { mirrorButton ->
             val labels = arrayOf(getString(R.string.md3_update_mirror_auto), *UpdateSystem.MIRROR_NAMES)
-            val mirrorAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, labels)
-            mirrorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            mirrorSpinner.adapter = mirrorAdapter
-            mirrorSpinner.setSelection(mirrorPosition(preferences.getString(UpdateSystem.PREF_MIRROR, UpdateSystem.MIRROR_AUTO)), false)
-            mirrorSpinner.onItemSelectedListener = itemSelected { preferences.edit().putString(UpdateSystem.PREF_MIRROR, mirrorId(it)).apply() }
+            selectedUpdateMirror = mirrorId(mirrorPosition(
+                preferences.getString(UpdateSystem.PREF_MIRROR, UpdateSystem.MIRROR_AUTO)
+            ))
+            mirrorButton.text = labels[mirrorPosition(selectedUpdateMirror)]
+            mirrorButton.setOnClickListener {
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.md3_update_mirror)
+                    .setSingleChoiceItems(labels, mirrorPosition(selectedUpdateMirror)) { dialog, position ->
+                        selectedUpdateMirror = mirrorId(position)
+                        preferences.edit().putString(UpdateSystem.PREF_MIRROR, selectedUpdateMirror).apply()
+                        mirrorButton.text = labels[position]
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show()
+            }
         }
         try {
             val current = packageManager.getPackageInfo(packageName, 0).versionName
@@ -378,8 +404,8 @@ open class SettingsActivity : Activity() {
     }
 
     private fun checkForUpdates() {
-        val channel = if (updateChannelSpinner?.selectedItemPosition == 1) UpdateSystem.CHANNEL_DEV else UpdateSystem.CHANNEL_STABLE
-        val mirror = mirrorId(updateMirrorSpinner?.selectedItemPosition ?: 0)
+        val channel = selectedUpdateChannel
+        val mirror = selectedUpdateMirror
         checkUpdateButton?.isEnabled = false
         updateStatus?.setText(R.string.md3_update_checking)
         UpdateSystem(this, channel, mirror, object : UpdateSystem.Callback {
