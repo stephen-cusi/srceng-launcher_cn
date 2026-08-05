@@ -313,6 +313,7 @@ class VpkArchiveActivity : Activity() {
             gmaArchive != null -> gmaArchive!!.extract(destination, paths, overwrite, skipped, ::updateProgress)
             else -> error(getString(R.string.vpk_no_archive))
         }
+        setResult(RESULT_OK, Intent().putExtra(EXTRA_EXTRACTED, true))
         runOnUiThread {
             selected.clear()
             selectionMode = false
@@ -428,6 +429,7 @@ class VpkArchiveActivity : Activity() {
 
     companion object {
         const val EXTRA_ARCHIVE_PATH = "vpk_archive_path"
+        const val EXTRA_EXTRACTED = "vpk_extracted"
         private const val REQUEST_EXTRACTION_DIRECTORY = 1001
     }
 }

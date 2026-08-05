@@ -287,12 +287,25 @@ class VpkToolActivity : Activity() {
                 }
                 file.isDirectory -> showDirectory(file, true)
                 file.isSupportedArchive() -> {
-                    startActivity(Intent(this, VpkArchiveActivity::class.java).putExtra(VpkArchiveActivity.EXTRA_ARCHIVE_PATH, file.path))
+                    startActivityForResult(
+                        Intent(this, VpkArchiveActivity::class.java).putExtra(VpkArchiveActivity.EXTRA_ARCHIVE_PATH, file.path),
+                        REQUEST_ARCHIVE
+                    )
                     applyOpenTransition()
                 }
             }
         }
         body.addView(row)
+    }
+
+    @Deprecated("Uses the classic Activity result callback")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_ARCHIVE && resultCode == RESULT_OK &&
+            data?.getBooleanExtra(VpkArchiveActivity.EXTRA_EXTRACTED, false) == true
+        ) {
+            renderDirectory()
+        }
     }
 
     private fun updateFooter() {
@@ -608,6 +621,7 @@ class VpkToolActivity : Activity() {
 
     companion object {
         private const val BUFFER_SIZE = 64 * 1024
+        private const val REQUEST_ARCHIVE = 1002
         const val EXTRA_PICK_DIRECTORY = "vpk_pick_directory"
         const val EXTRA_START_DIRECTORY = "vpk_start_directory"
         const val EXTRA_SELECTED_DIRECTORY = "vpk_selected_directory"
