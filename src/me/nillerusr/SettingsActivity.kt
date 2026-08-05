@@ -372,7 +372,16 @@ open class SettingsActivity : Activity() {
             getString(R.string.md3_update_stable), getString(R.string.md3_update_dev)
         )
         val preferences = getSharedPreferences("mod", 0)
-        selectedUpdateChannel = if (preferences.getString(UpdateSystem.PREF_CHANNEL, UpdateSystem.CHANNEL_STABLE) == UpdateSystem.CHANNEL_DEV) {
+        val defaultChannel = try {
+            if (packageManager.getPackageInfo(packageName, 0).versionName?.contains("-dev") == true) {
+                UpdateSystem.CHANNEL_DEV
+            } else {
+                UpdateSystem.CHANNEL_STABLE
+            }
+        } catch (_: Throwable) {
+            UpdateSystem.CHANNEL_STABLE
+        }
+        selectedUpdateChannel = if (preferences.getString(UpdateSystem.PREF_CHANNEL, defaultChannel) == UpdateSystem.CHANNEL_DEV) {
             UpdateSystem.CHANNEL_DEV
         } else {
             UpdateSystem.CHANNEL_STABLE
