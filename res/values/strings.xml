@@ -144,6 +144,19 @@
     <string name="engine_log_filter_info">Info</string>
     <string name="engine_log_not_found">engine.log not found in the game directory yet. It is generated while the game is running.</string>
     <string name="engine_log_no_matches">No log entries match this filter.</string>
+    <string name="engine_log_menu">Log menu</string>
+    <string name="engine_log_filter">Filter log level</string>
+    <string name="engine_log_highlight">Syntax highlighting</string>
+    <string name="engine_log_clear">Clear log</string>
+    <string name="engine_log_go_to_line">Go to line</string>
+    <string name="engine_log_word_wrap">Word wrap</string>
+    <string name="engine_log_clear_confirm">Clear the contents of engine.log? This cannot be undone.</string>
+    <string name="engine_log_cleared">Log cleared</string>
+    <string name="engine_log_clear_failed">Could not clear engine.log</string>
+    <string name="engine_log_line_range">Line %1$d–%2$d</string>
+    <string name="engine_log_invalid_line">Enter a valid line number</string>
+    <string name="engine_log_meta">%1$s · %2$d lines</string>
+    <string name="engine_log_empty">engine.log is empty. New output will appear here while the game is running.</string>
     <string name="vpk_actions" tools:ignore="UnusedResources">Archive actions</string>
     <string name="vpk_actions_desc" tools:ignore="UnusedResources">Creation writes a standalone embedded archive. When opening a split archive, select its _dir.vpk and all numbered VPK chunks together.</string>
     <string name="vpk_create" tools:ignore="UnusedResources">Create VPK</string>
