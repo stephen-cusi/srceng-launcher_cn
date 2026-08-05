@@ -19,8 +19,8 @@ android {
         applicationId = "com.valvesoftware.source"
         minSdk = 24
         targetSdk = 29
-        versionCode = 1170042
-        versionName = "1.17.40-dev13"
+        versionCode = 1170043
+        versionName = "1.17.40-dev14"
     }
 
     signingConfigs {
