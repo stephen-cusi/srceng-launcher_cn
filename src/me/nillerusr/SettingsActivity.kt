@@ -15,6 +15,7 @@ import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
@@ -23,6 +24,7 @@ import android.widget.*
 import com.valvesoftware.source.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.switchmaterial.SwitchMaterial
+import io.noties.markwon.Markwon
 import me.nillerusr.md3.Md3Theme
 import me.nillerusr.md3.Md3Tokens
 
@@ -435,9 +437,19 @@ open class SettingsActivity : Activity() {
                     return
                 }
                 updateStatus?.text = getString(R.string.md3_update_available, result.versionName)
+                val padding = (24 * resources.displayMetrics.density).toInt()
+                val content = TextView(this@SettingsActivity).apply {
+                    setPadding(padding, 0, padding, padding)
+                    movementMethod = LinkMovementMethod.getInstance()
+                }
+                Markwon.builder(this@SettingsActivity).build()
+                    .setMarkdown(content, result.changelog.orEmpty())
+                val changelog = ScrollView(this@SettingsActivity).apply {
+                    addView(content)
+                }
                 MaterialAlertDialogBuilder(this@SettingsActivity)
                     .setTitle(getString(R.string.md3_update_available, result.versionName))
-                    .setMessage(result.changelog)
+                    .setView(changelog)
                     .setNegativeButton(android.R.string.cancel, null)
                     .setPositiveButton(R.string.md3_update_download) { _, _ ->
                         try { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(result.apkUrl))) }
