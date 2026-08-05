@@ -117,7 +117,8 @@
     <!-- MD3 Game / Resolution section -->
     <string name="md3_section_game">遊戲設定</string>
     <string name="md3_resolution">解析度</string>
-    <string name="md3_resolution_desc">遊戲畫面解析度。會自動在啟動參數中追加 \'-w {寬度} -h {高度}\'；選擇「使用本機解析度」時傳入設備物理解析度。</string>
+    <string name="md3_resolution_desc">遊戲畫面解析度。會自動在啟動參數中追加 \'-w {寬度} -h {高度}\'；「預設」不傳入解析度參數、跟隨遊戲內設定；選擇「使用本機解析度」時傳入設備物理解析度。</string>
+    <string name="md3_res_mode_default">預設（跟隨遊戲內設定）</string>
     <string name="md3_res_mode_device">使用裝置原生解析度</string>
     <string name="md3_res_mode_preset">從預設清單中選擇</string>
     <string name="md3_res_mode_custom">自訂寬 × 高</string>

@@ -51,6 +51,7 @@ class Md3Theme private constructor() {
         const val SP_KEY_RES_PRESET_IDX = "md3_res_preset_idx"
         const val SP_KEY_RES_CUSTOM_W = "md3_res_custom_w"
         const val SP_KEY_RES_CUSTOM_H = "md3_res_custom_h"
+        const val RES_MODE_DEFAULT = "default"
         const val RES_MODE_DEVICE = "device"
         const val RES_MODE_PRESET = "preset"
         const val RES_MODE_CUSTOM = "custom"
@@ -103,7 +104,7 @@ class Md3Theme private constructor() {
         @JvmStatic fun setUiLang(ctx: Context, value: String) { getPrefs(ctx).edit().putString(SP_KEY_UI_LANG, value).apply() }
         @JvmStatic fun getGameLang(ctx: Context): String = getPrefs(ctx).getString(SP_KEY_GAME_LANG, "") ?: ""
         @JvmStatic fun setGameLang(ctx: Context, value: String) { getPrefs(ctx).edit().putString(SP_KEY_GAME_LANG, value).apply() }
-        @JvmStatic fun getResolutionMode(ctx: Context): String = getPrefs(ctx).getString(SP_KEY_RES_MODE, RES_MODE_DEVICE) ?: RES_MODE_DEVICE
+        @JvmStatic fun getResolutionMode(ctx: Context): String = getPrefs(ctx).getString(SP_KEY_RES_MODE, RES_MODE_DEFAULT) ?: RES_MODE_DEFAULT
         @JvmStatic fun setResolutionMode(ctx: Context, value: String) { getPrefs(ctx).edit().putString(SP_KEY_RES_MODE, value).apply() }
         @JvmStatic fun getResolutionPresetIdx(ctx: Context) = getPrefs(ctx).getInt(SP_KEY_RES_PRESET_IDX, 0)
         @JvmStatic fun setResolutionPresetIdx(ctx: Context, value: Int) { getPrefs(ctx).edit().putInt(SP_KEY_RES_PRESET_IDX, value).apply() }
@@ -113,6 +114,9 @@ class Md3Theme private constructor() {
         @JvmStatic fun setResolutionCustomH(ctx: Context, value: Int) { getPrefs(ctx).edit().putInt(SP_KEY_RES_CUSTOM_H, value).apply() }
 
         @JvmStatic fun getResolvedResolution(ctx: Context): IntArray {
+            if (getResolutionMode(ctx) == RES_MODE_DEFAULT) {
+                return intArrayOf()
+            }
             if (getResolutionMode(ctx) == RES_MODE_DEVICE) {
                 val size = getDeviceResolution(ctx)
                 return intArrayOf(max(size[0], size[1]), min(size[0], size[1]))

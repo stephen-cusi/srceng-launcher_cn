@@ -119,7 +119,8 @@
     <!-- MD3 Game / Resolution section -->
     <string name="md3_section_game">Juego</string>
     <string name="md3_resolution">Resolución</string>
-    <string name="md3_resolution_desc">Resolución de pantalla del juego. Añade \'-w &lt;ancho&gt; -h &lt;alto&gt;\' a la línea de comandos. «Usar resolución nativa del dispositivo» pasa la resolución física de la pantalla.</string>
+    <string name="md3_resolution_desc">Resolución de pantalla del juego. Añade \'-w &lt;ancho&gt; -h &lt;alto&gt;\' a la línea de comandos. «Predeterminado» no pasa ninguna resolución y conserva el ajuste del juego; «Usar resolución nativa del dispositivo» pasa la resolución física de la pantalla.</string>
+    <string name="md3_res_mode_default">Predeterminado (usar el ajuste del juego)</string>
     <string name="md3_res_mode_device">Usar resolución nativa del dispositivo</string>
     <string name="md3_res_mode_preset">Elegir entre preajustes</string>
     <string name="md3_res_mode_custom">Ancho × alto personalizado</string>

@@ -125,7 +125,8 @@
     <!-- MD3 Game / Resolution section -->
     <string name="md3_section_game">Game</string>
     <string name="md3_resolution">Resolution</string>
-    <string name="md3_resolution_desc">Game screen resolution. Appends \'-w &lt;width&gt; -h &lt;height&gt;\' to the launch command line. \"Use device native\" passes the physical display resolution.</string>
+    <string name="md3_resolution_desc">Game screen resolution. Appends \'-w &lt;width&gt; -h &lt;height&gt;\' to the launch command line. \"Default\" passes no resolution so the in-game setting is kept; \"Use device native\" passes the physical display resolution.</string>
+    <string name="md3_res_mode_default">Default (use in-game setting)</string>
     <string name="md3_res_mode_device">Use device native resolution</string>
     <string name="md3_res_mode_preset">Choose from presets</string>
     <string name="md3_res_mode_custom">Custom width × height</string>

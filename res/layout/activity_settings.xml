@@ -276,6 +276,13 @@
                 android:orientation="vertical"
                 android:layout_marginBottom="12dp">
                 <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/md3_res_mode_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/md3_res_mode_default"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"/>
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/md3_res_mode_device"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

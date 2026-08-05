@@ -56,6 +56,7 @@ open class SettingsActivity : Activity() {
     private var gameLangButton: Button? = null
 
     private var resModeGroup: RadioGroup? = null
+    private var resModeDefault: RadioButton? = null
     private var resModeDevice: RadioButton? = null
     private var resModePreset: RadioButton? = null
     private var resModeCustom: RadioButton? = null
@@ -138,6 +139,7 @@ open class SettingsActivity : Activity() {
         uiLangButton = optFind(R.id.md3_ui_lang_spinner)
         gameLangButton = optFind(R.id.md3_game_lang_spinner)
         resModeGroup = optFind(R.id.md3_res_mode_group)
+        resModeDefault = optFind(R.id.md3_res_mode_default)
         resModeDevice = optFind(R.id.md3_res_mode_device)
         resModePreset = optFind(R.id.md3_res_mode_preset)
         resModeCustom = optFind(R.id.md3_res_mode_custom)
@@ -198,7 +200,8 @@ open class SettingsActivity : Activity() {
             lastResCustomH = height
         }
         setCheckedSafe(
-            if (Md3Theme.RES_MODE_PRESET == lastResMode) resModePreset
+            if (Md3Theme.RES_MODE_DEFAULT == lastResMode) resModeDefault
+            else if (Md3Theme.RES_MODE_PRESET == lastResMode) resModePreset
             else if (Md3Theme.RES_MODE_CUSTOM == lastResMode) resModeCustom else resModeDevice,
             true
         )
@@ -534,7 +537,12 @@ open class SettingsActivity : Activity() {
         previewTonal?.setOnClickListener(previewClick)
         previewOutlined?.setOnClickListener(previewClick)
         resModeGroup?.setOnCheckedChangeListener { _, checkedId ->
-            val mode = if (checkedId == R.id.md3_res_mode_preset) Md3Theme.RES_MODE_PRESET else if (checkedId == R.id.md3_res_mode_custom) Md3Theme.RES_MODE_CUSTOM else Md3Theme.RES_MODE_DEVICE
+            val mode = when (checkedId) {
+                R.id.md3_res_mode_default -> Md3Theme.RES_MODE_DEFAULT
+                R.id.md3_res_mode_preset -> Md3Theme.RES_MODE_PRESET
+                R.id.md3_res_mode_custom -> Md3Theme.RES_MODE_CUSTOM
+                else -> Md3Theme.RES_MODE_DEVICE
+            }
             if (Md3Theme.RES_MODE_CUSTOM != mode) saveCustomResolutionInputs()
             Md3Theme.setResolutionMode(this, mode)
             lastResMode = mode

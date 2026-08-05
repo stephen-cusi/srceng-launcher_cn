@@ -10,6 +10,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 @Suppress("DEPRECATION")
 open class UpdateSystem : AsyncTask<Void, Void, UpdateSystem.Result> {
@@ -55,7 +56,11 @@ open class UpdateSystem : AsyncTask<Void, Void, UpdateSystem.Result> {
     override fun doInBackground(vararg ignored: Void?): Result {
         val result = Result()
         var lastError: Exception? = null
-        val candidates = if (MIRROR_AUTO == mirror) AUTO_MIRRORS else arrayOf(mirror)
+        val candidates = if (MIRROR_AUTO == mirror) {
+            probeFastestMirror(channel)?.let { arrayOf(it) } ?: AUTO_MIRRORS
+        } else {
+            arrayOf(mirror)
+        }
         for (candidate in candidates) {
             try {
                 val manifestUrl = cacheBust(mirrorUrl(RAW_BASE + channel + "/manifest.json", candidate)!!)
@@ -153,7 +158,11 @@ open class UpdateSystem : AsyncTask<Void, Void, UpdateSystem.Result> {
                     val channel = if ("-dev" in version) CHANNEL_DEV else CHANNEL_STABLE
                     val configuredMirror = appContext.getSharedPreferences("mod", 0)
                         .getString(PREF_MIRROR, MIRROR_AUTO)
-                    val candidates = if (MIRROR_AUTO == configuredMirror) AUTO_MIRRORS else arrayOf(configuredMirror)
+                    val candidates = if (MIRROR_AUTO == configuredMirror) {
+                        probeFastestMirror(channel)?.let { arrayOf(it) } ?: AUTO_MIRRORS
+                    } else {
+                        arrayOf(configuredMirror)
+                    }
                     var lastError: Exception? = null
                     for (candidate in candidates) {
                         try {
@@ -174,6 +183,42 @@ open class UpdateSystem : AsyncTask<Void, Void, UpdateSystem.Result> {
         }
 
         private fun isKnownMirror(value: String?): Boolean = value == MIRROR_AUTO || MIRROR_IDS.any { it == value }
+
+        @JvmStatic
+        private fun probeFastestMirror(channel: String?): String? {
+            val executor = Executors.newFixedThreadPool(AUTO_MIRRORS.size)
+            val tasks = AUTO_MIRRORS.map { source ->
+                Callable<Pair<String, Long>?> {
+                    try {
+                        val start = System.currentTimeMillis()
+                        val manifestUrl = cacheBust(mirrorUrl(RAW_BASE + channel + "/manifest.json", source)!!)
+                        val manifest = JSONObject(fetchText(manifestUrl, 6000, 8000))
+                        if (!manifest.optBoolean("published", false)) return@Callable null
+                        if (!probeDownload(mirrorUrl(manifest.getString("apkUrl"), source)!!)) return@Callable null
+                        source to (System.currentTimeMillis() - start)
+                    } catch (_: Exception) {
+                        null
+                    }
+                }
+            }
+            val futures = try {
+                executor.invokeAll(tasks, 10000, TimeUnit.MILLISECONDS)
+            } catch (_: Exception) {
+                emptyList()
+            }
+            var best: Pair<String, Long>? = null
+            for (future in futures) {
+                try {
+                    val candidate = future.get()
+                    if (candidate != null && (best == null || candidate.second < best.second)) {
+                        best = candidate
+                    }
+                } catch (_: Exception) {
+                }
+            }
+            executor.shutdownNow()
+            return best?.first
+        }
 
         @JvmStatic
         fun mirrorUrl(rawUrl: String?, mirror: String?): String? {

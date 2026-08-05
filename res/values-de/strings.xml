@@ -119,7 +119,8 @@
     <!-- MD3 Game / Resolution section -->
     <string name="md3_section_game">Spiel</string>
     <string name="md3_resolution">Auflösung</string>
-    <string name="md3_resolution_desc">Bildschirmauflösung des Spiels. Fügt \'-w &lt;Breite&gt; -h &lt;Höhe&gt;\' zur Startkommandozeile hinzu. „Gerätenative Auflösung verwenden“ übergibt die physische Displayauflösung.</string>
+    <string name="md3_resolution_desc">Bildschirmauflösung des Spiels. Fügt \'-w &lt;Breite&gt; -h &lt;Höhe&gt;\' zur Startkommandozeile hinzu. „Standard“ übergibt keine Auflösung und behält die Spieleinstellung bei; „Gerätenative Auflösung verwenden“ übergibt die physische Displayauflösung.</string>
+    <string name="md3_res_mode_default">Standard (Spieleinstellung übernehmen)</string>
     <string name="md3_res_mode_device">Native Geräteauflösung verwenden</string>
     <string name="md3_res_mode_preset">Aus Presets wählen</string>
     <string name="md3_res_mode_custom">Eigene Breite × Höhe</string>
