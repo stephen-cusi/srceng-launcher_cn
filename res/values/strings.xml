@@ -134,6 +134,8 @@
     <string name="md3_res_custom_label">Custom resolution</string>
     <string name="md3_res_width">Width (px)</string>
     <string name="md3_res_height">Height (px)</string>
+    <string name="md3_skip_intro_video">Skip intro video</string>
+    <string name="md3_skip_intro_video_desc">Skip the Valve intro cinematic when the game starts and go straight to the main menu. Appends \'-novid\' to the launch command line.</string>
     <string name="vpk_tool">VPK and GMA tools</string>
     <string name="vpk_tool_desc">Browse and extract VPK and GMA archives created by tools such as gmad. VPK creation is also supported.</string>
     <string name="engine_log_viewer">Engine log viewer</string>

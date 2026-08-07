@@ -128,6 +128,8 @@
     <string name="md3_res_custom_label">사용자 지정 해상도</string>
     <string name="md3_res_width">너비(픽셀)</string>
     <string name="md3_res_height">높이(픽셀)</string>
+    <string name="md3_skip_intro_video">인트로 영상 건너뛰기</string>
+    <string name="md3_skip_intro_video_desc">게임 시작 시 Valve 인트로 영상을 건너뛰고 메인 메뉴로 바로 이동합니다. 시작 명령줄에 \'-novid\'를 추가합니다.</string>
     <string name="md3_section_tools">도구</string>
     <string name="vpk_tool">VPK 및 GMA 도구</string>
     <string name="vpk_tool_desc">VPK1 및 VPK2 아카이브를 만들고 보고 압축 해제합니다.</string>

@@ -36,6 +36,7 @@ open class SettingsActivity : Activity() {
     private var amoledSwitch: SwitchMaterial? = null
     private var dynamicSwitch: SwitchMaterial? = null
     private var predictiveBackSwitch: SwitchMaterial? = null
+    private var skipIntroSwitch: SwitchMaterial? = null
     private lateinit var predictiveBack: PredictiveBackController
     private var seedContainer: LinearLayout? = null
     private var customColorContainer: LinearLayout? = null
@@ -123,6 +124,7 @@ open class SettingsActivity : Activity() {
         amoledSwitch = optFind(R.id.md3_amoled_switch)
         dynamicSwitch = optFind(R.id.md3_dynamic_switch)
         predictiveBackSwitch = optFind(R.id.md3_predictive_back_switch)
+        skipIntroSwitch = optFind(R.id.md3_skip_intro_switch)
         seedContainer = optFind(R.id.md3_seed_container)
         customColorContainer = optFind(R.id.md3_seed_custom_container)
         customColorPreview = optFind(R.id.md3_seed_custom_preview)
@@ -176,6 +178,7 @@ open class SettingsActivity : Activity() {
         setCheckedSafe(amoledSwitch, Md3Theme.getAmoledBlack(this))
         setEnabledSafe(amoledSwitch, Md3Theme.resolveDark(this))
         setCheckedSafe(predictiveBackSwitch, getSharedPreferences(PredictiveBackController.PREFS_NAME, 0).getBoolean(PredictiveBackController.PREF_KEY, true))
+        setCheckedSafe(skipIntroSwitch, getSharedPreferences("mod", 0).getBoolean(PREF_SKIP_INTRO, false))
         if (Build.VERSION.SDK_INT < 33) setEnabledSafe(predictiveBackSwitch, false)
         if (!dynamicAvailable) {
             setCheckedSafe(dynamicSwitch, false)
@@ -520,6 +523,9 @@ open class SettingsActivity : Activity() {
             getSharedPreferences(PredictiveBackController.PREFS_NAME, 0).edit().putBoolean(PredictiveBackController.PREF_KEY, checked).apply()
             predictiveBack.sync()
         }
+        skipIntroSwitch?.setOnCheckedChangeListener { _, checked ->
+            getSharedPreferences("mod", 0).edit().putBoolean(PREF_SKIP_INTRO, checked).apply()
+        }
         bindCustomColorControls()
         checkUpdateButton?.setOnClickListener { checkForUpdates() }
         testMirrorsButton?.setOnClickListener { testUpdateMirrors() }
@@ -733,6 +739,7 @@ open class SettingsActivity : Activity() {
         private const val TAG = "SettingsActivity"
         private const val REFRESH_TOKEN_REDRAW = 0
         private const val REFRESH_FULL_RESTART = 2
+        const val PREF_SKIP_INTRO = "skip_intro_video"
 
         private fun setCheckedSafe(view: CompoundButton?, checked: Boolean) {
             if (view != null) try { view.isChecked = checked } catch (error: Throwable) { Log.w(TAG, "setChecked failed", error) }

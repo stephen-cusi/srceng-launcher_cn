@@ -16,6 +16,8 @@ class ValveActivity2 {
         @JvmField
         var mPref: SharedPreferences? = null
 
+        const val PREF_SKIP_INTRO = "skip_intro_video"
+
         @JvmStatic
         external fun setArgs(args: String)
 
@@ -101,6 +103,11 @@ class ValveActivity2 {
                     .replace(Regex("(?i)(^|\\s)-language(?:\\s+|=)\\S+"), "$1")
                     .trim()
                 arguments += " -language $gameLanguage"
+            }
+
+            if (preferences.getBoolean(PREF_SKIP_INTRO, false)) {
+                arguments = arguments.replace(Regex("(?i)(^|\\s)-novid(?:\\s|$)"), "$1").trim()
+                arguments += " -novid"
             }
 
             arguments = arguments

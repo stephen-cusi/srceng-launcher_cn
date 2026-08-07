@@ -126,6 +126,8 @@
     <string name="md3_res_custom_label">自訂解析度</string>
     <string name="md3_res_width">寬度（像素）</string>
     <string name="md3_res_height">高度（像素）</string>
+    <string name="md3_skip_intro_video">跳過開場動畫</string>
+    <string name="md3_skip_intro_video_desc">啟動遊戲時跳過 Valve 開場動畫，直接進入主選單。會向啟動參數追加 \'-novid\'。</string>
     <string name="md3_section_tools">工具</string>
     <string name="vpk_tool">VPK 和 GMA 工具</string>
     <string name="vpk_tool_desc">建立、檢視和解壓縮 VPK1 與 VPK2 檔案。</string>

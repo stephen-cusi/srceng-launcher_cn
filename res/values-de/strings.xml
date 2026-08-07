@@ -128,6 +128,8 @@
     <string name="md3_res_custom_label">Eigene Auflösung</string>
     <string name="md3_res_width">Breite (px)</string>
     <string name="md3_res_height">Höhe (px)</string>
+    <string name="md3_skip_intro_video">Intro-Video überspringen</string>
+    <string name="md3_skip_intro_video_desc">Überspringt das Valve-Intro-Video beim Start und geht direkt zum Hauptmenü. Fügt \'-novid\' zur Startbefehlszeile hinzu.</string>
     <string name="md3_section_tools">Werkzeuge</string>
     <string name="vpk_tool">VPK- und GMA-Werkzeuge</string>
     <string name="vpk_tool_desc">VPK-Archive der Versionen 1 und 2 erstellen, anzeigen und entpacken.</string>

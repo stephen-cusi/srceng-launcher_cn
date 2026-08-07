@@ -38,6 +38,8 @@ import android.view.Gravity;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.window.OnBackInvokedCallback;
+import android.window.OnBackInvokedDispatcher;
 import android.view.PointerIcon;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -412,6 +414,14 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         Log.v(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
 
+        // The manifest enables predictive back (enableOnBackInvokedCallback).
+        // Without a callback the system back gesture finishes the activity and
+        // quits the game without ever calling onBackPressed(). Register one so
+        // the back button is delivered to the engine as the ESC key, matching
+        // the original launcher where back toggles the in-game menu (ESC opens
+        // the menu, ESC again closes it) and never finishes the activity.
+        registerBackInvokedCallback();
+
         mIsInitCalled = false;
 
         if( Build.VERSION.SDK_INT >= 23 )
@@ -420,6 +430,21 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         if( checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && 
             checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED )
             init();
+    }
+
+    private void registerBackInvokedCallback() {
+        if (Build.VERSION.SDK_INT >= 33) {
+            getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
+                OnBackInvokedDispatcher.PRIORITY_DEFAULT, new OnBackInvokedCallback() {
+                    @Override
+                    public void onBackInvoked() {
+                        // Deliver the back gesture to the engine as the ESC
+                        // key instead of finishing the activity.
+                        SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_ESCAPE);
+                        SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_ESCAPE);
+                    }
+                });
+        }
     }
 
     protected void pauseNativeThread() {
@@ -592,21 +617,9 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
     @Override
     public void onBackPressed() {
-        // Check if we want to block the back button in case of mouse right click.
-        //
-        // If we do, the normal hardware back button will no longer work and people have to use home,
-        // but the mouse right click will work.
-        //
-        String trapBack = SDLActivity.nativeGetHint("SDL_ANDROID_TRAP_BACK_BUTTON");
-        if ((trapBack != null) && trapBack.equals("1")) {
-            // Exit and let the mouse handler handle this button (if appropriate)
-            return;
-        }
-
-        // Default system back button behavior.
-        if (!isFinishing()) {
-            super.onBackPressed();
-        }
+        // Intentionally do nothing: the default handling would finish the
+        // activity and quit the game. The startup video is skipped with a
+        // double tap; use the Home button to leave the app.
     }
 
     // Called by JNI from SDL.

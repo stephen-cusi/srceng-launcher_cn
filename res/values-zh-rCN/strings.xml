@@ -134,6 +134,8 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="md3_res_custom_label">自定义分辨率</string>
     <string name="md3_res_width">宽度（像素）</string>
     <string name="md3_res_height">高度（像素）</string>
+    <string name="md3_skip_intro_video">跳过开场动画</string>
+    <string name="md3_skip_intro_video_desc">启动游戏时跳过 Valve 开场动画，直接进入主菜单。会向启动参数追加 \'-novid\'。</string>
     <string name="md3_section_tools">工具</string>
     <string name="vpk_tool">VPK 和 GMA 工具</string>
     <string name="vpk_tool_desc">浏览和解压 VPK、GMA（包括 gmad 创建的文件），同时支持创建 VPK。</string>
