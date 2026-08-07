@@ -104,13 +104,13 @@ open class UpdateSystem : AsyncTask<Void, Void, UpdateSystem.Result> {
         const val MIRROR_AUTO = "auto"
 
         @JvmField
-        val MIRROR_IDS = arrayOf("github", "jsdelivr", "jsdelivr_fastly", "jsdelivr_cloudflare", "ghproxy_net", "gh_proxy_com")
+        val MIRROR_IDS = arrayOf("github", "ghfast_top", "ghproxy_net", "gh_proxy_com")
 
         @JvmField
-        val MIRROR_NAMES = arrayOf("GitHub Raw", "jsDelivr", "jsDelivr Fastly", "jsDelivr Cloudflare", "ghproxy.net", "gh-proxy.com")
+        val MIRROR_NAMES = arrayOf("GitHub Raw", "ghfast.top", "ghproxy.net", "gh-proxy.com")
 
         private const val RAW_BASE = "https://raw.githubusercontent.com/stephen-cusi/srceng-launcher-updates/main/"
-        private val AUTO_MIRRORS = arrayOf("github", "jsdelivr", "jsdelivr_fastly", "jsdelivr_cloudflare", "ghproxy_net", "gh_proxy_com")
+        private val AUTO_MIRRORS = arrayOf("github", "ghfast_top", "ghproxy_net", "gh_proxy_com")
 
         @JvmStatic
         fun testMirrors(callback: MirrorTestCallback?) {
@@ -227,18 +227,11 @@ open class UpdateSystem : AsyncTask<Void, Void, UpdateSystem.Result> {
             if (!rawUrl.startsWith(prefix)) return rawUrl
             val path = rawUrl.substring(prefix.length)
             return when (mirror) {
-                "jsdelivr" -> "https://cdn.jsdelivr.net/gh/${toJsDelivrPath(path)}"
-                "jsdelivr_fastly" -> "https://fastly.jsdelivr.net/gh/${toJsDelivrPath(path)}"
-                "jsdelivr_cloudflare" -> "https://testingcf.jsdelivr.net/gh/${toJsDelivrPath(path)}"
+                "ghfast_top" -> "https://ghfast.top/$rawUrl"
                 "ghproxy_net" -> "https://ghproxy.net/$rawUrl"
                 "gh_proxy_com" -> "https://gh-proxy.com/$rawUrl"
                 else -> rawUrl
             }
-        }
-
-        private fun toJsDelivrPath(path: String): String {
-            val parts = path.split("/", limit = 4)
-            return if (parts.size == 4) "${parts[0]}/${parts[1]}@${parts[2]}/${parts[3]}" else path
         }
 
         private fun cacheBust(address: String): String =
