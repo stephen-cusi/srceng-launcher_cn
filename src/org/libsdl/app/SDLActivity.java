@@ -592,21 +592,12 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
     @Override
     public void onBackPressed() {
-        // Check if we want to block the back button in case of mouse right click.
-        //
-        // If we do, the normal hardware back button will no longer work and people have to use home,
-        // but the mouse right click will work.
-        //
-        String trapBack = SDLActivity.nativeGetHint("SDL_ANDROID_TRAP_BACK_BUTTON");
-        if ((trapBack != null) && trapBack.equals("1")) {
-            // Exit and let the mouse handler handle this button (if appropriate)
-            return;
-        }
-
-        // Default system back button behavior.
-        if (!isFinishing()) {
-            super.onBackPressed();
-        }
+        // Map the back button to the ESC key for the game engine: it skips the
+        // startup video, opens the pause menu in-game, and never exits the app.
+        // The engine handles ESC in the startup video input handler and the
+        // inputsystem, so we never fall back to finishing the activity here.
+        SDLActivity.onNativeKeyDown(KeyEvent.KEYCODE_ESCAPE);
+        SDLActivity.onNativeKeyUp(KeyEvent.KEYCODE_ESCAPE);
     }
 
     // Called by JNI from SDL.
