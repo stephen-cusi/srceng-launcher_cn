@@ -17,6 +17,7 @@ class ValveActivity2 {
         var mPref: SharedPreferences? = null
 
         const val PREF_SKIP_INTRO = "skip_intro_video"
+        const val PREF_NO_BACKGROUND_LEVEL = "no_background_level"
 
         @JvmStatic
         external fun setArgs(args: String)
@@ -92,10 +93,14 @@ class ValveActivity2 {
             Log.v("SRCAPK", "argv=$arguments")
 
             if (arguments.isEmpty()) {
-                arguments = preferences.getString("argv", "-nobackgroundlevel")
-                    ?: "-nobackgroundlevel"
+                arguments = preferences.getString("argv", "") ?: ""
             }
             arguments = "-game $gameDirectory $arguments"
+
+            arguments = arguments.replace(Regex("(?i)(^|\\s)-nobackgroundlevel(?:\\s|$)"), "$1").trim()
+            if (preferences.getBoolean(PREF_NO_BACKGROUND_LEVEL, true)) {
+                arguments += " -nobackgroundlevel"
+            }
 
             val gameLanguage = Md3Theme.getGameLang(context)
             if (gameLanguage.matches(Regex("[a-z_]+"))) {

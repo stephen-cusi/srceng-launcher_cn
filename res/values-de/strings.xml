@@ -61,14 +61,6 @@
     <string name="md3_seed_color">Akzentfarbe</string>
     <string name="md3_custom_color">Benutzerdefinierte Farbe</string>
     <string name="md3_hex_color_hint">#RRGGBB</string>
-    <string name="md3_preview">Vorschau</string>
-    <string name="md3_preview_primary">Primär</string>
-    <string name="md3_preview_secondary">Tonal</string>
-    <string name="md3_preview_outlined">Umrissen</string>
-    <string name="md3_preview_hint_filled">Gefüllter Button — für die Primäraktion verwendet.</string>
-    <string name="md3_preview_hint_tonal">Tonaler Button — für Aktionen mittlerer Priorität, die weniger hervortreten sollen.</string>
-    <string name="md3_preview_hint_outlined">Umriss-Button — für wichtige Aktionen, die paarweise mit einem gefüllten Button auftreten.</string>
-    <string name="md3_preview_text">Dies ist eine Vorschaukarte, die zeigt, wie Karten, Buttons und Text mit dem aktuell ausgewählten Schema aussehen.</string>
     <string name="md3_back">Zurück</string>
     <string name="md3_section_general">Allgemein</string>
     <string name="md3_section_look">Darstellung</string>
@@ -130,6 +122,8 @@
     <string name="md3_res_height">Höhe (px)</string>
     <string name="md3_skip_intro_video">Intro-Video überspringen</string>
     <string name="md3_skip_intro_video_desc">Überspringt das Valve-Intro-Video beim Start und geht direkt zum Hauptmenü. Fügt \'-novid\' zur Startbefehlszeile hinzu.</string>
+    <string name="md3_no_background_level">Hintergrundkarte deaktivieren</string>
+    <string name="md3_no_background_level_desc">Lädt die Hintergrundkarte beim Start des Spiels nicht. Dies kann die Startzeit verkürzen. Fügt \'-nobackgroundlevel\' zur Startbefehlszeile hinzu.</string>
     <string name="md3_section_tools">Werkzeuge</string>
     <string name="vpk_tool">VPK- und GMA-Werkzeuge</string>
     <string name="vpk_tool_desc">VPK-Archive der Versionen 1 und 2 erstellen, anzeigen und entpacken.</string>
@@ -148,6 +142,13 @@
     <string name="engine_log_clear">Log leeren</string>
     <string name="engine_log_go_to_line">Zu Zeile wechseln</string>
     <string name="engine_log_word_wrap">Zeilenumbruch</string>
+    <string name="engine_log_search">Suchen</string>
+    <string name="engine_log_search_case_sensitive">Groß-/Kleinschreibung</string>
+    <string name="engine_log_search_regex">Regulärer Ausdruck</string>
+    <string name="engine_log_search_prev">Zurück</string>
+    <string name="engine_log_search_next">Weiter</string>
+    <string name="engine_log_search_count">%1$d / %2$d</string>
+    <string name="engine_log_search_no_matches">Keine Treffer</string>
     <string name="engine_log_clear_confirm">Inhalt von engine.log löschen? Dies kann nicht rückgängig gemacht werden.</string>
     <string name="engine_log_cleared">Log geleert</string>
     <string name="engine_log_clear_failed">engine.log konnte nicht geleert werden</string>
@@ -189,7 +190,10 @@
     <string name="vpk_copy">Kopieren</string><string name="vpk_move">Verschieben</string><string name="vpk_pack">Packen</string><string name="vpk_delete">Löschen</string><string name="vpk_paste_here">Hier einfügen</string>
     <string name="vpk_copy_destination">%1$d Element(e) kopieren: Zielordner auswählen.</string><string name="vpk_move_destination">%1$d Element(e) verschieben: Zielordner auswählen.</string>
     <string name="vpk_copying">Dateien werden kopiert…</string><string name="vpk_moving">Dateien werden verschoben…</string><string name="vpk_deleting">Dateien werden gelöscht…</string><string name="vpk_copy_done">Dateien wurden kopiert.</string><string name="vpk_move_done">Dateien wurden verschoben.</string><string name="vpk_delete_done">Dateien wurden gelöscht.</string>
-    <string name="vpk_delete_confirm_title">Auswahl löschen?</string><string name="vpk_delete_confirm">%1$d ausgewählte Element(e) dauerhaft löschen? Dies kann nicht rückgängig gemacht werden.</string><string name="vpk_output_exists">Eine Datei mit diesem Namen ist bereits vorhanden.</string><string name="vpk_extract_here">Hier entpacken</string>
+    <string name="vpk_delete_confirm_title">Auswahl löschen?</string><string name="vpk_delete_confirm">%1$d ausgewählte Element(e) dauerhaft löschen? Dies kann nicht rückgängig gemacht werden.</string><string name="vpk_output_exists">Eine Datei mit diesem Namen ist bereits vorhanden.</string>
+    <string name="vpk_error_same_directory">Ein Element kann nicht in seinen eigenen Ordner verschoben oder kopiert werden.</string>
+    <string name="vpk_error_already_exists">In diesem Ordner ist bereits eine Datei oder ein Ordner mit diesem Namen vorhanden.</string>
+    <string name="vpk_error_folder_inside_itself">Ein Ordner kann nicht in sich selbst platziert werden.</string><string name="vpk_extract_here">Hier entpacken</string>
     <string name="vpk_archive_browser">VPK- und GMA-Archivbrowser</string><string name="vpk_archive_summary">VPK-Version %1$d · Dateien: %2$d</string><string name="gma_archive_summary">GMA-Version %1$d · Dateien: %2$d · %3$s</string><string name="vpk_archive_folder">Ordner · Zum Öffnen antippen</string><string name="vpk_extract_all">Alles entpacken</string><string name="vpk_extract_selected">Auswahl entpacken</string><string name="vpk_overwrite_title">Vorhandene Dateien überschreiben?</string><string name="vpk_overwrite_message">Einige Dateien sind bereits vorhanden. Nur die betroffenen Dateien ersetzen?</string><string name="vpk_overwrite">Überschreiben</string><string name="vpk_extract_done_path">Entpacken abgeschlossen: %1$s</string>
     <string name="vpk_extract_destination_title">Entpacken nach</string>
     <string name="vpk_extract_current_directory">In das aktuelle Verzeichnis entpacken</string>

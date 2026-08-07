@@ -61,14 +61,6 @@
     <string name="md3_seed_color">액센트 색상</string>
     <string name="md3_custom_color">사용자 지정 색상</string>
     <string name="md3_hex_color_hint">#RRGGBB</string>
-    <string name="md3_preview">미리보기</string>
-    <string name="md3_preview_primary">기본 버튼</string>
-    <string name="md3_preview_secondary">보조 버튼</string>
-    <string name="md3_preview_outlined">외곽선 버튼</string>
-    <string name="md3_preview_hint_filled">채워진 버튼 — 가장 중요한 작업에 사용됩니다.</string>
-    <string name="md3_preview_hint_tonal">톤 버튼 — 중간 수준의 중요도 작업에 사용됩니다.</string>
-    <string name="md3_preview_hint_outlined">외곽선 버튼 — 주요 버튼과 함께 사용되는 중요한 보조 작업에 사용됩니다.</string>
-    <string name="md3_preview_text">이 카드는 현재 선택된 테마로 카드, 버튼, 텍스트가 어떻게 보이는지 보여줍니다.</string>
     <string name="md3_back">뒤로</string>
     <string name="md3_section_general">일반</string>
     <string name="md3_section_look">외관</string>
@@ -130,6 +122,8 @@
     <string name="md3_res_height">높이(픽셀)</string>
     <string name="md3_skip_intro_video">인트로 영상 건너뛰기</string>
     <string name="md3_skip_intro_video_desc">게임 시작 시 Valve 인트로 영상을 건너뛰고 메인 메뉴로 바로 이동합니다. 시작 명령줄에 \'-novid\'를 추가합니다.</string>
+    <string name="md3_no_background_level">배경 맵 비활성화</string>
+    <string name="md3_no_background_level_desc">게임 시작 시 배경 맵을 로드하지 않습니다. 이렇게 하면 시작 속도가 빨라질 수 있습니다. 시작 명령줄에 \'-nobackgroundlevel\'을 추가합니다.</string>
     <string name="md3_section_tools">도구</string>
     <string name="vpk_tool">VPK 및 GMA 도구</string>
     <string name="vpk_tool_desc">VPK1 및 VPK2 아카이브를 만들고 보고 압축 해제합니다.</string>
@@ -148,6 +142,13 @@
     <string name="engine_log_clear">로그 지우기</string>
     <string name="engine_log_go_to_line">지정한 줄로 이동</string>
     <string name="engine_log_word_wrap">자동 줄 바꿈</string>
+    <string name="engine_log_search">검색</string>
+    <string name="engine_log_search_case_sensitive">대/소문자 구분</string>
+    <string name="engine_log_search_regex">정규식</string>
+    <string name="engine_log_search_prev">이전</string>
+    <string name="engine_log_search_next">다음</string>
+    <string name="engine_log_search_count">%1$d / %2$d</string>
+    <string name="engine_log_search_no_matches">일치하는 항목 없음</string>
     <string name="engine_log_clear_confirm">engine.log의 모든 내용을 지울까요? 이 작업은 취소할 수 없습니다.</string>
     <string name="engine_log_cleared">로그를 지웠습니다</string>
     <string name="engine_log_clear_failed">engine.log을 지울 수 없습니다</string>
@@ -189,7 +190,10 @@
     <string name="vpk_copy">복사</string><string name="vpk_move">이동</string><string name="vpk_pack">패키징</string><string name="vpk_delete">삭제</string><string name="vpk_paste_here">여기에 붙여넣기</string>
     <string name="vpk_copy_destination">%1$d개 항목 복사: 대상 폴더를 선택하세요.</string><string name="vpk_move_destination">%1$d개 항목 이동: 대상 폴더를 선택하세요.</string>
     <string name="vpk_copying">파일 복사 중…</string><string name="vpk_moving">파일 이동 중…</string><string name="vpk_deleting">파일 삭제 중…</string><string name="vpk_copy_done">파일을 복사했습니다.</string><string name="vpk_move_done">파일을 이동했습니다.</string><string name="vpk_delete_done">파일을 삭제했습니다.</string>
-    <string name="vpk_delete_confirm_title">선택 항목을 삭제할까요?</string><string name="vpk_delete_confirm">선택한 %1$d개 항목을 영구 삭제합니다. 이 작업은 취소할 수 없습니다.</string><string name="vpk_output_exists">같은 이름의 파일이 이미 있습니다.</string><string name="vpk_extract_here">여기에 압축 풀기</string>
+    <string name="vpk_delete_confirm_title">선택 항목을 삭제할까요?</string><string name="vpk_delete_confirm">선택한 %1$d개 항목을 영구 삭제합니다. 이 작업은 취소할 수 없습니다.</string><string name="vpk_output_exists">같은 이름의 파일이 이미 있습니다.</string>
+    <string name="vpk_error_same_directory">항목을 자신의 폴더로 이동하거나 복사할 수 없습니다.</string>
+    <string name="vpk_error_already_exists">이 위치에 같은 이름의 파일이나 폴더가 이미 있습니다.</string>
+    <string name="vpk_error_folder_inside_itself">폴더를 자기 자신 안에 넣을 수 없습니다.</string><string name="vpk_extract_here">여기에 압축 풀기</string>
     <string name="vpk_archive_browser">VPK 및 GMA 아카이브 브라우저</string><string name="vpk_archive_summary">VPK 버전 %1$d · 파일: %2$d</string><string name="gma_archive_summary">GMA 버전 %1$d · 파일: %2$d · %3$s</string><string name="vpk_archive_folder">폴더 · 탭하여 열기</string><string name="vpk_extract_all">모두 압축 풀기</string><string name="vpk_extract_selected">선택 항목 압축 풀기</string><string name="vpk_overwrite_title">기존 파일을 덮어쓸까요?</string><string name="vpk_overwrite_message">일부 파일이 이미 있습니다. 충돌하는 파일만 바꿀까요?</string><string name="vpk_overwrite">덮어쓰기</string><string name="vpk_extract_done_path">압축 풀기 완료: %1$s</string>
     <string name="vpk_extract_destination_title">압축 풀 위치</string>
     <string name="vpk_extract_current_directory">현재 폴더에 압축 풀기</string>

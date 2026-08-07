@@ -27,6 +27,7 @@ import com.google.android.material.color.utilities.DynamicColor
 import com.google.android.material.color.utilities.Hct
 import com.google.android.material.color.utilities.MaterialDynamicColors
 import com.google.android.material.color.utilities.SchemeTonalSpot
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -396,7 +397,7 @@ class Md3Theme private constructor() {
             else if(v is Button&&v !is CompoundButton){applyButtonStyle(v,getStrTag(v)?:"filled",t);v.minHeight=dp(v.context,40);val h=dp(v.context,24);val pv=dp(v.context,10);v.setPadding(l+h,top+pv,r+h,bottom+pv);v.isAllCaps=false}
             if(v is TextInputLayout){v.boxBackgroundColor=t.surfaceContainerHigh;v.boxStrokeColor=t.primary.color;v.hintTextColor=ColorStateList.valueOf(t.primary.color);v.defaultHintTextColor=ColorStateList.valueOf(t.onSurfaceVariant)}
             if(v is EditText){val fill=t.surfaceContainerHigh;v.setTextColor(ensureContrastColor(fill,t.onSurface,0xFF1C1B17.toInt(),0xFFF5F1EC.toInt()));v.setHintTextColor(t.outline);if(v !is TextInputEditText)setEditTextBg(v,fill,t.outline);try{v.highlightColor=withAlpha(t.primary.color,0x33)}catch(_:Throwable){};trySetColorFilterField(v,"mCursorDrawable",t.primary.color);trySetColorFilterField(v,"mTextSelectHandleLeftRes",t.primary.color);trySetColorFilterField(v,"mTextSelectHandleRightRes",t.primary.color);trySetColorFilterField(v,"mTextSelectHandleRes",t.primary.color);if(v !is TextInputEditText)tryEtBackgroundTint(v,t.primary.color,t.outline)}
-            if(v is CompoundButton){CompoundButtonCompat.setButtonTintList(v,tintList(t.primary.color,t.outline));if(v is SwitchMaterial){v.trackTintList=tintList(withAlpha(t.primary.color,0x66),t.outlineVariant);v.thumbTintList=tintList(t.primary.color,t.surfaceContainerHighest)};v.setTextColor(t.onSurface)}
+            if(v is CompoundButton){if(v is MaterialSwitch){v.trackTintList=tintList(t.primary.color,t.surfaceContainerHighest);v.thumbTintList=tintList(t.primary.onColor,t.outline);v.setTextColor(t.onSurface)}else if(v is SwitchMaterial){v.trackTintList=tintList(t.primary.color,t.surfaceContainerHighest);v.thumbTintList=tintList(t.primary.onColor,t.outline);v.setTextColor(t.onSurface)}else{CompoundButtonCompat.setButtonTintList(v,tintList(t.primary.color,t.outline));v.setTextColor(t.onSurface)}}
             if((v is ImageButton||v is ImageView)&&hasStrTag(v,"icon")){try{v.setBackgroundDrawable(makeRippleBg(t.surfaceContainerHighest,t.surfaceContainerHigh))}catch(_:Throwable){};if(v is ImageView){v.setColorFilter(t.onSurfaceVariant,PorterDuff.Mode.SRC_IN);v.scaleType=ImageView.ScaleType.CENTER_INSIDE;val p=dp(v.context,8);v.setPadding(l+p,top+p,r+p,bottom+p)}}
             if(v is ImageView){when(getStrTag(v)){"feature_icon","folder_icon"->v.setColorFilter(t.primary.onContainer,PorterDuff.Mode.SRC_IN);"vpk_archive_icon"->v.setColorFilter(t.tertiary.onContainer,PorterDuff.Mode.SRC_IN);"gma_archive_icon"->v.setColorFilter(t.secondary.onContainer,PorterDuff.Mode.SRC_IN);"file_icon","trailing_icon"->v.setColorFilter(t.onSurfaceVariant,PorterDuff.Mode.SRC_IN)}}
         }

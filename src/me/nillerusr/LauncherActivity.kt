@@ -204,7 +204,7 @@ open class LauncherActivity : Activity() {
         }
 
         resources.getString(R.string.last_commit)
-        cmdArgs!!.setText(mPref!!.getString("argv", "-nobackgroundlevel"))
+        cmdArgs!!.setText(mPref!!.getString("argv", ""))
         GamePath!!.setText(mPref!!.getString("gamepath", getDefaultDir() + "/srceng"))
 
         applyPermissions(

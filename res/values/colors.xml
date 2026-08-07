@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 向后兼容（保留原名 + 新 MD3 调色板） -->
-    <color name="hl_color">#FFF79A10</color>
-    <color name="spin_color">#FF3F3F3F</color>
-
     <!-- ============ MD3 默认调色板（HL 橙主题 · Light）============ -->
     <color name="md3_primary">#FFB86200</color>
     <color name="md3_on_primary">#FFFFFFFF</color>

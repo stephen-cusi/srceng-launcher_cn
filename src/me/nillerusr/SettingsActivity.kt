@@ -23,7 +23,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.valvesoftware.source.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.switchmaterial.SwitchMaterial
+import com.google.android.material.materialswitch.MaterialSwitch
 import io.noties.markwon.Markwon
 import me.nillerusr.md3.Md3Theme
 import me.nillerusr.md3.Md3Tokens
@@ -33,10 +33,11 @@ open class SettingsActivity : Activity() {
     private var darkSystem: RadioButton? = null
     private var darkOff: RadioButton? = null
     private var darkOn: RadioButton? = null
-    private var amoledSwitch: SwitchMaterial? = null
-    private var dynamicSwitch: SwitchMaterial? = null
-    private var predictiveBackSwitch: SwitchMaterial? = null
-    private var skipIntroSwitch: SwitchMaterial? = null
+    private var amoledSwitch: MaterialSwitch? = null
+    private var dynamicSwitch: MaterialSwitch? = null
+    private var predictiveBackSwitch: MaterialSwitch? = null
+    private var skipIntroSwitch: MaterialSwitch? = null
+    private var noBackgroundLevelSwitch: MaterialSwitch? = null
     private lateinit var predictiveBack: PredictiveBackController
     private var seedContainer: LinearLayout? = null
     private var customColorContainer: LinearLayout? = null
@@ -48,9 +49,6 @@ open class SettingsActivity : Activity() {
     private var customGreenValue: TextView? = null
     private var customBlueValue: TextView? = null
     private var customHex: EditText? = null
-    private var previewFilled: Button? = null
-    private var previewTonal: Button? = null
-    private var previewOutlined: Button? = null
     private var updatingColorControls = false
 
     private var uiLangButton: Button? = null
@@ -125,6 +123,7 @@ open class SettingsActivity : Activity() {
         dynamicSwitch = optFind(R.id.md3_dynamic_switch)
         predictiveBackSwitch = optFind(R.id.md3_predictive_back_switch)
         skipIntroSwitch = optFind(R.id.md3_skip_intro_switch)
+        noBackgroundLevelSwitch = optFind(R.id.md3_no_background_level_switch)
         seedContainer = optFind(R.id.md3_seed_container)
         customColorContainer = optFind(R.id.md3_seed_custom_container)
         customColorPreview = optFind(R.id.md3_seed_custom_preview)
@@ -135,9 +134,6 @@ open class SettingsActivity : Activity() {
         customGreenValue = optFind(R.id.md3_seed_green_value)
         customBlueValue = optFind(R.id.md3_seed_blue_value)
         customHex = optFind(R.id.md3_seed_hex)
-        previewFilled = optFind(R.id.md3_preview_btn_filled)
-        previewTonal = optFind(R.id.md3_preview_btn_tonal)
-        previewOutlined = optFind(R.id.md3_preview_btn_outlined)
         uiLangButton = optFind(R.id.md3_ui_lang_spinner)
         gameLangButton = optFind(R.id.md3_game_lang_spinner)
         resModeGroup = optFind(R.id.md3_res_mode_group)
@@ -179,6 +175,7 @@ open class SettingsActivity : Activity() {
         setEnabledSafe(amoledSwitch, Md3Theme.resolveDark(this))
         setCheckedSafe(predictiveBackSwitch, getSharedPreferences(PredictiveBackController.PREFS_NAME, 0).getBoolean(PredictiveBackController.PREF_KEY, true))
         setCheckedSafe(skipIntroSwitch, getSharedPreferences("mod", 0).getBoolean(PREF_SKIP_INTRO, false))
+        setCheckedSafe(noBackgroundLevelSwitch, getSharedPreferences("mod", 0).getBoolean(PREF_NO_BACKGROUND_LEVEL, true))
         if (Build.VERSION.SDK_INT < 33) setEnabledSafe(predictiveBackSwitch, false)
         if (!dynamicAvailable) {
             setCheckedSafe(dynamicSwitch, false)
@@ -526,6 +523,9 @@ open class SettingsActivity : Activity() {
         skipIntroSwitch?.setOnCheckedChangeListener { _, checked ->
             getSharedPreferences("mod", 0).edit().putBoolean(PREF_SKIP_INTRO, checked).apply()
         }
+        noBackgroundLevelSwitch?.setOnCheckedChangeListener { _, checked ->
+            getSharedPreferences("mod", 0).edit().putBoolean(PREF_NO_BACKGROUND_LEVEL, checked).apply()
+        }
         bindCustomColorControls()
         checkUpdateButton?.setOnClickListener { checkForUpdates() }
         testMirrorsButton?.setOnClickListener { testUpdateMirrors() }
@@ -535,13 +535,6 @@ open class SettingsActivity : Activity() {
         optFind<View>(R.id.md3_engine_log_tool)?.setOnClickListener {
             startActivity(Intent(this, EngineLogActivity::class.java))
         }
-        val previewClick = View.OnClickListener { view ->
-            val message = if (view === previewFilled) R.string.md3_preview_hint_filled else if (view === previewTonal) R.string.md3_preview_hint_tonal else if (view === previewOutlined) R.string.md3_preview_hint_outlined else 0
-            if (message != 0) try { Toast.makeText(this, message, Toast.LENGTH_SHORT).show() } catch (_: Throwable) {}
-        }
-        previewFilled?.setOnClickListener(previewClick)
-        previewTonal?.setOnClickListener(previewClick)
-        previewOutlined?.setOnClickListener(previewClick)
         resModeGroup?.setOnCheckedChangeListener { _, checkedId ->
             val mode = when (checkedId) {
                 R.id.md3_res_mode_default -> Md3Theme.RES_MODE_DEFAULT
@@ -740,6 +733,7 @@ open class SettingsActivity : Activity() {
         private const val REFRESH_TOKEN_REDRAW = 0
         private const val REFRESH_FULL_RESTART = 2
         const val PREF_SKIP_INTRO = "skip_intro_video"
+        const val PREF_NO_BACKGROUND_LEVEL = "no_background_level"
 
         private fun setCheckedSafe(view: CompoundButton?, checked: Boolean) {
             if (view != null) try { view.isChecked = checked } catch (error: Throwable) { Log.w(TAG, "setChecked failed", error) }

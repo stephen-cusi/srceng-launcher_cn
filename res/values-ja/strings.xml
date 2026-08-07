@@ -61,14 +61,6 @@
     <string name="md3_seed_color">アクセントカラー</string>
     <string name="md3_custom_color">カスタムカラー</string>
     <string name="md3_hex_color_hint">#RRGGBB</string>
-    <string name="md3_preview">プレビュー</string>
-    <string name="md3_preview_primary">プライマリ</string>
-    <string name="md3_preview_secondary">トーン</string>
-    <string name="md3_preview_outlined">アウトライン</string>
-    <string name="md3_preview_hint_filled">塗りつぶしボタン — 主要なアクションに使用されます。</string>
-    <string name="md3_preview_hint_tonal">トーンボタン — 強調度の中程度なアクションに使用されます。</string>
-    <string name="md3_preview_hint_outlined">アウトラインボタン — 主要ボタンとペアになる重要な補助アクションに使用されます。</string>
-    <string name="md3_preview_text">これは、現在選択されている配色でカード、ボタン、テキストがどのように表示されるかを示すプレビューカードです。</string>
     <string name="md3_back">戻る</string>
     <string name="md3_section_general">一般</string>
     <string name="md3_section_look">外観</string>
@@ -130,6 +122,8 @@
     <string name="md3_res_height">高さ（ピクセル）</string>
     <string name="md3_skip_intro_video">イントロ動画をスキップ</string>
     <string name="md3_skip_intro_video_desc">起動時のValveイントロ動画をスキップしてメインメニューに直接進みます。起動コマンドラインに \'-novid\' を追加します。</string>
+    <string name="md3_no_background_level">背景マップを無効化</string>
+    <string name="md3_no_background_level_desc">ゲーム起動時に背景マップを読み込みません。これにより起動時間を短縮できます。起動コマンドラインに \'-nobackgroundlevel\' を追加します。</string>
     <string name="md3_section_tools">ツール</string>
     <string name="vpk_tool">VPK・GMA ツール</string>
     <string name="vpk_tool_desc">VPK1 と VPK2 アーカイブの作成、表示、展開。</string>
@@ -148,6 +142,13 @@
     <string name="engine_log_clear">ログを消去</string>
     <string name="engine_log_go_to_line">指定行へ移動</string>
     <string name="engine_log_word_wrap">自動折り返し</string>
+    <string name="engine_log_search">検索</string>
+    <string name="engine_log_search_case_sensitive">大文字と小文字を区別</string>
+    <string name="engine_log_search_regex">正規表現</string>
+    <string name="engine_log_search_prev">前へ</string>
+    <string name="engine_log_search_next">次へ</string>
+    <string name="engine_log_search_count">%1$d / %2$d</string>
+    <string name="engine_log_search_no_matches">一致なし</string>
     <string name="engine_log_clear_confirm">engine.log の内容を消去しますか？この操作は元に戻せません。</string>
     <string name="engine_log_cleared">ログを消去しました</string>
     <string name="engine_log_clear_failed">engine.log を消去できませんでした</string>
@@ -189,7 +190,10 @@
     <string name="vpk_copy">コピー</string><string name="vpk_move">移動</string><string name="vpk_pack">パック</string><string name="vpk_delete">削除</string><string name="vpk_paste_here">ここに貼り付け</string>
     <string name="vpk_copy_destination">%1$d 件をコピー：移動先フォルダーを選択してください。</string><string name="vpk_move_destination">%1$d 件を移動：移動先フォルダーを選択してください。</string>
     <string name="vpk_copying">ファイルをコピー中…</string><string name="vpk_moving">ファイルを移動中…</string><string name="vpk_deleting">ファイルを削除中…</string><string name="vpk_copy_done">ファイルをコピーしました。</string><string name="vpk_move_done">ファイルを移動しました。</string><string name="vpk_delete_done">ファイルを削除しました。</string>
-    <string name="vpk_delete_confirm_title">選択項目を削除しますか？</string><string name="vpk_delete_confirm">選択した %1$d 件を完全に削除します。この操作は元に戻せません。</string><string name="vpk_output_exists">同名のファイルが既に存在します。</string><string name="vpk_extract_here">ここに展開</string>
+    <string name="vpk_delete_confirm_title">選択項目を削除しますか？</string><string name="vpk_delete_confirm">選択した %1$d 件を完全に削除します。この操作は元に戻せません。</string><string name="vpk_output_exists">同名のファイルが既に存在します。</string>
+    <string name="vpk_error_same_directory">項目はそのまま自分のフォルダーへ移動・コピーできません。</string>
+    <string name="vpk_error_already_exists">この場所には同名のファイルまたはフォルダーが既に存在します。</string>
+    <string name="vpk_error_folder_inside_itself">フォルダーをその中に配置することはできません。</string><string name="vpk_extract_here">ここに展開</string>
     <string name="vpk_archive_browser">VPK・GMA アーカイブブラウザー</string><string name="vpk_archive_summary">VPK バージョン %1$d · ファイル: %2$d</string><string name="gma_archive_summary">GMA バージョン %1$d · ファイル: %2$d · %3$s</string><string name="vpk_archive_folder">フォルダー · タップして開く</string><string name="vpk_extract_all">すべて展開</string><string name="vpk_extract_selected">選択項目を展開</string><string name="vpk_overwrite_title">既存ファイルを上書きしますか？</string><string name="vpk_overwrite_message">一部のファイルが既に存在します。競合するファイルのみ上書きしますか？</string><string name="vpk_overwrite">上書き</string><string name="vpk_extract_done_path">展開完了: %1$s</string>
     <string name="vpk_extract_destination_title">展開先</string>
     <string name="vpk_extract_current_directory">現在のフォルダーに展開</string>

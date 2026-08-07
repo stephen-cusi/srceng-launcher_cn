@@ -30,7 +30,7 @@
                 android:id="@+id/md3_button_back"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
-                android:src="@android:drawable/ic_menu_revert"
+                android:src="@drawable/ic_arrow_back"
                 android:scaleType="centerInside"
                 android:background="@drawable/md3_btn_icon"
                 android:contentDescription="@string/md3_back"
@@ -102,7 +102,7 @@
                     android:tag="subtitle" />
             </LinearLayout>
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
+            <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/md3_predictive_back_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -435,8 +435,43 @@
                     android:textSize="12sp"
                     android:tag="subtitle"/>
             </LinearLayout>
-            <com.google.android.material.switchmaterial.SwitchMaterial
+            <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/md3_skip_intro_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <!-- Disable background map -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:tag="card">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/md3_no_background_level"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/md3_no_background_level_desc"
+                    android:textSize="12sp"
+                    android:tag="subtitle"/>
+            </LinearLayout>
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/md3_no_background_level_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"/>
@@ -635,7 +670,7 @@
                         android:layout_marginTop="4dp"
                         android:tag="subtitle"/>
                 </LinearLayout>
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <com.google.android.material.materialswitch.MaterialSwitch
                     android:id="@+id/md3_amoled_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -670,7 +705,7 @@
                     android:layout_marginTop="4dp"
                     android:tag="subtitle"/>
             </LinearLayout>
-            <com.google.android.material.switchmaterial.SwitchMaterial
+            <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/md3_dynamic_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -773,75 +808,5 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- ========== Preview ========== -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/md3_preview"
-            android:textAllCaps="true"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:tag="primary"/>
-
-        <LinearLayout
-            android:id="@+id/md3_preview_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_marginBottom="32dp"
-            android:tag="preview_primary">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/md3_preview"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:tag="on_primary_container"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/md3_preview_text"
-                android:textSize="13sp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="14dp"
-                android:tag="on_primary_container"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/md3_preview_btn_filled"
-                    style="@style/Widget.Material3.Button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/md3_preview_primary"
-                    android:textSize="13sp"
-                    android:tag="filled"
-                    android:layout_marginEnd="8dp"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/md3_preview_btn_tonal"
-                    style="@style/Widget.Material3.Button.TonalButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/md3_preview_secondary"
-                    android:textSize="13sp"
-                    android:tag="tonal"
-                    android:layout_marginEnd="8dp"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/md3_preview_btn_outlined"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/md3_preview_outlined"
-                    android:textSize="13sp"
-                    android:tag="outlined"/>
-            </LinearLayout>
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>

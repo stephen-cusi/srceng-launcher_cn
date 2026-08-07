@@ -169,9 +169,7 @@ class VpkToolActivity : Activity() {
         val children = currentDirectory.listFiles()?.filter { it.canRead() }?.sortedWith(
             compareBy<File> { !it.isDirectory }.thenBy { it.name.lowercase(Locale.ROOT) }
         ).orEmpty()
-        if (!directoryPicker) {
-            currentDirectory.parentFile?.takeIf { it.canRead() }?.let(::addParentEntry)
-        }
+        currentDirectory.parentFile?.takeIf { it.canRead() }?.let(::addParentEntry)
         if (children.isEmpty()) {
             TextView(this).apply {
                 setText(R.string.vpk_folder_empty)
@@ -375,8 +373,13 @@ class VpkToolActivity : Activity() {
     private fun pasteHere() {
         val sources = pendingFiles
         val move = pendingMove
-        runTask(if (move) R.string.vpk_moving else R.string.vpk_copying) {
+        try {
             validateTransfer(sources, currentDirectory)
+        } catch (error: Throwable) {
+            Toast.makeText(this, error.message ?: error.toString(), Toast.LENGTH_LONG).show()
+            return
+        }
+        runTask(if (move) R.string.vpk_moving else R.string.vpk_copying) {
             sources.forEachIndexed { index, source ->
                 val target = File(currentDirectory, source.name)
                 if (move && source.renameTo(target)) {
@@ -407,10 +410,10 @@ class VpkToolActivity : Activity() {
         val destinationPath = canonicalFile(destination).path
         sources.forEach { source ->
             val sourcePath = canonicalFile(source).path
-            require(source.parentFile?.let(::canonicalFile)?.path != destinationPath) { "Source and destination are the same" }
-            require(!File(destination, source.name).exists()) { "File already exists: ${source.name}" }
+            require(source.parentFile?.let(::canonicalFile)?.path != destinationPath) { getString(R.string.vpk_error_same_directory) }
+            require(!File(destination, source.name).exists()) { getString(R.string.vpk_error_already_exists) }
             require(!source.isDirectory || !destinationPath.startsWith(sourcePath + File.separator)) {
-                "Cannot place a folder inside itself: ${source.name}"
+                getString(R.string.vpk_error_folder_inside_itself)
             }
         }
     }

@@ -61,14 +61,6 @@
     <string name="md3_seed_color">Акцентный цвет</string>
     <string name="md3_custom_color">Пользовательский цвет</string>
     <string name="md3_hex_color_hint">#RRGGBB</string>
-    <string name="md3_preview">Превью</string>
-    <string name="md3_preview_primary">Основная</string>
-    <string name="md3_preview_secondary">Вторичная</string>
-    <string name="md3_preview_outlined">Обводка</string>
-    <string name="md3_preview_hint_filled">Залитая кнопка — для главного действия.</string>
-    <string name="md3_preview_hint_tonal">Тональная кнопка — для среднеприоритетных действий.</string>
-    <string name="md3_preview_hint_outlined">Кнопка с обводкой — для важных вторичных действий, парных с основной.</string>
-    <string name="md3_preview_text">Здесь показано, как выглядят карточки, кнопки и текст в текущей цветовой схеме.</string>
     <string name="md3_back">Назад</string>
     <string name="md3_section_general">Основное</string>
     <string name="md3_section_look">Вид</string>
@@ -130,6 +122,8 @@
     <string name="md3_res_height">Высота (px)</string>
     <string name="md3_skip_intro_video">Пропустить интро-видео</string>
     <string name="md3_skip_intro_video_desc">Пропускает интро-видео Valve при запуске и сразу переходит в главное меню. Добавляет \'-novid\' в командную строку запуска.</string>
+    <string name="md3_no_background_level">Отключить фоновую карту</string>
+    <string name="md3_no_background_level_desc">Не загружает фоновую карту при запуске игры. Это может ускорить запуск. Добавляет \'-nobackgroundlevel\' в командную строку запуска.</string>
     <string name="md3_section_tools">Инструменты</string>
     <string name="vpk_tool">Инструменты VPK и GMA</string>
     <string name="vpk_tool_desc">Создание, просмотр и распаковка архивов VPK1 и VPK2.</string>
@@ -148,6 +142,13 @@
     <string name="engine_log_clear">Очистить журнал</string>
     <string name="engine_log_go_to_line">Перейти к строке</string>
     <string name="engine_log_word_wrap">Перенос строк</string>
+    <string name="engine_log_search">Поиск</string>
+    <string name="engine_log_search_case_sensitive">Учитывать регистр</string>
+    <string name="engine_log_search_regex">Регулярное выражение</string>
+    <string name="engine_log_search_prev">Назад</string>
+    <string name="engine_log_search_next">Вперёд</string>
+    <string name="engine_log_search_count">%1$d / %2$d</string>
+    <string name="engine_log_search_no_matches">Совпадений нет</string>
     <string name="engine_log_clear_confirm">Очистить содержимое engine.log? Это действие нельзя отменить.</string>
     <string name="engine_log_cleared">Журнал очищен</string>
     <string name="engine_log_clear_failed">Не удалось очистить engine.log</string>
@@ -189,7 +190,10 @@
     <string name="vpk_copy">Копировать</string><string name="vpk_move">Переместить</string><string name="vpk_pack">Упаковать</string><string name="vpk_delete">Удалить</string><string name="vpk_paste_here">Вставить сюда</string>
     <string name="vpk_copy_destination">Копирование элементов (%1$d): выберите папку назначения.</string><string name="vpk_move_destination">Перемещение элементов (%1$d): выберите папку назначения.</string>
     <string name="vpk_copying">Копирование файлов…</string><string name="vpk_moving">Перемещение файлов…</string><string name="vpk_deleting">Удаление файлов…</string><string name="vpk_copy_done">Файлы скопированы.</string><string name="vpk_move_done">Файлы перемещены.</string><string name="vpk_delete_done">Файлы удалены.</string>
-    <string name="vpk_delete_confirm_title">Удалить выбранное?</string><string name="vpk_delete_confirm">Удалить выбранные элементы (%1$d) без возможности восстановления?</string><string name="vpk_output_exists">Файл с таким именем уже существует.</string><string name="vpk_extract_here">Распаковать сюда</string>
+    <string name="vpk_delete_confirm_title">Удалить выбранное?</string><string name="vpk_delete_confirm">Удалить выбранные элементы (%1$d) без возможности восстановления?</string><string name="vpk_output_exists">Файл с таким именем уже существует.</string>
+    <string name="vpk_error_same_directory">Нельзя переместить или скопировать элемент в его собственную папку.</string>
+    <string name="vpk_error_already_exists">В этом месте уже есть файл или папка с таким именем.</string>
+    <string name="vpk_error_folder_inside_itself">Нельзя поместить папку внутрь самой себя.</string><string name="vpk_extract_here">Распаковать сюда</string>
     <string name="vpk_archive_browser">Просмотр архивов VPK и GMA</string><string name="vpk_archive_summary">VPK версии %1$d · Файлов: %2$d</string><string name="gma_archive_summary">GMA версии %1$d · Файлов: %2$d · %3$s</string><string name="vpk_archive_folder">Папка · Нажмите, чтобы открыть</string><string name="vpk_extract_all">Извлечь всё</string><string name="vpk_extract_selected">Извлечь выбранное</string><string name="vpk_overwrite_title">Заменить существующие файлы?</string><string name="vpk_overwrite_message">Некоторые файлы уже существуют. Заменить только конфликтующие файлы?</string><string name="vpk_overwrite">Заменить</string><string name="vpk_extract_done_path">Извлечение завершено: %1$s</string>
     <string name="vpk_extract_destination_title">Распаковать в</string>
     <string name="vpk_extract_current_directory">Распаковать в текущую папку</string>

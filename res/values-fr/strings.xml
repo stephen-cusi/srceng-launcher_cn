@@ -61,14 +61,6 @@
     <string name="md3_seed_color">Couleur d\'accent</string>
     <string name="md3_custom_color">Couleur personnalisée</string>
     <string name="md3_hex_color_hint">#RRGGBB</string>
-    <string name="md3_preview">Aperçu</string>
-    <string name="md3_preview_primary">Primaire</string>
-    <string name="md3_preview_secondary">Secondaire</string>
-    <string name="md3_preview_outlined">Contour</string>
-    <string name="md3_preview_hint_filled">Bouton plein — utilisé pour l\'action principale.</string>
-    <string name="md3_preview_hint_tonal">Bouton tonal — utilisé pour des actions secondaires d\'importance moyenne.</string>
-    <string name="md3_preview_hint_outlined">Bouton contour — utilisé pour des actions secondaires importantes, en complément du bouton plein.</string>
-    <string name="md3_preview_text">Ceci est une carte d\'aperçu montrant l\'apparence des cartes, boutons et textes avec le thème actuellement sélectionné.</string>
     <string name="md3_back">Retour</string>
     <string name="md3_section_general">Général</string>
     <string name="md3_section_look">Apparence</string>
@@ -130,6 +122,8 @@
     <string name="md3_res_height">Hauteur (px)</string>
     <string name="md3_skip_intro_video">Passer la vidéo d\'intro</string>
     <string name="md3_skip_intro_video_desc">Ignore la vidéo d\'intro de Valve au démarrage et va directement au menu principal. Ajoute \'-novid\' à la ligne de commande de lancement.</string>
+    <string name="md3_no_background_level">Désactiver la carte de fond</string>
+    <string name="md3_no_background_level_desc">Ne charge pas la carte de fond au démarrage du jeu. Cela peut accélérer le lancement. Ajoute \'-nobackgroundlevel\' à la ligne de commande de lancement.</string>
     <string name="md3_section_tools">Outils</string>
     <string name="vpk_tool">Outils VPK et GMA</string>
     <string name="vpk_tool_desc">Créer, consulter et extraire des archives VPK1 et VPK2.</string>
@@ -148,6 +142,13 @@
     <string name="engine_log_clear">Effacer le journal</string>
     <string name="engine_log_go_to_line">Aller à la ligne</string>
     <string name="engine_log_word_wrap">Retour à la ligne</string>
+    <string name="engine_log_search">Rechercher</string>
+    <string name="engine_log_search_case_sensitive">Respecter la casse</string>
+    <string name="engine_log_search_regex">Expression régulière</string>
+    <string name="engine_log_search_prev">Précédent</string>
+    <string name="engine_log_search_next">Suivant</string>
+    <string name="engine_log_search_count">%1$d / %2$d</string>
+    <string name="engine_log_search_no_matches">Aucun résultat</string>
     <string name="engine_log_clear_confirm">Effacer le contenu de engine.log ? Cette action est irréversible.</string>
     <string name="engine_log_cleared">Journal effacé</string>
     <string name="engine_log_clear_failed">Impossible d\'effacer engine.log</string>
@@ -189,7 +190,10 @@
     <string name="vpk_copy">Copier</string><string name="vpk_move">Déplacer</string><string name="vpk_pack">Empaqueter</string><string name="vpk_delete">Supprimer</string><string name="vpk_paste_here">Coller ici</string>
     <string name="vpk_copy_destination">Copie de %1$d élément(s) : choisissez le dossier de destination.</string><string name="vpk_move_destination">Déplacement de %1$d élément(s) : choisissez le dossier de destination.</string>
     <string name="vpk_copying">Copie des fichiers…</string><string name="vpk_moving">Déplacement des fichiers…</string><string name="vpk_deleting">Suppression des fichiers…</string><string name="vpk_copy_done">Fichiers copiés.</string><string name="vpk_move_done">Fichiers déplacés.</string><string name="vpk_delete_done">Fichiers supprimés.</string>
-    <string name="vpk_delete_confirm_title">Supprimer la sélection ?</string><string name="vpk_delete_confirm">Supprimer définitivement %1$d élément(s) ? Cette action est irréversible.</string><string name="vpk_output_exists">Un fichier de ce nom existe déjà.</string><string name="vpk_extract_here">Extraire ici</string>
+    <string name="vpk_delete_confirm_title">Supprimer la sélection ?</string><string name="vpk_delete_confirm">Supprimer définitivement %1$d élément(s) ? Cette action est irréversible.</string><string name="vpk_output_exists">Un fichier de ce nom existe déjà.</string>
+    <string name="vpk_error_same_directory">Impossible de déplacer ou copier un élément dans son propre dossier.</string>
+    <string name="vpk_error_already_exists">Un fichier ou un dossier portant ce nom existe déjà à cet emplacement.</string>
+    <string name="vpk_error_folder_inside_itself">Impossible de placer un dossier dans lui-même.</string><string name="vpk_extract_here">Extraire ici</string>
     <string name="vpk_archive_browser">Explorateur d’archives VPK et GMA</string><string name="vpk_archive_summary">VPK version %1$d · Fichiers : %2$d</string><string name="gma_archive_summary">GMA version %1$d · Fichiers : %2$d · %3$s</string><string name="vpk_archive_folder">Dossier · Touchez pour ouvrir</string><string name="vpk_extract_all">Tout extraire</string><string name="vpk_extract_selected">Extraire la sélection</string><string name="vpk_overwrite_title">Remplacer les fichiers existants ?</string><string name="vpk_overwrite_message">Certains fichiers existent déjà. Remplacer uniquement les fichiers en conflit ?</string><string name="vpk_overwrite">Remplacer</string><string name="vpk_extract_done_path">Extraction terminée : %1$s</string>
     <string name="vpk_extract_destination_title">Extraire vers</string>
     <string name="vpk_extract_current_directory">Extraire dans le dossier actuel</string>

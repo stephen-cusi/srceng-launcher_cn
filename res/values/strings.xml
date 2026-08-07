@@ -62,14 +62,6 @@
     <string name="md3_seed_color">Accent color</string>
     <string name="md3_custom_color">Custom color</string>
     <string name="md3_hex_color_hint">#RRGGBB</string>
-    <string name="md3_preview">Preview</string>
-    <string name="md3_preview_primary">Primary</string>
-    <string name="md3_preview_secondary">Filled tonal</string>
-    <string name="md3_preview_outlined">Outlined</string>
-    <string name="md3_preview_hint_filled">Filled button — used for the primary action.</string>
-    <string name="md3_preview_hint_tonal">Tonal button — used for medium-emphasis actions that need less prominence.</string>
-    <string name="md3_preview_hint_outlined">Outlined button — used for important actions paired with a filled button.</string>
-    <string name="md3_preview_text">This is a preview card showing how cards, buttons and text look with the currently selected scheme.</string>
     <string name="md3_back">Back</string>
     <string name="md3_section_general">General</string>
     <string name="md3_section_navigation">Navigation</string>
@@ -136,6 +128,8 @@
     <string name="md3_res_height">Height (px)</string>
     <string name="md3_skip_intro_video">Skip intro video</string>
     <string name="md3_skip_intro_video_desc">Skip the Valve intro cinematic when the game starts and go straight to the main menu. Appends \'-novid\' to the launch command line.</string>
+    <string name="md3_no_background_level">Disable background map</string>
+    <string name="md3_no_background_level_desc">Do not load the background map when starting the game. This can speed up launch time. Appends \'-nobackgroundlevel\' to the launch command line.</string>
     <string name="vpk_tool">VPK and GMA tools</string>
     <string name="vpk_tool_desc">Browse and extract VPK and GMA archives created by tools such as gmad. VPK creation is also supported.</string>
     <string name="engine_log_viewer">Engine log viewer</string>
@@ -153,6 +147,13 @@
     <string name="engine_log_clear">Clear log</string>
     <string name="engine_log_go_to_line">Go to line</string>
     <string name="engine_log_word_wrap">Word wrap</string>
+    <string name="engine_log_search">Search</string>
+    <string name="engine_log_search_case_sensitive">Case sensitive</string>
+    <string name="engine_log_search_regex">Regex</string>
+    <string name="engine_log_search_prev">Prev</string>
+    <string name="engine_log_search_next">Next</string>
+    <string name="engine_log_search_count">%1$d / %2$d</string>
+    <string name="engine_log_search_no_matches">No matches</string>
     <string name="engine_log_clear_confirm">Clear the contents of engine.log? This cannot be undone.</string>
     <string name="engine_log_cleared">Log cleared</string>
     <string name="engine_log_clear_failed">Could not clear engine.log</string>
@@ -212,6 +213,9 @@
     <string name="vpk_delete_confirm_title">Delete selected items?</string>
     <string name="vpk_delete_confirm">Permanently delete the selection? This cannot be undone. Selected: %1$d</string>
     <string name="vpk_output_exists">A file with this name already exists.</string>
+    <string name="vpk_error_same_directory">Cannot move or copy an item to its own folder.</string>
+    <string name="vpk_error_already_exists">A file or folder with this name already exists.</string>
+    <string name="vpk_error_folder_inside_itself">Cannot place a folder inside itself.</string>
     <string name="vpk_extract_here" tools:ignore="UnusedResources">Extract here</string>
     <string name="vpk_archive_browser">VPK archive browser</string>
     <string name="vpk_archive_summary">VPK version %1$d · Files: %2$d</string>

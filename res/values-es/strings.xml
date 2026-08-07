@@ -61,14 +61,6 @@
     <string name="md3_seed_color">Color de acento</string>
     <string name="md3_custom_color">Color personalizado</string>
     <string name="md3_hex_color_hint">#RRGGBB</string>
-    <string name="md3_preview">Vista previa</string>
-    <string name="md3_preview_primary">Primario</string>
-    <string name="md3_preview_secondary">Secundario</string>
-    <string name="md3_preview_outlined">Contorno</string>
-    <string name="md3_preview_hint_filled">Botón relleno — usado para la acción principal.</string>
-    <string name="md3_preview_hint_tonal">Botón tonal — usado para acciones medias, que requieren menos protagonismo.</string>
-    <string name="md3_preview_hint_outlined">Botón con contorno — usado para acciones importantes complementarias al botón relleno.</string>
-    <string name="md3_preview_text">Esta es una tarjeta de vista previa que muestra cómo se ven las tarjetas, los botones y el texto con el esquema actualmente seleccionado.</string>
     <string name="md3_back">Atrás</string>
     <string name="md3_section_general">General</string>
     <string name="md3_section_look">Apariencia</string>
@@ -130,6 +122,8 @@
     <string name="md3_res_height">Alto (px)</string>
     <string name="md3_skip_intro_video">Omitir video de introducción</string>
     <string name="md3_skip_intro_video_desc">Omite el video de introducción de Valve al iniciar y va directamente al menú principal. Añade \'-novid\' a la línea de comandos de inicio.</string>
+    <string name="md3_no_background_level">Desactivar mapa de fondo</string>
+    <string name="md3_no_background_level_desc">No carga el mapa de fondo al iniciar el juego. Esto puede acelerar el inicio. Añade \'-nobackgroundlevel\' a la línea de comandos de inicio.</string>
     <string name="md3_section_tools">Herramientas</string>
     <string name="vpk_tool">Herramientas VPK y GMA</string>
     <string name="vpk_tool_desc">Crear, consultar y extraer archivos VPK1 y VPK2.</string>
@@ -148,6 +142,13 @@
     <string name="engine_log_clear">Vaciar registro</string>
     <string name="engine_log_go_to_line">Ir a la línea</string>
     <string name="engine_log_word_wrap">Ajuste de línea</string>
+    <string name="engine_log_search">Buscar</string>
+    <string name="engine_log_search_case_sensitive">Distinguir mayúsculas</string>
+    <string name="engine_log_search_regex">Expresión regular</string>
+    <string name="engine_log_search_prev">Anterior</string>
+    <string name="engine_log_search_next">Siguiente</string>
+    <string name="engine_log_search_count">%1$d / %2$d</string>
+    <string name="engine_log_search_no_matches">Sin resultados</string>
     <string name="engine_log_clear_confirm">¿Vaciar el contenido de engine.log? Esta acción no se puede deshacer.</string>
     <string name="engine_log_cleared">Registro vaciado</string>
     <string name="engine_log_clear_failed">No se pudo vaciar engine.log</string>
@@ -189,7 +190,10 @@
     <string name="vpk_copy">Copiar</string><string name="vpk_move">Mover</string><string name="vpk_pack">Empaquetar</string><string name="vpk_delete">Eliminar</string><string name="vpk_paste_here">Pegar aquí</string>
     <string name="vpk_copy_destination">Copiando %1$d elemento(s): elige la carpeta de destino.</string><string name="vpk_move_destination">Moviendo %1$d elemento(s): elige la carpeta de destino.</string>
     <string name="vpk_copying">Copiando archivos…</string><string name="vpk_moving">Moviendo archivos…</string><string name="vpk_deleting">Eliminando archivos…</string><string name="vpk_copy_done">Archivos copiados.</string><string name="vpk_move_done">Archivos movidos.</string><string name="vpk_delete_done">Archivos eliminados.</string>
-    <string name="vpk_delete_confirm_title">¿Eliminar la selección?</string><string name="vpk_delete_confirm">¿Eliminar permanentemente %1$d elemento(s)? Esta acción no se puede deshacer.</string><string name="vpk_output_exists">Ya existe un archivo con este nombre.</string><string name="vpk_extract_here">Extraer aquí</string>
+    <string name="vpk_delete_confirm_title">¿Eliminar la selección?</string><string name="vpk_delete_confirm">¿Eliminar permanentemente %1$d elemento(s)? Esta acción no se puede deshacer.</string><string name="vpk_output_exists">Ya existe un archivo con este nombre.</string>
+    <string name="vpk_error_same_directory">No se puede mover ni copiar un elemento a su propia carpeta.</string>
+    <string name="vpk_error_already_exists">Ya existe un archivo o carpeta con este nombre en esta ubicación.</string>
+    <string name="vpk_error_folder_inside_itself">No se puede colocar una carpeta dentro de sí misma.</string><string name="vpk_extract_here">Extraer aquí</string>
     <string name="vpk_archive_browser">Explorador de archivos VPK y GMA</string><string name="vpk_archive_summary">VPK versión %1$d · Archivos: %2$d</string><string name="gma_archive_summary">GMA versión %1$d · Archivos: %2$d · %3$s</string><string name="vpk_archive_folder">Carpeta · Toca para abrir</string><string name="vpk_extract_all">Extraer todo</string><string name="vpk_extract_selected">Extraer selección</string><string name="vpk_overwrite_title">¿Sobrescribir archivos existentes?</string><string name="vpk_overwrite_message">Algunos archivos ya existen. ¿Reemplazar solo los archivos en conflicto?</string><string name="vpk_overwrite">Sobrescribir</string><string name="vpk_extract_done_path">Extracción completa: %1$s</string>
     <string name="vpk_extract_destination_title">Extraer en</string>
     <string name="vpk_extract_current_directory">Extraer en la carpeta actual</string>

@@ -130,6 +130,29 @@ class VpkArchiveActivity : Activity() {
         }
         body.removeAllViews()
         val prefix = if (currentPath.isEmpty()) "" else "$currentPath/"
+        if (currentPath.isNotEmpty()) {
+            val parentPath = currentPath.substringBeforeLast('/', "")
+            val parentRow = layoutInflater.inflate(R.layout.vpk_file_picker_entry, body, false)
+            bindPressAnimation(parentRow)
+            parentRow.findViewById<View>(R.id.vpk_picker_icon_container).tag = "folder_container"
+            parentRow.findViewById<ImageView>(R.id.vpk_picker_icon).apply {
+                visibility = View.VISIBLE
+                setImageResource(R.drawable.ic_vpk_folder)
+                tag = "folder_icon"
+            }
+            parentRow.findViewById<ImageView>(R.id.vpk_picker_trailing).visibility = View.VISIBLE
+            parentRow.findViewById<View>(R.id.vpk_picker_selection).visibility = View.GONE
+            parentRow.findViewById<TextView>(R.id.vpk_picker_name).text = ".."
+            parentRow.findViewById<TextView>(R.id.vpk_picker_detail).setText(R.string.vpk_archive_folder)
+            parentRow.setOnClickListener {
+                if (!busy && !selectionMode) {
+                    scrollPositions[currentPath] = scroll.scrollY
+                    currentPath = parentPath
+                    renderDirectory(scrollPositions[currentPath] ?: 0, true)
+                }
+            }
+            body.addView(parentRow)
+        }
         val items = linkedMapOf<String, Item>()
         entries.forEach { entry ->
             if (!entry.path.startsWith(prefix)) return@forEach

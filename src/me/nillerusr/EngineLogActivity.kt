@@ -7,6 +7,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.BackgroundColorSpan
@@ -19,12 +20,16 @@ import android.widget.PopupMenu
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.valvesoftware.source.R
 import java.io.File
 import java.io.RandomAccessFile
+import java.util.regex.Pattern
+import java.util.regex.PatternSyntaxException
 import me.nillerusr.md3.Md3Theme
 import me.nillerusr.md3.Md3Tokens
 
@@ -57,6 +62,12 @@ class EngineLogActivity : Activity() {
     private var jumpHighlightLine: Int? = null
     private var pendingScrollLine: Int? = null
     private var scrollPreDrawListener: ViewTreeObserver.OnPreDrawListener? = null
+    private var searchQuery = ""
+    private var searchCaseSensitive = false
+    private var searchRegex = false
+    private var searchMatchStarts = IntArray(0)
+    private var searchMatchEnds = IntArray(0)
+    private var searchCurrentIndex = -1
     private val handler = Handler(Looper.getMainLooper())
 
     private val refreshRunnable = object : Runnable {
@@ -131,18 +142,25 @@ class EngineLogActivity : Activity() {
 
     private fun showMainMenu(anchor: View) {
         PopupMenu(this, anchor).apply {
-            menu.add(0, MENU_HIGHLIGHT, 0, R.string.engine_log_highlight).apply {
+            menu.add(0, MENU_SEARCH, 0, R.string.engine_log_search).apply {
+                icon = null
+            }
+            menu.add(0, MENU_HIGHLIGHT, 1, R.string.engine_log_highlight).apply {
                 isCheckable = true
                 isChecked = highlightEnabled
             }
-            menu.add(0, MENU_CLEAR, 1, R.string.engine_log_clear)
-            menu.add(0, MENU_GO_TO_LINE, 2, R.string.engine_log_go_to_line)
-            menu.add(0, MENU_WORD_WRAP, 3, R.string.engine_log_word_wrap).apply {
+            menu.add(0, MENU_CLEAR, 2, R.string.engine_log_clear)
+            menu.add(0, MENU_GO_TO_LINE, 3, R.string.engine_log_go_to_line)
+            menu.add(0, MENU_WORD_WRAP, 4, R.string.engine_log_word_wrap).apply {
                 isCheckable = true
                 isChecked = wordWrapEnabled
             }
             setOnMenuItemClickListener { item ->
                 when (item.itemId) {
+                    MENU_SEARCH -> {
+                        showSearchDialog()
+                        true
+                    }
                     MENU_HIGHLIGHT -> {
                         highlightEnabled = !highlightEnabled
                         saveDisplayPrefs()
@@ -247,6 +265,93 @@ class EngineLogActivity : Activity() {
         dialog.show()
         Md3Theme.applyDialog(dialog)
     }
+
+    private fun showSearchDialog() {
+        val container = layoutInflater.inflate(R.layout.dialog_engine_log_search, null)
+        val inputLayout = container.findViewById<TextInputLayout>(R.id.engine_log_search_input_layout)
+        val input = container.findViewById<TextInputEditText>(R.id.engine_log_search_input)
+        val caseSwitch = container.findViewById<MaterialSwitch>(R.id.engine_log_search_case_sensitive)
+        val regexSwitch = container.findViewById<MaterialSwitch>(R.id.engine_log_search_regex)
+        val status = container.findViewById<TextView>(R.id.engine_log_search_status)
+        val prevButton = container.findViewById<MaterialButton>(R.id.engine_log_search_prev)
+        val nextButton = container.findViewById<MaterialButton>(R.id.engine_log_search_next)
+
+        input.setText(searchQuery)
+        caseSwitch.isChecked = searchCaseSensitive
+        regexSwitch.isChecked = searchRegex
+
+        fun updateMatches(anchorIndex: Int?) {
+            searchQuery = input.text.toString()
+            searchCaseSensitive = caseSwitch.isChecked
+            searchRegex = regexSwitch.isChecked
+            searchCurrentIndex = anchorIndex ?: searchCurrentIndex
+            rebuild()
+            status.text = if (searchMatchStarts.isEmpty()) getString(R.string.engine_log_search_no_matches) else getString(R.string.engine_log_search_count, searchCurrentIndex + 1, searchMatchStarts.size)
+        }
+
+        fun navigate(delta: Int) {
+            if (searchMatchStarts.isEmpty()) return
+            searchCurrentIndex = (searchCurrentIndex + delta + searchMatchStarts.size) % searchMatchStarts.size
+            val start = searchMatchStarts[searchCurrentIndex]
+            status.text = getString(R.string.engine_log_search_count, searchCurrentIndex + 1, searchMatchStarts.size)
+            rebuild()
+            scrollToOffset(start)
+        }
+
+        input.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                updateMatches(null)
+            }
+        })
+        caseSwitch.setOnCheckedChangeListener { _, _ -> updateMatches(null) }
+        regexSwitch.setOnCheckedChangeListener { _, _ -> updateMatches(null) }
+        prevButton.setOnClickListener { navigate(-1) }
+        nextButton.setOnClickListener { navigate(1) }
+
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.engine_log_search)
+            .setView(container)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                searchQuery = input.text.toString()
+                searchCaseSensitive = caseSwitch.isChecked
+                searchRegex = regexSwitch.isChecked
+            }
+            .create()
+        dialog.setOnShowListener {
+            input.post { input.requestFocus() }
+            updateMatches(0)
+        }
+        dialog.show()
+        Md3Theme.applyDialog(dialog)
+    }
+
+    private fun compileSearchPattern(query: String, caseSensitive: Boolean, regex: Boolean): Pattern {
+        val flags = if (caseSensitive) 0 else Pattern.CASE_INSENSITIVE or Pattern.UNICODE_CASE
+        return if (regex) Pattern.compile(query, flags) else Pattern.compile(Pattern.quote(query), flags)
+    }
+
+    private fun scrollToOffset(offset: Int) {
+        cancelPendingScroll()
+        val listener = ViewTreeObserver.OnPreDrawListener {
+            val layout = textView.layout ?: return@OnPreDrawListener true
+            cancelPendingScroll()
+            val visualLine = layout.getLineForOffset(offset.coerceAtMost(textView.text.length))
+            val targetY = (textView.totalPaddingTop + layout.getLineTop(visualLine) - dp(24)).coerceAtLeast(0)
+            scroll.postOnAnimation {
+                textView.clearFocus()
+                scroll.scrollTo(0, targetY)
+            }
+            true
+        }
+        scrollPreDrawListener = listener
+        textView.viewTreeObserver.addOnPreDrawListener(listener)
+        textView.requestLayout()
+    }
+
+    private fun clampIndex(index: Int, size: Int): Int = if (size == 0) -1 else ((index % size) + size) % size
 
     private fun saveDisplayPrefs() {
         getSharedPreferences(PREFS_NAME, 0).edit()
@@ -433,6 +538,28 @@ class EngineLogActivity : Activity() {
             }
         }
 
+        val matchStarts = ArrayList<Int>()
+        val matchEnds = ArrayList<Int>()
+        if (searchQuery.isNotEmpty()) {
+            try {
+                val matcher = compileSearchPattern(searchQuery, searchCaseSensitive, searchRegex).matcher(builder)
+                while (matcher.find()) {
+                    matchStarts.add(matcher.start())
+                    matchEnds.add(matcher.end())
+                }
+            } catch (_: PatternSyntaxException) {
+            }
+        }
+        searchMatchStarts = matchStarts.toIntArray()
+        searchMatchEnds = matchEnds.toIntArray()
+        if (searchMatchStarts.isNotEmpty()) searchCurrentIndex = clampIndex(searchCurrentIndex, searchMatchStarts.size) else searchCurrentIndex = -1
+        val matchBackground = if (tokens.dark) 0x55FFFFFF else 0x55FFD54F
+        val currentMatchBackground = if (tokens.dark) 0xAAFFB300.toInt() else 0x88FF6F00.toInt()
+        for (i in searchMatchStarts.indices) {
+            val background = if (i == searchCurrentIndex) currentMatchBackground else matchBackground
+            builder.setSpan(BackgroundColorSpan(background), searchMatchStarts[i], searchMatchEnds[i], Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+
         textView.text = builder
         textView.setTextColor(tokens.onSurface)
         visibleLineNumbers = lineNumbers.toIntArray()
@@ -528,6 +655,7 @@ class EngineLogActivity : Activity() {
         private const val REFRESH_INTERVAL = 2000L
         private const val MAX_ENTRIES = 20000
         private const val SCROLL_FOLLOW_MARGIN = 64
+        private const val MENU_SEARCH = 0
         private const val MENU_HIGHLIGHT = 1
         private const val MENU_CLEAR = 2
         private const val MENU_GO_TO_LINE = 3

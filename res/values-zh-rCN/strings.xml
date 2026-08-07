@@ -63,14 +63,6 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="md3_seed_color">主题色</string>
     <string name="md3_custom_color">自定义颜色</string>
     <string name="md3_hex_color_hint">#RRGGBB</string>
-    <string name="md3_preview">预览</string>
-    <string name="md3_preview_primary">主色调按钮</string>
-    <string name="md3_preview_secondary">辅色调按钮</string>
-    <string name="md3_preview_outlined">描边按钮</string>
-    <string name="md3_preview_hint_filled">填充按钮：用于最高优先级的主操作。</string>
-    <string name="md3_preview_hint_tonal">色调按钮：用于中等强调、需要与主按钮区分开的次要操作。</string>
-    <string name="md3_preview_hint_outlined">描边按钮：用于与填充按钮配对的重要次要操作。</string>
-    <string name="md3_preview_text">这是一张预览卡片，展示当前主题方案下卡片、按钮与文字的视觉效果。</string>
     <string name="md3_back">返回</string>
     <string name="md3_section_general">通用</string>
     <string name="md3_section_navigation">导航</string>
@@ -136,6 +128,8 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="md3_res_height">高度（像素）</string>
     <string name="md3_skip_intro_video">跳过开场动画</string>
     <string name="md3_skip_intro_video_desc">启动游戏时跳过 Valve 开场动画，直接进入主菜单。会向启动参数追加 \'-novid\'。</string>
+    <string name="md3_no_background_level">禁用启动背景地图</string>
+    <string name="md3_no_background_level_desc">启动游戏时不加载背景地图，可以加快启动速度。开启后会向启动参数追加 \'-nobackgroundlevel\'。</string>
     <string name="md3_section_tools">工具</string>
     <string name="vpk_tool">VPK 和 GMA 工具</string>
     <string name="vpk_tool_desc">浏览和解压 VPK、GMA（包括 gmad 创建的文件），同时支持创建 VPK。</string>
@@ -154,6 +148,13 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="engine_log_clear">清空日志</string>
     <string name="engine_log_go_to_line">转到指定行</string>
     <string name="engine_log_word_wrap">自动换行</string>
+    <string name="engine_log_search">搜索</string>
+    <string name="engine_log_search_case_sensitive">区分大小写</string>
+    <string name="engine_log_search_regex">正则表达式</string>
+    <string name="engine_log_search_prev">上一个</string>
+    <string name="engine_log_search_next">下一个</string>
+    <string name="engine_log_search_count">%1$d / %2$d</string>
+    <string name="engine_log_search_no_matches">无匹配</string>
     <string name="engine_log_clear_confirm">确定清空 engine.log 的全部内容吗？此操作无法撤销。</string>
     <string name="engine_log_cleared">日志已清空</string>
     <string name="engine_log_clear_failed">无法清空 engine.log</string>
@@ -212,6 +213,9 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="vpk_delete_confirm_title">删除所选项目？</string>
     <string name="vpk_delete_confirm">永久删除所选的 %1$d 项？此操作无法撤销。</string>
     <string name="vpk_output_exists">已存在同名文件。</string>
+    <string name="vpk_error_same_directory">不能将项目移动或复制到它所在的目录。</string>
+    <string name="vpk_error_already_exists">该位置已存在同名文件或文件夹。</string>
+    <string name="vpk_error_folder_inside_itself">不能将文件夹放入其自身内部。</string>
     <string name="vpk_extract_here">解压到当前目录</string>
     <string name="vpk_archive_browser">VPK 和 GMA 内容浏览器</string>
     <string name="vpk_archive_summary">VPK%1$d · %2$d 个文件</string>

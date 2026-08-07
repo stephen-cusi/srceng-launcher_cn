@@ -22,7 +22,7 @@
             android:background="@drawable/md3_btn_icon"
             android:contentDescription="@string/md3_back"
             android:scaleType="centerInside"
-            android:src="@android:drawable/ic_menu_revert"
+            android:src="@drawable/ic_arrow_back"
             android:tag="icon" />
 
         <LinearLayout
