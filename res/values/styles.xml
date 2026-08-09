@@ -32,4 +32,9 @@
         <item name="android:windowLightStatusBar">false</item>
     </style>
 
+    <style name="SrcEng.DialogPreview" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/dialog_preview_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_preview_exit</item>
+    </style>
+
 </resources>

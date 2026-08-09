@@ -238,4 +238,16 @@
     <string name="vpk_conflict_message">This file already exists:\n%1$s</string>
     <string name="vpk_conflict_apply_all">Apply to all remaining conflicts</string>
     <string name="vpk_skip">Skip</string>
+    <string name="vpk_preview_reading">Reading file…</string>
+    <string name="vpk_preview_unreadable">This file cannot be previewed.</string>
+    <string name="vpk_preview_play">Play</string>
+    <string name="vpk_preview_pause">Pause</string>
+    <string name="vpk_preview_previous">Previous</string>
+    <string name="vpk_preview_next">Next</string>
+    <string name="vpk_preview_seek">Seek</string>
+    <string name="vpk_preview_autoplay">Auto-play after switching track</string>
+    <string name="vpk_preview_tap_to_play">Tap to play</string>
+    <string name="vpk_preview_playing">Playing…</string>
+    <string name="vpk_preview_paused">Paused</string>
+    <string name="vpk_preview_failed">Playback failed: %1$s</string>
 </resources>

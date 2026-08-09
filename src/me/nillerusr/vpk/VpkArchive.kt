@@ -56,6 +56,18 @@ class VpkArchive private constructor(
         }
     }
 
+    fun read(path: String): ByteArray? {
+        val entry = entries.firstOrNull { it.path == path } ?: return null
+        if (entry.size > MAX_PREVIEW_SIZE) error("File is too large to preview")
+        val output = ByteArrayOutputStream(entry.size.toInt())
+        val crc = CRC32()
+        output.write(entry.preload)
+        crc.update(entry.preload)
+        entry.parts.forEach { part -> copyPart(part, output, crc) }
+        check(crc.value == entry.crc) { "CRC mismatch: ${entry.path}" }
+        return output.toByteArray()
+    }
+
     fun extract(
         destination: File,
         selectedPaths: Set<String>? = null,
@@ -122,6 +134,7 @@ class VpkArchive private constructor(
         private const val EMBEDDED_INDEX = 0x7fff
         private const val ENTRY_TERMINATOR = 0xffff
         private const val MAX_TREE_SIZE = 64L * 1024L * 1024L
+        private const val MAX_PREVIEW_SIZE = 16L * 1024L * 1024L
         private const val BUFFER_SIZE = 64 * 1024
 
         fun open(resolver: ContentResolver, uris: List<Uri>, cacheDir: File): VpkArchive {

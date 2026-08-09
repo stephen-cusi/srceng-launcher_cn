@@ -238,4 +238,16 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="vpk_conflict_message">以下文件已经存在：\n%1$s</string>
     <string name="vpk_conflict_apply_all">全部（对后续冲突执行相同操作）</string>
     <string name="vpk_skip">跳过</string>
+    <string name="vpk_preview_reading">正在读取文件…</string>
+    <string name="vpk_preview_unreadable">该文件无法预览。</string>
+    <string name="vpk_preview_play">播放</string>
+    <string name="vpk_preview_pause">暂停</string>
+    <string name="vpk_preview_previous">上一首</string>
+    <string name="vpk_preview_next">下一首</string>
+    <string name="vpk_preview_seek">进度</string>
+    <string name="vpk_preview_autoplay">切换曲目后自动播放</string>
+    <string name="vpk_preview_tap_to_play">点击播放</string>
+    <string name="vpk_preview_playing">播放中…</string>
+    <string name="vpk_preview_paused">已暂停</string>
+    <string name="vpk_preview_failed">播放失败：%1$s</string>
 </resources>

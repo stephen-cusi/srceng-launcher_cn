@@ -212,5 +212,6 @@
     <string name="vpk_conflict_message">以下檔案已存在：\n%1$s</string>
     <string name="vpk_conflict_apply_all">全部（對後續衝突執行相同操作）</string>
     <string name="vpk_skip">略過</string>
+    <string name="vpk_preview_reading">正在讀取檔案…</string><string name="vpk_preview_unreadable">此檔案無法預覽。</string><string name="vpk_preview_play">播放</string><string name="vpk_preview_pause">暫停</string><string name="vpk_preview_previous">上一首</string><string name="vpk_preview_next">下一首</string>    <string name="vpk_preview_seek">進度</string><string name="vpk_preview_autoplay">切換曲目後自動播放</string><string name="vpk_preview_tap_to_play">點擊播放</string><string name="vpk_preview_playing">播放中…</string><string name="vpk_preview_paused">已暫停</string><string name="vpk_preview_failed">播放失敗：%1$s</string>
     <string name="md3_launcher_subtitle">設定遊戲資源並快速啟動</string>
 </resources>

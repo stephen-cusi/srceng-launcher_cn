@@ -7,6 +7,9 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Build
+import android.media.MediaPlayer
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
@@ -19,6 +22,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.ScrollView
+import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -227,6 +231,7 @@ class VpkArchiveActivity : Activity() {
                     currentPath = item.path
                     renderDirectory(scrollPositions[currentPath] ?: 0, true)
                 }
+                else -> previewFile(item)
             }
         }
         body.addView(row)
@@ -345,6 +350,314 @@ class VpkArchiveActivity : Activity() {
         }
     }
 
+    private fun previewFile(item: Item) {
+        val lowerName = item.name.lowercase(Locale.ROOT)
+        val isText = TEXT_PREVIEW_EXTENSIONS.any { lowerName.endsWith(it) }
+        val isAudio = AUDIO_PREVIEW_EXTENSIONS.any { lowerName.endsWith(it) }
+        if (!isText && !isAudio) return
+        if (isText) {
+            runTask(R.string.vpk_preview_reading) {
+                val bytes = readEntryBytes(item.path)
+                runOnUiThread {
+                    if (bytes == null) {
+                        Toast.makeText(this, R.string.vpk_preview_unreadable, Toast.LENGTH_LONG).show()
+                        return@runOnUiThread
+                    }
+                    showTextPreview(item.name, bytes)
+                }
+            }
+        } else {
+            try {
+                val playlist = audioPlaylistInCurrentDirectory()
+                if (playlist.isEmpty()) return
+                val startIndex = playlist.indexOfFirst { it.path == item.path }.coerceAtLeast(0)
+                showAudioPreview(playlist, startIndex)
+            } catch (error: Throwable) {
+                Toast.makeText(this, getString(R.string.vpk_preview_failed, error.message ?: ""), Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun readEntryBytes(path: String): ByteArray? = when {
+        vpkArchive != null -> vpkArchive!!.read(path)
+        gmaArchive != null -> gmaArchive!!.read(path)
+        else -> null
+    }
+
+    private fun audioPlaylistInCurrentDirectory(): List<Item> {
+        val prefix = if (currentPath.isEmpty()) "" else "$currentPath/"
+        val items = linkedMapOf<String, Item>()
+        archiveEntries().forEach { entry ->
+            if (!entry.path.startsWith(prefix)) return@forEach
+            val remaining = entry.path.removePrefix(prefix)
+            val name = remaining.substringBefore('/')
+            if (name.isEmpty() || '/' in remaining) return@forEach
+            if (!AUDIO_PREVIEW_EXTENSIONS.any { name.lowercase(Locale.ROOT).endsWith(it) }) return@forEach
+            items[name] = Item(name, prefix + name, false, entry.size)
+        }
+        return items.values.sortedBy { it.name.lowercase(Locale.ROOT) }
+    }
+
+    private fun showTextPreview(name: String, bytes: ByteArray) {
+        var text = String(bytes, Charsets.UTF_8)
+        if (!containsReplacementChars(text)) {
+            text = String(bytes, Charsets.ISO_8859_1).replace(Regex("[^\\x20-\\x7E\\x0A\\x0D\\x09]"), "\uFFFD")
+        }
+        if (text.length > MAX_TEXT_PREVIEW_CHARS) text = text.substring(0, MAX_TEXT_PREVIEW_CHARS) + "\n…"
+        val content = TextView(this).apply {
+            textSize = 13f
+            typeface = android.graphics.Typeface.MONOSPACE
+            setTextIsSelectable(true)
+            setPadding(dp(20), dp(4), dp(20), dp(12))
+            setText(text)
+        }
+        val scroll = ScrollView(this).apply { addView(content) }
+        MaterialAlertDialogBuilder(this)
+            .setTitle(name)
+            .setView(scroll)
+            .setPositiveButton(android.R.string.ok, null)
+            .show().also { Md3Theme.applyDialog(it) }
+    }
+
+    private fun containsReplacementChars(text: String): Boolean =
+        text.indexOf('\uFFFD') >= 0 || text.indexOf('\u0000') >= 0
+
+    private fun showAudioPreview(playlist: List<Item>, startIndex: Int) {
+        AudioPreviewController(playlist, startIndex).show()
+    }
+
+    private inner class AudioPreviewController(
+        private val playlist: List<Item>,
+        private var currentIndex: Int
+    ) {
+        private val player = MediaPlayer()
+        private val handler = Handler(Looper.getMainLooper())
+        private var prepared = false
+        private var loading = false
+        private var errorCheckRunnable: Runnable? = null
+        private lateinit var autoplaySwitch: com.google.android.material.materialswitch.MaterialSwitch
+        private lateinit var dialog: androidx.appcompat.app.AlertDialog
+        private lateinit var seekBar: SeekBar
+        private lateinit var positionText: TextView
+        private lateinit var durationText: TextView
+        private lateinit var playButton: ImageButton
+        private lateinit var statusText: TextView
+
+        private val progressRunnable = object : Runnable {
+            override fun run() {
+                if (prepared && player.isPlaying && player.duration > 0) {
+                    seekBar.progress = (player.currentPosition * 1000L / player.duration).toInt()
+                    positionText.text = formatDuration(player.currentPosition.toLong())
+                }
+                handler.postDelayed(this, 500L)
+            }
+        }
+
+        fun show() {
+            dialog = MaterialAlertDialogBuilder(this@VpkArchiveActivity)
+                .setTitle(playlist[currentIndex].name)
+                .setPositiveButton(android.R.string.ok, null)
+                .setOnDismissListener {
+                    handler.removeCallbacksAndMessages(null)
+                    player.release()
+                    cacheDir.listFiles { it.name.startsWith("preview_") }?.forEach { it.delete() }
+                }
+                .create()
+            val content = layoutInflater.inflate(R.layout.dialog_audio_preview, null)
+            seekBar = content.findViewById(R.id.audio_preview_seek)
+            positionText = content.findViewById(R.id.audio_preview_position)
+            durationText = content.findViewById(R.id.audio_preview_duration)
+            playButton = content.findViewById(R.id.audio_preview_play)
+            statusText = content.findViewById(R.id.audio_preview_status)
+            autoplaySwitch = content.findViewById(R.id.audio_preview_autoplay)
+            autoplaySwitch.isChecked = getSharedPreferences("mod", 0).getBoolean(PREF_AUTOPLAY, true)
+            autoplaySwitch.setOnCheckedChangeListener { _, checked ->
+                getSharedPreferences("mod", 0).edit().putBoolean(PREF_AUTOPLAY, checked).apply()
+            }
+            val previousButton = content.findViewById<ImageButton>(R.id.audio_preview_previous)
+            val nextButton = content.findViewById<ImageButton>(R.id.audio_preview_next)
+            dialog.setView(content)
+            dialog.window?.setWindowAnimations(R.style.SrcEng_DialogPreview)
+            dialog.setOnShowListener {
+                Md3Theme.applyDialog(dialog)
+                styleSeekBar()
+                playButton.setOnClickListener { togglePlay() }
+                previousButton.setOnClickListener { playSibling(currentIndex - 1) }
+                nextButton.setOnClickListener { playSibling(currentIndex + 1) }
+                seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                    override fun onProgressChanged(bar: SeekBar, progress: Int, fromUser: Boolean) {
+                        if (fromUser && prepared && player.duration > 0) {
+                            val target = player.duration * progress.toLong() / 1000L
+                            player.seekTo(target.toInt())
+                            positionText.text = formatDuration(target)
+                        }
+                    }
+
+                    override fun onStartTrackingTouch(bar: SeekBar) = Unit
+                    override fun onStopTrackingTouch(bar: SeekBar) = Unit
+                })
+                player.setOnCompletionListener { onTrackEnded() }
+                player.setOnErrorListener { _, _, _ ->
+                    // Some codecs (notably certain WAV variants) report a transient
+                    // error during prepare yet still play back normally afterwards.
+                    // Only surface a failure when the player is no longer running.
+                    errorCheckRunnable?.let { handler.removeCallbacks(it) }
+                    val check = Runnable {
+                        errorCheckRunnable = null
+                        if (!player.isPlaying && !prepared) {
+                            onPlaybackFailed("media")
+                        }
+                    }
+                    errorCheckRunnable = check
+                    handler.postDelayed(check, 500)
+                    true
+                }
+                updateControls()
+                durationText.text = try {
+                    if (prepared) formatDuration(player.duration.toLong()) else formatDuration(0)
+                } catch (_: Throwable) {
+                    formatDuration(0)
+                }
+                handler.post(progressRunnable)
+            }
+            dialog.show()
+        }
+
+        private fun togglePlay() {
+            if (loading) return
+            try {
+                when {
+                    player.isPlaying -> {
+                        player.pause()
+                        statusText.setText(R.string.vpk_preview_paused)
+                    }
+                    prepared -> {
+                        player.start()
+                        statusText.setText(R.string.vpk_preview_playing)
+                    }
+                    else -> loadCurrent(true)
+                }
+                updateControls()
+            } catch (error: Throwable) {
+                statusText.text = getString(R.string.vpk_preview_failed, error.message ?: "")
+            }
+        }
+
+        private fun loadCurrent(autoplay: Boolean) {
+            errorCheckRunnable?.let { handler.removeCallbacks(it) }
+            errorCheckRunnable = null
+            val item = playlist[currentIndex]
+            val extension = item.name.substringAfterLast('.', "wav")
+            val file = File(cacheDir, "preview_$currentIndex.$extension")
+            loading = true
+            statusText.setText(R.string.vpk_preview_reading)
+            executor.execute {
+                try {
+                    cacheDir.listFiles { it.name.startsWith("preview_") && it != file }?.forEach { it.delete() }
+                    val bytes = readEntryBytes(item.path)
+                        ?: error(getString(R.string.vpk_preview_unreadable))
+                    file.writeBytes(bytes)
+                    runOnUiThread {
+                        try {
+                            prepared = false
+                            player.reset()
+                            player.setDataSource(file.path)
+                            player.setOnPreparedListener {
+                                try {
+                                    errorCheckRunnable?.let { handler.removeCallbacks(it) }
+                                    errorCheckRunnable = null
+                                    loading = false
+                                    prepared = true
+                                    if (dialog.isShowing) dialog.setTitle(item.name)
+                                    durationText.text = formatDuration(player.duration.toLong())
+                                    if (autoplay) {
+                                        statusText.setText(R.string.vpk_preview_playing)
+                                        player.start()
+                                    } else {
+                                        statusText.setText(R.string.vpk_preview_paused)
+                                        seekBar.progress = 0
+                                        positionText.text = formatDuration(0)
+                                    }
+                                    updateControls()
+                                } catch (error: Throwable) {
+                                    onPlaybackFailed(error.message ?: "")
+                                }
+                            }
+                            player.setOnErrorListener { _, _, _ ->
+                                handler.postDelayed({
+                                    if (!player.isPlaying && !prepared) {
+                                        onPlaybackFailed("media")
+                                    }
+                                }, 300)
+                                true
+                            }
+                            player.prepareAsync()
+                        } catch (error: Throwable) {
+                            onPlaybackFailed(error.message ?: "")
+                        }
+                    }
+                } catch (error: Throwable) {
+                    runOnUiThread { onPlaybackFailed(error.message ?: "") }
+                }
+            }
+        }
+
+        private fun onPlaybackFailed(message: String) {
+            loading = false
+            prepared = false
+            statusText.text = getString(R.string.vpk_preview_failed, message)
+            playButton.setImageResource(R.drawable.ic_play)
+            seekBar.progress = 0
+            updateControls()
+        }
+
+        private fun playSibling(rawIndex: Int) {
+            if (loading || playlist.size <= 1) return
+            var index = rawIndex
+            if (index < 0) index = playlist.size - 1
+            if (index >= playlist.size) index = 0
+            if (index == currentIndex) return
+            currentIndex = index
+            try {
+                if (prepared || player.isPlaying) player.pause()
+            } catch (_: Throwable) {
+            }
+            prepared = false
+            loadCurrent(autoplaySwitch.isChecked)
+        }
+
+        private fun onTrackEnded() {
+            prepared = false
+            seekBar.progress = 0
+            positionText.text = formatDuration(0)
+            playButton.setImageResource(R.drawable.ic_play)
+            statusText.setText(R.string.vpk_preview_tap_to_play)
+        }
+
+        private fun updateControls() {
+            playButton.setImageResource(if (player.isPlaying) R.drawable.ic_pause else R.drawable.ic_play)
+        }
+
+        private fun styleSeekBar() {
+            try {
+                val color = resources.getColor(R.color.md3_primary, theme)
+                seekBar.progressTintList = android.content.res.ColorStateList.valueOf(color)
+                seekBar.thumbTintList = android.content.res.ColorStateList.valueOf(color)
+                seekBar.progressBackgroundTintList = android.content.res.ColorStateList.valueOf(
+                    (color and 0x00ffffff) or (0x33000000.toInt())
+                )
+            } catch (_: Throwable) {
+            }
+        }
+    }
+
+    private fun formatDuration(millis: Long): String {
+        val totalSeconds = millis / 1000
+        val minutes = totalSeconds / 60
+        val seconds = totalSeconds % 60
+        return "%d:%02d".format(Locale.ROOT, minutes, seconds)
+    }
+
     private fun archiveBaseName(): String {
         val withoutExtension = archiveFile.name.dropLast(4)
         return if (archiveFile.extension.equals("vpk", true)) {
@@ -454,5 +767,12 @@ class VpkArchiveActivity : Activity() {
         const val EXTRA_ARCHIVE_PATH = "vpk_archive_path"
         const val EXTRA_EXTRACTED = "vpk_extracted"
         private const val REQUEST_EXTRACTION_DIRECTORY = 1001
+        private const val PREF_AUTOPLAY = "vpk_audio_autoplay"
+        private const val MAX_TEXT_PREVIEW_CHARS = 200_000
+        private val TEXT_PREVIEW_EXTENSIONS = arrayOf(
+            ".txt", ".cfg", ".vdf", ".rc", ".nut", ".lst", ".vmt", ".res", ".kv",
+            ".vhv", ".game", ".snd", ".kv3", ".json", ".xml", ".log"
+        )
+        private val AUDIO_PREVIEW_EXTENSIONS = arrayOf(".wav", ".mp3", ".ogg")
     }
 }

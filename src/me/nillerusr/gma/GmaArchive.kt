@@ -22,6 +22,19 @@ class GmaArchive private constructor(
 ) : AutoCloseable {
     data class Entry(val path: String, val size: Long, val crc: Long, val offset: Long)
 
+    fun read(path: String): ByteArray? {
+        val entry = entries.firstOrNull { it.path == path } ?: return null
+        if (entry.size > MAX_PREVIEW_SIZE) error("File is too large to preview")
+        RandomAccessFile(source, "r").use { input ->
+            input.seek(dataOffset + entry.offset)
+            val output = ByteArrayOutputStream(entry.size.toInt())
+            val crc = CRC32()
+            copyRange(input, output, entry.size, crc)
+            check(entry.crc == 0L || crc.value == entry.crc) { "CRC mismatch: ${entry.path}" }
+            return output.toByteArray()
+        }
+    }
+
     fun extract(
         destination: File,
         selectedPaths: Set<String>? = null,
@@ -59,6 +72,7 @@ class GmaArchive private constructor(
 
     companion object {
         private const val MAX_STRING = 1024 * 1024
+        private const val MAX_PREVIEW_SIZE = 16L * 1024L * 1024L
         private const val BUFFER_SIZE = 64 * 1024
 
         fun open(file: File): GmaArchive {
