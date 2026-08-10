@@ -632,11 +632,13 @@ open class SettingsActivity : Activity() {
             customGreenValue?.text = green.toString()
             customBlueValue?.text = blue.toString()
             customHex?.setText(String.format("#%06X", color and 0x00FFFFFF))
+            val tokens = try { Md3Theme.buildTokens(this) } catch (_: Throwable) { null }
+            // 预览的是这个种子最终生成的主色，跟色卡、跟界面实际强调色完全一致。
             customColorPreview?.background = GradientDrawable().apply {
                 shape = GradientDrawable.RECTANGLE
-                cornerRadius = dp(12).toFloat()
-                setColor(color)
-                setStroke(dp(1), 0x55000000)
+                cornerRadius = dp(16).toFloat()
+                setColor(Md3Theme.previewPrimary(color, tokens?.dark ?: false))
+                setStroke(dp(1), tokens?.outlineVariant ?: 0x55000000)
             }
         } finally { updatingColorControls = false }
     }
@@ -645,15 +647,19 @@ open class SettingsActivity : Activity() {
         val container = seedContainer ?: return
         val presets = Md3Theme.SEED_PRESETS
         val current = Md3Theme.getSeedColor(this)
-        val size = dp(44)
+        val size = dp(48)
+        val inset = dp(5)
         val margin = dp(8)
         val reuse = container.childCount == presets.size
         if (!reuse) try { container.removeAllViews() } catch (_: Throwable) {}
         val tokens: Md3Tokens = Md3Theme.buildTokens(this)
+        // 选中环用中性的 onSurface，色块用生成后的主色；两者永远不会撞色。
         var ringColor = 0
-        try { ringColor = tokens.primary.color } catch (_: Throwable) {}
+        var edgeColor = 0
+        var dark = false
+        try { ringColor = tokens.onSurface; edgeColor = tokens.outlineVariant; dark = tokens.dark } catch (_: Throwable) {}
         for (i in presets.indices) {
-            val color = presets[i]
+            val color = Md3Theme.previewPrimary(presets[i], dark)
             val wrapper: FrameLayout
             val swatch: View
             val ringView: View
@@ -668,34 +674,40 @@ open class SettingsActivity : Activity() {
             } else {
                 wrapper = FrameLayout(this)
                 wrapper.layoutParams = LinearLayout.LayoutParams(size, size).apply { leftMargin = if (i == 0) 0 else margin }
-                wrapper.setPadding(dp(3), dp(3), dp(3), dp(3))
-                val params = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
                 swatchBackground = GradientDrawable().apply { shape = GradientDrawable.RECTANGLE }
-                swatch = View(this).apply { layoutParams = params }
+                swatch = View(this).apply {
+                    layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+                        .apply { setMargins(inset, inset, inset, inset) }
+                }
                 wrapper.addView(swatch)
                 ringBackground = GradientDrawable().apply { shape = GradientDrawable.RECTANGLE }
-                ringView = View(this).apply { layoutParams = params }
+                ringView = View(this).apply {
+                    layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+                }
                 wrapper.addView(ringView)
                 try { wrapper.foreground = RippleDrawable(ColorStateList(arrayOf(intArrayOf()), intArrayOf(0x22000000)), null, null) } catch (_: Throwable) {}
                 wrapper.isClickable = true
                 wrapper.isFocusable = true
+                try { Md3Motion.attachPressBounce(wrapper, 0.88f) } catch (_: Throwable) {}
             }
             swatchBackground.setColor(color)
-            swatchBackground.cornerRadius = size * 0.5f
+            swatchBackground.cornerRadius = size.toFloat()
+            try { swatchBackground.setStroke(dp(1), edgeColor) } catch (_: Throwable) {}
             swatch.background = swatchBackground
             ringBackground.setColor(Color.TRANSPARENT)
-            ringBackground.cornerRadius = size * 0.5f
-            try { ringBackground.setStroke(dp(3), ringColor) } catch (_: Throwable) {}
+            ringBackground.cornerRadius = size.toFloat()
+            try { ringBackground.setStroke(dp(2), ringColor) } catch (_: Throwable) {}
             ringView.background = ringBackground
-            ringView.visibility = if (colorsEqual(current, color)) View.VISIBLE else View.INVISIBLE
+            ringView.visibility = if (colorsEqual(current, presets[i])) View.VISIBLE else View.INVISIBLE
             wrapper.setOnClickListener {
                 if (Md3Theme.isDynamicColorAvailable() && Md3Theme.getDynamicColor(this)) try {
                     Toast.makeText(this, R.string.md3_seed_ignored_when_dynamic, Toast.LENGTH_LONG).show()
                 } catch (_: Throwable) {}
-                Md3Theme.setSeedColor(this, color)
-                if (lastSeed != color) {
-                    lastSeed = color
-                    updateCustomColorControls(color)
+                val seed = presets[i]
+                Md3Theme.setSeedColor(this, seed)
+                if (lastSeed != seed) {
+                    lastSeed = seed
+                    updateCustomColorControls(seed)
                     for (index in 0 until container.childCount) try {
                         val child = container.getChildAt(index) as ViewGroup
                         if (child.childCount >= 2) child.getChildAt(1).visibility = if (index == i) View.VISIBLE else View.INVISIBLE

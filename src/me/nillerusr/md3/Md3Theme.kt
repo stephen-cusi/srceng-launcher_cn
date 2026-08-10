@@ -343,6 +343,16 @@ class Md3Theme private constructor() {
             } catch (_: Throwable) { null }
         }
 
+        /**
+         * 某个种子色最终会生成的主色。设置页的色卡直接填这个颜色，
+         * 让用户看到的就是选中后界面真正会用的强调色，而不是未经调色的原始种子。
+         */
+        @JvmStatic
+        @SuppressLint("RestrictedApi")
+        fun previewPrimary(seed: Int, dark: Boolean): Int = try {
+            MaterialDynamicColors().primary().getArgb(expressiveScheme(seed, dark))
+        } catch (_: Throwable) { seed }
+
         @JvmStatic fun buildTokens(ctx: Context): Md3Tokens {
             val dark = resolveDark(ctx)
             if (Build.VERSION.SDK_INT >= 31 && getDynamicColor(ctx)) {
