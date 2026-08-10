@@ -26,6 +26,7 @@ import com.valvesoftware.source.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.noties.markwon.Markwon
 import java.io.File
+import me.nillerusr.md3.Md3Motion
 import me.nillerusr.md3.Md3Theme
 import org.libsdl.app.SDLActivity
 
@@ -148,6 +149,8 @@ open class LauncherActivity : Activity() {
         cmdArgs = findViewById(R.id.edit_cmdline)
         GamePath = findViewById(R.id.edit_gamepath)
 
+        applyExpressiveMotion()
+
         findViewById<View>(R.id.md3_button_settings)?.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
@@ -211,6 +214,22 @@ open class LauncherActivity : Activity() {
             ),
             REQUEST_PERMISSIONS
         )
+    }
+
+    /** MD3 Expressive 动效：主操作按压回弹 + 首屏元素错峰弹入。 */
+    private fun applyExpressiveMotion() {
+        try {
+            Md3Motion.attachPressBounce(
+                findViewById(R.id.button_launch),
+                findViewById(R.id.button_gamedir),
+                findViewById(R.id.button_about),
+                findViewById(R.id.md3_button_settings)
+            )
+            findViewById<ViewGroup>(R.id.launcher_root)?.let { root ->
+                root.post { Md3Motion.enterStaggered(root) }
+            }
+        } catch (_: Throwable) {
+        }
     }
 
     open fun saveSettings(editor: SharedPreferences.Editor) {

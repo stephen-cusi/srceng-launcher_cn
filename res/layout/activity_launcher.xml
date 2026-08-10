@@ -7,96 +7,113 @@
     android:overScrollMode="never">
 
     <LinearLayout
+        android:id="@+id/launcher_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingStart="20dp"
         android:paddingTop="0dp"
         android:paddingEnd="20dp"
-        android:paddingBottom="28dp">
+        android:paddingBottom="32dp">
 
+        <!-- Expressive large top app bar：图标 + 标题上下堆叠，标题字号拉大到 Headline -->
         <LinearLayout
             android:id="@id/md3_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingTop="44dp"
-            android:paddingBottom="20dp"
+            android:orientation="vertical"
+            android:paddingTop="40dp"
+            android:paddingBottom="24dp"
             android:tag="md3_app_bar_inner">
 
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginEnd="16dp"
-                android:contentDescription="@string/srceng_app_name"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_launcher" />
-
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:text="@string/md3_title_launcher"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:contentDescription="@string/srceng_app_name"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_launcher" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:maxLines="1"
-                    android:text="@string/md3_launcher_subtitle"
-                    android:textSize="12sp"
-                    android:tag="subtitle" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:id="@id/md3_button_settings"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="@drawable/md3_btn_icon"
+                    android:contentDescription="@string/md3_settings"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_settings"
+                    android:tag="icon" />
             </LinearLayout>
 
-            <ImageButton
-                android:id="@id/md3_button_settings"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="12dp"
-                android:background="@drawable/md3_btn_icon"
-                android:contentDescription="@string/md3_settings"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_settings"
-                android:tag="icon" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:maxLines="2"
+                android:text="@string/md3_title_launcher"
+                android:textAppearance="@style/Expressive.Headline.Medium.Emphasized" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:maxLines="2"
+                android:tag="subtitle"
+                android:text="@string/md3_launcher_subtitle"
+                android:textAppearance="@style/Expressive.Body.Medium" />
         </LinearLayout>
+
+        <!-- Hero 主操作前置：Expressive 强调"最重要的动作最大最圆最靠上" -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_launch"
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:layout_marginBottom="28dp"
+            android:tag="launch"
+            android:text="@string/srceng_launcher_launch"
+            android:textAppearance="@style/Expressive.Title.Medium.Emphasized"
+            app:icon="@drawable/ic_play"
+            app:iconGravity="textStart"
+            app:iconPadding="12dp"
+            app:iconSize="26dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="10dp"
+            android:tag="subtitle"
             android:text="@string/md3_game_config_card"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:tag="subtitle" />
+            android:textAppearance="@style/Expressive.Title.Small.Emphasized" />
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="24dp"
             android:tag="card">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="6dp"
+                    android:layout_marginBottom="8dp"
+                    android:tag="on_surface_variant"
                     android:text="@string/srceng_launcher_command_args"
-                    android:textSize="13sp"
-                    android:tag="on_surface_variant" />
+                    android:textAppearance="@style/Expressive.Label.Large" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
@@ -109,7 +126,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="text"
                         android:maxLines="1"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/Expressive.Body.Large" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -117,37 +134,36 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="10dp"
+            android:tag="subtitle"
             android:text="@string/md3_paths_card"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:tag="subtitle" />
+            android:textAppearance="@style/Expressive.Title.Small.Emphasized" />
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="20dp"
             android:tag="card">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="6dp"
+                    android:layout_marginBottom="8dp"
+                    android:tag="on_surface_variant"
                     android:text="@string/srceng_launcher_game_path"
-                    android:textSize="13sp"
-                    android:tag="on_surface_variant" />
+                    android:textAppearance="@style/Expressive.Label.Large" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp">
+                    android:layout_marginBottom="16dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_gamepath"
@@ -156,46 +172,33 @@
                         android:inputType="text"
                         android:maxLines="1"
                         android:text="/sdcard/srceng/"
-                        android:textSize="14sp" />
+                        android:textAppearance="@style/Expressive.Body.Large" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_gamedir"
                     style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:text="@string/srceng_launcher_set_game_path"
-                    android:textSize="14sp"
+                    android:layout_height="56dp"
                     android:tag="outlined"
+                    android:text="@string/srceng_launcher_set_game_path"
+                    android:textAppearance="@style/Expressive.Label.Large.Emphasized"
                     app:icon="@drawable/ic_folder_open"
                     app:iconGravity="textStart"
-                    app:iconPadding="8dp" />
+                    app:iconPadding="10dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_launch"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="@string/srceng_launcher_launch"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:tag="launch"
-            app:icon="@drawable/ic_play"
-            app:iconGravity="textStart"
-            app:iconPadding="10dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_about"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="6dp"
-            android:text="@string/srceng_launcher_about"
-            android:textSize="14sp"
+            android:layout_height="52dp"
             android:tag="text"
+            android:text="@string/srceng_launcher_about"
+            android:textAppearance="@style/Expressive.Label.Large"
             app:icon="@drawable/ic_info"
             app:iconGravity="textStart"
-            app:iconPadding="8dp" />
+            app:iconPadding="10dp" />
     </LinearLayout>
 </ScrollView>

@@ -37,4 +37,121 @@
         <item name="android:windowExitAnimation">@anim/dialog_preview_exit</item>
     </style>
 
+    <!--
+        Material 3 Expressive 字阶 (type scale)。
+        字号/字距/行高按 M3 规范给出；带 .Emphasized 后缀的为 Expressive 新增的强调字重，
+        用于需要视觉重量的标题与操作项。颜色不在此定义，由 Md3Theme 运行时按 token 覆盖。
+    -->
+    <style name="Expressive" />
+
+    <style name="Expressive.Display" />
+
+    <style name="Expressive.Display.Small">
+        <item name="android:textSize">36sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:lineSpacingMultiplier">1.22</item>
+    </style>
+
+    <style name="Expressive.Headline" />
+
+    <style name="Expressive.Headline.Medium">
+        <item name="android:textSize">28sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:lineSpacingMultiplier">1.29</item>
+    </style>
+
+    <style name="Expressive.Headline.Medium.Emphasized">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Expressive.Headline.Small">
+        <item name="android:textSize">24sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:lineSpacingMultiplier">1.33</item>
+    </style>
+
+    <style name="Expressive.Headline.Small.Emphasized">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Expressive.Title" />
+
+    <style name="Expressive.Title.Large">
+        <item name="android:textSize">22sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:lineSpacingMultiplier">1.27</item>
+    </style>
+
+    <style name="Expressive.Title.Large.Emphasized">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Expressive.Title.Medium">
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.009</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
+    </style>
+
+    <style name="Expressive.Title.Medium.Emphasized">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Expressive.Title.Small">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.007</item>
+        <item name="android:lineSpacingMultiplier">1.43</item>
+    </style>
+
+    <style name="Expressive.Title.Small.Emphasized">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Expressive.Body" />
+
+    <style name="Expressive.Body.Large">
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.031</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
+    </style>
+
+    <style name="Expressive.Body.Medium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.018</item>
+        <item name="android:lineSpacingMultiplier">1.43</item>
+    </style>
+
+    <style name="Expressive.Body.Small">
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.033</item>
+        <item name="android:lineSpacingMultiplier">1.33</item>
+    </style>
+
+    <style name="Expressive.Label" />
+
+    <style name="Expressive.Label.Large">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.007</item>
+        <item name="android:lineSpacingMultiplier">1.43</item>
+    </style>
+
+    <style name="Expressive.Label.Large.Emphasized">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Expressive.Label.Medium">
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.042</item>
+        <item name="android:lineSpacingMultiplier">1.33</item>
+    </style>
+
+    <style name="Expressive.Label.Medium.Emphasized">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Expressive.Label.Small">
+        <item name="android:textSize">11sp</item>
+        <item name="android:letterSpacing">0.045</item>
+        <item name="android:lineSpacingMultiplier">1.45</item>
+    </style>
+
 </resources>
