@@ -64,13 +64,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Expressive.Headline.Small" tools:ignore="UnusedResources">
+    <style name="Expressive.Headline.Small">
         <item name="android:textSize">24sp</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:lineSpacingMultiplier">1.33</item>
     </style>
 
-    <style name="Expressive.Headline.Small.Emphasized" tools:ignore="UnusedResources">
+    <style name="Expressive.Headline.Small.Emphasized">
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -138,7 +138,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Expressive.Label.Medium" tools:ignore="UnusedResources">
+    <style name="Expressive.Label.Medium">
         <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">0.042</item>
         <item name="android:lineSpacingMultiplier">1.33</item>

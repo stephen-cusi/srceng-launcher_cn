@@ -131,6 +131,23 @@ object Md3Motion {
         }
     }
 
+    /**
+     * 单个列表项入场：从侧边弹入。列表是增量填充的，用不了 [enterStaggered]，
+     * 由调用方按索引传 [delay] 自己排节奏。
+     */
+    @JvmStatic
+    @JvmOverloads
+    fun enterItem(view: View, offsetDp: Float = 14f, delay: Long = 0L) {
+        view.animate().cancel()
+        view.alpha = 0f
+        view.translationX = offsetDp * view.resources.displayMetrics.density
+        val run = Runnable {
+            springTo(view, SpringAnimation.TRANSLATION_X, 0f, STIFFNESS_SLOW, DAMPING_SPATIAL_DEFAULT)
+            view.animate().alpha(1f).setDuration(200L).start()
+        }
+        if (delay > 0L) view.postDelayed(run, delay) else run.run()
+    }
+
     /** 展开/收起时的高度形变，用弹簧驱动 scaleY，避免 layout 抖动。 */
     @JvmStatic
     fun morphIn(view: View) {

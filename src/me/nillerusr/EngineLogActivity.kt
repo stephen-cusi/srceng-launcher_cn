@@ -30,6 +30,7 @@ import java.io.File
 import java.io.RandomAccessFile
 import java.util.regex.Pattern
 import java.util.regex.PatternSyntaxException
+import me.nillerusr.md3.Md3Motion
 import me.nillerusr.md3.Md3Theme
 import me.nillerusr.md3.Md3Tokens
 
@@ -104,7 +105,20 @@ class EngineLogActivity : Activity() {
 
         applyEditorPalette()
         applyWordWrap()
+        applyExpressiveMotion()
         locateLogFile()
+    }
+
+    /** 顶栏图标按钮接入 Expressive 弹簧手感。 */
+    private fun applyExpressiveMotion() {
+        try {
+            Md3Motion.attachPressBounce(
+                findViewById(R.id.md3_button_back),
+                findViewById(R.id.engine_log_filter),
+                findViewById(R.id.engine_log_menu)
+            )
+        } catch (_: Throwable) {
+        }
     }
 
     override fun attachBaseContext(newBase: Context) {
@@ -387,7 +401,9 @@ class EngineLogActivity : Activity() {
 
     private fun applyEditorPalette() {
         val tokens = Md3Theme.buildTokens(this)
-        findViewById<View>(R.id.engine_log_file_bar).setBackgroundColor(tokens.surfaceContainerHigh)
+        // 文件名栏是 Expressive 大标题的一部分，直接坐在 surface 上，跟其它页面的标题栏一致；
+        // 与日志正文的层次靠正文自己的 surfaceContainerLow 拉开。
+        findViewById<View>(R.id.engine_log_file_bar).setBackgroundColor(tokens.surface)
         textView.setBackgroundColor(tokens.surfaceContainerLow)
         textView.setEditorPalette(tokens.surfaceContainerHigh, tokens.onSurfaceVariant, tokens.outlineVariant)
         val tint = ColorStateList.valueOf(tokens.onSurfaceVariant)

@@ -2,22 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="6dp"
+    android:layout_marginBottom="8dp"
     android:clickable="true"
     android:focusable="true"
     android:gravity="center_vertical"
-    android:minHeight="64dp"
+    android:minHeight="68dp"
     android:orientation="horizontal"
-    android:paddingStart="12dp"
-    android:paddingTop="8dp"
-    android:paddingEnd="12dp"
-    android:paddingBottom="8dp"
+    android:paddingStart="16dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="10dp"
     android:tag="list_item">
 
     <FrameLayout
         android:layout_width="44dp"
         android:layout_height="44dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="16dp"
         android:tag="folder_container">
 
         <ImageView
@@ -36,12 +36,12 @@
         android:layout_weight="1"
         android:ellipsize="middle"
         android:maxLines="1"
-        android:textSize="16sp" />
+        android:textAppearance="@style/Expressive.Title.Medium" />
 
     <ImageView
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="12dp"
         android:contentDescription="@null"
         android:src="@drawable/ic_chevron_right"
         android:tag="trailing_icon" />

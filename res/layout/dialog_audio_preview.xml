@@ -26,8 +26,8 @@
             android:id="@+id/audio_preview_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:tag="subtitle" />
+            android:tag="subtitle"
+            android:textAppearance="@style/Expressive.Label.Medium" />
 
         <Space
             android:layout_width="0dp"
@@ -38,8 +38,8 @@
             android:id="@+id/audio_preview_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:tag="subtitle" />
+            android:tag="subtitle"
+            android:textAppearance="@style/Expressive.Label.Medium" />
     </LinearLayout>
 
     <LinearLayout
@@ -47,7 +47,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="4dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="6dp">
 
         <ImageButton
             android:id="@+id/audio_preview_previous"
@@ -61,8 +62,10 @@
 
         <ImageButton
             android:id="@+id/audio_preview_play"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/vpk_preview_play"
             android:scaleType="centerInside"
@@ -84,14 +87,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:minHeight="48dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
             android:layout_weight="1"
             android:text="@string/vpk_preview_autoplay"
-            android:textSize="14sp" />
+            android:textAppearance="@style/Expressive.Body.Large" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/audio_preview_autoplay"
@@ -104,7 +109,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"
+        android:tag="subtitle"
         android:text="@string/vpk_preview_tap_to_play"
-        android:textSize="14sp" />
+        android:textAppearance="@style/Expressive.Body.Medium" />
 </LinearLayout>

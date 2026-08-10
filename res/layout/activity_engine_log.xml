@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/engine_log_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -7,16 +8,18 @@
     <LinearLayout
         android:id="@+id/md3_app_bar"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
+        android:paddingLeft="12dp"
+        android:paddingTop="32dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="4dp">
 
         <ImageButton
             android:id="@+id/md3_button_back"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
             android:background="@drawable/md3_btn_icon"
             android:contentDescription="@string/md3_back"
             android:scaleType="centerInside"
@@ -30,31 +33,34 @@
 
         <ImageButton
             android:id="@+id/engine_log_filter"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
             android:background="@drawable/md3_btn_icon"
             android:contentDescription="@string/engine_log_filter"
-            android:padding="12dp"
-            android:src="@drawable/ic_filter_list" />
+            android:src="@drawable/ic_filter_list"
+            android:tag="icon" />
 
         <ImageButton
             android:id="@+id/engine_log_menu"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="4dp"
             android:background="@drawable/md3_btn_icon"
             android:contentDescription="@string/engine_log_menu"
-            android:padding="12dp"
-            android:src="@drawable/ic_more_vert" />
+            android:src="@drawable/ic_more_vert"
+            android:tag="icon" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/engine_log_file_bar"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:paddingLeft="20dp"
+        android:paddingTop="4dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="14dp">
 
         <TextView
             android:id="@+id/engine_log_title"
@@ -64,27 +70,28 @@
             android:ellipsize="middle"
             android:maxLines="1"
             android:text="engine.log"
-            android:textSize="15sp" />
+            android:textAppearance="@style/Expressive.Headline.Small.Emphasized" />
 
         <TextView
             android:id="@+id/engine_log_meta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
             android:maxLines="1"
             android:tag="subtitle"
-            android:textSize="12sp" />
+            android:textAppearance="@style/Expressive.Body.Small" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/engine_log_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="10dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="8dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="12dp"
         android:tag="subtitle"
-        android:textSize="12sp"
+        android:textAppearance="@style/Expressive.Body.Small"
         android:visibility="gone" />
 
     <ScrollView
@@ -108,12 +115,13 @@
                 android:overScrollMode="never"
                 android:visibility="gone">
 
+                <!-- 日志正文是等宽代码，不套字阶，保持逐字对齐。 -->
                 <me.nillerusr.EngineLogTextView
                     android:id="@+id/engine_log_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
-                    android:lineSpacingExtra="2dp"
+                    android:lineSpacingExtra="3dp"
                     android:textIsSelectable="true"
                     android:textSize="12sp" />
             </HorizontalScrollView>

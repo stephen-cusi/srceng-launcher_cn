@@ -6,10 +6,8 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Environment
-import android.view.MotionEvent
 import android.view.LayoutInflater
 import android.view.View
-import android.view.animation.OvershootInterpolator
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -22,6 +20,7 @@ import java.io.FileFilter
 import java.io.IOException
 import java.util.Arrays
 import java.util.Comparator
+import me.nillerusr.md3.Md3Motion
 import me.nillerusr.md3.Md3Theme
 
 open class DirchActivity : Activity() {
@@ -95,47 +94,10 @@ open class DirchActivity : Activity() {
         animateDirectory(view, body.childCount - 1)
     }
 
-    private fun animateDirectory(view: View, position: Int) {
-        view.animate().cancel()
-        view.alpha = 0f
-        view.translationY = dp(8).toFloat()
-        view.animate()
-            .alpha(1f)
-            .translationY(0f)
-            .setStartDelay((position.coerceAtMost(8) * 18L))
-            .setDuration(170)
-            .start()
-    }
+    private fun animateDirectory(view: View, position: Int) =
+        Md3Motion.enterItem(view, 12f, position.coerceAtMost(8) * 26L)
 
-    @Suppress("ClickableViewAccessibility")
-    private fun bindPressAnimation(view: View) {
-        view.setOnTouchListener { touched, event ->
-            when (event.actionMasked) {
-                MotionEvent.ACTION_DOWN -> {
-                    touched.animate().cancel()
-                    touched.animate()
-                        .scaleX(0.975f)
-                        .scaleY(0.975f)
-                        .alpha(0.9f)
-                        .setDuration(70)
-                        .start()
-                }
-                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                    touched.animate().cancel()
-                    touched.animate()
-                        .scaleX(1f)
-                        .scaleY(1f)
-                        .alpha(1f)
-                        .setInterpolator(OvershootInterpolator(1.25f))
-                        .setDuration(150)
-                        .start()
-                }
-            }
-            false
-        }
-    }
-
-    private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
+    private fun bindPressAnimation(view: View) = Md3Motion.attachPressBounce(view, 0.97f)
 
     override fun attachBaseContext(newBase: Context) {
         try {
@@ -184,6 +146,7 @@ open class DirchActivity : Activity() {
                 finish()
             }
         }
+        applyExpressiveMotion()
 
         val defaultPath = LauncherActivity.getDefaultDir()
         val paths = getExtStoragePaths()
@@ -195,6 +158,14 @@ open class DirchActivity : Activity() {
         addDirectoryView(layoutInflater, File(defaultPath).name.ifEmpty { defaultPath }, defaultPath)
         for (path in paths) addDirectoryView(layoutInflater, File(path).name.ifEmpty { path }, path)
         Md3Theme.applyAfterSetContentView(this)
+    }
+
+    /** 顶栏与确认按钮接入 Expressive 弹簧手感。 */
+    private fun applyExpressiveMotion() {
+        try {
+            Md3Motion.attachPressBounce(findViewById(R.id.md3_button_back), choiceButton)
+        } catch (_: Throwable) {
+        }
     }
 
     override fun onDestroy() {

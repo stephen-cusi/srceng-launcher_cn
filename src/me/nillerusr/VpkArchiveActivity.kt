@@ -1,7 +1,6 @@
 package me.nillerusr
 
 import android.app.Activity
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -12,8 +11,6 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.HapticFeedbackConstants
-import android.view.MotionEvent
-import android.view.animation.OvershootInterpolator
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.FrameLayout
@@ -30,6 +27,7 @@ import com.valvesoftware.source.R
 import java.io.File
 import java.util.Locale
 import java.util.concurrent.Executors
+import me.nillerusr.md3.Md3Motion
 import me.nillerusr.md3.Md3Theme
 import me.nillerusr.gma.GmaArchive
 import me.nillerusr.vpk.VpkArchive
@@ -78,10 +76,21 @@ class VpkArchiveActivity : Activity() {
         findViewById<ImageButton>(R.id.md3_button_back).setOnClickListener { navigateBack() }
         extractButton.setOnClickListener { prepareExtraction() }
 
+        applyExpressiveMotion()
+
         val path = intent.getStringExtra(EXTRA_ARCHIVE_PATH) ?: return finish()
         archiveFile = File(path)
         title.text = archiveFile.name
         openArchive()
+    }
+
+    /** 顶栏与提取按钮接入 Expressive 弹簧手感。 */
+    private fun applyExpressiveMotion() {
+        try {
+            Md3Motion.attachPressBounce(findViewById(R.id.md3_button_back), extractButton)
+            Md3Motion.enterStaggered(findViewById(R.id.vpk_archive_root), 40L, 20f)
+        } catch (_: Throwable) {
+        }
     }
 
     override fun attachBaseContext(newBase: Context) {
@@ -191,16 +200,7 @@ class VpkArchiveActivity : Activity() {
         selectionIndicator.tag = if (checked) "selection_checked" else "selection_unchecked"
         selectionCheck.visibility = if (checked) View.VISIBLE else View.INVISIBLE
         if (selecting && animateSelectionIndicators) {
-            selectionIndicator.alpha = 0f
-            selectionIndicator.scaleX = 0.72f
-            selectionIndicator.scaleY = 0.72f
-            selectionIndicator.animate()
-                .alpha(1f)
-                .scaleX(1f)
-                .scaleY(1f)
-                .setInterpolator(OvershootInterpolator(1.6f))
-                .setDuration(180)
-                .start()
+            Md3Motion.morphIn(selectionIndicator)
         }
         name.text = item.name
         detail.text = if (item.directory) getString(R.string.vpk_archive_folder) else formatSize(item.size)
@@ -699,40 +699,9 @@ class VpkArchiveActivity : Activity() {
     private fun archiveEntries(): List<ArchiveEntry> = gmaArchive?.entries?.map { ArchiveEntry(it.path, it.size) }
         ?: vpkArchive?.entries?.map { ArchiveEntry(it.path, it.size) }.orEmpty()
 
-    private fun animateDirectory(view: View) {
-        view.animate().cancel()
-        view.alpha = 0f
-        view.translationX = (12 * resources.displayMetrics.density)
-        view.animate().alpha(1f).translationX(0f).setDuration(180).start()
-    }
+    private fun animateDirectory(view: View) = Md3Motion.enterItem(view)
 
-    @SuppressLint("ClickableViewAccessibility")
-    private fun bindPressAnimation(view: View) {
-        view.setOnTouchListener { touched, event ->
-            when (event.actionMasked) {
-                MotionEvent.ACTION_DOWN -> {
-                    touched.animate().cancel()
-                    touched.animate()
-                        .scaleX(0.975f)
-                        .scaleY(0.975f)
-                        .alpha(0.88f)
-                        .setDuration(80)
-                        .start()
-                }
-                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                    touched.animate().cancel()
-                    touched.animate()
-                        .scaleX(1f)
-                        .scaleY(1f)
-                        .alpha(1f)
-                        .setInterpolator(OvershootInterpolator(1.4f))
-                        .setDuration(180)
-                        .start()
-                }
-            }
-            false
-        }
-    }
+    private fun bindPressAnimation(view: View) = Md3Motion.attachPressBounce(view, 0.97f)
 
     @Suppress("DEPRECATION")
     private fun applyCloseTransition() {
