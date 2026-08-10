@@ -209,6 +209,4 @@
     <string name="vpk_preview_reading">파일 읽는 중…</string><string name="vpk_preview_unreadable">이 파일은 미리 볼 수 없습니다.</string><string name="vpk_preview_play">재생</string><string name="vpk_preview_pause">일시정지</string><string name="vpk_preview_previous">이전</string><string name="vpk_preview_next">다음</string>    <string name="vpk_preview_seek">탐색</string><string name="vpk_preview_autoplay">트랙 전환 후 자동 재생</string><string name="vpk_preview_tap_to_play">탭하여 재생</string><string name="vpk_preview_playing">재생 중…</string><string name="vpk_preview_paused">일시정지</string><string name="vpk_preview_failed">재생 실패: %1$s</string>
     <string name="md3_launcher_subtitle">게임 리소스를 설정하고 시작합니다</string>
     <string name="md3_section_navigation">탐색</string>
-    <string name="md3_predictive_back">예측 뒤로가기</string>
-    <string name="md3_predictive_back_desc">뒤로가기 중 대상 화면 미리보기(Android 13+)</string>
 </resources>

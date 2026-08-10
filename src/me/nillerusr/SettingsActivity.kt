@@ -9,7 +9,6 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.RippleDrawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableStringBuilder
@@ -35,10 +34,8 @@ open class SettingsActivity : Activity() {
     private var darkOn: RadioButton? = null
     private var amoledSwitch: MaterialSwitch? = null
     private var dynamicSwitch: MaterialSwitch? = null
-    private var predictiveBackSwitch: MaterialSwitch? = null
     private var skipIntroSwitch: MaterialSwitch? = null
     private var noBackgroundLevelSwitch: MaterialSwitch? = null
-    private lateinit var predictiveBack: PredictiveBackController
     private var seedContainer: LinearLayout? = null
     private var customColorContainer: LinearLayout? = null
     private var customColorPreview: View? = null
@@ -89,8 +86,6 @@ open class SettingsActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         Md3Theme.applyAfterSetContentView(this)
-        predictiveBack = PredictiveBackController(this) { finish() }
-        predictiveBack.sync()
         findViews()
         bindState()
         buildSeedColors()
@@ -121,7 +116,6 @@ open class SettingsActivity : Activity() {
         darkOn = optFind(R.id.md3_dark_on)
         amoledSwitch = optFind(R.id.md3_amoled_switch)
         dynamicSwitch = optFind(R.id.md3_dynamic_switch)
-        predictiveBackSwitch = optFind(R.id.md3_predictive_back_switch)
         skipIntroSwitch = optFind(R.id.md3_skip_intro_switch)
         noBackgroundLevelSwitch = optFind(R.id.md3_no_background_level_switch)
         seedContainer = optFind(R.id.md3_seed_container)
@@ -173,10 +167,8 @@ open class SettingsActivity : Activity() {
         setCheckedSafe(dynamicSwitch, dynamic)
         setCheckedSafe(amoledSwitch, Md3Theme.getAmoledBlack(this))
         setEnabledSafe(amoledSwitch, Md3Theme.resolveDark(this))
-        setCheckedSafe(predictiveBackSwitch, getSharedPreferences(PredictiveBackController.PREFS_NAME, 0).getBoolean(PredictiveBackController.PREF_KEY, true))
         setCheckedSafe(skipIntroSwitch, getSharedPreferences("mod", 0).getBoolean(PREF_SKIP_INTRO, false))
         setCheckedSafe(noBackgroundLevelSwitch, getSharedPreferences("mod", 0).getBoolean(PREF_NO_BACKGROUND_LEVEL, true))
-        if (Build.VERSION.SDK_INT < 33) setEnabledSafe(predictiveBackSwitch, false)
         if (!dynamicAvailable) {
             setCheckedSafe(dynamicSwitch, false)
             setEnabledSafe(dynamicSwitch, false)
@@ -516,10 +508,6 @@ open class SettingsActivity : Activity() {
                 if (checked != lastDynamic) { lastDynamic = checked; refreshTheme(REFRESH_TOKEN_REDRAW) }
             }
         }
-        predictiveBackSwitch?.setOnCheckedChangeListener { _, checked ->
-            getSharedPreferences(PredictiveBackController.PREFS_NAME, 0).edit().putBoolean(PredictiveBackController.PREF_KEY, checked).apply()
-            predictiveBack.sync()
-        }
         skipIntroSwitch?.setOnCheckedChangeListener { _, checked ->
             getSharedPreferences("mod", 0).edit().putBoolean(PREF_SKIP_INTRO, checked).apply()
         }
@@ -567,7 +555,6 @@ open class SettingsActivity : Activity() {
     }
 
     override fun onDestroy() {
-        if (::predictiveBack.isInitialized) predictiveBack.release()
         super.onDestroy()
     }
 

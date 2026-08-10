@@ -209,6 +209,4 @@
     <string name="vpk_preview_reading">ファイルを読み込み中…</string><string name="vpk_preview_unreadable">このファイルはプレビューできません。</string><string name="vpk_preview_play">再生</string><string name="vpk_preview_pause">一時停止</string><string name="vpk_preview_previous">前へ</string><string name="vpk_preview_next">次へ</string>    <string name="vpk_preview_seek">シーク</string><string name="vpk_preview_autoplay">曲を切り替えたら自動再生</string><string name="vpk_preview_tap_to_play">タップして再生</string><string name="vpk_preview_playing">再生中…</string><string name="vpk_preview_paused">一時停止</string><string name="vpk_preview_failed">再生に失敗しました：%1$s</string>
     <string name="md3_launcher_subtitle">ゲームリソースを設定して起動</string>
     <string name="md3_section_navigation">ナビゲーション</string>
-    <string name="md3_predictive_back">予測型「戻る」</string>
-    <string name="md3_predictive_back_desc">戻る操作中に移動先をプレビュー（Android 13+）</string>
 </resources>

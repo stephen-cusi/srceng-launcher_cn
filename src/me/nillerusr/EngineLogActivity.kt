@@ -38,7 +38,6 @@ class EngineLogActivity : Activity() {
 
     private data class Entry(val lineNumber: Int, val text: String, val level: Level)
 
-    private lateinit var predictiveBack: PredictiveBackController
     private lateinit var metaView: TextView
     private lateinit var statusView: TextView
     private lateinit var textView: EngineLogTextView
@@ -82,8 +81,6 @@ class EngineLogActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_engine_log)
         Md3Theme.applyAfterSetContentView(this)
-        predictiveBack = PredictiveBackController(this) { finish() }
-        predictiveBack.sync()
 
         metaView = findViewById(R.id.engine_log_meta)
         statusView = findViewById(R.id.engine_log_status)
@@ -123,7 +120,6 @@ class EngineLogActivity : Activity() {
 
     override fun onResume() {
         super.onResume()
-        if (::predictiveBack.isInitialized) predictiveBack.sync()
         handler.removeCallbacks(refreshRunnable)
         handler.post(refreshRunnable)
     }
@@ -136,7 +132,6 @@ class EngineLogActivity : Activity() {
     override fun onDestroy() {
         handler.removeCallbacks(refreshRunnable)
         cancelPendingScroll()
-        if (::predictiveBack.isInitialized) predictiveBack.release()
         super.onDestroy()
     }
 

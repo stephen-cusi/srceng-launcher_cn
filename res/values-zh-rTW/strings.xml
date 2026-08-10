@@ -59,8 +59,6 @@
     <string name="md3_back">返回</string>
     <string name="md3_section_general">一般</string>
     <string name="md3_section_navigation">導覽</string>
-    <string name="md3_predictive_back">預測返回</string>
-    <string name="md3_predictive_back_desc">返回手勢期間預覽目標畫面（Android 13+）</string>
     <string name="md3_section_look">視覺</string>
     <string name="md3_title_launcher">起源引擎啟動器</string>
     <string name="md3_game_config_card">遊戲設定</string>

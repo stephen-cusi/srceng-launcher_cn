@@ -209,6 +209,4 @@
     <string name="vpk_preview_reading">Datei wird gelesen…</string><string name="vpk_preview_unreadable">Diese Datei kann nicht angezeigt werden.</string><string name="vpk_preview_play">Abspielen</string><string name="vpk_preview_pause">Pause</string><string name="vpk_preview_previous">Zurück</string><string name="vpk_preview_next">Weiter</string>    <string name="vpk_preview_seek">Spulen</string><string name="vpk_preview_autoplay">Nach Titelsprung automatisch abspielen</string><string name="vpk_preview_tap_to_play">Zum Abspielen tippen</string><string name="vpk_preview_playing">Wiedergabe…</string><string name="vpk_preview_paused">Pausiert</string><string name="vpk_preview_failed">Wiedergabe fehlgeschlagen: %1$s</string>
     <string name="md3_launcher_subtitle">Ressourcen konfigurieren und Spiel starten</string>
     <string name="md3_section_navigation">Navigation</string>
-    <string name="md3_predictive_back">Vorausschauende Zurück-Geste</string>
-    <string name="md3_predictive_back_desc">Ziel beim Zurückwischen anzeigen (Android 13+)</string>
 </resources>

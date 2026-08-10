@@ -209,6 +209,4 @@
     <string name="vpk_preview_reading">Leyendo archivo…</string><string name="vpk_preview_unreadable">Este archivo no se puede previsualizar.</string><string name="vpk_preview_play">Reproducir</string><string name="vpk_preview_pause">Pausa</string><string name="vpk_preview_previous">Anterior</string><string name="vpk_preview_next">Siguiente</string>    <string name="vpk_preview_seek">Buscar</string><string name="vpk_preview_autoplay">Reproducción automática al cambiar</string><string name="vpk_preview_tap_to_play">Toca para reproducir</string><string name="vpk_preview_playing">Reproduciendo…</string><string name="vpk_preview_paused">En pausa</string><string name="vpk_preview_failed">Error de reproducción: %1$s</string>
     <string name="md3_launcher_subtitle">Configura los recursos e inicia el juego</string>
     <string name="md3_section_navigation">Navegación</string>
-    <string name="md3_predictive_back">Atrás predictivo</string>
-    <string name="md3_predictive_back_desc">Previsualiza el destino al volver (Android 13+)</string>
 </resources>

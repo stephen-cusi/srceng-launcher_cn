@@ -209,6 +209,4 @@
     <string name="vpk_preview_reading">Чтение файла…</string><string name="vpk_preview_unreadable">Этот файл нельзя просмотреть.</string><string name="vpk_preview_play">Воспроизвести</string><string name="vpk_preview_pause">Пауза</string><string name="vpk_preview_previous">Назад</string><string name="vpk_preview_next">Вперёд</string>    <string name="vpk_preview_seek">Перемотка</string><string name="vpk_preview_autoplay">Автовоспроизведение после переключения</string><string name="vpk_preview_tap_to_play">Нажмите, чтобы воспроизвести</string><string name="vpk_preview_playing">Воспроизведение…</string><string name="vpk_preview_paused">Пауза</string><string name="vpk_preview_failed">Ошибка воспроизведения: %1$s</string>
     <string name="md3_launcher_subtitle">Настройка ресурсов и запуск игры</string>
     <string name="md3_section_navigation">Навигация</string>
-    <string name="md3_predictive_back">Предиктивный возврат</string>
-    <string name="md3_predictive_back_desc">Предпросмотр экрана при возврате (Android 13+)</string>
 </resources>

@@ -65,8 +65,6 @@
     <string name="md3_back">Back</string>
     <string name="md3_section_general">General</string>
     <string name="md3_section_navigation">Navigation</string>
-    <string name="md3_predictive_back">Predictive back</string>
-    <string name="md3_predictive_back_desc">Preview the destination while swiping back (Android 13+)</string>
     <string name="md3_section_look">Look &amp; feel</string>
     <string name="md3_title_launcher">Source Engine Launcher</string>
     <string name="md3_launcher_subtitle">Configure resources and start the game</string>

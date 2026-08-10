@@ -37,7 +37,6 @@ import me.nillerusr.md3.Md3Theme
 import me.nillerusr.vpk.VpkWriter
 
 class VpkToolActivity : Activity() {
-    private lateinit var predictiveBack: PredictiveBackController
     private val executor = Executors.newSingleThreadExecutor()
     private val selected = linkedSetOf<String>()
     private val scrollPositions = mutableMapOf<String, Int>()
@@ -70,8 +69,6 @@ class VpkToolActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vpk_tool)
         Md3Theme.applyAfterSetContentView(this)
-        predictiveBack = PredictiveBackController(this, ::navigateBack)
-        predictiveBack.sync()
 
         pathView = findViewById(R.id.vpk_manager_path)
         statusArea = findViewById(R.id.vpk_manager_status_area)
@@ -617,7 +614,6 @@ class VpkToolActivity : Activity() {
     }
 
     override fun onDestroy() {
-        if (::predictiveBack.isInitialized) predictiveBack.release()
         executor.shutdownNow()
         super.onDestroy()
     }

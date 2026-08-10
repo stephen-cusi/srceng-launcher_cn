@@ -35,7 +35,6 @@ import me.nillerusr.gma.GmaArchive
 import me.nillerusr.vpk.VpkArchive
 
 class VpkArchiveActivity : Activity() {
-    private lateinit var predictiveBack: PredictiveBackController
     private data class Item(val name: String, val path: String, val directory: Boolean, val size: Long)
 
     private val executor = Executors.newSingleThreadExecutor()
@@ -66,8 +65,6 @@ class VpkArchiveActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vpk_archive)
         Md3Theme.applyAfterSetContentView(this)
-        predictiveBack = PredictiveBackController(this, ::navigateBack)
-        predictiveBack.sync()
 
         title = findViewById(R.id.vpk_archive_title)
         pathView = findViewById(R.id.vpk_archive_path)
@@ -756,7 +753,6 @@ class VpkArchiveActivity : Activity() {
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 
     override fun onDestroy() {
-        if (::predictiveBack.isInitialized) predictiveBack.release()
         vpkArchive?.close()
         gmaArchive?.close()
         executor.shutdownNow()

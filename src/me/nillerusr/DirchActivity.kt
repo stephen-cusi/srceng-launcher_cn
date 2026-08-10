@@ -25,7 +25,6 @@ import java.util.Comparator
 import me.nillerusr.md3.Md3Theme
 
 open class DirchActivity : Activity() {
-    private lateinit var predictiveBack: PredictiveBackController
     private lateinit var body: LinearLayout
     private lateinit var header: TextView
     private lateinit var selectionHint: TextView
@@ -170,8 +169,6 @@ open class DirchActivity : Activity() {
         mPref = getSharedPreferences("mod", 0)
         setContentView(R.layout.activity_directory_choice)
         Md3Theme.applyAfterSetContentView(this)
-        predictiveBack = PredictiveBackController(this) { finish() }
-        predictiveBack.sync()
 
         body = findViewById(R.id.bodych)
         scroll = findViewById(R.id.directory_scroll)
@@ -201,7 +198,6 @@ open class DirchActivity : Activity() {
     }
 
     override fun onDestroy() {
-        if (::predictiveBack.isInitialized) predictiveBack.release()
         super.onDestroy()
     }
 }
