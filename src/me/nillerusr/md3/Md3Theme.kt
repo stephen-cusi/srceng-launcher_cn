@@ -24,9 +24,12 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.color.utilities.DynamicColor
+import com.google.android.material.color.utilities.DynamicScheme
 import com.google.android.material.color.utilities.Hct
 import com.google.android.material.color.utilities.MaterialDynamicColors
 import com.google.android.material.color.utilities.SchemeExpressive
+import com.google.android.material.color.utilities.TonalPalette
+import com.google.android.material.color.utilities.Variant
 import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.RelativeCornerSize
@@ -241,11 +244,80 @@ class Md3Theme private constructor() {
 
         @JvmStatic fun resolveSeedColor(ctx: Context): Int = if (getDynamicColor(ctx)) tryGetWallpaperSeed(ctx) ?: getSeedColor(ctx) else getSeedColor(ctx)
 
-        /** Expressive 配色: 由任意种子色经 Material 官方 SchemeExpressive 算法生成完整 token 集。 */
+        /**
+         * 保真版 Expressive 配色方案。
+         *
+         * 官方 [SchemeExpressive] 会把 primary 的色相强制 +240°（源码里写死的 `hue + 240`），
+         * 这是它刻意制造"意外感"的手法。但本应用给了用户一个种子色选择器：选红色却得到紫色界面，
+         * 会被当成 bug。这里保留 Expressive 的全部其它特征——高色度调色板（primary 40 / secondary 24
+         * / tertiary 32）、带色调的中性色（+15°，chroma 8/12）、以及官方按色相区间调校过的
+         * secondary / tertiary 旋转表——只把 primary 拉回种子色本身，做到所见即所得。
+         */
         @SuppressLint("RestrictedApi")
-        private fun buildSchemeTokens(seed: Int, dark: Boolean): Md3Tokens? {
+        private fun expressiveScheme(seed: Int, dark: Boolean): DynamicScheme {
+            val source = Hct.fromInt(seed)
+            val official = SchemeExpressive(source, dark, 0.0)
+            // 复用官方旋转后的 secondary / tertiary，但保证与 primary 拉开足够色相差，
+            // 否则某些色相区间（官方 tertiary 只转 15~20°）会和未旋转的 primary 糊在一起。
+            val hue = source.getHue()
+            val primary = TonalPalette.fromHueAndChroma(hue, 40.0)
+            val secondary = separateFrom(hue, official.secondaryPalette, 24.0, 30.0)
+            val tertiary = separateFrom(hue, official.tertiaryPalette, 32.0, 60.0)
+            return DynamicScheme(
+                source, Variant.EXPRESSIVE, dark, 0.0,
+                primary, secondary, tertiary,
+                official.neutralPalette, official.neutralVariantPalette
+            )
+        }
+
+        /** 色相距 [baseHue] 不足 [minGap] 时按原方向推开，避免强调色与主色撞在一起。 */
+        @SuppressLint("RestrictedApi")
+        private fun separateFrom(baseHue: Double, palette: TonalPalette, chroma: Double, minGap: Double): TonalPalette {
+            var delta = palette.getHue() - baseHue
+            while (delta < -180.0) delta += 360.0
+            while (delta > 180.0) delta -= 360.0
+            if (abs(delta) >= minGap) return palette
+            val pushed = baseHue + if (delta < 0) -minGap else minGap
+            return TonalPalette.fromHueAndChroma((pushed % 360.0 + 360.0) % 360.0, chroma)
+        }
+
+        /**
+         * 真·系统取色（Android 12+）。
+         *
+         * 之前的写法是取 `system_accent1_500` 当成种子再跑一遍配色算法，等于把系统已经算好的
+         * 结果又处理了一次，色相和色度都会漂。正确做法是直接采纳系统那五套调色板，
+         * 只让 Material 负责生成明度阶梯，这样结果与系统、与其它遵循动态取色的应用完全一致。
+         */
+        @TargetApi(31)
+        @SuppressLint("RestrictedApi")
+        private fun systemScheme(ctx: Context, dark: Boolean): DynamicScheme? {
             return try {
-                val scheme = SchemeExpressive(Hct.fromInt(seed), dark, 0.0)
+                val res = ctx.resources
+                val theme = ctx.theme
+                // _500 对应 tone 50，是各调色板色相与色度的代表色。
+                val accent1Argb = res.getColor(android.R.color.system_accent1_500, theme)
+                if (accent1Argb == 0) return null
+                fun palette(id: Int): TonalPalette? {
+                    val argb = res.getColor(id, theme)
+                    return if (argb == 0) null else TonalPalette.fromInt(argb)
+                }
+                DynamicScheme(
+                    Hct.fromInt(accent1Argb),
+                    Variant.TONAL_SPOT, dark, 0.0,
+                    TonalPalette.fromInt(accent1Argb),
+                    palette(android.R.color.system_accent2_500) ?: return null,
+                    palette(android.R.color.system_accent3_500) ?: return null,
+                    palette(android.R.color.system_neutral1_500) ?: return null,
+                    palette(android.R.color.system_neutral2_500) ?: return null
+                )
+            } catch (_: Throwable) { null }
+        }
+
+        /** 把任意 [DynamicScheme] 映射成本应用的 token 集。所有取色路径共用，保证 token 结构统一。 */
+        @SuppressLint("RestrictedApi")
+        private fun tokensFrom(scheme: DynamicScheme?, dark: Boolean): Md3Tokens? {
+            if (scheme == null) return null
+            return try {
                 val mdc = MaterialDynamicColors()
                 fun argb(color: DynamicColor): Int = color.getArgb(scheme)
                 val t = Md3Tokens()
@@ -274,10 +346,9 @@ class Md3Theme private constructor() {
         @JvmStatic fun buildTokens(ctx: Context): Md3Tokens {
             val dark = resolveDark(ctx)
             if (Build.VERSION.SDK_INT >= 31 && getDynamicColor(ctx)) {
-                val systemSeed = try { ctx.resources.getColor(android.R.color.system_accent1_500, ctx.theme) } catch (_: Throwable) { 0 }
-                if (systemSeed != 0) buildSchemeTokens(systemSeed, dark)?.let { return it.applyAmoled(dark, getAmoledBlack(ctx)) }
+                tokensFrom(systemScheme(ctx, dark), dark)?.let { return it.applyAmoled(dark, getAmoledBlack(ctx)) }
             }
-            buildSchemeTokens(resolveSeedColor(ctx), dark)?.let { return it.applyAmoled(dark, getAmoledBlack(ctx)) }
+            tokensFrom(expressiveScheme(resolveSeedColor(ctx), dark), dark)?.let { return it.applyAmoled(dark, getAmoledBlack(ctx)) }
             val hsv = FloatArray(3)
             Color.colorToHSV(resolveSeedColor(ctx), hsv)
             val hue = hsv[0]
