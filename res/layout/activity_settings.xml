@@ -6,6 +6,7 @@
     android:overScrollMode="never">
 
     <LinearLayout
+        android:id="@+id/settings_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -14,22 +15,19 @@
         android:paddingBottom="32dp"
         android:paddingTop="0dp">
 
-        <!-- ========== Top App Bar ========== -->
+        <!-- ========== Expressive Large Top App Bar ========== -->
         <LinearLayout
             android:id="@+id/md3_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="44dp"
-            android:paddingBottom="16dp">
+            android:orientation="vertical"
+            android:paddingTop="40dp"
+            android:paddingBottom="20dp">
 
             <ImageButton
                 android:id="@+id/md3_button_back"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
                 android:src="@drawable/ic_arrow_back"
                 android:scaleType="centerInside"
                 android:background="@drawable/md3_btn_icon"
@@ -37,25 +35,22 @@
                 android:tag="icon"/>
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="4dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/md3_settings"
-                android:textStyle="bold"
-                android:textSize="22sp"
+                android:textAppearance="@style/Expressive.Headline.Medium.Emphasized"
                 android:maxLines="1"/>
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/md3_section_navigation"
-            android:textAllCaps="true"
-            android:textSize="12sp"
-            android:textStyle="bold"
+            android:textAppearance="@style/Expressive.Title.Small.Emphasized"
             android:tag="primary" />
 
         <!-- ========== Language section (before Look & Feel) ========== -->
@@ -63,13 +58,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/md3_section_language"
-            android:textAllCaps="true"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:textAppearance="@style/Expressive.Title.Small.Emphasized"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
             android:tag="primary"/>
 
         <!-- Launcher UI language -->
@@ -78,8 +70,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_marginBottom="12dp"
+            android:padding="20dp"
+            android:layout_marginBottom="14dp"
             android:tag="card">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -96,13 +88,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/md3_ui_language"
-                        android:textStyle="bold"
-                        android:textSize="16sp"/>
+                        android:textAppearance="@style/Expressive.Title.Medium.Emphasized"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/md3_ui_lang_desc"
-                        android:textSize="12sp"
+                        android:textAppearance="@style/Expressive.Body.Small"
                         android:layout_marginTop="4dp"
                         android:tag="subtitle"/>
                 </LinearLayout>
@@ -125,8 +116,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_marginBottom="12dp"
+            android:padding="20dp"
+            android:layout_marginBottom="14dp"
             android:tag="card_outlined">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -143,13 +134,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/md3_game_language"
-                        android:textStyle="bold"
-                        android:textSize="16sp"/>
+                        android:textAppearance="@style/Expressive.Title.Medium.Emphasized"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/md3_game_lang_desc"
-                        android:textSize="12sp"
+                        android:textAppearance="@style/Expressive.Body.Small"
                         android:layout_marginTop="4dp"
                         android:tag="subtitle"/>
                 </LinearLayout>
@@ -172,13 +162,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/md3_section_game"
-            android:textAllCaps="true"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:textAppearance="@style/Expressive.Title.Small.Emphasized"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
             android:tag="primary"/>
 
         <!-- Resolution mode card -->
@@ -187,8 +174,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_marginBottom="12dp"
+            android:padding="20dp"
+            android:layout_marginBottom="14dp"
             android:tag="card">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -205,13 +192,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/md3_resolution"
-                        android:textStyle="bold"
-                        android:textSize="16sp"/>
+                        android:textAppearance="@style/Expressive.Title.Medium.Emphasized"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/md3_resolution_desc"
-                        android:textSize="12sp"
+                        android:textAppearance="@style/Expressive.Body.Small"
                         android:layout_marginTop="4dp"
                         android:tag="subtitle"/>
                 </LinearLayout>
@@ -223,7 +209,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginBottom="12dp">
+                android:layout_marginBottom="14dp">
                 <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/md3_res_mode_default"
                     android:layout_width="match_parent"
@@ -260,14 +246,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="14dp"
                 android:visibility="gone">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_res_preset_label"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
+                    android:textAppearance="@style/Expressive.Title.Small.Emphasized"
                     android:layout_marginBottom="6dp"/>
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/md3_res_preset_spinner"
@@ -285,14 +270,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="14dp"
                 android:visibility="gone">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_res_custom_label"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
+                    android:textAppearance="@style/Expressive.Title.Small.Emphasized"
                     android:layout_marginBottom="6dp"/>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -308,7 +292,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/md3_res_width"
-                            android:textSize="12sp"
+                            android:textAppearance="@style/Expressive.Body.Small"
                             android:tag="subtitle"
                             android:layout_marginBottom="2dp"/>
                         <com.google.android.material.textfield.TextInputLayout
@@ -335,7 +319,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/md3_res_height"
-                            android:textSize="12sp"
+                            android:textAppearance="@style/Expressive.Body.Small"
                             android:tag="subtitle"
                             android:layout_marginBottom="2dp"/>
                         <com.google.android.material.textfield.TextInputLayout
@@ -360,10 +344,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="14dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="16dp"
+            android:padding="20dp"
             android:tag="card">
             <LinearLayout
                 android:layout_width="0dp"
@@ -374,14 +358,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_skip_intro_video"
-                    android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:textAppearance="@style/Expressive.Title.Medium.Emphasized"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="@string/md3_skip_intro_video_desc"
-                    android:textSize="12sp"
+                    android:textAppearance="@style/Expressive.Body.Small"
                     android:tag="subtitle"/>
             </LinearLayout>
             <com.google.android.material.materialswitch.MaterialSwitch
@@ -395,10 +378,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="14dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="16dp"
+            android:padding="20dp"
             android:tag="card">
             <LinearLayout
                 android:layout_width="0dp"
@@ -409,14 +392,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_no_background_level"
-                    android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:textAppearance="@style/Expressive.Title.Medium.Emphasized"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="@string/md3_no_background_level_desc"
-                    android:textSize="12sp"
+                    android:textAppearance="@style/Expressive.Body.Small"
                     android:tag="subtitle"/>
             </LinearLayout>
             <com.google.android.material.materialswitch.MaterialSwitch
@@ -431,26 +413,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/md3_section_updates"
-            android:textAllCaps="true"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:textAppearance="@style/Expressive.Title.Small.Emphasized"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
             android:tag="primary"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_marginBottom="12dp"
+            android:padding="20dp"
+            android:layout_marginBottom="14dp"
             android:tag="card_outlined">
-            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/md3_update_channel" android:textStyle="bold" android:textSize="16sp"/>
-            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/md3_update_channel_desc" android:textSize="12sp" android:layout_marginTop="4dp" android:tag="subtitle"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/md3_update_channel" android:textAppearance="@style/Expressive.Title.Medium.Emphasized"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/md3_update_channel_desc" android:textAppearance="@style/Expressive.Body.Small" android:layout_marginTop="4dp" android:tag="subtitle"/>
             <com.google.android.material.button.MaterialButton android:id="@+id/md3_update_channel" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="8dp" android:gravity="start|center_vertical" android:maxLines="1" android:ellipsize="end" android:tag="outlined"/>
-            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/md3_update_mirror" android:textStyle="bold" android:textSize="16sp" android:layout_marginTop="12dp"/>
-            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/md3_update_mirror_desc" android:textSize="12sp" android:layout_marginTop="4dp" android:tag="subtitle"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/md3_update_mirror" android:textAppearance="@style/Expressive.Title.Medium.Emphasized" android:layout_marginTop="12dp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/md3_update_mirror_desc" android:textAppearance="@style/Expressive.Body.Small" android:layout_marginTop="4dp" android:tag="subtitle"/>
             <com.google.android.material.button.MaterialButton android:id="@+id/md3_update_mirror" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="8dp" android:gravity="start|center_vertical" android:maxLines="1" android:ellipsize="end" android:tag="outlined"/>
             <com.google.android.material.button.MaterialButton android:id="@+id/md3_test_mirrors" style="@style/Widget.Material3.Button.OutlinedButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/md3_update_mirror_test" android:tag="outlined"/>
             <TextView android:id="@+id/md3_mirror_test_status" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp"/>
@@ -462,68 +441,95 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
             android:tag="primary"
             android:text="@string/md3_section_tools"
-            android:textAllCaps="true"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textAppearance="@style/Expressive.Title.Small.Emphasized" />
 
         <LinearLayout
             android:id="@+id/md3_vpk_tool"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="14dp"
             android:clickable="true"
             android:focusable="true"
-            android:orientation="vertical"
-            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="20dp"
             android:tag="card_outlined">
 
-            <TextView
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/vpk_tool"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:tag="subtitle"
-                android:text="@string/vpk_tool_desc"
-                android:textSize="12sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vpk_tool"
+                    android:textAppearance="@style/Expressive.Title.Medium.Emphasized" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:tag="subtitle"
+                    android:text="@string/vpk_tool_desc"
+                    android:textAppearance="@style/Expressive.Body.Small" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="12dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_chevron_right"
+                android:tag="trailing_icon" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/md3_engine_log_tool"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="14dp"
             android:clickable="true"
             android:focusable="true"
-            android:orientation="vertical"
-            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="20dp"
             android:tag="card_outlined">
 
-            <TextView
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/engine_log_viewer"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:tag="subtitle"
-                android:text="@string/engine_log_viewer_desc"
-                android:textSize="12sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/engine_log_viewer"
+                    android:textAppearance="@style/Expressive.Title.Medium.Emphasized" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:tag="subtitle"
+                    android:text="@string/engine_log_viewer_desc"
+                    android:textAppearance="@style/Expressive.Body.Small" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="12dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_chevron_right"
+                android:tag="trailing_icon" />
         </LinearLayout>
 
         <!-- ========== Appearance section title ========== -->
@@ -531,13 +537,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/md3_section_look"
-            android:textAllCaps="true"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:textAppearance="@style/Expressive.Title.Small.Emphasized"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
             android:tag="primary"/>
 
         <!-- Dark mode row -->
@@ -545,8 +548,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_marginBottom="12dp"
+            android:padding="20dp"
+            android:layout_marginBottom="14dp"
             android:tag="card">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -559,8 +562,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/md3_dark_mode"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/Expressive.Title.Medium.Emphasized"/>
             </LinearLayout>
 
             <RadioGroup
@@ -609,13 +611,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/md3_amoled_black"
-                        android:textStyle="bold"
-                        android:textSize="16sp"/>
+                        android:textAppearance="@style/Expressive.Title.Medium.Emphasized"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/md3_amoled_black_desc"
-                        android:textSize="12sp"
+                        android:textAppearance="@style/Expressive.Body.Small"
                         android:layout_marginTop="4dp"
                         android:tag="subtitle"/>
                 </LinearLayout>
@@ -632,8 +633,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="16dp"
-            android:layout_marginBottom="12dp"
+            android:padding="20dp"
+            android:layout_marginBottom="14dp"
             android:tag="card_outlined">
             <LinearLayout
                 android:layout_width="0dp"
@@ -644,13 +645,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_dynamic_color"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
+                    android:textAppearance="@style/Expressive.Title.Medium.Emphasized"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_dynamic_color_desc"
-                    android:textSize="12sp"
+                    android:textAppearance="@style/Expressive.Body.Small"
                     android:layout_marginTop="4dp"
                     android:tag="subtitle"/>
             </LinearLayout>
@@ -665,16 +665,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_marginBottom="12dp"
+            android:padding="20dp"
+            android:layout_marginBottom="14dp"
             android:tag="card">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/md3_seed_color"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:layout_marginBottom="12dp"/>
+                android:textAppearance="@style/Expressive.Title.Medium.Emphasized"
+                android:layout_marginBottom="14dp"/>
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -698,8 +697,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/md3_custom_color"
-                    android:textStyle="bold"
-                    android:textSize="14sp"/>
+                    android:textAppearance="@style/Expressive.Title.Small.Emphasized"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

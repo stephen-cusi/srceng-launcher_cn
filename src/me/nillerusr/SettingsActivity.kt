@@ -24,6 +24,7 @@ import com.valvesoftware.source.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.materialswitch.MaterialSwitch
 import io.noties.markwon.Markwon
+import me.nillerusr.md3.Md3Motion
 import me.nillerusr.md3.Md3Theme
 import me.nillerusr.md3.Md3Tokens
 
@@ -96,6 +97,25 @@ open class SettingsActivity : Activity() {
         bindListeners()
         updateSeedVisualState()
         updateResolutionVisibility()
+        applyExpressiveMotion()
+    }
+
+    /** MD3 Expressive 动效：可点击卡片按压回弹 + 首屏分区错峰弹入。 */
+    private fun applyExpressiveMotion() {
+        try {
+            Md3Motion.attachPressBounce(
+                findViewById(R.id.md3_button_back),
+                findViewById(R.id.md3_vpk_tool),
+                findViewById(R.id.md3_engine_log_tool),
+                findViewById(R.id.md3_check_update),
+                findViewById(R.id.md3_test_mirrors),
+                pressedScale = 0.97f
+            )
+            findViewById<ViewGroup>(R.id.settings_root)?.let { root ->
+                root.post { Md3Motion.enterStaggered(root, stagger = 26L, offsetDp = 18f) }
+            }
+        } catch (_: Throwable) {
+        }
     }
 
     override fun attachBaseContext(newBase: Context) {

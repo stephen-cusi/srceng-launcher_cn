@@ -1,5 +1,6 @@
 package me.nillerusr.md3
 
+import android.annotation.SuppressLint
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -75,8 +76,10 @@ object Md3Motion {
 
     /**
      * 按压回弹：按下时缩到 [pressedScale]，抬起时用弹簧回弹到 1（带轻微超调）。
-     * 不吞掉事件，OnClickListener 照常工作。
+     * 监听器一律 return false，事件继续交给 View 自己处理，点击与无障碍行为不受影响，
+     * 因此不需要（也不能）在这里调 performClick——那会导致点击触发两次。
      */
+    @SuppressLint("ClickableViewAccessibility")
     @JvmStatic
     @JvmOverloads
     fun attachPressBounce(view: View, pressedScale: Float = 0.94f) {
