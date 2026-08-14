@@ -12,6 +12,7 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.BackgroundColorSpan
 import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.HorizontalScrollView
@@ -53,6 +54,8 @@ class EngineLogActivity : Activity() {
     private var nextLineNumber = 1
     private var selectedLevel: Level? = null
     private var refreshing = false
+    /** 菜单/对话框打开期间暂停自动刷新，避免重建日志与界面动画抢主线程。 */
+    private var uiBusy = false
     private var followTail = false
     private var fileMissing = false
     private var highlightEnabled = true
@@ -62,6 +65,11 @@ class EngineLogActivity : Activity() {
     private var jumpHighlightLine: Int? = null
     private var pendingScrollLine: Int? = null
     private var scrollPreDrawListener: ViewTreeObserver.OnPreDrawListener? = null
+    private var pendingRestoreAnchor: Pair<Int, Int>? = null
+    private var pendingRestoreBottom = false
+    private var restoreLayoutListener: ViewTreeObserver.OnGlobalLayoutListener? = null
+    private var restorePreDrawListener: ViewTreeObserver.OnPreDrawListener? = null
+    private var restoreLastContentHeight = -1
     private var searchQuery = ""
     private var searchCaseSensitive = false
     private var searchRegex = false
@@ -72,7 +80,7 @@ class EngineLogActivity : Activity() {
 
     private val refreshRunnable = object : Runnable {
         override fun run() {
-            refresh()
+            if (!uiBusy) refresh()
             handler.postDelayed(this, REFRESH_INTERVAL)
         }
     }
@@ -150,7 +158,9 @@ class EngineLogActivity : Activity() {
     }
 
     private fun showMainMenu(anchor: View) {
+        uiBusy = true
         PopupMenu(this, anchor).apply {
+            setOnDismissListener { uiBusy = false }
             menu.add(0, MENU_SEARCH, 0, R.string.engine_log_search).apply {
                 icon = null
             }
@@ -185,10 +195,9 @@ class EngineLogActivity : Activity() {
                         true
                     }
                     MENU_WORD_WRAP -> {
-                        val anchorLine = currentTopLine()
                         wordWrapEnabled = !wordWrapEnabled
                         saveDisplayPrefs()
-                        rebuild(anchorLine)
+                        rebuild()
                         true
                     }
                     else -> false
@@ -199,7 +208,9 @@ class EngineLogActivity : Activity() {
     }
 
     private fun showFilterMenu(anchor: View) {
+        uiBusy = true
         PopupMenu(this, anchor).apply {
+            setOnDismissListener { uiBusy = false }
             menu.add(FILTER_GROUP, FILTER_ALL, 0, R.string.engine_log_filter_all).isChecked = selectedLevel == null
             menu.add(FILTER_GROUP, FILTER_WARNING, 1, R.string.engine_log_filter_warning).isChecked = selectedLevel == Level.WARNING
             menu.add(FILTER_GROUP, FILTER_INFO, 2, R.string.engine_log_filter_info).isChecked = selectedLevel == Level.INFO
@@ -213,7 +224,11 @@ class EngineLogActivity : Activity() {
                     else -> null
                 }
                 jumpHighlightLine = null
-                rebuild()
+                // Filter change: we intentionally want to start from the top of the filtered list.
+                // Cancel any in-flight restore and disable the scroll-restore inside rebuild so a
+                // stale OnPreDrawListener can't later yank the user's manual scrolling back down.
+                cancelPendingScroll()
+                rebuild(restoreScroll = false)
                 scroll.post { scroll.scrollTo(0, 0) }
                 true
             }
@@ -276,6 +291,7 @@ class EngineLogActivity : Activity() {
     }
 
     private fun showSearchDialog() {
+        uiBusy = true
         val container = layoutInflater.inflate(R.layout.dialog_engine_log_search, null)
         val inputLayout = container.findViewById<TextInputLayout>(R.id.engine_log_search_input_layout)
         val input = container.findViewById<TextInputEditText>(R.id.engine_log_search_input)
@@ -322,19 +338,29 @@ class EngineLogActivity : Activity() {
         val dialog = MaterialAlertDialogBuilder(this)
             .setTitle(R.string.engine_log_search)
             .setView(container)
-            .setNegativeButton(android.R.string.cancel, null)
+            .setNegativeButton(android.R.string.cancel) { _, _ -> clearSearch() }
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 searchQuery = input.text.toString()
                 searchCaseSensitive = caseSwitch.isChecked
                 searchRegex = regexSwitch.isChecked
             }
             .create()
+        dialog.setOnDismissListener { uiBusy = false }
         dialog.setOnShowListener {
             input.post { input.requestFocus() }
             updateMatches(0)
         }
         dialog.show()
         Md3Theme.applyDialog(dialog)
+    }
+
+    /** 取消搜索：清空查询与匹配高亮，回到普通浏览状态。 */
+    private fun clearSearch() {
+        searchQuery = ""
+        searchMatchStarts = IntArray(0)
+        searchMatchEnds = IntArray(0)
+        searchCurrentIndex = -1
+        rebuild()
     }
 
     private fun compileSearchPattern(query: String, caseSensitive: Boolean, regex: Boolean): Pattern {
@@ -347,8 +373,9 @@ class EngineLogActivity : Activity() {
         val listener = ViewTreeObserver.OnPreDrawListener {
             val layout = textView.layout ?: return@OnPreDrawListener true
             cancelPendingScroll()
-            val visualLine = layout.getLineForOffset(offset.coerceAtMost(textView.text.length))
-            val targetY = (textView.totalPaddingTop + layout.getLineTop(visualLine) - dp(24)).coerceAtLeast(0)
+        val visualLine = layout.getLineForOffset(offset.coerceAtMost(textView.text.length))
+        // getLineTop already includes TextView's top padding; don't add totalPaddingTop again.
+        val targetY = (layout.getLineTop(visualLine) - dp(24)).coerceAtLeast(0)
             scroll.postOnAnimation {
                 textView.clearFocus()
                 scroll.scrollTo(0, targetY)
@@ -434,8 +461,9 @@ class EngineLogActivity : Activity() {
         nextLineNumber = 1
         entries.clear()
         pending.setLength(0)
+        cancelPendingScroll()
         refresh()
-        rebuild()
+        rebuild(restoreScroll = false)
     }
 
     private fun refresh() {
@@ -496,35 +524,82 @@ class EngineLogActivity : Activity() {
 
     private fun classify(text: String): Level {
         val lower = text.lowercase()
-        if (lower.contains("error") || lower.contains("fatal") || lower.contains("exception") ||
-            lower.contains("unable to load") || lower.contains("failed to load")
+        // 错误：独立的 error/fatal/exception 单词，或明确的失败短语。
+        // 用 \b 避免 GL_KHR_no_error 这种扩展名被误判为错误。
+        if (ERROR_KEYWORD_PATTERN.matcher(lower).find() ||
+            lower.contains("failed to load") ||
+            lower.contains("unable to load")
         ) return Level.ERROR
-        if (lower.contains("can't find") || lower.contains("can't use") || lower.contains("missing") ||
-            lower.contains("conflicting") || lower.contains("not allowed") || lower.contains("warning") ||
-            lower.contains("doesn't exist") || lower.contains("not found") || lower.contains("multiple help strings")
+        if (lower.contains("warning:") ||
+            lower.contains("can't find") ||
+            lower.contains("can't use") ||
+            lower.contains("missing") ||
+            lower.contains("conflicting") ||
+            lower.contains("not allowed") ||
+            lower.contains("not found") ||
+            lower.contains("doesn't exist") ||
+            lower.contains("multiple help strings")
         ) return Level.WARNING
         return Level.INFO
     }
 
-    private fun timestampEnd(text: String): Int {
-        if (!text.startsWith("[")) return 0
-        val close = text.indexOf(']')
-        if (close < 0) return 0
-        var end = close + 1
-        if (end < text.length && text[end] == ' ') end++
-        return end
+    /**
+     * Applies mtsx-style token highlighting to one log line. Rules run in priority order
+     * (first match wins). Once a character range is colored, later rules never overwrite it.
+     * maxLength lets us skip overly broad matches (e.g. the entire GL_EXTENSIONS quoted list).
+     */
+    private fun applyLogTokenHighlight(builder: SpannableStringBuilder, lineStart: Int, lineEnd: Int, text: String, dark: Boolean) {
+        val n = text.length
+        if (n <= 0) return
+        val colored = BooleanArray(n)
+        for (rule in LOG_TOKEN_RULES) {
+            val matcher = rule.pattern.matcher(text)
+            val color = if (dark) rule.nightColor else rule.dayColor
+            while (matcher.find()) {
+                var rs = matcher.start()
+                val re = matcher.end()
+                if (re - rs > rule.maxLength) continue
+                if (rs >= n) break
+                // Trim to the uncolored part of this match (higher-priority rules win).
+                while (rs < re && colored[rs]) rs++
+                var e = re
+                while (e > rs && colored[e - 1]) e--
+                if (e <= rs) continue
+                for (i in rs until e) colored[i] = true
+                val absStart = lineStart + rs
+                val absEnd = lineStart + e
+                builder.setSpan(ForegroundColorSpan(color), absStart, absEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                if (rule.bold) {
+                    builder.setSpan(StyleSpan(android.graphics.Typeface.BOLD), absStart, absEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                }
+            }
+        }
     }
 
-    private fun rebuild(jumpToLine: Int? = null) {
+    private fun rebuild(jumpToLine: Int? = null, restoreScroll: Boolean = true) {
         val tokens: Md3Tokens = Md3Theme.buildTokens(this)
-        val errorColor = if (tokens.dark) 0xFFFF5252.toInt() else 0xFFD32F2F.toInt()
-        val warningColor = if (tokens.dark) 0xFFFFB300.toInt() else 0xFFF57F17.toInt()
         val builder = SpannableStringBuilder()
         val lineNumbers = ArrayList<Int>()
         val lineOffsets = ArrayList<Int>()
         val jumpHighlight = jumpHighlightLine
         val jumpBackground = if (tokens.dark) 0x55C9A227 else 0x66FFF3B0
-        val preserveLine = if (jumpToLine != null) null else if (!followTail) currentTopLine() else null
+        // Capture scroll anchor (text offset + intra-line pixel delta) so the exact visible
+        // position can be restored after the text is rebuilt (highlight toggle, wrap toggle, refresh).
+        // Decide "at bottom" from the actual scroll position rather than the followTail flag, which
+        // can be stale right after an auto-refresh grows the content.
+        //
+        // Guard: if a restore is ALREADY pending from a prior rebuild that hasn't settled yet
+        // (e.g. an auto-refresh fired while a menu-triggered rebuild's OnPreDrawListener is still
+        // active), do NOT overwrite its anchor. Otherwise the newer rebuild might capture a
+        // scrollY that has already been clamped toward the top by a relayout, and restore to the
+        // wrong place. Reusing the in-flight anchor keeps the user's position stable.
+        val useInFlight = restorePreDrawListener != null
+        val wasAtBottom = if (useInFlight) pendingRestoreBottom else {
+            val contentView = scroll.getChildAt(0)
+            val maxScroll = if (contentView == null) 0 else contentView.height - scroll.height
+            scroll.scrollY >= maxScroll - SCROLL_FOLLOW_MARGIN
+        }
+        val scrollAnchor = if (useInFlight) pendingRestoreAnchor else computeScrollAnchor()
 
         for (entry in entries) {
             if (selectedLevel != null && entry.level != selectedLevel) continue
@@ -532,20 +607,25 @@ class EngineLogActivity : Activity() {
             lineNumbers.add(entry.lineNumber)
             lineOffsets.add(start)
             builder.append(entry.text).append('\n')
+            val lineEnd = builder.length - 1
             if (jumpHighlight != null && entry.lineNumber == jumpHighlight) {
-                builder.setSpan(BackgroundColorSpan(jumpBackground), start, builder.length - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                builder.setSpan(BackgroundColorSpan(jumpBackground), start, lineEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             }
             if (highlightEnabled) {
-                val timestampEnd = timestampEnd(entry.text)
-                if (timestampEnd > 0) {
-                    builder.setSpan(ForegroundColorSpan(tokens.onSurfaceVariant), start, start + timestampEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                // 行级淡背景：一眼区分日志等级（Error 淡红、Warning 淡橙），不覆盖跳转高亮行
+                when (entry.level) {
+                    Level.ERROR -> if (jumpHighlight != entry.lineNumber) builder.setSpan(
+                        BackgroundColorSpan(if (tokens.dark) 0x1AFF5252.toInt() else 0x14D32F2F.toInt()),
+                        start, lineEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    Level.WARNING -> if (jumpHighlight != entry.lineNumber) builder.setSpan(
+                        BackgroundColorSpan(if (tokens.dark) 0x1AFFB300.toInt() else 0x14F57F17.toInt()),
+                        start, lineEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    Level.INFO -> {}
                 }
-                val color = when (entry.level) {
-                    Level.ERROR -> errorColor
-                    Level.WARNING -> warningColor
-                    Level.INFO -> tokens.onSurface
-                }
-                builder.setSpan(ForegroundColorSpan(color), start + timestampEnd, builder.length - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                // mtsx 风格 token 高亮（时间戳/错误/警告/路径/资源/数字/关键词等）
+                applyLogTokenHighlight(builder, start, lineEnd, entry.text, tokens.dark)
             }
         }
 
@@ -580,13 +660,80 @@ class EngineLogActivity : Activity() {
         updateStatus(lineNumbers.size)
         metaView.text = getString(R.string.engine_log_meta, filterLabel(), lineNumbers.size)
 
-        val scrollLine = jumpToLine ?: preserveLine
-        if (scrollLine != null) {
+        // Restore scroll position. We use a SELF-RE-ARMING OnPreDrawListener instead of a single
+        // post {} or OnGlobalLayoutListener. An OnPreDrawListener fires AFTER the view hierarchy
+        // has been measured/layouted for that frame, so textView.layout is guaranteed fresh and
+        // never reports a stale lineTop of 0. We re-apply the restore on EVERY draw until:
+        //   - the anchor/bottom has actually been reached, AND
+        //   - the content height has stopped changing between consecutive passes (layout settled).
+        // This is robust against the multiple relayouts triggered by word-wrap reparenting, popup
+        // menu close, and auto-refresh growth — and it never "gives up early" on a stale layout.
+        if (!restoreScroll) {
+            // Scroll restore disabled (e.g. filter change → we reset to top separately). Make sure
+            // no stale restore listener survives.
+            removeRestoreListeners()
+        } else if (jumpToLine != null) {
             followTail = false
-            scrollToLine(scrollLine)
-        } else if (followTail && entries.isNotEmpty()) {
-            scroll.post { scroll.fullScroll(ScrollView.FOCUS_DOWN) }
+            scrollToLine(jumpToLine)
+        } else {
+            removeRestoreListeners()
+            pendingRestoreBottom = wasAtBottom
+            pendingRestoreAnchor = scrollAnchor
+            restoreLastContentHeight = -1
+            restorePreDrawListener = ViewTreeObserver.OnPreDrawListener {
+                val layout = textView.layout
+                val content = scroll.getChildAt(0)
+                val contentHeight = content?.height ?: 0
+                val layoutSettled = layout != null && contentHeight > 0 && contentHeight == restoreLastContentHeight
+                // If we still need to scroll, do it on this pass.
+                if (pendingRestoreBottom) {
+                    val maxScroll = (contentHeight - scroll.height).coerceAtLeast(0)
+                    val maxReached = layout != null && contentHeight > 0 && scroll.scrollY >= maxScroll - 1
+                    if (maxReached && layoutSettled) {
+                        removeRestoreListeners()
+                    } else {
+                        if (layout != null && contentHeight > 0) {
+                            scroll.scrollTo(0, maxScroll)
+                        }
+                        restoreLastContentHeight = contentHeight
+                    }
+                } else {
+                    val anchor = pendingRestoreAnchor
+                    if (anchor == null || layout == null) {
+                        return@OnPreDrawListener true // not ready yet; keep listener armed
+                    }
+                    val (offset, delta) = anchor
+                    val newVisualLine = layout.getLineForOffset(offset.coerceAtMost(textView.text.length))
+                    val targetY = (layout.getLineTop(newVisualLine) + delta).coerceAtLeast(0)
+                    val reached = kotlin.math.abs(targetY - scroll.scrollY) <= 1
+                    if (reached && layoutSettled) {
+                        removeRestoreListeners()
+                    } else {
+                        scroll.scrollTo(0, targetY)
+                        restoreLastContentHeight = contentHeight
+                    }
+                }
+                true
+            }
+            scroll.viewTreeObserver.addOnPreDrawListener(restorePreDrawListener)
+            textView.requestLayout()
         }
+    }
+
+    private fun removeRestoreListeners() {
+        restorePreDrawListener?.let { listener ->
+            val observer = scroll.viewTreeObserver
+            if (observer.isAlive) observer.removeOnPreDrawListener(listener)
+        }
+        restorePreDrawListener = null
+        restoreLayoutListener?.let { listener ->
+            val observer = scroll.viewTreeObserver
+            if (observer.isAlive) observer.removeOnGlobalLayoutListener(listener)
+        }
+        restoreLayoutListener = null
+        pendingRestoreAnchor = null
+        pendingRestoreBottom = false
+        restoreLastContentHeight = -1
     }
 
     private fun scrollToLine(lineNumber: Int) {
@@ -604,7 +751,8 @@ class EngineLogActivity : Activity() {
                 }
             }
             val visualLine = layout.getLineForOffset(offset.coerceAtMost(textView.text.length))
-            val targetY = (textView.totalPaddingTop + layout.getLineTop(visualLine) - dp(16)).coerceAtLeast(0)
+            // getLineTop already includes TextView's top padding.
+            val targetY = (layout.getLineTop(visualLine) - dp(16)).coerceAtLeast(0)
             scroll.postOnAnimation {
                 textView.clearFocus()
                 scroll.scrollTo(0, targetY)
@@ -623,10 +771,31 @@ class EngineLogActivity : Activity() {
         }
         scrollPreDrawListener = null
         pendingScrollLine = null
+        removeRestoreListeners()
+    }
+
+    /**
+     * Captures the exact currently-visible position as a (textOffset, intraLineDelta) pair.
+     * textOffset is the character offset of the topmost visible visual line; intraLineDelta is
+     * how far the actual scroll position is below that visual line's top (for partially-scrolled
+     * lines). After a rebuild we re-locate the same textOffset in the new layout, which keeps the
+     * visible position stable even when total height or per-line heights change (e.g. word wrap toggle).
+     */
+    private fun computeScrollAnchor(): Pair<Int, Int>? {
+        val layout = textView.layout ?: return null
+        if (visibleLineNumbers.isEmpty()) return null
+        // scroll.scrollY is the in-TextView y (TextView top == 0 inside the ScrollView) and it
+        // already includes the TextView's top padding. Layout coordinates share that same origin,
+        // so pass scroll.scrollY directly without subtracting padding.
+        val y = scroll.scrollY
+        val visualLine = layout.getLineForVertical(y)
+        val offset = layout.getLineStart(visualLine).coerceAtMost(textView.text.length)
+        val delta = (y - layout.getLineTop(visualLine)).coerceAtLeast(0)
+        return offset to delta
     }
 
     private fun currentTopLine(): Int? {
-        val layout = textView.layout ?: return visibleLineNumbers.firstOrNull()
+        val layout = textView.layout ?: return null
         if (visibleLineNumbers.isEmpty()) return null
         val localY = (scroll.scrollY - textView.totalPaddingTop).coerceAtLeast(0)
         val visualLine = layout.getLineForVertical(localY)
@@ -676,5 +845,56 @@ class EngineLogActivity : Activity() {
         private const val FILTER_WARNING = 22
         private const val FILTER_INFO = 23
         private const val FILTER_ERROR = 24
+
+        /** 用于 classify()，避免 GL_KHR_no_error 这类扩展名被误判为 error。 */
+        private val ERROR_KEYWORD_PATTERN = Pattern.compile("""\b(?:error|fatal|exception)\b""")
+
+        /** One token-highlight rule, mirroring the srcenglog.mtsx grammar. */
+        private data class LogTokenRule(
+            val pattern: Pattern,
+            val dayColor: Int,
+            val nightColor: Int,
+            val bold: Boolean = false,
+            val maxLength: Int = Int.MAX_VALUE,
+        )
+
+        /**
+         * Token highlight rules in priority order (first match wins, mirroring the mtsx
+         * "contains" order: timestamp → fatal → error → warning → info → LoadLibrary →
+         * module tag → keyword → keyword2 → path → quoted resource → number).
+         */
+        private val LOG_TOKEN_RULES = listOf(
+            // 1. 时间戳 [0.1469]
+            LogTokenRule(Pattern.compile("^\\[\\d+\\.\\d+\\]"), 0xFF888888.toInt(), 0xFF666666.toInt()),
+            // 2. 致命错误（服务器关闭、断开连接、断言失败）
+            LogTokenRule(Pattern.compile("Fatal|Assertion|Server shutting down|Dropped .* from server"), 0xFFFF0000.toInt(), 0xFFCC3333.toInt(), bold = true),
+            // 3. 普通错误（Error:、unknown shader、failed to load、Unable to load）
+            LogTokenRule(Pattern.compile("Error:[^\\n]*|unknown shader|failed to load|Unable to load"), 0xFFCC0000.toInt(), 0xFFDD4444.toInt(), bold = true),
+            // 4. 警告（Warning、Can't find module、conflicting、Missing Vgui material、not allowed、not found、not loaded 等）
+            LogTokenRule(
+                Pattern.compile(
+                    "Warning:[^\\n]*|Can't find module[^\\n]*|Unable to load[^\\n]*|conflicting[^\\n]*|" +
+                    "Can't use cheat cvar[^\\n]*|Missing Vgui material[^\\n]*|not allowed[^\\n]*|" +
+                    "multiple help strings[^\\n]*|not found[^\\n]*|not loaded[^\\n]*"
+                ),
+                0xFFFF8800.toInt(), 0xFFDD7700.toInt()
+            ),
+            // 5. 正常加载/成功（loaded for、Found font、started at、SDL version、success、OK）
+            LogTokenRule(Pattern.compile("loaded for|Found font|started at|SDL version|\\bsuccess\\b|\\bOK\\b"), 0xFF008800.toInt(), 0xFF66AA66.toInt()),
+            // 6. 加载库动作 LoadLibrary:
+            LogTokenRule(Pattern.compile("LoadLibrary:[^\\n]*"), 0xFF008800.toInt(), 0xFF66AA66.toInt()),
+            // 7. 核心模块标签 [Engine]、[AppFramework]
+            LogTokenRule(Pattern.compile("\\[[A-Za-z_]+\\]"), 0xFF0055AA.toInt(), 0xFF77AADD.toInt()),
+            // 8. 图形/渲染关键词（GL_、OpenGL、Material、Shader、Texture、Vulkan）
+            LogTokenRule(Pattern.compile("GL_\\w+|OpenGL|Render|Material|Shader|\\bTexture\\b|Vulkan"), 0xFF7B1FA2.toInt(), 0xFFCE93D8.toInt()),
+            // 9. 服务器/网络关键词（SV_、CL_、Steam、server、client、tickrate、maxplayers）
+            LogTokenRule(Pattern.compile("SV_|CL_|\\bSteam\\b|\\bserver\\b|\\bclient\\b|\\btickrate\\b|\\bmaxplayers\\b"), 0xFFAD1457.toInt(), 0xFFF48FB1.toInt()),
+            // 10. 文件路径
+            LogTokenRule(Pattern.compile("/[^\\s\"]+"), 0xFF996600.toInt(), 0xFFCCAA44.toInt()),
+            // 11. 引号内资源名（超长引号跳过，避免 GL_EXTENSIONS 整段被涂成绿色）
+            LogTokenRule(Pattern.compile("\"[^\"]*\""), 0xFF22AA22.toInt(), 0xFF77CC77.toInt(), maxLength = 120),
+            // 12. 数字（浮点/整数）
+            LogTokenRule(Pattern.compile("\\b\\d+(?:\\.\\d+)?\\b"), 0xFF0055CC.toInt(), 0xFF8899DD.toInt()),
+        )
     }
 }

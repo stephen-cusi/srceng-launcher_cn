@@ -57,15 +57,29 @@ class EngineLogTextView @JvmOverloads constructor(
         canvas.drawRect(0f, 0f, gutterWidth.toFloat(), height.toFloat(), gutterPaint)
         canvas.drawLine(gutterWidth.toFloat(), 0f, gutterWidth.toFloat(), height.toFloat(), dividerPaint)
         val textLayout = layout
-        if (textLayout != null && sourceLines.size == sourceOffsets.size) {
+        if (textLayout != null && sourceLines.size == sourceOffsets.size && sourceLines.isNotEmpty()) {
             val clip = canvas.clipBounds
-            for (index in sourceLines.indices) {
+            // 只遍历当前可见区间的行号，而不是全部日志行（最多 2 万行）。
+            // sourceOffsets 单调递增，对应的 visualLine 也单调，用二分定位首行。
+            val firstVis = textLayout.getLineForVertical(clip.top)
+            val lastVis = textLayout.getLineForVertical(clip.bottom)
+            var lo = 0
+            var hi = sourceOffsets.size
+            while (lo < hi) {
+                val mid = (lo + hi) ushr 1
+                val v = textLayout.getLineForOffset(sourceOffsets[mid].coerceIn(0, text.length))
+                if (v < firstVis) lo = mid + 1 else hi = mid
+            }
+            var index = lo
+            while (index < sourceOffsets.size) {
                 val offset = sourceOffsets[index].coerceIn(0, text.length)
                 val visualLine = textLayout.getLineForOffset(offset)
+                if (visualLine > lastVis) break
                 val baseline = totalPaddingTop + textLayout.getLineBaseline(visualLine)
                 if (baseline >= clip.top - linePaint.textSize && baseline <= clip.bottom + linePaint.textSize) {
                     canvas.drawText(sourceLines[index].toString(), gutterWidth - dpF(10), baseline.toFloat(), linePaint)
                 }
+                index++
             }
         }
         super.onDraw(canvas)
