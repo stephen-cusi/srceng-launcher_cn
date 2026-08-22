@@ -164,6 +164,15 @@
     <string name="vpk_create_version">출력 형식</string>
     <string name="vpk_version_1">VPK1</string>
     <string name="vpk_version_2">VPK2</string>
+    <string name="vpk_chunk_size_title">청크 크기(분할 보관)</string>
+    <string name="vpk_chunk_none">단일 파일(분할 안 함)</string>
+    <string name="vpk_chunk_200">200 MB(Valve 기본값)</string>
+    <string name="vpk_chunk_512">512 MB</string>
+    <string name="vpk_chunk_1gb">1 GB</string>
+    <string name="vpk_chunk_custom">사용자 지정…</string>
+    <string name="vpk_chunk_custom_title">사용자 지정 청크 크기(MB)</string>
+    <string name="vpk_chunk_custom_hint">예: 200</string>
+    <string name="vpk_chunk_invalid">1~2048 사이의 값을 입력하세요(MB).</string>
     <string name="vpk_ready">작업을 선택하세요.</string>
     <string name="vpk_reading">VPK 읽는 중…</string>
     <string name="vpk_creating">VPK 만드는 중…</string>
@@ -183,6 +192,7 @@
     <string name="vpk_picker_empty">파일 또는 폴더를 하나 이상 선택하세요.</string>
     <string name="vpk_picker_unreadable">이 폴더를 읽을 수 없습니다.</string>
     <string name="vpk_output_name">출력 VPK 이름</string>
+    <string name="vpk_output_chunked_hint">%1$s_dir.vpk 인덱스 파일과 %1$s_000.vpk, %1$s_001.vpk… 데이터 청크가 생성됩니다.</string>
     <string name="vpk_output_name_invalid">올바른 파일 이름을 입력하세요.</string>
     <string name="vpk_create_done_path">VPK 버전 %1$d 생성 위치: %2$s</string>
     <string name="vpk_file_manager">VPK 및 GMA 파일 관리자</string><string name="vpk_manager_folder">폴더 · 탭하여 열기</string><string name="vpk_manager_archive">VPK 아카이브 · %1$s</string><string name="gma_manager_archive">GMA 아카이브 · %1$s</string><string name="vpk_folder_empty">이 폴더는 비어 있습니다.</string>

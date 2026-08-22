@@ -164,6 +164,15 @@
     <string name="vpk_create_version">Format de sortie</string>
     <string name="vpk_version_1">VPK1</string>
     <string name="vpk_version_2">VPK2</string>
+    <string name="vpk_chunk_size_title">Taille des morceaux (archive fractionnée)</string>
+    <string name="vpk_chunk_none">Fichier unique (non fractionné)</string>
+    <string name="vpk_chunk_200">200 Mo (par défaut Valve)</string>
+    <string name="vpk_chunk_512">512 Mo</string>
+    <string name="vpk_chunk_1gb">1 Go</string>
+    <string name="vpk_chunk_custom">Personnalisé…</string>
+    <string name="vpk_chunk_custom_title">Taille personnalisée (Mo)</string>
+    <string name="vpk_chunk_custom_hint">ex. 200</string>
+    <string name="vpk_chunk_invalid">Saisissez une taille entre 1 et 2048 Mo.</string>
     <string name="vpk_ready">Choisissez une action.</string>
     <string name="vpk_reading">Lecture du VPK…</string>
     <string name="vpk_creating">Création du VPK…</string>
@@ -183,6 +192,7 @@
     <string name="vpk_picker_empty">Sélectionnez au moins un fichier ou dossier.</string>
     <string name="vpk_picker_unreadable">Impossible de lire ce dossier.</string>
     <string name="vpk_output_name">Nom du VPK de sortie</string>
+    <string name="vpk_output_chunked_hint">L'archive sera écrite en %1$s_dir.vpk plus des morceaux numérotés %1$s_000.vpk, %1$s_001.vpk, …</string>
     <string name="vpk_output_name_invalid">Saisissez un nom de fichier valide.</string>
     <string name="vpk_create_done_path">VPK version %1$d créé dans %2$s</string>
     <string name="vpk_file_manager">Gestionnaire de fichiers VPK et GMA</string><string name="vpk_manager_folder">Dossier · Touchez pour ouvrir</string><string name="vpk_manager_archive">Archive VPK · %1$s</string><string name="gma_manager_archive">Archive GMA · %1$s</string><string name="vpk_folder_empty">Ce dossier est vide.</string>

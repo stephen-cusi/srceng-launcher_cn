@@ -164,6 +164,15 @@
     <string name="vpk_create_version">出力形式</string>
     <string name="vpk_version_1">VPK1</string>
     <string name="vpk_version_2">VPK2</string>
+    <string name="vpk_chunk_size_title">チャンクサイズ（分割アーカイブ）</string>
+    <string name="vpk_chunk_none">単一ファイル（分割なし）</string>
+    <string name="vpk_chunk_200">200 MB（Valve デフォルト）</string>
+    <string name="vpk_chunk_512">512 MB</string>
+    <string name="vpk_chunk_1gb">1 GB</string>
+    <string name="vpk_chunk_custom">カスタム…</string>
+    <string name="vpk_chunk_custom_title">カスタムチャンクサイズ（MB）</string>
+    <string name="vpk_chunk_custom_hint">例：200</string>
+    <string name="vpk_chunk_invalid">1〜2048 MB の間で入力してください。</string>
     <string name="vpk_ready">操作を選択してください。</string>
     <string name="vpk_reading">VPK を読み込み中…</string>
     <string name="vpk_creating">VPK を作成中…</string>
@@ -183,6 +192,7 @@
     <string name="vpk_picker_empty">ファイルまたはフォルダーを1つ以上選択してください。</string>
     <string name="vpk_picker_unreadable">このフォルダーは読み取れません。</string>
     <string name="vpk_output_name">出力 VPK 名</string>
+    <string name="vpk_output_chunked_hint">%1$s_dir.vpk インデックスファイルと %1$s_000.vpk、%1$s_001.vpk… のデータチャンクが生成されます。</string>
     <string name="vpk_output_name_invalid">有効なファイル名を入力してください。</string>
     <string name="vpk_create_done_path">VPK バージョン %1$d を %2$s に作成しました</string>
     <string name="vpk_file_manager">VPK・GMA ファイルマネージャー</string><string name="vpk_manager_folder">フォルダー · タップして開く</string><string name="vpk_manager_archive">VPK アーカイブ · %1$s</string><string name="gma_manager_archive">GMA アーカイブ · %1$s</string><string name="vpk_folder_empty">このフォルダーは空です。</string>

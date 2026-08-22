@@ -164,6 +164,15 @@
     <string name="vpk_create_version">Формат вывода</string>
     <string name="vpk_version_1">VPK1</string>
     <string name="vpk_version_2">VPK2</string>
+    <string name="vpk_chunk_size_title">Размер чанка (разделение архива)</string>
+    <string name="vpk_chunk_none">Один файл (без разделения)</string>
+    <string name="vpk_chunk_200">200 МБ (по умолчанию Valve)</string>
+    <string name="vpk_chunk_512">512 МБ</string>
+    <string name="vpk_chunk_1gb">1 ГБ</string>
+    <string name="vpk_chunk_custom">Вручную…</string>
+    <string name="vpk_chunk_custom_title">Размер чанка вручную (МБ)</string>
+    <string name="vpk_chunk_custom_hint">напр. 200</string>
+    <string name="vpk_chunk_invalid">Введите значение от 1 до 2048 МБ.</string>
     <string name="vpk_ready">Выберите действие.</string>
     <string name="vpk_reading">Чтение VPK…</string>
     <string name="vpk_creating">Создание VPK…</string>
@@ -183,6 +192,7 @@
     <string name="vpk_picker_empty">Выберите хотя бы один файл или папку.</string>
     <string name="vpk_picker_unreadable">Эту папку невозможно прочитать.</string>
     <string name="vpk_output_name">Имя выходного VPK</string>
+    <string name="vpk_output_chunked_hint">Архив будет записан как %1$s_dir.vpk плюс нумерованные файлы данных %1$s_000.vpk, %1$s_001.vpk, …</string>
     <string name="vpk_output_name_invalid">Введите допустимое имя файла.</string>
     <string name="vpk_create_done_path">VPK версии %1$d создан: %2$s</string>
     <string name="vpk_file_manager">Файловый менеджер VPK и GMA</string><string name="vpk_manager_folder">Папка · Нажмите, чтобы открыть</string><string name="vpk_manager_archive">Архив VPK · %1$s</string><string name="gma_manager_archive">Архив GMA · %1$s</string><string name="vpk_folder_empty">Эта папка пуста.</string>
