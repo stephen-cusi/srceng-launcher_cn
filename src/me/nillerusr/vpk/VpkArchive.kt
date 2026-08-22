@@ -332,15 +332,18 @@ object VpkWriter {
         val file: File? = null,
         var size: Long = 0,
         var crc: Long = 0,
-        var offset: Long = 0
+        var offset: Long = 0,
+        var archiveIndex: Int = EMBEDDED_INDEX
     )
 
     fun create(
         inputPaths: List<File>,
         output: File,
         version: Int,
-        progress: (Int, Int, String) -> Unit
+        progress: (Int, Int, String) -> Unit,
+        chunkSizeMb: Int? = null
     ) {
+        require(chunkSizeMb == null || chunkSizeMb > 0) { "Invalid chunk size: $chunkSizeMb MB" }
         val outputPath = output.canonicalPath
         val sources = ArrayList<Source>()
         inputPaths.distinctBy { it.canonicalPath }.forEach { input ->
@@ -352,7 +355,7 @@ object VpkWriter {
                 sources += Source(input.name, file = input)
             }
         }
-        createFromSources(null, sources.sortedBy { it.path.lowercase(Locale.ROOT) }, null, output, version, progress)
+        createFromSources(null, sources.sortedBy { it.path.lowercase(Locale.ROOT) }, null, output, version, chunkSizeMb, progress)
     }
 
     fun create(
@@ -363,7 +366,7 @@ object VpkWriter {
         progress: (Int, Int, String) -> Unit
     ) {
         val sources = collectSources(resolver, inputTree, output).sortedBy { it.path.lowercase(Locale.ROOT) }
-        createFromSources(resolver, sources, output, null, version, progress)
+        createFromSources(resolver, sources, output, null, version, null, progress)
     }
 
     fun create(
@@ -378,7 +381,7 @@ object VpkWriter {
             validateFileName(name)
             Source(name, uri = uri)
         }.sortedBy { it.path.lowercase(Locale.ROOT) }
-        createFromSources(resolver, sources, output, null, version, progress)
+        createFromSources(resolver, sources, output, null, version, null, progress)
     }
 
     fun create(
@@ -392,7 +395,7 @@ object VpkWriter {
         val sources = ArrayList<Source>()
         sources += collectSources(resolver, inputTree, output)
         sources += collectFileSources(resolver, inputFiles, output)
-        createFromSources(resolver, sources.sortedBy { it.path.lowercase(Locale.ROOT) }, output, null, version, progress)
+        createFromSources(resolver, sources.sortedBy { it.path.lowercase(Locale.ROOT) }, output, null, version, null, progress)
     }
 
     private fun createFromSources(
@@ -401,6 +404,7 @@ object VpkWriter {
         output: Uri?,
         outputFile: File?,
         version: Int,
+        chunkSizeMb: Int?,
         progress: (Int, Int, String) -> Unit
     ) {
         require(version == 1 || version == 2)
@@ -425,9 +429,27 @@ object VpkWriter {
             source.crc = crc.value
             progress(index + 1, sources.size * 2, source.path)
         }
+        val chunkSize = chunkSizeMb?.let { it * 1024L * 1024L }
+        if (chunkSize == null) {
+            createSingleFile(resolver, sources, output, outputFile, version, progress)
+        } else {
+            createChunked(resolver, sources, outputFile, version, chunkSize, progress)
+        }
+    }
+
+    /** 单文件 VPK：所有数据内嵌在输出文件里（archiveIndex = EMBEDDED_INDEX）。 */
+    private fun createSingleFile(
+        resolver: ContentResolver?,
+        sources: List<Source>,
+        output: Uri?,
+        outputFile: File?,
+        version: Int,
+        progress: (Int, Int, String) -> Unit
+    ) {
         var offset = 0L
         sources.forEach { source ->
             source.offset = offset
+            source.archiveIndex = EMBEDDED_INDEX
             offset += source.size
             require(offset <= 0xffffffffL) { "Embedded VPK data exceeds 4 GiB" }
         }
@@ -437,13 +459,7 @@ object VpkWriter {
             ?: resolver?.openOutputStream(output ?: error("Missing output URI"), "wt")
         rawOutput?.use { openedOutput ->
             BufferedOutputStream(openedOutput).use { stream ->
-                stream.writeU32(SIGNATURE)
-                stream.writeU32(version.toLong())
-                stream.writeU32(tree.size.toLong())
-                if (version == 2) {
-                    stream.writeU32(offset)
-                    repeat(3) { stream.writeU32(0) }
-                }
+                writeHeader(stream, version, tree.size.toLong(), if (version == 2) offset else 0L)
                 stream.write(tree)
                 sources.forEachIndexed { index, source ->
                     openSource(resolver, source).use { input -> input.copyTo(stream, BUFFER_SIZE) }
@@ -451,6 +467,90 @@ object VpkWriter {
                 }
             }
         } ?: error("Cannot create output VPK")
+    }
+
+    /**
+     * 分卷（multi-chunk）VPK：数据按 chunkSize 拆分写入 base_000.vpk / base_001.vpk …，
+     * 索引写入 base_dir.vpk。单个文件不跨分卷：放不下当前分卷就开新分卷，
+     * 超大文件独占一个新分卷（与 Valve vpk.exe 行为一致）。
+     */
+    private fun createChunked(
+        resolver: ContentResolver?,
+        sources: List<Source>,
+        outputFile: File?,
+        version: Int,
+        chunkSize: Long,
+        progress: (Int, Int, String) -> Unit
+    ) {
+        val requestedFile = outputFile ?: error("Chunked VPK requires a file output path")
+        val dir = requestedFile.parentFile ?: error("Missing output directory")
+        // 索引文件按 Valve 规范命名为 <base>_dir.vpk（输入 pak01.vpk 或 pak01_dir.vpk 都归一为 pak01）
+        var baseName = requestedFile.name
+        if (baseName.lowercase(Locale.ROOT).endsWith(".vpk")) baseName = baseName.dropLast(4)
+        if (baseName.lowercase(Locale.ROOT).endsWith("_dir")) baseName = baseName.dropLast(4)
+        if (baseName.isEmpty()) error("Invalid output VPK name")
+        val dirFile = File(dir, "${baseName}_dir.vpk")
+        // 1) 分配：每个 source 落到哪个分卷、分卷内偏移
+        var archiveIndex = 0
+        var offset = 0L
+        sources.forEach { source ->
+            if (offset > 0 && offset + source.size > chunkSize) {
+                archiveIndex++
+                offset = 0L
+            }
+            source.archiveIndex = archiveIndex
+            source.offset = offset
+            offset += source.size
+            require(offset <= 0xffffffffL) { "Chunk exceeds 4 GiB: ${source.path}" }
+        }
+        // 2) 写各数据分卷
+        val chunkCount = archiveIndex + 1
+        val chunkFiles = ArrayList<File>(chunkCount)
+        var currentIndex = -1
+        var currentStream: BufferedOutputStream? = null
+        try {
+            sources.forEachIndexed { index, source ->
+                if (source.archiveIndex != currentIndex) {
+                    currentStream?.close()
+                    currentIndex = source.archiveIndex
+                    val chunkFile = File(dir, String.format(Locale.ROOT, "%s_%03d.vpk", baseName, currentIndex))
+                    chunkFiles += chunkFile
+                    currentStream = BufferedOutputStream(FileOutputStream(chunkFile))
+                }
+                val stream = currentStream ?: error("Missing chunk stream")
+                openSource(resolver, source).use { input -> input.copyTo(stream, BUFFER_SIZE) }
+                progress(sources.size + index + 1, sources.size * 2, source.path)
+            }
+            currentStream?.close()
+            currentStream = null
+        } catch (error: Throwable) {
+            currentStream?.close()
+            chunkFiles.forEach { it.delete() }
+            throw error
+        }
+        // 3) 写 dir 索引文件（无内嵌数据）
+        val tree = buildTree(sources)
+        require(tree.size.toLong() <= 0xffffffffL) { "VPK directory tree is too large" }
+        try {
+            BufferedOutputStream(FileOutputStream(dirFile)).use { stream ->
+                writeHeader(stream, version, tree.size.toLong(), 0L)
+                stream.write(tree)
+            }
+        } catch (error: Throwable) {
+            chunkFiles.forEach { it.delete() }
+            dirFile.delete()
+            throw error
+        }
+    }
+
+    private fun writeHeader(stream: BufferedOutputStream, version: Int, treeSize: Long, dataSize: Long) {
+        stream.writeU32(SIGNATURE)
+        stream.writeU32(version.toLong())
+        stream.writeU32(treeSize)
+        if (version == 2) {
+            stream.writeU32(dataSize)
+            repeat(3) { stream.writeU32(0) }
+        }
     }
 
     private fun openSource(resolver: ContentResolver?, source: Source): InputStream =
@@ -562,7 +662,7 @@ object VpkWriter {
                     output.writeCString(item.base)
                     output.writeU32(item.source.crc)
                     output.writeU16(0)
-                    output.writeU16(EMBEDDED_INDEX)
+                    output.writeU16(item.source.archiveIndex)
                     output.writeU32(item.source.offset)
                     output.writeU32(item.source.size)
                     output.writeU16(TERMINATOR)

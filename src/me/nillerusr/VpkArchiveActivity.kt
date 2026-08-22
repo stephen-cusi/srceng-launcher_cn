@@ -185,6 +185,7 @@ class VpkArchiveActivity : Activity() {
     private fun addEntry(item: Item) {
         val row = layoutInflater.inflate(R.layout.vpk_file_picker_entry, body, false)
         bindPressAnimation(row)
+        val iconContainer = row.findViewById<View>(R.id.vpk_picker_icon_container)
         val icon = row.findViewById<ImageView>(R.id.vpk_picker_icon)
         val trailing = row.findViewById<ImageView>(R.id.vpk_picker_trailing)
         val selectionIndicator = row.findViewById<View>(R.id.vpk_picker_selection)
@@ -196,6 +197,8 @@ class VpkArchiveActivity : Activity() {
         icon.visibility = View.VISIBLE
         trailing.visibility = if (!selecting && item.directory) View.VISIBLE else View.GONE
         icon.setImageResource(if (item.directory) R.drawable.ic_vpk_folder else R.drawable.ic_vpk_file)
+        iconContainer.tag = if (item.directory) "folder_container" else "file_container"
+        icon.tag = if (item.directory) "folder_icon" else "file_icon"
         val checked = item.path in selected
         selectionIndicator.tag = if (checked) "selection_checked" else "selection_unchecked"
         selectionCheck.visibility = if (checked) View.VISIBLE else View.INVISIBLE
@@ -261,6 +264,7 @@ class VpkArchiveActivity : Activity() {
             }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
+            .also { Md3Theme.applyDialog(it) }
     }
 
     @Deprecated("Uses the classic activity result callback")
@@ -328,6 +332,7 @@ class VpkArchiveActivity : Activity() {
                 }
             }
             dialog.show()
+            Md3Theme.applyDialog(dialog)
         }
         ask(0)
     }
@@ -676,6 +681,7 @@ class VpkArchiveActivity : Activity() {
                         .setMessage(error.message ?: error.toString())
                         .setPositiveButton(android.R.string.ok, null)
                         .show()
+                        .also { Md3Theme.applyDialog(it) }
                 }
             } finally {
                 runOnUiThread { setBusy(false) }

@@ -167,6 +167,15 @@
     <string name="vpk_create_version">Output format</string>
     <string name="vpk_version_1">VPK version 1</string>
     <string name="vpk_version_2">VPK version 2</string>
+    <string name="vpk_chunk_size_title">Chunk size (split archive)</string>
+    <string name="vpk_chunk_none">Single file (no split)</string>
+    <string name="vpk_chunk_200">200 MB (Valve default)</string>
+    <string name="vpk_chunk_512">512 MB</string>
+    <string name="vpk_chunk_1gb">1 GB</string>
+    <string name="vpk_chunk_custom">Custom…</string>
+    <string name="vpk_chunk_custom_title">Custom chunk size (MB)</string>
+    <string name="vpk_chunk_custom_hint">e.g. 200</string>
+    <string name="vpk_chunk_invalid">Enter a size between 1 and 2048 MB.</string>
     <string name="vpk_ready" tools:ignore="UnusedResources">Choose an action to begin.</string>
     <string name="vpk_reading">Reading VPK…</string>
     <string name="vpk_creating">Creating VPK…</string>
@@ -186,6 +195,7 @@
     <string name="vpk_picker_empty" tools:ignore="UnusedResources">Select at least one file or folder.</string>
     <string name="vpk_picker_unreadable">This directory cannot be read.</string>
     <string name="vpk_output_name">Output VPK name</string>
+    <string name="vpk_output_chunked_hint">The archive is written as %1$s_dir.vpk plus numbered %1$s_000.vpk, %1$s_001.vpk, … data chunks.</string>
     <string name="vpk_output_name_invalid">Enter a valid file name.</string>
     <string name="vpk_create_done_path" tools:ignore="UnusedResources">Created VPK version %1$d at %2$s</string>
     <string name="vpk_default_filename" translatable="false">pak01.vpk</string>

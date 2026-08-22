@@ -13,7 +13,6 @@ import android.view.View
 import android.view.HapticFeedbackConstants
 import android.widget.Button
 import android.widget.CheckBox
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -22,6 +21,8 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.valvesoftware.source.R
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
@@ -454,6 +455,7 @@ class VpkToolActivity : Activity() {
                 }
             }
             .show()
+            .also { Md3Theme.applyDialog(it) }
     }
 
     private fun deleteItem(file: File): Boolean {
@@ -466,13 +468,72 @@ class VpkToolActivity : Activity() {
         val labels = arrayOf(getString(R.string.vpk_version_1), getString(R.string.vpk_version_2))
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.vpk_create_version)
-            .setItems(labels) { _, index -> chooseOutputName(inputs, index + 1) }
+            .setItems(labels) { _, index -> chooseChunkSize(inputs, index + 1) }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
+            .also { Md3Theme.applyDialog(it) }
     }
 
-    private fun chooseOutputName(inputs: List<File>, version: Int) {
-        val name = EditText(this).apply {
+    private fun chooseChunkSize(inputs: List<File>, version: Int) {
+        val labels = arrayOf(
+            getString(R.string.vpk_chunk_none),
+            getString(R.string.vpk_chunk_200),
+            getString(R.string.vpk_chunk_512),
+            getString(R.string.vpk_chunk_1gb),
+            getString(R.string.vpk_chunk_custom)
+        )
+        val sizes = arrayOf<Int?>(null, 200, 512, 1024, null)
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.vpk_chunk_size_title)
+            .setItems(labels) { _, index ->
+                if (index == sizes.size - 1) promptChunkSize(inputs, version)
+                else chooseOutputName(inputs, version, sizes[index])
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+            .also { Md3Theme.applyDialog(it) }
+    }
+
+    private fun promptChunkSize(inputs: List<File>, version: Int) {
+        val layout = layoutInflater.inflate(R.layout.dialog_text_input, null)
+        val inputLayout = layout.findViewById<TextInputLayout>(R.id.dialog_text_input_layout).apply {
+            hint = getString(R.string.vpk_chunk_custom_hint)
+        }
+        val input = layout.findViewById<TextInputEditText>(R.id.dialog_text_input).apply {
+            inputType = InputType.TYPE_CLASS_NUMBER
+            isSingleLine = true
+        }
+        val container = android.widget.FrameLayout(this).apply {
+            setPadding(dp(24), 0, dp(24), 0)
+            addView(layout)
+        }
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.vpk_chunk_custom_title)
+            .setView(container)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(android.R.string.ok, null)
+            .create()
+        dialog.setOnShowListener {
+            dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val mb = input.text.toString().trim().toIntOrNull()
+                if (mb == null || mb <= 0 || mb > MAX_CHUNK_MB) {
+                    inputLayout.error = getString(R.string.vpk_chunk_invalid)
+                    return@setOnClickListener
+                }
+                dialog.dismiss()
+                chooseOutputName(inputs, version, mb)
+            }
+        }
+        dialog.show()
+        Md3Theme.applyDialog(dialog)
+    }
+
+    private fun chooseOutputName(inputs: List<File>, version: Int, chunkSizeMb: Int?) {
+        val layout = layoutInflater.inflate(R.layout.dialog_text_input, null)
+        val inputLayout = layout.findViewById<TextInputLayout>(R.id.dialog_text_input_layout).apply {
+            hint = getString(R.string.vpk_output_name)
+        }
+        val name = layout.findViewById<TextInputEditText>(R.id.dialog_text_input).apply {
             setText(R.string.vpk_default_filename)
             selectAll()
             inputType = InputType.TYPE_CLASS_TEXT
@@ -480,26 +541,41 @@ class VpkToolActivity : Activity() {
         }
         val container = android.widget.FrameLayout(this).apply {
             setPadding(dp(24), 0, dp(24), 0)
-            addView(name)
+            addView(layout)
         }
-        val dialog = MaterialAlertDialogBuilder(this)
+        val builder = MaterialAlertDialogBuilder(this)
             .setTitle(R.string.vpk_output_name)
             .setView(container)
             .setNegativeButton(android.R.string.cancel, null)
             .setPositiveButton(android.R.string.ok, null)
-            .create()
+        if (chunkSizeMb != null) {
+            val hintBase = getString(R.string.vpk_default_filename).trim().let {
+                if (it.lowercase(Locale.ROOT).endsWith(".vpk")) it.dropLast(4) else it
+            }
+            builder.setMessage(getString(R.string.vpk_output_chunked_hint, hintBase))
+        }
+        val dialog = builder.create()
         dialog.setOnShowListener {
             dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 var fileName = name.text.toString().trim()
                 if (!fileName.lowercase(Locale.ROOT).endsWith(".vpk")) fileName += ".vpk"
                 val output = File(currentDirectory, fileName)
-                if (fileName == ".vpk" || fileName.contains('/') || fileName.contains('\\') || output.exists()) {
-                    name.error = getString(if (output.exists()) R.string.vpk_output_exists else R.string.vpk_output_name_invalid)
+                val exists = when {
+                    chunkSizeMb == null -> output.exists()
+                    else -> {
+                        var base = fileName.dropLast(4)
+                        if (base.lowercase(Locale.ROOT).endsWith("_dir")) base = base.dropLast(4)
+                        File(currentDirectory, "${base}_dir.vpk").exists() ||
+                            File(currentDirectory, String.format(Locale.ROOT, "%s_000.vpk", base)).exists()
+                    }
+                }
+                if (fileName == ".vpk" || fileName.contains('/') || fileName.contains('\\') || exists) {
+                    inputLayout.error = getString(if (exists) R.string.vpk_output_exists else R.string.vpk_output_name_invalid)
                     return@setOnClickListener
                 }
                 dialog.dismiss()
                 runTask(R.string.vpk_creating) {
-                    VpkWriter.create(inputs, output, version, ::updateProgress)
+                    VpkWriter.create(inputs, output, version, ::updateProgress, chunkSizeMb)
                     runOnUiThread {
                         selected.clear()
                         selectionMode = false
@@ -510,6 +586,7 @@ class VpkToolActivity : Activity() {
             }
         }
         dialog.show()
+        Md3Theme.applyDialog(dialog)
     }
 
     private fun selectedFiles(): List<File> = selected.map(::File).sortedBy { it.path.length }.filter { candidate ->
@@ -534,6 +611,7 @@ class VpkToolActivity : Activity() {
                         .setMessage(error.message ?: error.toString())
                         .setPositiveButton(android.R.string.ok, null)
                         .show()
+                        .also { Md3Theme.applyDialog(it) }
                 }
             } finally {
                 runOnUiThread { setBusy(false) }
@@ -595,6 +673,7 @@ class VpkToolActivity : Activity() {
     companion object {
         private const val BUFFER_SIZE = 64 * 1024
         private const val REQUEST_ARCHIVE = 1002
+        private const val MAX_CHUNK_MB = 2048
         const val EXTRA_PICK_DIRECTORY = "vpk_pick_directory"
         const val EXTRA_START_DIRECTORY = "vpk_start_directory"
         const val EXTRA_SELECTED_DIRECTORY = "vpk_selected_directory"
