@@ -88,6 +88,7 @@ open class LauncherActivity : Activity() {
     private var cachedDynamic = false
     private var cachedSeedColor = Md3Theme.SEED_PRESETS[0]
     private var cachedUiLang = Md3Theme.UI_LANG_SYSTEM
+    private var startupUpdateCheckStarted = false
 
     open fun applyPermissions(permissions: Array<String>, code: Int) {
         val requestPermissions = ArrayList<String>()
@@ -214,6 +215,52 @@ open class LauncherActivity : Activity() {
             ),
             REQUEST_PERMISSIONS
         )
+
+        checkForStartupUpdate()
+    }
+
+    private fun checkForStartupUpdate() {
+        if (startupUpdateCheckStarted) return
+        startupUpdateCheckStarted = true
+
+        val preferences = getSharedPreferences("mod", 0)
+        val channel = preferences.getString(UpdateSystem.PREF_CHANNEL, UpdateSystem.CHANNEL_STABLE)
+            ?: UpdateSystem.CHANNEL_STABLE
+        val mirror = preferences.getString(UpdateSystem.PREF_MIRROR, UpdateSystem.MIRROR_AUTO)
+            ?: UpdateSystem.MIRROR_AUTO
+
+        UpdateSystem(this, channel, mirror, object : UpdateSystem.Callback {
+            override fun onUpdateResult(result: UpdateSystem.Result) {
+                if (!result.success || !result.published || !result.available || isFinishing) return
+                showStartupUpdateDialog(result)
+            }
+        }).execute()
+    }
+
+    private fun showStartupUpdateDialog(result: UpdateSystem.Result) {
+        val padding = (24 * resources.displayMetrics.density).toInt()
+        val content = TextView(this).apply {
+            setPadding(padding, 0, padding, padding)
+            movementMethod = LinkMovementMethod.getInstance()
+        }
+        Markwon.builder(this).build().setMarkdown(content, result.changelog.orEmpty())
+        val changelog = ScrollView(this).apply {
+            addView(content)
+        }
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(R.string.md3_update_available, result.versionName))
+            .setView(changelog)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(R.string.md3_update_download) { _, _ ->
+                try {
+                    startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse(result.apkUrl)))
+                } catch (_: Throwable) {
+                    Toast.makeText(this, R.string.md3_update_open_failed, Toast.LENGTH_LONG).show()
+                }
+            }
+            .show()
+            .also { Md3Theme.applyDialog(it) }
     }
 
     /** MD3 Expressive 动效：主操作按压回弹 + 首屏元素错峰弹入。 */
