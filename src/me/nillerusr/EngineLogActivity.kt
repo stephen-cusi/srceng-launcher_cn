@@ -376,11 +376,11 @@ class EngineLogActivity : Activity() {
         val visualLine = layout.getLineForOffset(offset.coerceAtMost(textView.text.length))
         // getLineTop already includes TextView's top padding; don't add totalPaddingTop again.
         val targetY = (layout.getLineTop(visualLine) - dp(24)).coerceAtLeast(0)
-            scroll.postOnAnimation {
-                textView.clearFocus()
-                scroll.scrollTo(0, targetY)
-            }
-            true
+        scroll.postOnAnimation {
+            textView.clearFocus()
+            scroll.scrollTo(0, targetY)
+        }
+        true
         }
         scrollPreDrawListener = listener
         textView.viewTreeObserver.addOnPreDrawListener(listener)
