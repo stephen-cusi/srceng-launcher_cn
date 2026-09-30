@@ -64,15 +64,11 @@ open class DirchActivity : Activity() {
 
         body.removeAllViews()
         val inflater = layoutInflater
-        val appDataPath = try {
-            filesDir.canonicalPath
-        } catch (_: IOException) {
-            filesDir.absolutePath
+        directory.parentFile?.let { parent ->
+            val parentReadable = parent.isDirectory &&
+                parent.listFiles(FileFilter { it.isDirectory }) != null
+            if (parentReadable) addDirectoryView(inflater, "..", parent.absolutePath)
         }
-        if (canonicalPath != appDataPath) {
-            addDirectoryView(inflater, "⭐ " + getString(R.string.srceng_dir_app_data), filesDir.absolutePath)
-        }
-        directory.parentFile?.let { addDirectoryView(inflater, "..", it.absolutePath) }
         for (child in directories) addDirectoryView(inflater, child.name, child.absolutePath)
         Md3Theme.applyAfterSetContentView(this)
         scroll.post { scroll.scrollTo(0, scrollPositions[canonicalPath] ?: 0) }
