@@ -40,6 +40,14 @@
     <string name="srceng_dir_current_path">Carpeta actual: %1$s</string>
     <string name="srceng_dir_unreadable">No se puede abrir esta carpeta</string>
     <string name="srceng_dir_app_data">Datos privados de la aplicación</string>
+    <string name="addon_manager">Gestor de addons</string>
+    <string name="addon_manager_desc">Activa o desactiva los addons de la carpeta hl2sb/addons (carpetas y archivos .gma).</string>
+    <string name="addon_manager_empty">No hay addons en la carpeta addons.</string>
+    <string name="addon_manager_saved">addons_disabled.txt guardado</string>
+    <string name="addon_manager_save_failed">Error al escribir addons_disabled.txt</string>
+    <string name="addon_manager_load_failed">No se pudo leer la carpeta addons. Comprueba la ruta del juego en la pantalla principal.</string>
+    <string name="addon_manager_hint">Los addons desactivados no se montan; los cambios se aplican en el próximo inicio del juego.</string>
+    <string name="addon_manager_gma">Archivo de addon GMA</string>
     <string name="srceng_update">¡Actualización disponible!</string>
     <string name="srceng_launcher_error_find_platform">¡Falta la carpeta platform!</string>
 

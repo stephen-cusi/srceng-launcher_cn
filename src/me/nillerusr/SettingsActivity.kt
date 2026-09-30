@@ -538,6 +538,9 @@ open class SettingsActivity : Activity() {
         optFind<View>(R.id.md3_engine_log_tool)?.setOnClickListener {
             startActivity(Intent(this, EngineLogActivity::class.java))
         }
+        optFind<View>(R.id.md3_addon_manager_tool)?.setOnClickListener {
+            startActivity(Intent(this, AddonManagerActivity::class.java))
+        }
         optFind<View>(R.id.md3_import_game_tool)?.setOnClickListener { startGameImport() }
         resModeGroup?.setOnCheckedChangeListener { _, checkedId ->
             val mode = when (checkedId) {

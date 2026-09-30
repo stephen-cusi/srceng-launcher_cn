@@ -37,6 +37,14 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="srceng_dir_current_path">当前目录：%1$s</string>
     <string name="srceng_dir_unreadable">无法打开此目录</string>
     <string name="srceng_dir_app_data">应用私有数据目录</string>
+    <string name="addon_manager">插件管理</string>
+    <string name="addon_manager_desc">启用或禁用 hl2sb addons 目录中的插件（文件夹与 .gma 插件包）。</string>
+    <string name="addon_manager_empty">addons 目录中没有插件。</string>
+    <string name="addon_manager_saved">已保存 addons_disabled.txt</string>
+    <string name="addon_manager_save_failed">写入 addons_disabled.txt 失败</string>
+    <string name="addon_manager_load_failed">无法读取 addons 目录，请检查主界面的游戏资源路径。</string>
+    <string name="addon_manager_hint">禁用的插件不会被挂载，更改在下次启动游戏时生效。</string>
+    <string name="addon_manager_gma">GMA 插件包</string>
     <string name="srceng_update">更新可用！</string>
     <string name="srceng_app_name">HL2Box</string>
     <string name="srceng_game_hl2">半条命2</string>

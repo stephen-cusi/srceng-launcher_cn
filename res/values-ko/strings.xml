@@ -40,6 +40,14 @@
     <string name="srceng_dir_current_path">현재 폴더: %1$s</string>
     <string name="srceng_dir_unreadable">이 폴더를 열 수 없습니다</string>
     <string name="srceng_dir_app_data">앱 전용 데이터 디렉터리</string>
+    <string name="addon_manager">애드온 관리</string>
+    <string name="addon_manager_desc">hl2sb/addons 폴더의 애드온(폴더 및 .gma)을 활성화/비활성화합니다.</string>
+    <string name="addon_manager_empty">addons 폴더에 애드온이 없습니다.</string>
+    <string name="addon_manager_saved">addons_disabled.txt 저장됨</string>
+    <string name="addon_manager_save_failed">addons_disabled.txt 쓰기 실패</string>
+    <string name="addon_manager_load_failed">addons 폴더를 읽을 수 없습니다. 메인 화면의 게임 경로를 확인하세요.</string>
+    <string name="addon_manager_hint">비활성화된 애드온은 마운트되지 않으며, 변경 사항은 다음 게임 시작 시 적용됩니다.</string>
+    <string name="addon_manager_gma">GMA 애드온 아카이브</string>
     <string name="srceng_update">업데이트가 있습니다!</string>
     <string name="srceng_launcher_error_find_platform">platform 폴더가 없습니다!</string>
 

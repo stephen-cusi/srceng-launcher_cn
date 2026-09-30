@@ -40,6 +40,14 @@
     <string name="srceng_dir_current_path">Aktueller Ordner: %1$s</string>
     <string name="srceng_dir_unreadable">Dieser Ordner kann nicht geöffnet werden</string>
     <string name="srceng_dir_app_data">Privater App-Datenspeicher</string>
+    <string name="addon_manager">Addon-Verwaltung</string>
+    <string name="addon_manager_desc">Aktiviert oder deaktiviert Addons aus dem Ordner hl2sb/addons (Ordner und .gma-Archive).</string>
+    <string name="addon_manager_empty">Keine Addons im addons-Ordner gefunden.</string>
+    <string name="addon_manager_saved">addons_disabled.txt gespeichert</string>
+    <string name="addon_manager_save_failed">Schreiben von addons_disabled.txt fehlgeschlagen</string>
+    <string name="addon_manager_load_failed">addons-Ordner nicht lesbar. Bitte Spielpfad im Hauptbildschirm prüfen.</string>
+    <string name="addon_manager_hint">Deaktivierte Addons werden nicht eingebunden; Änderungen gelten beim nächsten Spielstart.</string>
+    <string name="addon_manager_gma">GMA-Addon-Archiv</string>
     <string name="srceng_update">Update verfügbar!</string>
     <string name="srceng_launcher_error_find_platform">platform-Ordner fehlt!</string>
 

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp">
+
+    <LinearLayout
+        android:id="@+id/md3_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="44dp"
+        android:paddingBottom="14dp">
+
+        <ImageButton
+            android:id="@+id/md3_button_back"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/md3_btn_icon"
+            android:contentDescription="@string/md3_back"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_arrow_back"
+            android:tag="icon" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/addon_manager"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/addon_manager_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="start"
+                android:maxLines="1"
+                android:text="@string/addon_manager_desc"
+                android:textSize="12sp"
+                android:tag="subtitle" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/addon_manager_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/md3_app_bar"
+        android:paddingBottom="8dp"
+        android:textSize="12sp"
+        android:tag="subtitle" />
+
+    <ScrollView
+        android:id="@+id/addon_manager_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/addon_manager_hint"
+        android:layout_below="@id/addon_manager_status"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/addon_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/addon_manager_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="14dp"
+        android:text="@string/addon_manager_hint"
+        android:textSize="12sp"
+        android:tag="subtitle" />
+</RelativeLayout>

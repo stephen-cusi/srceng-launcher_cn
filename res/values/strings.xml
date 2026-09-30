@@ -41,6 +41,14 @@
     <string name="srceng_dir_current_path">Current folder: %1$s</string>
     <string name="srceng_dir_unreadable">This folder cannot be opened</string>
     <string name="srceng_dir_app_data">App private data</string>
+    <string name="addon_manager">Addon manager</string>
+    <string name="addon_manager_desc">Enable or disable plugins from the hl2sb addons folder (folders and .gma archives).</string>
+    <string name="addon_manager_empty">No addons found in the addons folder.</string>
+    <string name="addon_manager_saved">Saved addons_disabled.txt</string>
+    <string name="addon_manager_save_failed">Failed to write addons_disabled.txt</string>
+    <string name="addon_manager_load_failed">Cannot read the addons folder. Check the game path in the main screen.</string>
+    <string name="addon_manager_hint">Disabled addons are not mounted; changes apply on the next game start.</string>
+    <string name="addon_manager_gma">GMA addon archive</string>
     <string name="srceng_update">Update available!</string>
     <string name="srceng_launcher_error_find_platform">platform directory is missing!</string>
 

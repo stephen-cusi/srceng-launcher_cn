@@ -40,6 +40,14 @@
     <string name="srceng_dir_current_path">Dossier actuel : %1$s</string>
     <string name="srceng_dir_unreadable">Impossible d’ouvrir ce dossier</string>
     <string name="srceng_dir_app_data">Données privées de l’application</string>
+    <string name="addon_manager">Gestion des addons</string>
+    <string name="addon_manager_desc">Activez ou désactivez les addons du dossier hl2sb/addons (dossiers et archives .gma).</string>
+    <string name="addon_manager_empty">Aucun addon dans le dossier addons.</string>
+    <string name="addon_manager_saved">addons_disabled.txt enregistré</string>
+    <string name="addon_manager_save_failed">Échec de l\'écriture d\'addons_disabled.txt</string>
+    <string name="addon_manager_load_failed">Impossible de lire le dossier addons. Vérifiez le chemin du jeu sur l\'écran principal.</string>
+    <string name="addon_manager_hint">Les addons désactivés ne sont pas montés ; les changements s\'appliquent au prochain lancement.</string>
+    <string name="addon_manager_gma">Archive d\'addon GMA</string>
     <string name="srceng_update">Mise à jour disponible!</string>
     <string name="srceng_launcher_error_find_platform">Le dossier platform est manquant!</string>
 

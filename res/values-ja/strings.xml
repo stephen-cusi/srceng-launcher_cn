@@ -40,6 +40,14 @@
     <string name="srceng_dir_current_path">現在のフォルダー: %1$s</string>
     <string name="srceng_dir_unreadable">このフォルダーを開けません</string>
     <string name="srceng_dir_app_data">アプリ専用データディレクトリ</string>
+    <string name="addon_manager">アドオン管理</string>
+    <string name="addon_manager_desc">hl2sb/addons フォルダーのアドオン（フォルダーと .gma）の有効/無効を切り替えます。</string>
+    <string name="addon_manager_empty">addons フォルダーにアドオンがありません。</string>
+    <string name="addon_manager_saved">addons_disabled.txt を保存しました</string>
+    <string name="addon_manager_save_failed">addons_disabled.txt の書き込みに失敗しました</string>
+    <string name="addon_manager_load_failed">addons フォルダーを読み取れません。メイン画面のゲームパスを確認してください。</string>
+    <string name="addon_manager_hint">無効化されたアドオンはマウントされません。変更は次回のゲーム起動時に反映されます。</string>
+    <string name="addon_manager_gma">GMA アドオンアーカイブ</string>
     <string name="srceng_update">アップデートがあります！</string>
     <string name="srceng_launcher_error_find_platform">platform フォルダが見つかりません！</string>
 

@@ -36,6 +36,14 @@
     <string name="srceng_dir_current_path">目前目錄：%1$s</string>
     <string name="srceng_dir_unreadable">無法開啟此目錄</string>
     <string name="srceng_dir_app_data">應用程式私有資料目錄</string>
+    <string name="addon_manager">插件管理</string>
+    <string name="addon_manager_desc">啟用或停用 hl2sb addons 目錄中的插件（資料夾與 .gma 插件包）。</string>
+    <string name="addon_manager_empty">addons 目錄中沒有插件。</string>
+    <string name="addon_manager_saved">已儲存 addons_disabled.txt</string>
+    <string name="addon_manager_save_failed">寫入 addons_disabled.txt 失敗</string>
+    <string name="addon_manager_load_failed">無法讀取 addons 目錄，請檢查主畫面的遊戲資源路徑。</string>
+    <string name="addon_manager_hint">停用的插件不會被掛載，變更在下次啟動遊戲時生效。</string>
+    <string name="addon_manager_gma">GMA 插件包</string>
     <string name="srceng_launcher_error_find_platform">platform 目錄遺失！</string>
 
     <!-- MD3 Settings / Appearance -->
