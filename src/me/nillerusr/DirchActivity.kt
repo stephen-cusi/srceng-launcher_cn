@@ -195,6 +195,7 @@ open class DirchActivity : Activity() {
             return
         }
 
+        addDirectoryView(layoutInflater, getString(R.string.srceng_dir_app_data), filesDir.absolutePath)
         addDirectoryView(layoutInflater, File(defaultPath).name.ifEmpty { defaultPath }, defaultPath)
         for (path in paths) addDirectoryView(layoutInflater, File(path).name.ifEmpty { path }, path)
         Md3Theme.applyAfterSetContentView(this)

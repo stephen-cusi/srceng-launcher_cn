@@ -35,6 +35,7 @@
     <string name="srceng_dir_storage_prompt">請選擇儲存位置</string>
     <string name="srceng_dir_current_path">目前目錄：%1$s</string>
     <string name="srceng_dir_unreadable">無法開啟此目錄</string>
+    <string name="srceng_dir_app_data">應用程式私有資料目錄</string>
     <string name="srceng_launcher_error_find_platform">platform 目錄遺失！</string>
 
     <!-- MD3 Settings / Appearance -->

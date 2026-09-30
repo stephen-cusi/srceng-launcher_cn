@@ -36,6 +36,7 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="srceng_dir_storage_prompt">请选择存储位置</string>
     <string name="srceng_dir_current_path">当前目录：%1$s</string>
     <string name="srceng_dir_unreadable">无法打开此目录</string>
+    <string name="srceng_dir_app_data">应用私有数据目录</string>
     <string name="srceng_update">更新可用！</string>
     <string name="srceng_app_name">HL2Box</string>
     <string name="srceng_game_hl2">半条命2</string>

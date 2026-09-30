@@ -39,6 +39,7 @@
     <string name="srceng_dir_storage_prompt">保存場所を選択</string>
     <string name="srceng_dir_current_path">現在のフォルダー: %1$s</string>
     <string name="srceng_dir_unreadable">このフォルダーを開けません</string>
+    <string name="srceng_dir_app_data">アプリ専用データディレクトリ</string>
     <string name="srceng_update">アップデートがあります！</string>
     <string name="srceng_launcher_error_find_platform">platform フォルダが見つかりません！</string>
 

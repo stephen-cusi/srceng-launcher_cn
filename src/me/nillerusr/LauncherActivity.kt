@@ -244,6 +244,9 @@ open class LauncherActivity : Activity() {
     override fun onResume() {
         super.onResume()
         if (::predictiveBack.isInitialized) predictiveBack.sync()
+        // refresh from prefs first: onPause persists this field, a stale text
+        // would silently overwrite a gamepath switch made elsewhere (import)
+        try { GamePath?.setText(mPref!!.getString("gamepath", getDefaultDir() + "/srceng")) } catch (_: Throwable) {}
         try {
             val newMode = Md3Theme.getThemeMode(this)
             val newDark = Md3Theme.resolveDark(this)
