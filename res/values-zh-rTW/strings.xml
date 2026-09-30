@@ -63,7 +63,7 @@
     <string name="md3_predictive_back">預測返回</string>
     <string name="md3_predictive_back_desc">返回手勢期間預覽目標畫面（Android 13+）</string>
     <string name="md3_section_look">視覺</string>
-    <string name="md3_title_launcher">起源引擎啟動器</string>
+    <string name="md3_title_launcher">HL2Box 啟動器</string>
     <string name="md3_game_config_card">遊戲設定</string>
     <string name="md3_paths_card">資源路徑</string>
     <string name="md3_section_updates">軟體更新</string>

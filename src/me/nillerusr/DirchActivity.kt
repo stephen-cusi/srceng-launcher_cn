@@ -64,6 +64,14 @@ open class DirchActivity : Activity() {
 
         body.removeAllViews()
         val inflater = layoutInflater
+        val appDataPath = try {
+            filesDir.canonicalPath
+        } catch (_: IOException) {
+            filesDir.absolutePath
+        }
+        if (canonicalPath != appDataPath) {
+            addDirectoryView(inflater, "⭐ " + getString(R.string.srceng_dir_app_data), filesDir.absolutePath)
+        }
         directory.parentFile?.let { addDirectoryView(inflater, "..", it.absolutePath) }
         for (child in directories) addDirectoryView(inflater, child.name, child.absolutePath)
         Md3Theme.applyAfterSetContentView(this)

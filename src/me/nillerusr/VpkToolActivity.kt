@@ -172,7 +172,7 @@ class VpkToolActivity : Activity() {
             compareBy<File> { !it.isDirectory }.thenBy { it.name.lowercase(Locale.ROOT) }
         ).orEmpty()
         currentDirectory.parentFile?.takeIf { it.canRead() }?.let(::addParentEntry)
-        if (currentDirectory.path == browserRootPath) addAppDataShortcutEntry()
+        if (currentDirectory.absolutePath != filesDir.absolutePath) addAppDataShortcutEntry()
         if (children.isEmpty()) {
             TextView(this).apply {
                 setText(R.string.vpk_folder_empty)

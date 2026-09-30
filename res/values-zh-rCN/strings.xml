@@ -70,7 +70,7 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="md3_predictive_back">预见式返回</string>
     <string name="md3_predictive_back_desc">返回手势过程中预览目标界面（Android 13+）</string>
     <string name="md3_section_look">视觉效果</string>
-    <string name="md3_title_launcher">起源引擎启动器</string>
+    <string name="md3_title_launcher">HL2Box 启动器</string>
     <string name="md3_launcher_subtitle">配置游戏资源并快速启动</string>
     <string name="md3_game_config_card">游戏配置</string>
     <string name="md3_paths_card">资源路径</string>
