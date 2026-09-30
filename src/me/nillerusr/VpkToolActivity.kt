@@ -313,6 +313,14 @@ class VpkToolActivity : Activity() {
                     )
                     applyOpenTransition()
                 }
+                CodeEditorActivity.isEditableTextFile(file.name) -> {
+                    startActivity(
+                        Intent(this, CodeEditorActivity::class.java)
+                            .putExtra(CodeEditorActivity.EXTRA_PATH, file.path)
+                            .putExtra(CodeEditorActivity.EXTRA_TITLE, file.name)
+                    )
+                    applyOpenTransition()
+                }
             }
         }
         body.addView(row)

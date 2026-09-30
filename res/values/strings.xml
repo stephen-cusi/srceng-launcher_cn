@@ -49,6 +49,15 @@
     <string name="addon_manager_load_failed">Cannot read the addons folder. Check the game path in the main screen.</string>
     <string name="addon_manager_hint">Disabled addons are not mounted; changes apply on the next game start.</string>
     <string name="addon_manager_gma">GMA addon archive</string>
+    <string name="addon_manager_dup">case-only duplicate</string>
+    <string name="code_editor">Text editor</string>
+    <string name="editor_save">Save</string>
+    <string name="editor_saved">Saved</string>
+    <string name="editor_save_failed">Save failed</string>
+    <string name="editor_readonly">Read-only (content inside archives cannot be modified)</string>
+    <string name="editor_too_large">File too large, opened read-only</string>
+    <string name="editor_open_failed">Cannot open file</string>
+    <string name="vpk_preview_open_editor">Open in editor</string>
     <string name="srceng_update">Update available!</string>
     <string name="srceng_launcher_error_find_platform">platform directory is missing!</string>
 

@@ -48,6 +48,15 @@
     <string name="addon_manager_load_failed">No se pudo leer la carpeta addons. Comprueba la ruta del juego en la pantalla principal.</string>
     <string name="addon_manager_hint">Los addons desactivados no se montan; los cambios se aplican en el próximo inicio del juego.</string>
     <string name="addon_manager_gma">Archivo de addon GMA</string>
+    <string name="addon_manager_dup">duplicado que solo difiere en mayúsculas/minúsculas</string>
+    <string name="code_editor">Editor de texto</string>
+    <string name="editor_save">Guardar</string>
+    <string name="editor_saved">Guardado</string>
+    <string name="editor_save_failed">Error al guardar</string>
+    <string name="editor_readonly">Solo lectura (el contenido de los archivos no se puede modificar)</string>
+    <string name="editor_too_large">Archivo demasiado grande, abierto en solo lectura</string>
+    <string name="editor_open_failed">No se pudo abrir el archivo</string>
+    <string name="vpk_preview_open_editor">Abrir en el editor</string>
     <string name="srceng_update">¡Actualización disponible!</string>
     <string name="srceng_launcher_error_find_platform">¡Falta la carpeta platform!</string>
 

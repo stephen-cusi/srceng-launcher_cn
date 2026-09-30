@@ -44,6 +44,15 @@
     <string name="addon_manager_load_failed">無法讀取 addons 目錄，請檢查主畫面的遊戲資源路徑。</string>
     <string name="addon_manager_hint">停用的插件不會被掛載，變更在下次啟動遊戲時生效。</string>
     <string name="addon_manager_gma">GMA 插件包</string>
+    <string name="addon_manager_dup">僅大小寫不同的重複項</string>
+    <string name="code_editor">文字編輯</string>
+    <string name="editor_save">儲存</string>
+    <string name="editor_saved">已儲存</string>
+    <string name="editor_save_failed">儲存失敗</string>
+    <string name="editor_readonly">唯讀（封裝內檔案不可修改）</string>
+    <string name="editor_too_large">檔案過大，已以唯讀方式開啟</string>
+    <string name="editor_open_failed">無法開啟檔案</string>
+    <string name="vpk_preview_open_editor">在編輯器中開啟</string>
     <string name="srceng_launcher_error_find_platform">platform 目錄遺失！</string>
 
     <!-- MD3 Settings / Appearance -->

@@ -416,6 +416,21 @@ class VpkArchiveActivity : Activity() {
             .setTitle(name)
             .setView(scroll)
             .setPositiveButton(android.R.string.ok, null)
+            .setNeutralButton(R.string.vpk_preview_open_editor) { _, _ ->
+                try {
+                    val editable = File(cacheDir, "preview_edit_${System.currentTimeMillis()}_$name")
+                    editable.writeBytes(bytes)
+                    startActivity(
+                        Intent(this, CodeEditorActivity::class.java)
+                            .putExtra(CodeEditorActivity.EXTRA_PATH, editable.path)
+                            .putExtra(CodeEditorActivity.EXTRA_TITLE, name)
+                            .putExtra(CodeEditorActivity.EXTRA_READONLY, true)
+                    )
+                    Md3Theme.applyAfterSetContentView(this)
+                } catch (_: Throwable) {
+                    Toast.makeText(this, R.string.editor_open_failed, Toast.LENGTH_LONG).show()
+                }
+            }
             .show().also { Md3Theme.applyDialog(it) }
     }
 

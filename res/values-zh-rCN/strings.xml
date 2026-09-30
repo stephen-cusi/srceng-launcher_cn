@@ -45,6 +45,15 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="addon_manager_load_failed">无法读取 addons 目录，请检查主界面的游戏资源路径。</string>
     <string name="addon_manager_hint">禁用的插件不会被挂载，更改在下次启动游戏时生效。</string>
     <string name="addon_manager_gma">GMA 插件包</string>
+    <string name="addon_manager_dup">仅大小写不同的重复项</string>
+    <string name="code_editor">文本编辑</string>
+    <string name="editor_save">保存</string>
+    <string name="editor_saved">已保存</string>
+    <string name="editor_save_failed">保存失败</string>
+    <string name="editor_readonly">只读（归档内文件不可修改）</string>
+    <string name="editor_too_large">文件过大，已以只读方式打开</string>
+    <string name="editor_open_failed">无法打开文件</string>
+    <string name="vpk_preview_open_editor">在编辑器中打开</string>
     <string name="srceng_update">更新可用！</string>
     <string name="srceng_app_name">HL2Box</string>
     <string name="srceng_game_hl2">半条命2</string>

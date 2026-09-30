@@ -48,6 +48,15 @@
     <string name="addon_manager_load_failed">Не удалось прочитать папку addons. Проверьте путь к игре на главном экране.</string>
     <string name="addon_manager_hint">Отключённые аддоны не подключаются; изменения вступят в силу при следующем запуске игры.</string>
     <string name="addon_manager_gma">GMA-архив аддона</string>
+    <string name="addon_manager_dup">дубликат, отличающийся только регистром</string>
+    <string name="code_editor">Текстовый редактор</string>
+    <string name="editor_save">Сохранить</string>
+    <string name="editor_saved">Сохранено</string>
+    <string name="editor_save_failed">Ошибка сохранения</string>
+    <string name="editor_readonly">Только для чтения (содержимое архивов нельзя изменять)</string>
+    <string name="editor_too_large">Файл слишком большой, открыт только для чтения</string>
+    <string name="editor_open_failed">Не удалось открыть файл</string>
+    <string name="vpk_preview_open_editor">Открыть в редакторе</string>
     <string name="srceng_update">Доступно обновление</string>
     <string name="srceng_launcher_error_find_platform">Папка platform отсутствует!</string>
 

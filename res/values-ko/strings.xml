@@ -48,6 +48,15 @@
     <string name="addon_manager_load_failed">addons 폴더를 읽을 수 없습니다. 메인 화면의 게임 경로를 확인하세요.</string>
     <string name="addon_manager_hint">비활성화된 애드온은 마운트되지 않으며, 변경 사항은 다음 게임 시작 시 적용됩니다.</string>
     <string name="addon_manager_gma">GMA 애드온 아카이브</string>
+    <string name="addon_manager_dup">대소문자만 다른 중복 항목</string>
+    <string name="code_editor">텍스트 편집기</string>
+    <string name="editor_save">저장</string>
+    <string name="editor_saved">저장됨</string>
+    <string name="editor_save_failed">저장 실패</string>
+    <string name="editor_readonly">읽기 전용(아카이브 내 파일은 수정할 수 없습니다)</string>
+    <string name="editor_too_large">파일이 너무 커서 읽기 전용으로 열었습니다</string>
+    <string name="editor_open_failed">파일을 열 수 없습니다</string>
+    <string name="vpk_preview_open_editor">편집기에서 열기</string>
     <string name="srceng_update">업데이트가 있습니다!</string>
     <string name="srceng_launcher_error_find_platform">platform 폴더가 없습니다!</string>
 

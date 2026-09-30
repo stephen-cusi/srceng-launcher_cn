@@ -2,6 +2,7 @@ package me.nillerusr
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -86,25 +87,49 @@ open class AddonManagerActivity : Activity() {
             statusView.setText(R.string.addon_manager_empty)
             return
         }
+        val keyCounts = entries.groupingBy { addonKey(it) }.eachCount()
         val inflater = layoutInflater
-        for (entry in entries) addAddonRow(inflater, entry)
+        for (entry in entries) addAddonRow(inflater, entry, (keyCounts[addonKey(entry)] ?: 1) > 1)
         Md3Theme.applyAfterSetContentView(this)
     }
 
-    private fun addAddonRow(inflater: LayoutInflater, entry: File) {
+    private fun addonKey(entry: File): String {
+        val name = if (entry.isDirectory) entry.name else entry.name.removeSuffix(".gma")
+        return name.lowercase()
+    }
+
+    private fun addAddonRow(inflater: LayoutInflater, entry: File, duplicate: Boolean) {
         val isArchive = !entry.isDirectory
         val name = if (isArchive) entry.name.removeSuffix(".gma") else entry.name
         val row = inflater.inflate(R.layout.addon_row, listContainer, false)
         row.findViewById<TextView>(R.id.addon_row_name).text = name
-        row.findViewById<TextView>(R.id.addon_row_detail).setText(
+        val detail = row.findViewById<TextView>(R.id.addon_row_detail)
+        detail.text = getString(
             if (isArchive) R.string.addon_manager_gma else R.string.vpk_manager_folder
-        )
+        ) + if (duplicate) "  ·  " + getString(R.string.addon_manager_dup) else ""
         val switch = row.findViewById<MaterialSwitch>(R.id.addon_row_switch)
         switch.isChecked = !disabledAddons.contains(name.lowercase())
         switch.setOnCheckedChangeListener { _, checked ->
             val key = name.lowercase()
             if (checked) disabledAddons.remove(key) else disabledAddons.add(key)
             persist()
+        }
+        row.setOnClickListener {
+            try {
+                if (isArchive) {
+                    startActivity(
+                        Intent(this, VpkArchiveActivity::class.java)
+                            .putExtra(VpkArchiveActivity.EXTRA_ARCHIVE_PATH, entry.path)
+                    )
+                } else {
+                    startActivity(
+                        Intent(this, VpkToolActivity::class.java)
+                            .putExtra(VpkToolActivity.EXTRA_START_DIRECTORY, entry.path)
+                    )
+                }
+                Md3Theme.applyAfterSetContentView(this)
+            } catch (_: Throwable) {
+            }
         }
         listContainer.addView(row)
     }

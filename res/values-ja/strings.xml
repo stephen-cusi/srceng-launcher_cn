@@ -48,6 +48,15 @@
     <string name="addon_manager_load_failed">addons フォルダーを読み取れません。メイン画面のゲームパスを確認してください。</string>
     <string name="addon_manager_hint">無効化されたアドオンはマウントされません。変更は次回のゲーム起動時に反映されます。</string>
     <string name="addon_manager_gma">GMA アドオンアーカイブ</string>
+    <string name="addon_manager_dup">大文字・小文字のみ異なる重複</string>
+    <string name="code_editor">テキスト編集</string>
+    <string name="editor_save">保存</string>
+    <string name="editor_saved">保存しました</string>
+    <string name="editor_save_failed">保存に失敗しました</string>
+    <string name="editor_readonly">読み取り専用（アーカイブ内のファイルは変更できません）</string>
+    <string name="editor_too_large">ファイルが大きすぎるため、読み取り専用で開きました</string>
+    <string name="editor_open_failed">ファイルを開けません</string>
+    <string name="vpk_preview_open_editor">エディターで開く</string>
     <string name="srceng_update">アップデートがあります！</string>
     <string name="srceng_launcher_error_find_platform">platform フォルダが見つかりません！</string>
 

@@ -48,6 +48,15 @@
     <string name="addon_manager_load_failed">addons-Ordner nicht lesbar. Bitte Spielpfad im Hauptbildschirm prüfen.</string>
     <string name="addon_manager_hint">Deaktivierte Addons werden nicht eingebunden; Änderungen gelten beim nächsten Spielstart.</string>
     <string name="addon_manager_gma">GMA-Addon-Archiv</string>
+    <string name="addon_manager_dup">Duplikat, das sich nur durch Groß-/Kleinschreibung unterscheidet</string>
+    <string name="code_editor">Texteditor</string>
+    <string name="editor_save">Speichern</string>
+    <string name="editor_saved">Gespeichert</string>
+    <string name="editor_save_failed">Speichern fehlgeschlagen</string>
+    <string name="editor_readonly">Schreibgeschützt (Inhalt in Archiven kann nicht geändert werden)</string>
+    <string name="editor_too_large">Datei zu groß, nur zum Lesen geöffnet</string>
+    <string name="editor_open_failed">Datei konnte nicht geöffnet werden</string>
+    <string name="vpk_preview_open_editor">Im Editor öffnen</string>
     <string name="srceng_update">Update verfügbar!</string>
     <string name="srceng_launcher_error_find_platform">platform-Ordner fehlt!</string>
 
