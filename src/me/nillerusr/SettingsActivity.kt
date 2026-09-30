@@ -579,6 +579,15 @@ open class SettingsActivity : Activity() {
         val target = GameImport.targetDir(this, sourcePath)
         try { target.mkdirs() } catch (_: Throwable) {}
         val progressView = TextView(this)
+        val progressBar = ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal)
+        progressBar.max = 10000
+        val progressContainer = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            val pad = (20 * resources.displayMetrics.density).toInt()
+            setPadding(pad, pad / 2, pad, 0)
+            addView(progressView)
+            addView(progressBar, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { topMargin = dp(8) })
+        }
         val padding = (20 * resources.displayMetrics.density).toInt()
         progressView.setPadding(padding, padding / 2, padding, 0)
         val handler = android.os.Handler(android.os.Looper.getMainLooper())
@@ -617,7 +626,7 @@ open class SettingsActivity : Activity() {
                     .setTitle(R.string.import_game_title)
                     .setMessage(message)
                     .setPositiveButton(R.string.import_game_start) { _, _ ->
-                        runImport(source, target, stats, progressView, handler, cancelled)
+                        runImport(source, target, stats, progressContainer, progressView, progressBar, handler, cancelled)
                     }
                     .setNegativeButton(android.R.string.cancel) { _, _ -> importToolButton?.isEnabled = true }
                     .show().also { Md3Theme.applyDialog(it) }
@@ -629,14 +638,17 @@ open class SettingsActivity : Activity() {
         source: File,
         target: File,
         stats: GameImport.Stats,
+        progressContainer: LinearLayout,
         progressView: TextView,
+        progressBar: ProgressBar,
         handler: android.os.Handler,
         cancelled: BooleanArray
     ) {
         progressView.text = getString(R.string.import_game_progress, 0, formatBytes(0), formatBytes(stats.bytes), 0)
+        progressBar.setProgress(0, false)
         val dialog = MaterialAlertDialogBuilder(this)
             .setTitle(R.string.import_game_title)
-            .setView(progressView)
+            .setView(progressContainer)
             .setCancelable(false)
             .setNegativeButton(R.string.import_game_cancel) { _, _ -> cancelled[0] = true }
             .show().also { Md3Theme.applyDialog(it) }
@@ -654,6 +666,7 @@ open class SettingsActivity : Activity() {
                             formatBytes(totalBytes),
                             files
                         )
+                        progressBar.setProgress((percent.coerceIn(0, 100) * 100), true)
                     }
                 }
             }, { cancelled[0] })

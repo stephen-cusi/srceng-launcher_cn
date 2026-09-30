@@ -47,6 +47,7 @@ class VpkToolActivity : Activity() {
     private var directoryPicker = false
     private var selectionMode = false
     private var animateSelectionIndicators = false
+    private var browserRootPath: String? = null
     private lateinit var currentDirectory: File
     private lateinit var pathView: TextView
     private lateinit var statusArea: View
@@ -114,6 +115,7 @@ class VpkToolActivity : Activity() {
         val start = requestedStart?.takeIf { it.isDirectory && it.canRead() }
             ?: File(LauncherActivity.getDefaultDir()).takeIf { it.isDirectory && it.canRead() }
             ?: Environment.getExternalStorageDirectory()
+        browserRootPath = canonicalFile(start).path
         showDirectory(start)
     }
 
@@ -170,6 +172,7 @@ class VpkToolActivity : Activity() {
             compareBy<File> { !it.isDirectory }.thenBy { it.name.lowercase(Locale.ROOT) }
         ).orEmpty()
         currentDirectory.parentFile?.takeIf { it.canRead() }?.let(::addParentEntry)
+        if (currentDirectory.path == browserRootPath) addAppDataShortcutEntry()
         if (children.isEmpty()) {
             TextView(this).apply {
                 setText(R.string.vpk_folder_empty)
@@ -205,6 +208,25 @@ class VpkToolActivity : Activity() {
         row.findViewById<TextView>(R.id.vpk_picker_detail).setText(R.string.vpk_manager_folder)
         row.setOnClickListener {
             if (!busy && !selectionMode) showDirectory(parent, true)
+        }
+        body.addView(row)
+    }
+
+    private fun addAppDataShortcutEntry() {
+        val row = layoutInflater.inflate(R.layout.vpk_file_picker_entry, body, false)
+        bindPressAnimation(row)
+        row.findViewById<View>(R.id.vpk_picker_icon_container).tag = "folder_container"
+        row.findViewById<ImageView>(R.id.vpk_picker_icon).apply {
+            visibility = View.VISIBLE
+            setImageResource(R.drawable.ic_vpk_folder)
+            tag = "folder_icon"
+        }
+        row.findViewById<ImageView>(R.id.vpk_picker_trailing).visibility = View.VISIBLE
+        row.findViewById<View>(R.id.vpk_picker_selection).visibility = View.GONE
+        row.findViewById<TextView>(R.id.vpk_picker_name).setText(R.string.srceng_dir_app_data)
+        row.findViewById<TextView>(R.id.vpk_picker_detail).text = filesDir.absolutePath
+        row.setOnClickListener {
+            if (!busy && !selectionMode) showDirectory(filesDir, true)
         }
         body.addView(row)
     }
