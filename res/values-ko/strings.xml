@@ -75,6 +75,17 @@
     <string name="check_unmatched_bracket">괄호 불일치: %1$s</string>
     <string name="check_unclosed_bracket">괄호 미종료: %1$s</string>
     <string name="check_missing_until">\'until\' 누락(%1$s행 repeat 미종료)</string>
+    <string name="editor_menu_find">찾기</string>
+    <string name="editor_menu_goto_line">줄로 이동</string>
+    <string name="editor_menu_complete">완성</string>
+    <string name="editor_menu_info">파일 정보</string>
+    <string name="editor_find_next">다음 찾기</string>
+    <string name="editor_find_not_found">일치하는 항목이 없습니다</string>
+    <string name="editor_find_count">%1$d건 일치</string>
+    <string name="editor_goto_invalid">잘못된 줄 번호입니다</string>
+    <string name="editor_complete_none">커서 위치에 완성할 단어가 없습니다</string>
+    <string name="editor_info_lines">%1$d줄</string>
+    <string name="editor_info_size">%1$d B</string>
     <string name="srceng_update">업데이트가 있습니다!</string>
     <string name="srceng_launcher_error_find_platform">platform 폴더가 없습니다!</string>
 

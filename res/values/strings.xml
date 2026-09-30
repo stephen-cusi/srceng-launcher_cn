@@ -76,6 +76,17 @@
     <string name="check_unmatched_bracket">Mismatched bracket: %1$s</string>
     <string name="check_unclosed_bracket">Unclosed bracket: %1$s</string>
     <string name="check_missing_until">Missing \'until\' (repeat unclosed, line %1$s)</string>
+    <string name="editor_menu_find">Find</string>
+    <string name="editor_menu_goto_line">Go to line</string>
+    <string name="editor_menu_complete">Complete</string>
+    <string name="editor_menu_info">File info</string>
+    <string name="editor_find_next">Find next</string>
+    <string name="editor_find_not_found">No matches found</string>
+    <string name="editor_find_count">%1$d matches</string>
+    <string name="editor_goto_invalid">Invalid line number</string>
+    <string name="editor_complete_none">Nothing to complete at cursor</string>
+    <string name="editor_info_lines">%1$d lines</string>
+    <string name="editor_info_size">%1$d B</string>
     <string name="srceng_update">Update available!</string>
     <string name="srceng_launcher_error_find_platform">platform directory is missing!</string>
 

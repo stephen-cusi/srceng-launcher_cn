@@ -75,6 +75,17 @@
     <string name="check_unmatched_bracket">括弧が一致しません：%1$s</string>
     <string name="check_unclosed_bracket">括弧が閉じていません：%1$s</string>
     <string name="check_missing_until">\'until\' が不足（%1$s 行目の repeat が未閉）</string>
+    <string name="editor_menu_find">検索</string>
+    <string name="editor_menu_goto_line">行へ移動</string>
+    <string name="editor_menu_complete">補完</string>
+    <string name="editor_menu_info">ファイル情報</string>
+    <string name="editor_find_next">次を検索</string>
+    <string name="editor_find_not_found">一致がありません</string>
+    <string name="editor_find_count">%1$d 件一致</string>
+    <string name="editor_goto_invalid">行番号が無効です</string>
+    <string name="editor_complete_none">カーソル位置に補完できる語がありません</string>
+    <string name="editor_info_lines">%1$d 行</string>
+    <string name="editor_info_size">%1$d B</string>
     <string name="srceng_update">アップデートがあります！</string>
     <string name="srceng_launcher_error_find_platform">platform フォルダが見つかりません！</string>
 

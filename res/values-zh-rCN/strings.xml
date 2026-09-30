@@ -72,6 +72,17 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="check_unmatched_bracket">括号不匹配：%1$s</string>
     <string name="check_unclosed_bracket">括号未闭合：%1$s</string>
     <string name="check_missing_until">缺少 until（第 %1$s 行的 repeat 未闭合）</string>
+    <string name="editor_menu_find">查找</string>
+    <string name="editor_menu_goto_line">跳转到行</string>
+    <string name="editor_menu_complete">补全</string>
+    <string name="editor_menu_info">文件信息</string>
+    <string name="editor_find_next">查找下一个</string>
+    <string name="editor_find_not_found">未找到匹配</string>
+    <string name="editor_find_count">找到 %1$d 处匹配</string>
+    <string name="editor_goto_invalid">行号无效</string>
+    <string name="editor_complete_none">光标处没有可补全的词</string>
+    <string name="editor_info_lines">%1$d 行</string>
+    <string name="editor_info_size">%1$d B</string>
     <string name="srceng_update">更新可用！</string>
     <string name="srceng_app_name">HL2Box</string>
     <string name="srceng_game_hl2">半条命2</string>

@@ -75,6 +75,17 @@
     <string name="check_unmatched_bracket">Несовпадающая скобка: %1$s</string>
     <string name="check_unclosed_bracket">Незакрытая скобка: %1$s</string>
     <string name="check_missing_until">Отсутствует \'until\' (repeat не закрыт, строка %1$s)</string>
+    <string name="editor_menu_find">Найти</string>
+    <string name="editor_menu_goto_line">Перейти к строке</string>
+    <string name="editor_menu_complete">Дополнить</string>
+    <string name="editor_menu_info">Сведения о файле</string>
+    <string name="editor_find_next">Далее</string>
+    <string name="editor_find_not_found">Ничего не найдено</string>
+    <string name="editor_find_count">Совпадений: %1$d</string>
+    <string name="editor_goto_invalid">Неверный номер строки</string>
+    <string name="editor_complete_none">Нечего дополнять в позиции курсора</string>
+    <string name="editor_info_lines">Строк: %1$d</string>
+    <string name="editor_info_size">%1$d Б</string>
     <string name="srceng_update">Доступно обновление</string>
     <string name="srceng_launcher_error_find_platform">Папка platform отсутствует!</string>
 

@@ -75,6 +75,17 @@
     <string name="check_unmatched_bracket">Parenthèse non appariée : %1$s</string>
     <string name="check_unclosed_bracket">Parenthèse non fermée : %1$s</string>
     <string name="check_missing_until">\'until\' manquant (repeat non fermé, ligne %1$s)</string>
+    <string name="editor_menu_find">Rechercher</string>
+    <string name="editor_menu_goto_line">Aller à la ligne</string>
+    <string name="editor_menu_complete">Compléter</string>
+    <string name="editor_menu_info">Infos fichier</string>
+    <string name="editor_find_next">Suivant</string>
+    <string name="editor_find_not_found">Aucun résultat</string>
+    <string name="editor_find_count">%1$d correspondances</string>
+    <string name="editor_goto_invalid">Numéro de ligne invalide</string>
+    <string name="editor_complete_none">Rien à compléter au curseur</string>
+    <string name="editor_info_lines">%1$d lignes</string>
+    <string name="editor_info_size">%1$d o</string>
     <string name="srceng_update">Mise à jour disponible!</string>
     <string name="srceng_launcher_error_find_platform">Le dossier platform est manquant!</string>
 

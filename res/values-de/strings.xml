@@ -75,6 +75,17 @@
     <string name="check_unmatched_bracket">Klammer stimmt nicht überein: %1$s</string>
     <string name="check_unclosed_bracket">Klammer nicht geschlossen: %1$s</string>
     <string name="check_missing_until">\'until\' fehlt (repeat nicht geschlossen, Zeile %1$s)</string>
+    <string name="editor_menu_find">Suchen</string>
+    <string name="editor_menu_goto_line">Zu Zeile springen</string>
+    <string name="editor_menu_complete">Vervollständigen</string>
+    <string name="editor_menu_info">Datei-Info</string>
+    <string name="editor_find_next">Weitersuchen</string>
+    <string name="editor_find_not_found">Keine Treffer</string>
+    <string name="editor_find_count">%1$d Treffer</string>
+    <string name="editor_goto_invalid">Ungültige Zeilennummer</string>
+    <string name="editor_complete_none">Nichts zu vervollständigen am Cursor</string>
+    <string name="editor_info_lines">%1$d Zeilen</string>
+    <string name="editor_info_size">%1$d B</string>
     <string name="srceng_update">Update verfügbar!</string>
     <string name="srceng_launcher_error_find_platform">platform-Ordner fehlt!</string>
 

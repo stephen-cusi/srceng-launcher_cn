@@ -10,8 +10,10 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.style.BackgroundColorSpan
 import android.text.style.CharacterStyle
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -21,9 +23,11 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ListView
+import android.widget.PopupMenu
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.valvesoftware.source.R
 import java.io.File
 import me.nillerusr.md3.Md3Theme
@@ -57,6 +61,7 @@ open class CodeEditorActivity : Activity() {
     private var completionStart = -1
     private val completionItems = ArrayList<String>()
     private var documentWords: Set<String> = emptySet()
+    private var findTerm = ""
 
     private val highlightRunnable = Runnable { refreshDecorations() }
 
@@ -113,10 +118,18 @@ open class CodeEditorActivity : Activity() {
             tag = "filled"
             setOnClickListener { save() }
         }
+        val menuButton = ImageButton(this).apply {
+            setBackgroundResource(R.drawable.md3_btn_icon)
+            setImageResource(R.drawable.ic_more_vert)
+            contentDescription = getString(R.string.editor_menu_info)
+            tag = "icon"
+            setOnClickListener { showOptionsMenu(it) }
+        }
         header.addView(backButton)
         header.addView(titleView)
         header.addView(checkButton)
         header.addView(saveButton)
+        header.addView(menuButton)
 
         statusView = TextView(this).apply {
             textSize = 12f
@@ -173,6 +186,25 @@ open class CodeEditorActivity : Activity() {
         root.addView(cursorView)
         setContentView(root)
         Md3Theme.applyAfterSetContentView(this)
+        // Md3Theme styles every EditText with a filled ripple background; the
+        // code surface needs a quiet, ripple-free canvas instead.
+        try {
+            editor.background = GradientDrawable().apply {
+                cornerRadius = 10 * resources.displayMetrics.density
+                setColor(tokens?.surfaceContainerLow ?: 0xFFECECEC.toInt())
+            }
+            editor.backgroundTintList = null
+            editor.foreground = null
+            editor.setTextColor(tokens?.onSurface ?: 0xFF1C1B17.toInt())
+            val primaryTone = tokens?.primary?.color ?: 0xFF6750A4.toInt()
+            editor.setHighlightColor((primaryTone and 0x00FFFFFF) or 0x33000000)
+            lineNumbers.setTextColor(tokens?.onSurfaceVariant ?: 0xFF777777.toInt())
+            lineNumbers.background = GradientDrawable().apply {
+                cornerRadius = 10 * resources.displayMetrics.density
+                setColor(tokens?.surfaceContainer ?: 0xFFE0E0E0.toInt())
+            }
+        } catch (_: Throwable) {
+        }
         predictiveBack = PredictiveBackController(this) { finish() }
         predictiveBack.sync()
 
@@ -195,6 +227,7 @@ open class CodeEditorActivity : Activity() {
             return
         }
         lang = detectLanguage(file.name, fileText)
+        checkButton.visibility = if (lang == Lang.LUA) View.VISIBLE else View.GONE
         editor.setText(fileText)
         editor.setSelection(0)
         if (readOnly) {
@@ -282,7 +315,7 @@ open class CodeEditorActivity : Activity() {
         val text = editor.editableText ?: return
         if (text.length > HIGHLIGHT_LIMIT) return
         for (span in text.getSpans(0, text.length, CharacterStyle::class.java)) {
-            if (span is ForegroundColorSpan) text.removeSpan(span)
+            if (span is ForegroundColorSpan || span is BackgroundColorSpan) text.removeSpan(span)
         }
         val content = text.toString()
         when (lang) {
@@ -351,8 +384,7 @@ open class CodeEditorActivity : Activity() {
     private fun runCheck(jump: Boolean) {
         if (lang != Lang.LUA) {
             issue = null
-            statusView.setTextColor(tokens?.onSurfaceVariant ?: 0xFF9E9E9E.toInt())
-            statusView.setText(R.string.editor_check_unsupported)
+            statusView.text = ""
             return
         }
         val content = editor.text.toString()
@@ -457,7 +489,7 @@ open class CodeEditorActivity : Activity() {
                     completionPopup?.dismiss()
                 }
             }
-            val newPopup = PopupWindow(listView, (editor.width * 0.6).toInt().coerceAtLeast(400), ViewGroup.LayoutParams.WRAP_CONTENT, true).apply {
+            val newPopup = PopupWindow(listView, (editor.width * 0.6).toInt().coerceAtLeast(400), ViewGroup.LayoutParams.WRAP_CONTENT, false).apply {
                 isOutsideTouchable = true
                 setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 elevation = 12 * resources.displayMetrics.density
@@ -465,12 +497,142 @@ open class CodeEditorActivity : Activity() {
             completionList = listView
             completionPopup = newPopup
             positionPopup(newPopup)
-        } catch (_: Throwable) {
+        } catch (error: Throwable) {
+            Log.e("CodeEditor", "completion popup failed", error)
             completionPopup?.dismiss()
         }
     }
 
     private fun rootViewOf(): View = findViewById(android.R.id.content)
+
+    // ------------------------------------------------------------------ menu
+
+    private fun showOptionsMenu(anchor: View) {
+        val popup = PopupMenu(this, anchor)
+        popup.menuInflater.inflate(R.menu.editor_menu, popup.menu)
+        popup.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.editor_menu_find -> { openFindDialog(); true }
+                R.id.editor_menu_goto_line -> { openGotoLineDialog(); true }
+                R.id.editor_menu_complete -> { manualComplete(); true }
+                R.id.editor_menu_info -> { showFileInfo(); true }
+                else -> false
+            }
+        }
+        popup.show()
+    }
+
+    private fun openFindDialog() {
+        val input = EditText(this).apply {
+            setText(findTerm)
+            setSelection(findTerm.length)
+            hint = getString(R.string.editor_menu_find)
+        }
+        val pad = (20 * resources.displayMetrics.density).toInt()
+        val wrapper = LinearLayout(this).apply {
+            setPadding(pad, pad / 2, pad, 0)
+            addView(input, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+        }
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.editor_menu_find)
+            .setView(wrapper)
+            .setPositiveButton(R.string.editor_find_next) { _, _ -> findNext(input.text.toString()) }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show().also { Md3Theme.applyDialog(it) }
+    }
+
+    private fun findNext(term: String) {
+        if (term.isEmpty()) return
+        findTerm = term
+        val content = editor.text.toString()
+        val lower = content.lowercase()
+        val needle = term.lowercase()
+        val count = lower.split(needle).size - 1
+        if (count == 0) {
+            try { Toast.makeText(this, R.string.editor_find_not_found, Toast.LENGTH_SHORT).show() } catch (_: Throwable) {}
+            return
+        }
+        val from = (editor.selectionEnd).coerceIn(0, content.length)
+        var index = lower.indexOf(needle, from)
+        if (index < 0) index = lower.indexOf(needle)
+        editor.requestFocus()
+        editor.setSelection(index, index + term.length)
+        applyFindHighlights(term)
+        try { Toast.makeText(this, getString(R.string.editor_find_count, count), Toast.LENGTH_SHORT).show() } catch (_: Throwable) {}
+    }
+
+    private fun applyFindHighlights(term: String) {
+        val text = editor.editableText ?: return
+        val lower = text.toString().lowercase()
+        val needle = term.lowercase()
+        var index = lower.indexOf(needle)
+        val highlight = 0x40FFC107
+        while (index >= 0) {
+            val span = BackgroundColorSpan(highlight)
+            text.setSpan(span, index, index + term.length, android.text.Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            index = lower.indexOf(needle, index + term.length)
+        }
+    }
+
+    private fun openGotoLineDialog() {
+        val input = EditText(this).apply {
+            inputType = android.text.InputType.TYPE_CLASS_NUMBER
+            hint = getString(R.string.editor_menu_goto_line)
+        }
+        val pad = (20 * resources.displayMetrics.density).toInt()
+        val wrapper = LinearLayout(this).apply {
+            setPadding(pad, pad / 2, pad, 0)
+            addView(input, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+        }
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.editor_menu_goto_line)
+            .setView(wrapper)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                val lineNumber = input.text.toString().toIntOrNull()
+                val layout = editor.layout
+                if (lineNumber != null && layout != null && lineNumber >= 1 && lineNumber <= layout.lineCount) {
+                    editor.requestFocus()
+                    editor.setSelection(layout.getLineStart(lineNumber - 1))
+                } else {
+                    try { Toast.makeText(this, R.string.editor_goto_invalid, Toast.LENGTH_SHORT).show() } catch (_: Throwable) {}
+                }
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show().also { Md3Theme.applyDialog(it) }
+    }
+
+    private fun manualComplete() {
+        if (readOnly) return
+        if (currentWord() == null) {
+            try { Toast.makeText(this, R.string.editor_complete_none, Toast.LENGTH_SHORT).show() } catch (_: Throwable) {}
+            return
+        }
+        updateCompletion()
+        if (completionPopup?.isShowing != true) {
+            try { Toast.makeText(this, R.string.editor_complete_none, Toast.LENGTH_SHORT).show() } catch (_: Throwable) {}
+        }
+    }
+
+    private fun showFileInfo() {
+        val file = targetFile ?: return
+        val lineCount = editor.text.count { it == '\n' } + 1
+        val languageLabel = getString(
+            when (lang) {
+                Lang.LUA -> R.string.editor_lang_lua
+                Lang.KV -> R.string.editor_lang_kv
+                Lang.C -> R.string.editor_lang_c
+                Lang.TEXT -> R.string.editor_lang_text
+            }
+        )
+        val message = file.path + "\n" +
+            getString(R.string.editor_info_lines, lineCount) + " · " + languageLabel + "\n" +
+            getString(R.string.editor_info_size, file.length())
+        MaterialAlertDialogBuilder(this)
+            .setTitle(titleView.text)
+            .setMessage(message)
+            .setPositiveButton(android.R.string.ok, null)
+            .show().also { Md3Theme.applyDialog(it) }
+    }
 
     private fun positionPopup(popup: PopupWindow) {
         try {
