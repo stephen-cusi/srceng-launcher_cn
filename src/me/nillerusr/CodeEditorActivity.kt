@@ -61,6 +61,7 @@ open class CodeEditorActivity : Activity() {
     private var completionStart = -1
     private val completionItems = ArrayList<String>()
     private var documentWords: Set<String> = emptySet()
+    private var completionWords: Set<String> = emptySet()
     private var findTerm = ""
 
     private val highlightRunnable = Runnable { refreshDecorations() }
@@ -80,6 +81,16 @@ open class CodeEditorActivity : Activity() {
         Md3Theme.applyBeforeOnCreate(this)
         super.onCreate(savedInstanceState)
         tokens = try { Md3Theme.buildTokens(this) } catch (_: Throwable) { null }
+        completionWords = try {
+            assets.open("glua_words.txt").bufferedReader().use { reader ->
+                reader.lineSequence()
+                    .map { it.trim() }
+                    .filter { it.isNotEmpty() && it.first().isLetter() }
+                    .toSet()
+            }
+        } catch (_: Throwable) {
+            LuaSyntaxChecker.GLUA_BUILTINS
+        }
         applyLanguageColors()
 
         val root = LinearLayout(this).apply {
@@ -444,15 +455,41 @@ open class CodeEditorActivity : Activity() {
         if (current == null) { completionPopup?.dismiss(); return }
         val (word, start) = current
         val prefix = word.lowercase()
-        val source = LuaSyntaxChecker.GLUA_BUILTINS + documentWords + LuaSyntaxChecker.KEYWORDS
-        val matches = source
-            .filter { it.length > 1 && !it.equals(word, true) && it.lowercase().startsWith(prefix) }
-            .sortedWith(compareBy({ !it.first().isUpperCase() }, { it.length }, { it }))
-            .take(12)
+        val source = completionWords + documentWords + LuaSyntaxChecker.KEYWORDS
+        // VSCode-style ranking: exact-case prefix > case-insensitive prefix >
+        // camel-hump initials > substring; shorter first within each group.
+        val exactPrefix = ArrayList<String>()
+        val foldedPrefix = ArrayList<String>()
+        val hump = ArrayList<String>()
+        val substring = ArrayList<String>()
+        for (candidate in source) {
+            if (candidate == word) continue
+            if (candidate.startsWith(word)) exactPrefix.add(candidate)
+            else if (candidate.lowercase().startsWith(prefix)) foldedPrefix.add(candidate)
+            else if (camelHumpStartsWith(candidate, prefix)) hump.add(candidate)
+            else if (candidate.lowercase().contains(prefix)) substring.add(candidate)
+        }
+        val byLength = compareBy<String> { it.length }
+        val matches = (exactPrefix.sortedWith(byLength) +
+            foldedPrefix.sortedWith(byLength) +
+            hump.sortedWith(byLength) +
+            substring.sortedWith(byLength)).take(12)
         if (matches.isEmpty()) { completionPopup?.dismiss(); return }
         completionItems.clear()
         completionItems.addAll(matches)
         showCompletion(start)
+    }
+
+    /** "gpos" matches "GetPos" via camel-hump initials (G.Pos). */
+    private fun camelHumpStartsWith(candidate: String, prefix: String): Boolean {
+        if (prefix.length < 2) return false
+        val initials = StringBuilder()
+        var previousWasLower = false
+        for (ch in candidate) {
+            if (ch.isUpperCase() && previousWasLower) initials.append(ch.lowercaseChar())
+            previousWasLower = ch.isLowerCase() || ch.isDigit()
+        }
+        return initials.isNotEmpty() && initials.startsWith(prefix)
     }
 
     private fun showCompletion(start: Int) {

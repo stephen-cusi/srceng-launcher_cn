@@ -48,6 +48,7 @@ class VpkToolActivity : Activity() {
     private var selectionMode = false
     private var animateSelectionIndicators = false
     private var browserRootPath: String? = null
+    private var entryDirectoryPath: String? = null
     private lateinit var currentDirectory: File
     private lateinit var pathView: TextView
     private lateinit var statusArea: View
@@ -112,10 +113,15 @@ class VpkToolActivity : Activity() {
         }
 
         val requestedStart = intent.getStringExtra(EXTRA_START_DIRECTORY)?.let(::File)
+        val usedRequested = requestedStart != null && requestedStart.isDirectory && requestedStart.canRead()
         val start = requestedStart?.takeIf { it.isDirectory && it.canRead() }
             ?: File(LauncherActivity.getDefaultDir()).takeIf { it.isDirectory && it.canRead() }
             ?: Environment.getExternalStorageDirectory()
-        browserRootPath = canonicalFile(start).path
+        // the app-data shortcut belongs to the normal first page only; when the
+        // browser is opened at a specific directory (e.g. an addon folder),
+        // back should close it instead of walking parents
+        browserRootPath = if (usedRequested) null else canonicalFile(start).path
+        entryDirectoryPath = if (usedRequested) canonicalFile(start).path else null
         showDirectory(start)
     }
 
@@ -139,6 +145,10 @@ class VpkToolActivity : Activity() {
             selected.clear()
             selectionMode = false
             renderDirectory(scroll.scrollY)
+            return
+        }
+        if (entryDirectoryPath != null && currentDirectory.path == entryDirectoryPath) {
+            finish()
             return
         }
         val parent = currentDirectory.parentFile
