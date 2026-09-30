@@ -22,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.valvesoftware.source.R
+import java.io.File
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.materialswitch.MaterialSwitch
 import io.noties.markwon.Markwon
@@ -71,6 +72,7 @@ open class SettingsActivity : Activity() {
     private var testMirrorsButton: Button? = null
     private var updateStatus: TextView? = null
     private var mirrorTestStatus: TextView? = null
+    private var importToolButton: View? = null
 
     private var lastDarkMode = Md3Theme.THEME_SYSTEM
     private var lastDynamic = false
@@ -152,6 +154,7 @@ open class SettingsActivity : Activity() {
         testMirrorsButton = optFind(R.id.md3_test_mirrors)
         updateStatus = optFind(R.id.md3_update_status)
         mirrorTestStatus = optFind(R.id.md3_mirror_test_status)
+        importToolButton = optFind(R.id.md3_import_game_tool)
         optFind<ImageButton>(R.id.md3_button_back)?.setOnClickListener { finish() }
     }
 
@@ -535,6 +538,7 @@ open class SettingsActivity : Activity() {
         optFind<View>(R.id.md3_engine_log_tool)?.setOnClickListener {
             startActivity(Intent(this, EngineLogActivity::class.java))
         }
+        optFind<View>(R.id.md3_import_game_tool)?.setOnClickListener { startGameImport() }
         resModeGroup?.setOnCheckedChangeListener { _, checkedId ->
             val mode = when (checkedId) {
                 R.id.md3_res_mode_default -> Md3Theme.RES_MODE_DEFAULT
@@ -549,6 +553,138 @@ open class SettingsActivity : Activity() {
         }
         resCustomW?.addTextChangedListener(resolutionWatcher(320, { lastResCustomW }) { Md3Theme.setResolutionCustomW(this, it); lastResCustomW = it })
         resCustomH?.addTextChangedListener(resolutionWatcher(240, { lastResCustomH }) { Md3Theme.setResolutionCustomH(this, it); lastResCustomH = it })
+    }
+
+    private fun formatBytes(bytes: Long): String {
+        if (bytes < 1024) return "$bytes B"
+        val unit = arrayOf("KB", "MB", "GB", "TB")
+        var index = -1
+        var current = bytes.toDouble()
+        while (current >= 1024.0 && index < unit.size - 1) {
+            current /= 1024.0
+            index++
+        }
+        return String.format(java.util.Locale.US, "%.1f %s", current, unit[index + 1])
+    }
+
+    private fun startGameImport() {
+        val preferences = getSharedPreferences("mod", 0)
+        val sourcePath = preferences.getString("gamepath", LauncherActivity.getDefaultDir() + "/srceng")
+            ?: LauncherActivity.getDefaultDir() + "/srceng"
+        val source = File(sourcePath)
+        if (!source.isDirectory) {
+            try { Toast.makeText(this, getString(R.string.import_game_no_source, sourcePath), Toast.LENGTH_LONG).show() } catch (_: Throwable) {}
+            return
+        }
+        val target = GameImport.targetDir(this, sourcePath)
+        val progressView = TextView(this)
+        val padding = (20 * resources.displayMetrics.density).toInt()
+        progressView.setPadding(padding, padding / 2, padding, 0)
+        val handler = android.os.Handler(android.os.Looper.getMainLooper())
+        val dialogHolder = arrayOf<android.app.AlertDialog?>(null)
+        val cancelled = booleanArrayOf(false)
+        importToolButton?.isEnabled = false
+
+        Thread {
+            val stats = GameImport.computeStats(source)
+            val free = target.usableSpace
+            handler.post {
+                if (isFinishing || isDestroyed) {
+                    importToolButton?.isEnabled = true
+                    return@post
+                }
+                if (stats.files == 0) {
+                    importToolButton?.isEnabled = true
+                    try { Toast.makeText(this, getString(R.string.import_game_no_source, sourcePath), Toast.LENGTH_LONG).show() } catch (_: Throwable) {}
+                    return@post
+                }
+                val message = getString(
+                    R.string.import_game_confirm,
+                    sourcePath,
+                    formatBytes(stats.bytes),
+                    stats.files,
+                    target.path,
+                    formatBytes(free)
+                )
+                MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.import_game_title)
+                    .setMessage(message)
+                    .setPositiveButton(R.string.import_game_start) { _, _ ->
+                        runImport(source, target, stats, progressView, handler, dialogHolder, cancelled)
+                    }
+                    .setNegativeButton(android.R.string.cancel) { _, _ -> importToolButton?.isEnabled = true }
+                    .show().also { Md3Theme.applyDialog(it) }
+            }
+        }.start()
+    }
+
+    private fun runImport(
+        source: File,
+        target: File,
+        stats: GameImport.Stats,
+        progressView: TextView,
+        handler: android.os.Handler,
+        dialogHolder: Array<android.app.AlertDialog?>,
+        cancelled: BooleanArray
+    ) {
+        progressView.text = getString(R.string.import_game_progress, 0, formatBytes(0), formatBytes(stats.bytes), 0)
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.import_game_title)
+            .setView(progressView)
+            .setCancelable(false)
+            .setNegativeButton(R.string.import_game_cancel) { _, _ -> cancelled[0] = true }
+            .show().also { Md3Theme.applyDialog(it) }
+        dialogHolder[0] = dialog
+        val startedAt = System.currentTimeMillis()
+        Thread {
+            val okay = GameImport.copyDir(source, target, object : GameImport.Progress {
+                override fun onProgress(copiedBytes: Long, totalBytes: Long, files: Int) {
+                    handler.post {
+                        if (isFinishing || isDestroyed) return@post
+                        val percent = if (totalBytes > 0) ((copiedBytes * 100) / totalBytes).toInt() else 100
+                        progressView.text = getString(
+                            R.string.import_game_progress,
+                            percent.coerceIn(0, 100),
+                            formatBytes(copiedBytes),
+                            formatBytes(totalBytes),
+                            files
+                        )
+                    }
+                }
+            }, { cancelled[0] })
+            handler.post {
+                try { dialog.dismiss() } catch (_: Throwable) {}
+                importToolButton?.isEnabled = true
+                if (isFinishing || isDestroyed) return@post
+                when {
+                    cancelled[0] -> try {
+                        Toast.makeText(this, R.string.import_game_cancelled, Toast.LENGTH_LONG).show()
+                    } catch (_: Throwable) {}
+                    !okay -> MaterialAlertDialogBuilder(this)
+                        .setTitle(R.string.import_game_title)
+                        .setMessage(R.string.import_game_failed)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show().also { Md3Theme.applyDialog(it) }
+                    else -> {
+                        val seconds = (System.currentTimeMillis() - startedAt) / 1000
+                        MaterialAlertDialogBuilder(this)
+                            .setTitle(R.string.import_game_title)
+                            .setMessage(getString(R.string.import_game_done, formatBytes(stats.bytes), seconds))
+                            .setPositiveButton(R.string.import_game_switch) { _, _ ->
+                                getSharedPreferences("mod", 0).edit()
+                                    .putString("gamepath", target.path)
+                                    .putBoolean("rodir", false)
+                                    .apply()
+                                try {
+                                    Toast.makeText(this, getString(R.string.import_game_switched, target.path), Toast.LENGTH_LONG).show()
+                                } catch (_: Throwable) {}
+                            }
+                            .setNegativeButton(R.string.import_game_keep, null)
+                            .show().also { Md3Theme.applyDialog(it) }
+                    }
+                }
+            }
+        }.start()
     }
 
     private fun resolutionWatcher(minimum: Int, current: () -> Int, save: (Int) -> Unit) = object : TextWatcher {

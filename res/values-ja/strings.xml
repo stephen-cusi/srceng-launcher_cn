@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="srceng_launcher_rewrite_text">モダン化リライトについて\nランチャーの UI とアプリケーションロジックを Kotlin で書き直しました。ビルドシステムは Gradle Wrapper と Android Gradle Plugin に移行し、画面には公式の Material 3 テーマとコンポーネントを使用しています。エンジンの動作を維持するため、SDL とネイティブ互換レイヤーは Java のまま残しています。</string>
-    <string name="srceng_app_name">Source Engine</string>
+    <string name="srceng_app_name">HL2Box</string>
 
     <string name="srceng_launcher_about">このポートについて</string>
     <string name="srceng_launcher_changelog">更新履歴</string>
@@ -129,6 +129,20 @@
     <string name="vpk_tool_desc">VPK1 と VPK2 アーカイブの作成、表示、展開。</string>
     <string name="engine_log_viewer">エンジンログビューアー</string>
     <string name="engine_log_viewer_desc">engine.log を読み取り、レベル別の色分けとフィルタリングを行います。</string>
+    <string name="import_game_tool">ゲームデータのインポート</string>
+    <string name="import_game_tool_desc">ゲームファイルを高速なアプリ専用ストレージにコピーし、ゲームディレクトリをインポート先へ切り替えられます。</string>
+    <string name="import_game_title">ゲームデータのインポート</string>
+    <string name="import_game_confirm">ソース：%1$s\nサイズ：%2$s（%3$d ファイル）\n\nターゲット（アプリ専用）： %4$s\n空き容量：%5$s\n\nサイズとタイムスタンプが一致するファイルはスキップされるため、中断したインポートを再開できます。</string>
+    <string name="import_game_start">インポート</string>
+    <string name="import_game_cancel">キャンセル</string>
+    <string name="import_game_progress">%1$d%%（%2$s / %3$s）· %4$d ファイル</string>
+    <string name="import_game_done">インポート完了：%1$s／%2$d 秒。\n\nゲームディレクトリをインポート先に切り替えますか？</string>
+    <string name="import_game_switch">切り替える</string>
+    <string name="import_game_keep">現状を維持</string>
+    <string name="import_game_switched">ゲームディレクトリを切り替えました：\n%1$s\n\nゲームの再起動後に適用されます。</string>
+    <string name="import_game_cancelled">インポートをキャンセルしました。コピー済みのファイルは保持され、次回の続行が可能です。</string>
+    <string name="import_game_failed">インポートに失敗しました。空き容量とストレージ権限を確認して再試行してください。完了済みのファイルは保持されます。</string>
+    <string name="import_game_no_source">ゲームディレクトリが見つかりません：%1$s</string>
     <string name="engine_log_refresh">更新</string>
     <string name="engine_log_filter_all">すべて</string>
     <string name="engine_log_filter_error">エラー</string>

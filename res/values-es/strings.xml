@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="srceng_launcher_rewrite_text">Reescritura moderna del lanzador\nLa interfaz y la lógica de la aplicación del lanzador se han reescrito en Kotlin. El sistema de compilación ahora usa Gradle Wrapper y Android Gradle Plugin, y la interfaz utiliza los temas y componentes oficiales de Material 3. La capa de compatibilidad SDL y nativa se mantiene en Java para conservar el comportamiento del motor.</string>
-    <string name="srceng_app_name">Source Engine</string>
+    <string name="srceng_app_name">HL2Box</string>
 
     <string name="srceng_launcher_about">Acerca de</string>
     <string name="srceng_launcher_changelog">Registro de cambios</string>
@@ -129,6 +129,20 @@
     <string name="vpk_tool_desc">Crear, consultar y extraer archivos VPK1 y VPK2.</string>
     <string name="engine_log_viewer">Visor de registro del motor</string>
     <string name="engine_log_viewer_desc">Lee engine.log con niveles codificados por color y filtrado.</string>
+    <string name="import_game_tool">Importar datos del juego</string>
+    <string name="import_game_tool_desc">Copia los archivos del juego al almacenamiento privado rápido de la app y cambia el directorio del juego a la copia importada.</string>
+    <string name="import_game_title">Importar datos del juego</string>
+    <string name="import_game_confirm">Origen: %1$s\nTamaño: %2$s (%3$d archivos)\n\nDestino (almacenamiento privado): %4$s\nEspacio libre: %5$s\n\nLos archivos con el mismo tamaño y fecha se omiten, por lo que una importación interrumpida puede reanudarse.</string>
+    <string name="import_game_start">Importar</string>
+    <string name="import_game_cancel">Cancelar</string>
+    <string name="import_game_progress">%1$d %% (%2$s / %3$s) · %4$d archivos</string>
+    <string name="import_game_done">Importación completada: %1$s en %2$d s.\n\n¿Cambiar el directorio del juego a la copia importada ahora?</string>
+    <string name="import_game_switch">Cambiar</string>
+    <string name="import_game_keep">Mantener actual</string>
+    <string name="import_game_switched">Directorio del juego cambiado a:\n%1$s\n\nReinicia el juego para aplicar.</string>
+    <string name="import_game_cancelled">Importación cancelada. Los archivos copiados se conservan y la próxima importación continuará.</string>
+    <string name="import_game_failed">Error al importar. Comprueba el espacio libre y los permisos de almacenamiento e inténtalo de nuevo: los archivos completados se conservan.</string>
+    <string name="import_game_no_source">No se encontró el directorio del juego: %1$s</string>
     <string name="engine_log_refresh">Actualizar</string>
     <string name="engine_log_filter_all">Todo</string>
     <string name="engine_log_filter_error">Errores</string>

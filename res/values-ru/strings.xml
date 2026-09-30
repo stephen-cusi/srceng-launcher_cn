@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="srceng_launcher_rewrite_text">О современной переработке\nИнтерфейс и логика приложения лаунчера переписаны на Kotlin. Система сборки переведена на Gradle Wrapper и Android Gradle Plugin, а интерфейс использует официальные темы и компоненты Material 3. Слой совместимости SDL и нативного кода оставлен на Java для сохранения поведения движка.</string>
-    <string name="srceng_app_name">Source Engine</string>
+    <string name="srceng_app_name">HL2Box</string>
 
     <string name="srceng_launcher_about">О порте</string>
     <string name="srceng_launcher_changelog">Список изменений</string>
@@ -129,6 +129,20 @@
     <string name="vpk_tool_desc">Создание, просмотр и распаковка архивов VPK1 и VPK2.</string>
     <string name="engine_log_viewer">Просмотр журнала движка</string>
     <string name="engine_log_viewer_desc">Чтение engine.log с цветовой разметкой уровней и фильтрацией.</string>
+    <string name="import_game_tool">Импорт игровых данных</string>
+    <string name="import_game_tool_desc">Скопируйте файлы игры в быстрое приватное хранилище приложения и переключите игровой каталог на импортированную копию.</string>
+    <string name="import_game_title">Импорт игровых данных</string>
+    <string name="import_game_confirm">Источник: %1$s\nРазмер: %2$s (%3$d файлов)\n\nНазначение (приватное хранилище): %4$s\nСвободно: %5$s\n\nФайлы с совпадающими размером и временем изменения пропускаются, поэтому прерванный импорт можно продолжить.</string>
+    <string name="import_game_start">Импортировать</string>
+    <string name="import_game_cancel">Отмена</string>
+    <string name="import_game_progress">%1$d%% (%2$s / %3$s) · файлов: %4$d</string>
+    <string name="import_game_done">Импорт завершён: %1$s за %2$d с.\n\nПереключить игровой каталог на импортированную копию?</string>
+    <string name="import_game_switch">Переключить</string>
+    <string name="import_game_keep">Оставить текущий</string>
+    <string name="import_game_switched">Игровой каталог переключён:\n%1$s\n\nПерезапустите игру, чтобы применить.</string>
+    <string name="import_game_cancelled">Импорт отменён. Скопированные файлы сохранены, импорт продолжится в следующий раз.</string>
+    <string name="import_game_failed">Ошибка импорта. Проверьте свободное место и права доступа к хранилищу, затем повторите — завершённые файлы сохранены.</string>
+    <string name="import_game_no_source">Игровой каталог не найден: %1$s</string>
     <string name="engine_log_refresh">Обновить</string>
     <string name="engine_log_filter_all">Все</string>
     <string name="engine_log_filter_error">Ошибки</string>

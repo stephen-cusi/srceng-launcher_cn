@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="srceng_launcher_rewrite_text">현대화 재작성 안내\n런처 UI와 애플리케이션 로직을 Kotlin으로 다시 작성했습니다. 빌드 시스템은 Gradle Wrapper와 Android Gradle Plugin으로 전환했으며, 인터페이스는 공식 Material 3 테마와 컴포넌트를 사용합니다. 엔진 동작을 유지하기 위해 SDL 및 네이티브 호환 계층은 Java로 유지합니다.</string>
-    <string name="srceng_app_name">Source Engine</string>
+    <string name="srceng_app_name">HL2Box</string>
 
     <string name="srceng_launcher_about">정보</string>
     <string name="srceng_launcher_changelog">변경 내역</string>
@@ -129,6 +129,20 @@
     <string name="vpk_tool_desc">VPK1 및 VPK2 아카이브를 만들고 보고 압축 해제합니다.</string>
     <string name="engine_log_viewer">엔진 로그 뷰어</string>
     <string name="engine_log_viewer_desc">engine.log을 읽고 레벨별 색상 구분 및 필터링을 제공합니다.</string>
+    <string name="import_game_tool">게임 데이터 가져오기</string>
+    <string name="import_game_tool_desc">게임 파일을 빠른 앱 전용 저장소로 복사하고 게임 디렉터리를 가져온 사본으로 전환할 수 있습니다.</string>
+    <string name="import_game_title">게임 데이터 가져오기</string>
+    <string name="import_game_confirm">원본: %1$s\n크기: %2$s (%3$d개 파일)\n\n대상(앱 전용 저장소): %4$s\n여유 공간: %5$s\n\n크기와 타임스탬프가 같은 파일은 건너뛰므로 중단된 가져오기를 이어서 진행할 수 있습니다.</string>
+    <string name="import_game_start">가져오기</string>
+    <string name="import_game_cancel">취소</string>
+    <string name="import_game_progress">%1$d%% (%2$s / %3$s) · %4$d개 파일</string>
+    <string name="import_game_done">가져오기 완료: %1$s, %2$d초.\n\n게임 디렉터리를 가져온 사본으로 전환하시겠습니까?</string>
+    <string name="import_game_switch">전환</string>
+    <string name="import_game_keep">현재 유지</string>
+    <string name="import_game_switched">게임 디렉터리가 전환되었습니다:\n%1$s\n\n게임을 다시 시작하면 적용됩니다.</string>
+    <string name="import_game_cancelled">가져오기가 취소되었습니다. 복사된 파일은 유지되며 다음 가져오기에서 이어집니다.</string>
+    <string name="import_game_failed">가져오기 실패. 여유 공간과 저장소 권한을 확인한 후 다시 시도하세요. 완료된 파일은 유지됩니다.</string>
+    <string name="import_game_no_source">게임 디렉터리를 찾을 수 없음: %1$s</string>
     <string name="engine_log_refresh">새로고침</string>
     <string name="engine_log_filter_all">전체</string>
     <string name="engine_log_filter_error">오류</string>

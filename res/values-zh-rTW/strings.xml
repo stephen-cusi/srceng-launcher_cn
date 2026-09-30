@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="srceng_launcher_rewrite_text">現代化重寫說明\n啟動器介面與應用程式邏輯已使用 Kotlin 重寫，建置系統已遷移至 Gradle Wrapper 與 Android Gradle Plugin，介面使用官方 Material 3 主題和元件。為維持引擎行為穩定，SDL 與原生相容層繼續保留 Java 實作。</string>
-    <string name="srceng_app_name">起源引擎</string>
+    <string name="srceng_app_name">HL2Box</string>
 
     <string name="srceng_launcher_about">關於</string>
     <string name="srceng_launcher_changelog">更新日誌</string>
@@ -127,6 +127,20 @@
     <string name="vpk_tool_desc">建立、檢視和解壓縮 VPK1 與 VPK2 檔案。</string>
     <string name="engine_log_viewer">引擎日誌檢視器</string>
     <string name="engine_log_viewer_desc">讀取 engine.log，依等級著色並支援篩選。</string>
+    <string name="import_game_tool">匯入遊戲資料</string>
+    <string name="import_game_tool_desc">將遊戲檔案複製到高速的應用程式私有儲存空間，並可將遊戲目錄切換至匯入副本。</string>
+    <string name="import_game_title">匯入遊戲資料</string>
+    <string name="import_game_confirm">來源目錄：%1$s\n大小：%2$s（%3$d 個檔案）\n\n目標（應用程式私有儲存空間）：%4$s\n可用空間：%5$s\n\n大小與時間戳記相同的檔案會被略過，因此中斷後可繼續匯入。</string>
+    <string name="import_game_start">開始匯入</string>
+    <string name="import_game_cancel">取消</string>
+    <string name="import_game_progress">%1$d%%（%2$s / %3$s）· %4$d 個檔案</string>
+    <string name="import_game_done">匯入完成：%1$s，耗時 %2$d 秒。\n\n是否立即將遊戲目錄切換至匯入副本？</string>
+    <string name="import_game_switch">切換</string>
+    <string name="import_game_keep">暫不切換</string>
+    <string name="import_game_switched">遊戲目錄已切換至：\n%1$s\n\n重新啟動遊戲後生效。</string>
+    <string name="import_game_cancelled">匯入已取消。已複製的檔案會保留，下次匯入將繼續。</string>
+    <string name="import_game_failed">匯入失敗。請檢查可用空間與儲存權限後重試，已完成的檔案會保留。</string>
+    <string name="import_game_no_source">找不到遊戲目錄：%1$s</string>
     <string name="engine_log_refresh">重新整理</string>
     <string name="engine_log_filter_all">全部</string>
     <string name="engine_log_filter_error">錯誤</string>

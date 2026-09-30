@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="srceng_app_name">Source Engine</string>
+    <string name="srceng_app_name">HL2Box</string>
 
     <string name="srceng_launcher_about">About</string>
     <string name="srceng_launcher_changelog">Changelog</string>
@@ -134,6 +134,20 @@
     <string name="vpk_tool_desc">Browse and extract VPK and GMA archives created by tools such as gmad. VPK creation is also supported.</string>
     <string name="engine_log_viewer">Engine log viewer</string>
     <string name="engine_log_viewer_desc">Read engine.log with color-coded levels and filtering.</string>
+    <string name="import_game_tool">Import game data</string>
+    <string name="import_game_tool_desc">Copy game files into fast app-private storage and switch the game directory to the imported copy.</string>
+    <string name="import_game_title">Import game data</string>
+    <string name="import_game_confirm">Source: %1$s\nSize: %2$s (%3$d files)\n\nTarget (app-private): %4$s\nFree space: %5$s\n\nExisting files with the same size and timestamp are skipped, so an interrupted import can be resumed.</string>
+    <string name="import_game_start">Import</string>
+    <string name="import_game_cancel">Cancel</string>
+    <string name="import_game_progress">%1$d%% (%2$s / %3$s) · %4$d files</string>
+    <string name="import_game_done">Import finished: %1$s in %2$d s.\n\nSwitch the game directory to the imported copy now?</string>
+    <string name="import_game_switch">Switch</string>
+    <string name="import_game_keep">Keep current</string>
+    <string name="import_game_switched">Game directory switched to:\n%1$s\n\nRestart the game to apply.</string>
+    <string name="import_game_cancelled">Import cancelled. Partial files are kept and the next import resumes.</string>
+    <string name="import_game_failed">Import failed. Check free space and storage permission, then try again — completed files are kept.</string>
+    <string name="import_game_no_source">Game directory not found: %1$s</string>
     <string name="engine_log_refresh">Refresh</string>
     <string name="engine_log_filter_all">All</string>
     <string name="engine_log_filter_error">Errors</string>
