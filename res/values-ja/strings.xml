@@ -57,6 +57,24 @@
     <string name="editor_too_large">ファイルが大きすぎるため、読み取り専用で開きました</string>
     <string name="editor_open_failed">ファイルを開けません</string>
     <string name="vpk_preview_open_editor">エディターで開く</string>
+    <string name="editor_check">検査</string>
+    <string name="check_ok">構文チェックに合格しました</string>
+    <string name="check_fail">構文エラー %1$d:%2$d · %3$s</string>
+    <string name="editor_check_unsupported">構文チェックは Lua ファイルのみ対応</string>
+    <string name="editor_status_pos">%1$d 行目 · %2$d 列</string>
+    <string name="editor_lang_lua">Lua (GLua)</string>
+    <string name="editor_lang_kv">KV</string>
+    <string name="editor_lang_c">C/JS</string>
+    <string name="editor_lang_text">プレーンテキスト</string>
+    <string name="check_unclosed_string">閉じられていない文字列</string>
+    <string name="check_unclosed_comment">閉じられていないコメント</string>
+    <string name="check_unexpected_end">予期しない \'end\'</string>
+    <string name="check_missing_end">\'end\' が不足（%1$s が未閉、%2$s 行目）</string>
+    <string name="check_unexpected_until">予期しない \'until\'</string>
+    <string name="check_until_without_repeat">予期しない \'until\'（%1$s が未閉）</string>
+    <string name="check_unmatched_bracket">括弧が一致しません：%1$s</string>
+    <string name="check_unclosed_bracket">括弧が閉じていません：%1$s</string>
+    <string name="check_missing_until">\'until\' が不足（%1$s 行目の repeat が未閉）</string>
     <string name="srceng_update">アップデートがあります！</string>
     <string name="srceng_launcher_error_find_platform">platform フォルダが見つかりません！</string>
 

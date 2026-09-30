@@ -53,6 +53,24 @@
     <string name="editor_too_large">檔案過大，已以唯讀方式開啟</string>
     <string name="editor_open_failed">無法開啟檔案</string>
     <string name="vpk_preview_open_editor">在編輯器中開啟</string>
+    <string name="editor_check">檢查</string>
+    <string name="check_ok">構文檢查通過</string>
+    <string name="check_fail">語法錯誤 %1$d:%2$d · %3$s</string>
+    <string name="editor_check_unsupported">語法檢查僅支援 Lua 檔案</string>
+    <string name="editor_status_pos">第 %1$d 行 · 第 %2$d 列</string>
+    <string name="editor_lang_lua">Lua (GLua)</string>
+    <string name="editor_lang_kv">KV</string>
+    <string name="editor_lang_c">C/JS</string>
+    <string name="editor_lang_text">純文字</string>
+    <string name="check_unclosed_string">未閉合的字串</string>
+    <string name="check_unclosed_comment">未閉合的註解</string>
+    <string name="check_unexpected_end">意外的 end</string>
+    <string name="check_missing_end">缺少 end（%1$s 未閉合，第 %2$s 行）</string>
+    <string name="check_unexpected_until">意外的 until</string>
+    <string name="check_until_without_repeat">意外的 until（%1$s 未閉合）</string>
+    <string name="check_unmatched_bracket">括號不匹配：%1$s</string>
+    <string name="check_unclosed_bracket">括號未閉合：%1$s</string>
+    <string name="check_missing_until">缺少 until（第 %1$s 行的 repeat 未閉合）</string>
     <string name="srceng_launcher_error_find_platform">platform 目錄遺失！</string>
 
     <!-- MD3 Settings / Appearance -->

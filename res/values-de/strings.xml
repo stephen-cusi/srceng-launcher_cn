@@ -57,6 +57,24 @@
     <string name="editor_too_large">Datei zu groß, nur zum Lesen geöffnet</string>
     <string name="editor_open_failed">Datei konnte nicht geöffnet werden</string>
     <string name="vpk_preview_open_editor">Im Editor öffnen</string>
+    <string name="editor_check">Prüfen</string>
+    <string name="check_ok">Syntaxprüfung bestanden</string>
+    <string name="check_fail">Syntaxfehler %1$d:%2$d · %3$s</string>
+    <string name="editor_check_unsupported">Syntaxprüfung unterstützt nur Lua-Dateien</string>
+    <string name="editor_status_pos">Zeile %1$d, Sp. %2$d</string>
+    <string name="editor_lang_lua">Lua (GLua)</string>
+    <string name="editor_lang_kv">KV</string>
+    <string name="editor_lang_c">C/JS</string>
+    <string name="editor_lang_text">Klartext</string>
+    <string name="check_unclosed_string">Unvollständige Zeichenkette</string>
+    <string name="check_unclosed_comment">Unvollständiger Kommentar</string>
+    <string name="check_unexpected_end">Unerwartetes \'end\'</string>
+    <string name="check_missing_end">\'end\' fehlt (%1$s nicht geschlossen, Zeile %2$s)</string>
+    <string name="check_unexpected_until">Unerwartetes \'until\'</string>
+    <string name="check_until_without_repeat">Unerwartetes \'until\' (%1$s nicht geschlossen)</string>
+    <string name="check_unmatched_bracket">Klammer stimmt nicht überein: %1$s</string>
+    <string name="check_unclosed_bracket">Klammer nicht geschlossen: %1$s</string>
+    <string name="check_missing_until">\'until\' fehlt (repeat nicht geschlossen, Zeile %1$s)</string>
     <string name="srceng_update">Update verfügbar!</string>
     <string name="srceng_launcher_error_find_platform">platform-Ordner fehlt!</string>
 

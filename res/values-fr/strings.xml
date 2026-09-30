@@ -57,6 +57,24 @@
     <string name="editor_too_large">Fichier trop volumineux, ouvert en lecture seule</string>
     <string name="editor_open_failed">Impossible d\'ouvrir le fichier</string>
     <string name="vpk_preview_open_editor">Ouvrir dans l\'éditeur</string>
+    <string name="editor_check">Vérifier</string>
+    <string name="check_ok">Vérification de syntaxe réussie</string>
+    <string name="check_fail">Erreur de syntaxe %1$d:%2$d · %3$s</string>
+    <string name="editor_check_unsupported">La vérification prend en charge uniquement Lua</string>
+    <string name="editor_status_pos">Ligne %1$d, col. %2$d</string>
+    <string name="editor_lang_lua">Lua (GLua)</string>
+    <string name="editor_lang_kv">KV</string>
+    <string name="editor_lang_c">C/JS</string>
+    <string name="editor_lang_text">Texte brut</string>
+    <string name="check_unclosed_string">Chaîne non fermée</string>
+    <string name="check_unclosed_comment">Commentaire non fermé</string>
+    <string name="check_unexpected_end">\'end\' inattendu</string>
+    <string name="check_missing_end">\'end\' manquant (%1$s non fermé, ligne %2$s)</string>
+    <string name="check_unexpected_until">\'until\' inattendu</string>
+    <string name="check_until_without_repeat">\'until\' inattendu (%1$s non fermé)</string>
+    <string name="check_unmatched_bracket">Parenthèse non appariée : %1$s</string>
+    <string name="check_unclosed_bracket">Parenthèse non fermée : %1$s</string>
+    <string name="check_missing_until">\'until\' manquant (repeat non fermé, ligne %1$s)</string>
     <string name="srceng_update">Mise à jour disponible!</string>
     <string name="srceng_launcher_error_find_platform">Le dossier platform est manquant!</string>
 

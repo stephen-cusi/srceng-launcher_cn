@@ -58,6 +58,24 @@
     <string name="editor_too_large">File too large, opened read-only</string>
     <string name="editor_open_failed">Cannot open file</string>
     <string name="vpk_preview_open_editor">Open in editor</string>
+    <string name="editor_check">Check</string>
+    <string name="check_ok">Syntax check passed</string>
+    <string name="check_fail">Syntax error %1$d:%2$d · %3$s</string>
+    <string name="editor_check_unsupported">Syntax check supports Lua files only</string>
+    <string name="editor_status_pos">Line %1$d, Col %2$d</string>
+    <string name="editor_lang_lua">Lua (GLua)</string>
+    <string name="editor_lang_kv">KV</string>
+    <string name="editor_lang_c">C/JS</string>
+    <string name="editor_lang_text">Plain text</string>
+    <string name="check_unclosed_string">Unclosed string</string>
+    <string name="check_unclosed_comment">Unclosed comment</string>
+    <string name="check_unexpected_end">Unexpected \'end\'</string>
+    <string name="check_missing_end">Missing \'end\' (%1$s unclosed, line %2$s)</string>
+    <string name="check_unexpected_until">Unexpected \'until\'</string>
+    <string name="check_until_without_repeat">Unexpected \'until\' (%1$s unclosed)</string>
+    <string name="check_unmatched_bracket">Mismatched bracket: %1$s</string>
+    <string name="check_unclosed_bracket">Unclosed bracket: %1$s</string>
+    <string name="check_missing_until">Missing \'until\' (repeat unclosed, line %1$s)</string>
     <string name="srceng_update">Update available!</string>
     <string name="srceng_launcher_error_find_platform">platform directory is missing!</string>
 

@@ -57,6 +57,24 @@
     <string name="editor_too_large">파일이 너무 커서 읽기 전용으로 열었습니다</string>
     <string name="editor_open_failed">파일을 열 수 없습니다</string>
     <string name="vpk_preview_open_editor">편집기에서 열기</string>
+    <string name="editor_check">검사</string>
+    <string name="check_ok">구문 검사 통과</string>
+    <string name="check_fail">구문 오류 %1$d:%2$d · %3$s</string>
+    <string name="editor_check_unsupported">구문 검사는 Lua 파일만 지원합니다</string>
+    <string name="editor_status_pos">%1$d행 · %2$d열</string>
+    <string name="editor_lang_lua">Lua (GLua)</string>
+    <string name="editor_lang_kv">KV</string>
+    <string name="editor_lang_c">C/JS</string>
+    <string name="editor_lang_text">일반 텍스트</string>
+    <string name="check_unclosed_string">닫히지 않은 문자열</string>
+    <string name="check_unclosed_comment">닫히지 않은 주석</string>
+    <string name="check_unexpected_end">예기치 않은 \'end\'</string>
+    <string name="check_missing_end">\'end\' 누락(%1$s 미종료, %2$s행)</string>
+    <string name="check_unexpected_until">예기치 않은 \'until\'</string>
+    <string name="check_until_without_repeat">예기치 않은 \'until\'(%1$s 미종료)</string>
+    <string name="check_unmatched_bracket">괄호 불일치: %1$s</string>
+    <string name="check_unclosed_bracket">괄호 미종료: %1$s</string>
+    <string name="check_missing_until">\'until\' 누락(%1$s행 repeat 미종료)</string>
     <string name="srceng_update">업데이트가 있습니다!</string>
     <string name="srceng_launcher_error_find_platform">platform 폴더가 없습니다!</string>
 

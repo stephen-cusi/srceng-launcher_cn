@@ -57,6 +57,24 @@
     <string name="editor_too_large">Файл слишком большой, открыт только для чтения</string>
     <string name="editor_open_failed">Не удалось открыть файл</string>
     <string name="vpk_preview_open_editor">Открыть в редакторе</string>
+    <string name="editor_check">Проверить</string>
+    <string name="check_ok">Проверка синтаксиса пройдена</string>
+    <string name="check_fail">Ошибка синтаксиса %1$d:%2$d · %3$s</string>
+    <string name="editor_check_unsupported">Проверка синтаксиса поддерживает только Lua</string>
+    <string name="editor_status_pos">Строка %1$d, столбец %2$d</string>
+    <string name="editor_lang_lua">Lua (GLua)</string>
+    <string name="editor_lang_kv">KV</string>
+    <string name="editor_lang_c">C/JS</string>
+    <string name="editor_lang_text">Обычный текст</string>
+    <string name="check_unclosed_string">Незакрытая строка</string>
+    <string name="check_unclosed_comment">Незакрытый комментарий</string>
+    <string name="check_unexpected_end">Неожиданный \'end\'</string>
+    <string name="check_missing_end">Отсутствует \'end\' (%1$s не закрыт, строка %2$s)</string>
+    <string name="check_unexpected_until">Неожиданный \'until\'</string>
+    <string name="check_until_without_repeat">Неожиданный \'until\' (%1$s не закрыт)</string>
+    <string name="check_unmatched_bracket">Несовпадающая скобка: %1$s</string>
+    <string name="check_unclosed_bracket">Незакрытая скобка: %1$s</string>
+    <string name="check_missing_until">Отсутствует \'until\' (repeat не закрыт, строка %1$s)</string>
     <string name="srceng_update">Доступно обновление</string>
     <string name="srceng_launcher_error_find_platform">Папка platform отсутствует!</string>
 
