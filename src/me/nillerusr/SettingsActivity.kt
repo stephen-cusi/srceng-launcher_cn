@@ -581,7 +581,6 @@ open class SettingsActivity : Activity() {
         val padding = (20 * resources.displayMetrics.density).toInt()
         progressView.setPadding(padding, padding / 2, padding, 0)
         val handler = android.os.Handler(android.os.Looper.getMainLooper())
-        val dialogHolder = arrayOf<android.app.AlertDialog?>(null)
         val cancelled = booleanArrayOf(false)
         importToolButton?.isEnabled = false
 
@@ -610,7 +609,7 @@ open class SettingsActivity : Activity() {
                     .setTitle(R.string.import_game_title)
                     .setMessage(message)
                     .setPositiveButton(R.string.import_game_start) { _, _ ->
-                        runImport(source, target, stats, progressView, handler, dialogHolder, cancelled)
+                        runImport(source, target, stats, progressView, handler, cancelled)
                     }
                     .setNegativeButton(android.R.string.cancel) { _, _ -> importToolButton?.isEnabled = true }
                     .show().also { Md3Theme.applyDialog(it) }
@@ -624,7 +623,6 @@ open class SettingsActivity : Activity() {
         stats: GameImport.Stats,
         progressView: TextView,
         handler: android.os.Handler,
-        dialogHolder: Array<android.app.AlertDialog?>,
         cancelled: BooleanArray
     ) {
         progressView.text = getString(R.string.import_game_progress, 0, formatBytes(0), formatBytes(stats.bytes), 0)
@@ -634,7 +632,6 @@ open class SettingsActivity : Activity() {
             .setCancelable(false)
             .setNegativeButton(R.string.import_game_cancel) { _, _ -> cancelled[0] = true }
             .show().also { Md3Theme.applyDialog(it) }
-        dialogHolder[0] = dialog
         val startedAt = System.currentTimeMillis()
         Thread {
             val okay = GameImport.copyDir(source, target, object : GameImport.Progress {
