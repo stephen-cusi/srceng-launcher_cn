@@ -143,6 +143,7 @@
     <string name="import_game_cancelled">Importación cancelada. Los archivos copiados se conservan y la próxima importación continuará.</string>
     <string name="import_game_failed">Error al importar. Comprueba el espacio libre y los permisos de almacenamiento e inténtalo de nuevo: los archivos completados se conservan.</string>
     <string name="import_game_no_source">No se encontró el directorio del juego: %1$s</string>
+    <string name="import_game_no_space">Espacio insuficiente en el almacenamiento de la aplicación: se necesitan %1$s, solo hay %2$s libres.</string>
     <string name="engine_log_refresh">Actualizar</string>
     <string name="engine_log_filter_all">Todo</string>
     <string name="engine_log_filter_error">Errores</string>

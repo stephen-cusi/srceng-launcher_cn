@@ -148,6 +148,7 @@
     <string name="import_game_cancelled">Import cancelled. Partial files are kept and the next import resumes.</string>
     <string name="import_game_failed">Import failed. Check free space and storage permission, then try again — completed files are kept.</string>
     <string name="import_game_no_source">Game directory not found: %1$s</string>
+    <string name="import_game_no_space">Not enough space in app storage: need %1$s, only %2$s free.</string>
     <string name="engine_log_refresh">Refresh</string>
     <string name="engine_log_filter_all">All</string>
     <string name="engine_log_filter_error">Errors</string>

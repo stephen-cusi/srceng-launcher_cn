@@ -143,6 +143,7 @@
     <string name="import_game_cancelled">Import abgebrochen. Kopierte Dateien bleiben erhalten, der nächste Import setzt fort.</string>
     <string name="import_game_failed">Import fehlgeschlagen. Freien Speicher und Speicherberechtigung prüfen und erneut versuchen — fertige Dateien bleiben erhalten.</string>
     <string name="import_game_no_source">Spielverzeichnis nicht gefunden: %1$s</string>
+    <string name="import_game_no_space">Nicht genug Speicher im App-internen Speicher: %1$s benötigt, nur %2$s frei.</string>
     <string name="engine_log_refresh">Aktualisieren</string>
     <string name="engine_log_filter_all">Alle</string>
     <string name="engine_log_filter_error">Fehler</string>

@@ -564,7 +564,7 @@ open class SettingsActivity : Activity() {
             current /= 1024.0
             index++
         }
-        return String.format(java.util.Locale.US, "%.1f %s", current, unit[index + 1])
+        return String.format(java.util.Locale.US, "%.1f %s", current, unit[index])
     }
 
     private fun startGameImport() {
@@ -577,6 +577,7 @@ open class SettingsActivity : Activity() {
             return
         }
         val target = GameImport.targetDir(this, sourcePath)
+        try { target.mkdirs() } catch (_: Throwable) {}
         val progressView = TextView(this)
         val padding = (20 * resources.displayMetrics.density).toInt()
         progressView.setPadding(padding, padding / 2, padding, 0)
@@ -595,6 +596,13 @@ open class SettingsActivity : Activity() {
                 if (stats.files == 0) {
                     importToolButton?.isEnabled = true
                     try { Toast.makeText(this, getString(R.string.import_game_no_source, sourcePath), Toast.LENGTH_LONG).show() } catch (_: Throwable) {}
+                    return@post
+                }
+                if (free < stats.bytes) {
+                    importToolButton?.isEnabled = true
+                    try {
+                        Toast.makeText(this, getString(R.string.import_game_no_space, formatBytes(stats.bytes), formatBytes(free)), Toast.LENGTH_LONG).show()
+                    } catch (_: Throwable) {}
                     return@post
                 }
                 val message = getString(

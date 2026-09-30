@@ -143,6 +143,7 @@
     <string name="import_game_cancelled">インポートをキャンセルしました。コピー済みのファイルは保持され、次回の続行が可能です。</string>
     <string name="import_game_failed">インポートに失敗しました。空き容量とストレージ権限を確認して再試行してください。完了済みのファイルは保持されます。</string>
     <string name="import_game_no_source">ゲームディレクトリが見つかりません：%1$s</string>
+    <string name="import_game_no_space">アプリ専用ストレージの空きが不足しています：%1$s 必要ですが、%2$s しかありません。</string>
     <string name="engine_log_refresh">更新</string>
     <string name="engine_log_filter_all">すべて</string>
     <string name="engine_log_filter_error">エラー</string>

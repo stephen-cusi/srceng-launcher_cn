@@ -141,6 +141,7 @@
     <string name="import_game_cancelled">匯入已取消。已複製的檔案會保留，下次匯入將繼續。</string>
     <string name="import_game_failed">匯入失敗。請檢查可用空間與儲存權限後重試，已完成的檔案會保留。</string>
     <string name="import_game_no_source">找不到遊戲目錄：%1$s</string>
+    <string name="import_game_no_space">應用程式私有儲存空間不足：需要 %1$s，僅剩 %2$s。</string>
     <string name="engine_log_refresh">重新整理</string>
     <string name="engine_log_filter_all">全部</string>
     <string name="engine_log_filter_error">錯誤</string>

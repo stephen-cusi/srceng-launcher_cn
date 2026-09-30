@@ -143,6 +143,7 @@
     <string name="import_game_cancelled">Import annulé. Les fichiers copiés sont conservés et le prochain import reprendra.</string>
     <string name="import_game_failed">Échec de l\'import. Vérifiez l\'espace libre et les autorisations de stockage, puis réessayez — les fichiers terminés sont conservés.</string>
     <string name="import_game_no_source">Répertoire du jeu introuvable : %1$s</string>
+    <string name="import_game_no_space">Espace insuffisant dans le stockage de l’application : %1$s nécessaires, %2$s libres seulement.</string>
     <string name="engine_log_refresh">Actualiser</string>
     <string name="engine_log_filter_all">Tout</string>
     <string name="engine_log_filter_error">Erreurs</string>

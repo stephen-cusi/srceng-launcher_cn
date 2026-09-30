@@ -143,6 +143,7 @@
     <string name="import_game_cancelled">Импорт отменён. Скопированные файлы сохранены, импорт продолжится в следующий раз.</string>
     <string name="import_game_failed">Ошибка импорта. Проверьте свободное место и права доступа к хранилищу, затем повторите — завершённые файлы сохранены.</string>
     <string name="import_game_no_source">Игровой каталог не найден: %1$s</string>
+    <string name="import_game_no_space">Недостаточно места в хранилище приложения: требуется %1$s, свободно только %2$s.</string>
     <string name="engine_log_refresh">Обновить</string>
     <string name="engine_log_filter_all">Все</string>
     <string name="engine_log_filter_error">Ошибки</string>

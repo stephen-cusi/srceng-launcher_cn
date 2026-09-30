@@ -149,6 +149,7 @@ XMR(Monero):48iXvX61MU24m5VGc77rXQYKmoww3dZh6hn7mEwDaLVTfGhyBKq2teoPpeBq6xvqj4it
     <string name="import_game_cancelled">导入已取消。已复制的文件会保留，下次导入将继续。</string>
     <string name="import_game_failed">导入失败。请检查可用空间和存储权限后重试，已完成的文件会保留。</string>
     <string name="import_game_no_source">找不到游戏目录：%1$s</string>
+    <string name="import_game_no_space">应用私有存储空间不足：需要 %1$s，仅剩 %2$s。</string>
     <string name="engine_log_refresh">刷新</string>
     <string name="engine_log_filter_all">全部</string>
     <string name="engine_log_filter_error">错误</string>

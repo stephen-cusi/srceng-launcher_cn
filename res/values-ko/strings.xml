@@ -143,6 +143,7 @@
     <string name="import_game_cancelled">가져오기가 취소되었습니다. 복사된 파일은 유지되며 다음 가져오기에서 이어집니다.</string>
     <string name="import_game_failed">가져오기 실패. 여유 공간과 저장소 권한을 확인한 후 다시 시도하세요. 완료된 파일은 유지됩니다.</string>
     <string name="import_game_no_source">게임 디렉터리를 찾을 수 없음: %1$s</string>
+    <string name="import_game_no_space">앱 전용 저장소 공간이 부족합니다: %1$s이(가) 필요하고 %2$s만 여유가 있습니다.</string>
     <string name="engine_log_refresh">새로고침</string>
     <string name="engine_log_filter_all">전체</string>
     <string name="engine_log_filter_error">오류</string>
