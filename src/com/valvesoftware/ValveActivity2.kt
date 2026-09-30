@@ -70,7 +70,7 @@ class ValveActivity2 {
                 "gamepath",
                 LauncherActivity.getDefaultDir() + "/srceng"
             ) ?: LauncherActivity.getDefaultDir() + "/srceng"
-            val gameDirectory = intent.getStringExtra("gamedir").orEmpty().ifEmpty { "hl2" }
+            val gameDirectory = intent.getStringExtra("gamedir").orEmpty().ifEmpty { "hl2sb" }
 
             val gameinfo = findGameinfo(gamePath)
             if (gameinfo == 0 || !isModGameinfoExists("$gamePath/$gameDirectory")) return 0
@@ -86,7 +86,7 @@ class ValveActivity2 {
                 "gamepath",
                 LauncherActivity.getDefaultDir() + "/srceng"
             ) ?: LauncherActivity.getDefaultDir() + "/srceng"
-            val gameDirectory = intent.getStringExtra("gamedir").orEmpty().ifEmpty { "hl2" }
+            val gameDirectory = intent.getStringExtra("gamedir").orEmpty().ifEmpty { "hl2sb" }
             val gameLibraryDirectory = intent.getStringExtra("gamelibdir")
             val customVpk = intent.getStringExtra("vpk")
             var arguments = intent.getStringExtra("argv").orEmpty()
