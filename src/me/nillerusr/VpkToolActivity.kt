@@ -152,8 +152,11 @@ class VpkToolActivity : Activity() {
             return
         }
         val parent = currentDirectory.parentFile
-        if (parent != null && parent.canRead()) {
+        val parentListable = parent != null && parent.isDirectory && parent.listFiles() != null
+        if (parentListable) {
             showDirectory(parent, true)
+        } else if (currentDirectory.path != storageRootPath()) {
+            showDirectory(File(LauncherActivity.getDefaultDir()), true)
         } else if (pendingFiles.isNotEmpty()) {
             cancelTransfer()
         } else {
@@ -181,7 +184,14 @@ class VpkToolActivity : Activity() {
         val children = currentDirectory.listFiles()?.filter { it.canRead() }?.sortedWith(
             compareBy<File> { !it.isDirectory }.thenBy { it.name.lowercase(Locale.ROOT) }
         ).orEmpty()
-        currentDirectory.parentFile?.takeIf { it.canRead() }?.let(::addParentEntry)
+        val parent = currentDirectory.parentFile
+        val parentListable = parent != null && parent.isDirectory && parent.listFiles() != null
+        if (parentListable) {
+            addParentEntry(parent)
+        } else if (currentDirectory.path != storageRootPath()) {
+            // boundary of the private data tree: bounce back to storage root
+            addParentEntry(File(LauncherActivity.getDefaultDir()))
+        }
         if (currentDirectory.path == browserRootPath) addAppDataShortcutEntry()
         if (children.isEmpty()) {
             TextView(this).apply {
@@ -593,6 +603,9 @@ class VpkToolActivity : Activity() {
     }
 
     private fun canonicalFile(file: File): File = try { file.canonicalFile } catch (_: Throwable) { file.absoluteFile }
+
+    private fun storageRootPath(): String =
+        canonicalFile(File(LauncherActivity.getDefaultDir())).path
 
     private fun File.isSupportedArchive(): Boolean = extension.equals("vpk", true) || extension.equals("gma", true)
 
