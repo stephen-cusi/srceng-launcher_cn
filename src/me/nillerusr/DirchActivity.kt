@@ -38,6 +38,10 @@ open class DirchActivity : Activity() {
     var mPref: SharedPreferences? = null
 
     open fun ListDirectory(path: String) {
+        if (path == ROOT_PAGE) {
+            showRootList()
+            return
+        }
         val directory = File(path)
         val directories = directory.listFiles(FileFilter { it.isDirectory })
         if (directories == null) {
@@ -68,6 +72,7 @@ open class DirchActivity : Activity() {
             val parentReadable = parent.isDirectory &&
                 parent.listFiles(FileFilter { it.isDirectory }) != null
             if (parentReadable) addDirectoryView(inflater, "..", parent.absolutePath)
+            else addDirectoryView(inflater, "..", ROOT_PAGE)
         }
         for (child in directories) addDirectoryView(inflater, child.name, child.absolutePath)
         Md3Theme.applyAfterSetContentView(this)
@@ -192,21 +197,35 @@ open class DirchActivity : Activity() {
             }
         }
 
-        val defaultPath = LauncherActivity.getDefaultDir()
-        val paths = getExtStoragePaths()
-        if (paths.isEmpty()) {
-            ListDirectory(defaultPath)
-            return
-        }
+        showRootList()
+    }
 
-        addDirectoryView(layoutInflater, getString(R.string.srceng_dir_app_data), filesDir.absolutePath)
-        addDirectoryView(layoutInflater, File(defaultPath).name.ifEmpty { defaultPath }, defaultPath)
-        for (path in paths) addDirectoryView(layoutInflater, File(path).name.ifEmpty { path }, path)
+    /** First page: app-data shortcut + storage mounts. Also the boundary target
+     *  when walking up out of the private data tree. */
+    private fun showRootList() {
+        currentDirectory?.let { scrollPositions[it] = scroll.scrollY }
+        currentDirectory = null
+        header.setText(R.string.srceng_dir_storage_prompt)
+        selectionHint.setText(R.string.srceng_dir_storage_prompt)
+        choiceButton.isEnabled = false
+        body.removeAllViews()
+        val inflater = layoutInflater
+        addDirectoryView(inflater, getString(R.string.srceng_dir_app_data), filesDir.absolutePath)
+        val defaultPath = LauncherActivity.getDefaultDir()
+        addDirectoryView(inflater, File(defaultPath).name.ifEmpty { defaultPath }, defaultPath)
+        for (path in getExtStoragePaths()) {
+            addDirectoryView(inflater, File(path).name.ifEmpty { path }, path)
+        }
         Md3Theme.applyAfterSetContentView(this)
+        scroll.post { scroll.scrollTo(0, 0) }
     }
 
     override fun onDestroy() {
         if (::predictiveBack.isInitialized) predictiveBack.release()
         super.onDestroy()
+    }
+
+    companion object {
+        private const val ROOT_PAGE = " root-page"
     }
 }
