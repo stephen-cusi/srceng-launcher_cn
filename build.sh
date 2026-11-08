@@ -7,11 +7,11 @@ if [ "$#" -gt 0 ]; then
     shift
 fi
 
-export JAVA_HOME=/home/arale/.local/jdk-17
-export ANDROID_HOME=/home/arale/.local/android-build-toolchain/usr/lib/android-sdk
+export JAVA_HOME=${HL2SB_JAVA_HOME:-/home/arale/.cache/hl2sb-cefrium-jdk25}
+export ANDROID_HOME=${HL2SB_ANDROID_HOME:-/home/arale/.cache/hl2sb-cefrium-launcher-tools/sdk-arm64}
 export LD_LIBRARY_PATH=/home/arale/.local/android-build-toolchain/usr/lib:/home/arale/.local/android-build-toolchain/usr/lib/aarch64-linux-gnu:/home/arale/.local/android-build-toolchain/usr/lib/aarch64-linux-gnu/android
-AAPT2=/home/arale/.local/android-build-toolchain/usr/lib/android-sdk/build-tools/debian/aapt2
-APKSIGNER=/home/arale/.local/android-build-toolchain/usr/lib/android-sdk/build-tools/35.0.0/apksigner
+AAPT2=${HL2SB_AAPT2:-/home/arale/.cache/hl2sb-cefrium-launcher-tools/verified/aapt2}
+APKSIGNER=${HL2SB_APKSIGNER:-/home/arale/.local/android-build-toolchain/usr/lib/android-sdk/build-tools/35.0.0/apksigner}
 
 case "$MODE" in
     debug)
