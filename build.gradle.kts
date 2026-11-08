@@ -3,15 +3,6 @@ import java.util.Properties
 
 plugins {
     id("com.android.application") version "9.4.0"
-    id("com.cefrium") version "0.17.1"
-}
-
-val hl2sbCefrium = providers.gradleProperty("hl2sbCefrium").orElse("false").get().toBoolean()
-val cefriumNativeDir = providers.gradleProperty("cefriumNativeDir").orNull
-if (hl2sbCefrium) {
-    check(cefriumNativeDir != null && file("$cefriumNativeDir/arm64-v8a/libhtml_cefrium.so").isFile) {
-        "The optional Cefrium bridge requires -PcefriumNativeDir=<external jniLibs directory>"
-    }
 }
 
 android {
@@ -28,7 +19,6 @@ android {
         applicationId = "com.valvesoftware.source"
         minSdk = 29
         ndk { abiFilters += "arm64-v8a" }
-        manifestPlaceholders["hl2sbCefrium"] = hl2sbCefrium.toString()
         targetSdk = 29
         versionCode = 1170044
         versionName = "1.17.40-dev16"
@@ -70,11 +60,11 @@ android {
     sourceSets {
         getByName("main") {
             manifest.srcFile("AndroidManifest.xml")
-            java.setSrcDirs(listOf("src"))
+            java.setSrcDirs(listOf("src/org/libsdl"))
             kotlin.setSrcDirs(listOf("src"))
             res.setSrcDirs(listOf("res"))
             assets.setSrcDirs(listOf("assets"))
-            jniLibs.setSrcDirs(listOf("lib") + listOfNotNull(cefriumNativeDir))
+            jniLibs.setSrcDirs(listOf("lib"))
         }
     }
 
@@ -89,6 +79,7 @@ android {
 
     packaging {
         jniLibs.useLegacyPackaging = true
+        jniLibs.excludes += setOf("**/libservo_capi.so", "**/libhtml_cefrium.so", "**/libcef.so")
     }
 
     lint {
@@ -97,21 +88,8 @@ android {
 }
 
 dependencies {
-    implementation("com.cefrium:cefrium-sdk:0.17.1")
     implementation("com.google.android.material:material:1.12.0")
     implementation("io.noties.markwon:core:4.6.2")
-}
-
-// The generated native services do not have Java class counterparts.
-tasks.matching { it.name.startsWith("generateCefriumJavalessManifest") }.configureEach {
-    doLast {
-        outputs.files.files.filter { it.name == "AndroidManifest.xml" }.forEach { file ->
-            val manifest = file.readText()
-                .replace("<manifest xmlns:android=", "<manifest xmlns:tools=\"http://schemas.android.com/tools\" xmlns:android=")
-                .replace("android:nativeService=\"true\"", "android:nativeService=\"true\" tools:ignore=\"MissingClass\"")
-            file.writeText(manifest)
-        }
-    }
 }
 
 kotlin {

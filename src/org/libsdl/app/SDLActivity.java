@@ -320,7 +320,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                 @Override
                 public void onClick(DialogInterface dialog, int id) {
                 	Intent intent = new Intent(SDLActivity.this, DirchActivity.class);
-					intent.addFlags(268435456);
+					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					startActivity(intent);
                     mSingleton.finish();
                 }
@@ -366,9 +366,10 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
                 SDLActivity.this.getWindow().getDecorView().setSystemUiVisibility(flags);
     }
 
-    if (Build.VERSION.SDK_INT >= 28)
+    if (Build.VERSION.SDK_INT >= 28) {
         getWindow().getAttributes().layoutInDisplayCutoutMode =
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+    }
 
         // Set up the surface
         mSurface = new SDLSurface(getApplication());
@@ -1006,6 +1007,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     /**
      * This method is called by SDL using JNI.
      */
+    @android.annotation.SuppressLint("UnsafeImplicitIntentLaunch")
     public static void minimizeWindow() {
 
         if (mSingleton == null) {
@@ -1982,8 +1984,9 @@ class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
             }
         }
 
-    if( keyCode == KeyEvent.KEYCODE_BACK )
+    if( keyCode == KeyEvent.KEYCODE_BACK ) {
             keyCode = KeyEvent.KEYCODE_ESCAPE;
+    }
 
 //        if (event.getAction() == KeyEvent.ACTION_DOWN) {
 //            Log.v("SDL", "key down: " + keyCode + ", deviceId = " + deviceId + ", source = " + source);
